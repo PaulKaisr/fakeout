@@ -14,6 +14,9 @@ importers:
       dotenv:
         specifier: ^17.2.3
         version: 17.2.3
+      isomorphic-fetch:
+        specifier: ^3.0.0
+        version: 3.0.0
       pexels:
         specifier: ^1.4.0
         version: 1.4.0

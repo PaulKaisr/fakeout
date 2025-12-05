@@ -8,6 +8,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 6.0"
     }
+    archive = {
+      source  = "hashicorp/archive"
+      version = "~> 2.4"
+    }
   }
 }
 
@@ -76,7 +80,7 @@ resource "aws_iam_role_policy_attachment" "lambda_r2_access" {
 }
 
 resource "aws_lambda_function" "scraper" {
-  filename      = var.lambda_deployment_package
+  filename      = "${path.module}/../scraper/lambda.zip"
   function_name = "scraper"
   role          = aws_iam_role.scraper_lambda.arn
   handler       = "index.handler"
@@ -94,5 +98,5 @@ resource "aws_lambda_function" "scraper" {
     }
   }
 
-  source_code_hash = fileexists(var.lambda_deployment_package) ? filebase64sha256(var.lambda_deployment_package) : null
+  source_code_hash = fileexists("${path.module}/../scraper/lambda.zip") ? filebase64sha256("${path.module}/../scraper/lambda.zip") : null
 }

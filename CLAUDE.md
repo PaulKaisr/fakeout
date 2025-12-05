@@ -96,12 +96,23 @@ See `terraform.tfvars.example` for the complete template.
 
 Before deploying the Lambda function:
 
-1. Package the scraper code and dependencies into `code/scraper/lambda.zip`
-2. Ensure the zip includes all node_modules and a proper handler
-3. Update `variables.tf` if using a different package path (default: `../scraper/lambda.zip`)
-4. Run `terraform apply` to deploy
+1. Build the Lambda deployment package:
+   ```bash
+   cd code/scraper
+   pnpm run build:lambda
+   # or directly: ./build-lambda.sh
+   ```
+   This creates `lambda.zip` with all necessary dependencies properly packaged (uses npm to avoid pnpm symlink issues).
 
-Note: The current `main.tf:97` uses `fileexists()` to conditionally compute the source code hash, allowing Terraform operations even when the deployment package doesn't exist yet.
+2. Deploy with Terraform:
+   ```bash
+   cd ../terraform
+   terraform apply
+   ```
+
+**Important**: The build script uses npm (not pnpm) to install dependencies in the Lambda package because pnpm's symlink structure doesn't work in zip files. The local development still uses pnpm.
+
+Note: The `main.tf:97` uses `fileexists()` to conditionally compute the source code hash, allowing Terraform operations even when the deployment package doesn't exist yet.
 
 ## Configuration Notes
 
