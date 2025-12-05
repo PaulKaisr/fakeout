@@ -1,35 +1,20 @@
-import { searchVideos } from "./clients/pexel.js";
-import { putObject } from "./clients/s3.js";
+import { scrapeAndStore } from "./index.js";
 
 async function run() {
-  const videos = await searchVideos({ per_page: 1 });
-  console.log(videos);
-
-  // Test S3 upload
-  console.log("\n--- Testing R2 Upload ---");
   try {
-    const testData = JSON.stringify({
-      message: "Test upload from scraper",
-      timestamp: new Date().toISOString(),
-      videoCount: videos.length,
-    });
-
-    const result = await putObject({
+    const result = await scrapeAndStore({
+      videoCount: 1,
+      query: "cat",
       bucketName: "fakeout-videos-dev",
-      key: "test/test-upload.json",
-      body: testData,
-      contentType: "application/json",
     });
 
-    console.log("✓ Successfully uploaded test object to R2:");
-    console.log(`  Bucket: fakeout-videos-dev`);
-    console.log(`  Key: test/test-upload.json`);
-    console.log(`  ETag: ${result.etag}`);
+    console.log("\n=== Scrape Complete ===");
+    console.log(`Videos found: ${result.videoCount}`);
+    console.log(`Upload key: ${result.uploadResult.key}`);
   } catch (err) {
-    console.error("✗ Failed to upload test object to R2:", err.message);
+    console.error("Failed to scrape and store videos:", err);
+    process.exit(1);
   }
 }
 
-run().catch((err) => {
-  console.error("Failed to fetch videos", err);
-});
+run();

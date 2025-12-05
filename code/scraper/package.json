@@ -5,7 +5,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:lambda": "./build-lambda.sh",
+    "test:lambda": "node test-lambda.js"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +16,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.943.0",
     "dotenv": "^17.2.3",
+    "isomorphic-fetch": "^3.0.0",
     "pexels": "^1.4.0"
   }
 }
