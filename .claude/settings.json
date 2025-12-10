@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": ["WebSearch"],
+    "deny": ["Bash(curl:*)", "Read(./.env)"]
+  },
+  "env": {}
+}
