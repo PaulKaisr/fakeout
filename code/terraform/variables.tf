@@ -56,3 +56,9 @@ variable "lambda_memory_size" {
   default     = 512
 }
 
+variable "openai_api_key" {
+  description = "OpenAI API Key for Vision API"
+  type        = string
+  sensitive   = true
+}
+
