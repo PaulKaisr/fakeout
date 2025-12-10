@@ -100,3 +100,55 @@ resource "aws_lambda_function" "scraper" {
 
   source_code_hash = fileexists("${path.module}/../scraper/lambda.zip") ? filebase64sha256("${path.module}/../scraper/lambda.zip") : null
 }
+
+# IAM Role for describe-and-generate Lambda
+resource "aws_iam_role" "describe_lambda" {
+  name = "describe-and-generate-lambda-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "lambda.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+# Attach basic execution role for logging
+resource "aws_iam_role_policy_attachment" "describe_lambda_basic_execution" {
+  role       = aws_iam_role.describe_lambda.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+# Attach R2 access policy (reuse the same policy)
+resource "aws_iam_role_policy_attachment" "describe_lambda_r2_access" {
+  role       = aws_iam_role.describe_lambda.name
+  policy_arn = aws_iam_policy.r2_access.arn
+}
+
+# Lambda function for describe-and-generate
+resource "aws_lambda_function" "describe_and_generate" {
+  filename      = "${path.module}/../describe-and-generate/lambda.zip"
+  function_name = "describe-and-generate"
+  role          = aws_iam_role.describe_lambda.arn
+  handler       = "main.handler"
+  runtime       = "python3.13"
+  timeout       = var.lambda_timeout
+  memory_size   = var.lambda_memory_size
+
+  environment {
+    variables = {
+      R2_ENDPOINT          = var.r2_endpoint
+      R2_ACCESS_KEY_ID     = var.r2_access_key_id
+      R2_SECRET_ACCESS_KEY = var.r2_secret_access_key
+      OPENAI_API_KEY       = var.openai_api_key
+    }
+  }
+
+  source_code_hash = fileexists("${path.module}/../describe-and-generate/lambda.zip") ? filebase64sha256("${path.module}/../describe-and-generate/lambda.zip") : null
+}
