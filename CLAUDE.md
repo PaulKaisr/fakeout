@@ -4,49 +4,61 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a video scraping and storage system that fetches videos from Pexels and stores them in Cloudflare R2 (S3-compatible storage). The system is designed to run as an AWS Lambda function and is provisioned using Terraform.
+This is a media pipeline system that scrapes images/videos from Pexels, stores them in Cloudflare R2, uses OpenAI Vision API to generate descriptions, and creates new images using DALL-E 3. The system includes a Vue.js frontend for viewing content and is provisioned using Terraform. All components run as AWS Lambda functions.
 
 ## Architecture
 
-The project consists of two main components:
+The project consists of four main components:
 
-1. **Scraper (`code/scraper/`)**: Node.js application that fetches videos from Pexels API and uploads them to Cloudflare R2
-   - `scrape.js`: Main entry point that orchestrates video fetching and R2 upload testing
-   - `clients/pexel.js`: Pexels API client wrapper for video search
-   - `clients/s3.js`: S3/R2 client wrapper with upload functionality (supports both direct data and file uploads)
+### 1. Scraper (`code/scraper/`)
+Node.js Lambda function that fetches media from Pexels API and uploads to Cloudflare R2
+- `index.js`: Main Lambda handler supporting two modes:
+  - `foto` mode (default): Fetches curated images
+  - `video` mode: Fetches popular videos
+- `clients/pexel.js`: Pexels API client wrapper
+- `clients/s3.js`: S3/R2 client for uploads
 
-2. **Infrastructure (`code/terraform/`)**: Terraform configuration for AWS Lambda and Cloudflare R2
-   - Creates an R2 bucket (`fakeout-videos-dev`)
-   - Provisions AWS Lambda function with IAM roles and policies for R2 access
-   - Lambda is configured with Node.js 20.x runtime, 512MB memory, 300s timeout
+**Storage pattern**: `{YYYY-MM-DD}/pexel_{images|videos}_raw/{number}` with corresponding `{number}_meta.json` metadata files
 
-### Key Integration Points
+### 2. Describe-and-Generate (`code/describe-and-generate/`)
+Python Lambda function that processes images with OpenAI Vision API and DALL-E 3
+- `main.py`: Lambda handler with three operational modes:
+  - `DESCRIBE`: Analyzes images with GPT-4o-mini, adds descriptions to metadata
+  - `GENERATE`: Creates new images with DALL-E 3 using existing descriptions
+  - `DESCRIBE_AND_GENERATE` (default): Performs both operations
+- `clients/r2.py`: R2 client wrapper
+- `clients/openai_vision.py`: OpenAI Vision API and DALL-E 3 client
 
-- The scraper uses the AWS SDK S3 client to interact with Cloudflare R2 via S3-compatible API
-- Lambda function receives R2 credentials and Pexels API key via environment variables
-- Terraform expects a Lambda deployment package at `../scraper/lambda.zip` (relative to terraform directory)
+**Storage pattern**: Generated images saved to `{YYYY-MM-DD}/openai_generated_images/{original_image_id}` with corresponding metadata
+
+### 3. Frontend (`code/frontend/`)
+Vue 3 + Vuetify application for displaying content
+- Built with Vite, TypeScript, Vue Router
+- Uses unplugin-vue-router for file-based routing
+- Configured with ESLint using Vuetify config
+
+### 4. Infrastructure (`code/terraform/`)
+Terraform configuration for all AWS and Cloudflare resources
+- Creates R2 bucket (`fakeout-videos-dev`)
+- Provisions scraper and describe-and-generate Lambda functions with IAM roles
+- Lambda functions configured with Node.js 20.x (scraper) and Python 3.13 (describe-and-generate)
+- All functions: 512MB memory, 300s timeout
 
 ## Development Commands
 
-### Scraper
+### Scraper (Node.js)
 
-Navigate to `code/scraper/` for all scraper operations:
+Navigate to `code/scraper/`:
 
 ```bash
 cd code/scraper
+pnpm install              # Install dependencies
+node scrape.js            # Run locally (requires .env)
+pnpm run test:lambda      # Test Lambda handler locally
+pnpm run build:lambda     # Build lambda.zip deployment package
 ```
 
-Install dependencies:
-```bash
-pnpm install
-```
-
-Run the scraper locally:
-```bash
-node scrape.js
-```
-
-The scraper requires a `.env` file with:
+Required `.env`:
 ```
 PEXELS_API_KEY=your-key
 R2_ENDPOINT=https://<account_id>.r2.cloudflarestorage.com
@@ -54,69 +66,151 @@ R2_ACCESS_KEY_ID=your-key-id
 R2_SECRET_ACCESS_KEY=your-secret-key
 ```
 
-### Infrastructure
+**Important**: The build script uses npm (not pnpm) for Lambda package because pnpm's symlink structure doesn't work in zip files. Local development still uses pnpm.
 
-Navigate to `code/terraform/` for all Terraform operations:
+### Describe-and-Generate (Python)
+
+Navigate to `code/describe-and-generate/`:
+
+```bash
+cd code/describe-and-generate
+uv sync                                      # Install dependencies with uv
+uv run python test_local.py                  # Run default test (DESCRIBE mode, 2 images)
+uv run python test_local.py describe         # Test DESCRIBE mode only
+uv run python test_local.py generate         # Test GENERATE mode only
+uv run python test_local.py both             # Test DESCRIBE_AND_GENERATE mode (expensive!)
+uv run python test_local.py full             # Test with all images
+./build-lambda.sh                            # Build lambda.zip deployment package
+```
+
+Required `.env`:
+```
+R2_ENDPOINT=https://<account_id>.r2.cloudflarestorage.com
+R2_ACCESS_KEY_ID=your-key-id
+R2_SECRET_ACCESS_KEY=your-secret-key
+OPENAI_API_KEY=your-openai-key
+```
+
+**Note**: This project uses `uv` for Python dependency management, not pip or poetry.
+
+### Frontend (Vue.js)
+
+Navigate to `code/frontend/`:
+
+```bash
+cd code/frontend
+pnpm install              # Install dependencies
+pnpm dev                  # Start dev server
+pnpm build                # Build for production
+pnpm preview              # Preview production build
+pnpm type-check           # Run TypeScript type checking
+pnpm lint                 # Run ESLint with auto-fix
+```
+
+### Infrastructure (Terraform)
+
+Navigate to `code/terraform/`:
 
 ```bash
 cd code/terraform
+terraform init            # Initialize Terraform
+terraform plan            # Preview infrastructure changes
+terraform apply           # Apply infrastructure changes
+terraform destroy         # Destroy infrastructure
 ```
 
-Initialize Terraform (download providers):
-```bash
-terraform init
-```
-
-Plan infrastructure changes:
-```bash
-terraform plan
-```
-
-Apply infrastructure changes:
-```bash
-terraform apply
-```
-
-Destroy infrastructure:
-```bash
-terraform destroy
-```
-
-Required `terraform.tfvars` configuration:
+Required `terraform.tfvars`:
 - `cloudflare_api_token`: Cloudflare API token with R2 permissions
 - `cloudflare_account_id`: Your Cloudflare account ID
-- `r2_endpoint`: R2 endpoint URL (format: `https://<account_id>.r2.cloudflarestorage.com`)
+- `r2_endpoint`: R2 endpoint URL
 - `r2_access_key_id`: R2 access key
 - `r2_secret_access_key`: R2 secret key
 - `pexels_api_key`: Pexels API key
+- `openai_api_key`: OpenAI API key
+- `aws_region`: AWS region (optional, defaults to us-east-1)
 
-See `terraform.tfvars.example` for the complete template.
+See `terraform.tfvars.example` for complete template.
 
 ## Lambda Deployment
 
-Before deploying the Lambda function:
+Before deploying with Terraform, build the Lambda packages:
 
-1. Build the Lambda deployment package:
-   ```bash
-   cd code/scraper
-   pnpm run build:lambda
-   # or directly: ./build-lambda.sh
-   ```
-   This creates `lambda.zip` with all necessary dependencies properly packaged (uses npm to avoid pnpm symlink issues).
+```bash
+# Build scraper Lambda
+cd code/scraper
+pnpm run build:lambda
 
-2. Deploy with Terraform:
-   ```bash
-   cd ../terraform
-   terraform apply
-   ```
+# Build describe-and-generate Lambda
+cd ../describe-and-generate
+./build-lambda.sh
 
-**Important**: The build script uses npm (not pnpm) to install dependencies in the Lambda package because pnpm's symlink structure doesn't work in zip files. The local development still uses pnpm.
+# Deploy both with Terraform
+cd ../terraform
+terraform apply
+```
 
-Note: The `main.tf:97` uses `fileexists()` to conditionally compute the source code hash, allowing Terraform operations even when the deployment package doesn't exist yet.
+**Important**: Terraform uses `fileexists()` to conditionally compute source code hashes, allowing operations even when deployment packages don't exist yet.
+
+## Lambda Invocation Examples
+
+### Scraper Lambda
+
+Fetch 10 curated images (default):
+```json
+{
+  "mode": "foto",
+  "mediaCount": 10
+}
+```
+
+Fetch 5 popular videos:
+```json
+{
+  "mode": "video",
+  "mediaCount": 5
+}
+```
+
+### Describe-and-Generate Lambda
+
+Describe and generate for today's images:
+```json
+{
+  "mode": "DESCRIBE_AND_GENERATE"
+}
+```
+
+Only describe images from specific date:
+```json
+{
+  "mode": "DESCRIBE",
+  "datePrefix": "2025-12-07"
+}
+```
+
+Generate new images (requires existing descriptions):
+```json
+{
+  "mode": "GENERATE",
+  "datePrefix": "2025-12-07",
+  "n": 5
+}
+```
+
+## Key Integration Points
+
+- **Scraper → R2**: Downloads media from Pexels and uploads to R2 with date-prefixed keys
+- **Describe-and-Generate → R2**: Reads images, adds AI descriptions to metadata, generates new images
+- **Frontend → R2**: (Future integration) Will display media from R2 buckets
+- **All Lambdas**: Receive credentials via environment variables configured in Terraform
+- **Storage hierarchy**: All media organized by date (`YYYY-MM-DD/`) for easy querying
 
 ## Configuration Notes
 
-- The project uses pnpm as the package manager (version 10.10.0)
-- Scraper defaults to portrait-oriented videos, 5-10 second duration, with "cat" as the search query
-- All sensitive credentials are kept in `.env` (scraper) and `terraform.tfvars` (infrastructure) - both are gitignored
-- The R2 bucket is named `fakeout-videos-dev` for the development environment
+- Project uses pnpm v10.10.0 for Node.js packages and uv for Python packages
+- Scraper defaults: portrait videos, 5-10 second duration, "cat" search query
+- Describe-and-generate uses gpt-4o-mini for vision analysis (cost efficient)
+- DALL-E 3 configured for standard quality (1024x1024)
+- All sensitive credentials in `.env` and `terraform.tfvars` (both gitignored)
+- R2 bucket name: `fakeout-videos-dev` (development environment)
+- Frontend uses Vue 3 composition API with TypeScript and Vuetify 3 component framework
