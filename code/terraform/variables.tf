@@ -57,8 +57,26 @@ variable "lambda_memory_size" {
 }
 
 variable "openai_api_key" {
-  description = "OpenAI API Key for Vision API"
+  description = "OpenAI API Key for Vision API and DALL-E"
   type        = string
   sensitive   = true
+}
+
+variable "google_ai_api_key" {
+  description = "Google AI API Key for Gemini Vision and Imagen"
+  type        = string
+  sensitive   = true
+}
+
+variable "r2_custom_domain" {
+  description = "Custom domain for R2 public access (e.g., media.yourdomain.com)"
+  type        = string
+  default     = ""
+}
+
+variable "cloudflare_zone_id" {
+  description = "Cloudflare Zone ID for DNS management"
+  type        = string
+  default     = ""
 }
 
