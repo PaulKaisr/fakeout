@@ -28,6 +28,28 @@ resource "cloudflare_r2_bucket" "fakeout_videos_dev" {
   name       = "fakeout-videos-dev"
 }
 
+# Note: Public access and CORS configuration for R2 bucket must be done manually via Cloudflare Dashboard
+# This is because the Terraform provider doesn't support these settings yet.
+#
+# Manual Setup Steps:
+# 1. Go to Cloudflare Dashboard > R2 > fakeout-videos-dev
+# 2. Enable "Public Access" in bucket settings
+# 3. Add CORS policy (Settings > CORS):
+#    [{
+#      "AllowedOrigins": ["https://*.vercel.app", "https://yourdomain.com"],
+#      "AllowedMethods": ["GET", "HEAD"],
+#      "AllowedHeaders": ["*"],
+#      "ExposeHeaders": ["ETag"],
+#      "MaxAgeSeconds": 3600
+#    }]
+# 4. Link custom domain (Settings > Custom Domains):
+#    - Add domain: media.yourdomain.com
+#    - Cloudflare will auto-create DNS records
+#
+# For more information:
+# - https://developers.cloudflare.com/r2/buckets/public-buckets/
+# - https://developers.cloudflare.com/r2/buckets/cors/
+
 resource "aws_iam_role" "scraper_lambda" {
   name = "scraper-lambda-role"
 
@@ -147,6 +169,7 @@ resource "aws_lambda_function" "describe_and_generate" {
       R2_ACCESS_KEY_ID     = var.r2_access_key_id
       R2_SECRET_ACCESS_KEY = var.r2_secret_access_key
       OPENAI_API_KEY       = var.openai_api_key
+      GOOGLE_AI_API_KEY    = var.google_ai_api_key
     }
   }
 

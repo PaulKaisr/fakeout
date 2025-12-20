@@ -1,0 +1,22 @@
+# Cloudflare Configuration
+cloudflare_api_token   = "your-cloudflare-api-token"
+cloudflare_account_id  = "your-cloudflare-account-id"
+cloudflare_zone_id     = "your-cloudflare-zone-id"  # Optional: for custom domain setup
+
+# AWS Configuration
+aws_region = "eu-central-1"
+
+# R2 Configuration
+r2_endpoint           = "https://your-account-id.r2.cloudflarestorage.com"
+r2_access_key_id      = "your-r2-access-key-id"
+r2_secret_access_key  = "your-r2-secret-access-key"
+r2_custom_domain      = "media.yourdomain.com"  # Optional: custom domain for public R2 access
+
+# API Keys
+pexels_api_key    = "your-pexels-api-key"
+openai_api_key    = "your-openai-api-key"
+google_ai_api_key = "your-google-ai-api-key"
+
+# Lambda Configuration (optional overrides)
+# lambda_timeout      = 300
+# lambda_memory_size  = 512
