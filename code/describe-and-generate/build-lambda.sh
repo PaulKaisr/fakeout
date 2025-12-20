@@ -14,9 +14,18 @@ rm -rf package lambda.zip
 mkdir -p package
 
 # Export dependencies using uv and install to package directory
-echo "Installing dependencies with uv..."
+echo "Installing dependencies with uv for Lambda (linux/x86_64)..."
 uv export --no-hashes --no-dev -o package/requirements.txt
-pip install -r package/requirements.txt -t package/ --quiet
+
+# Install dependencies targeting Linux platform (Lambda environment)
+# Use --python-platform to ensure compatibility with Lambda's Amazon Linux 2023
+uv pip install \
+  --python-preference only-system \
+  --system \
+  --python-platform linux \
+  --target package/ \
+  -r package/requirements.txt \
+  --quiet
 
 # Remove the temporary requirements.txt
 rm package/requirements.txt

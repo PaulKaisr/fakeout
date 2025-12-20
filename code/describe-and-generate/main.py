@@ -1,14 +1,27 @@
 """
 Lambda function to analyze images in R2 bucket and add descriptions to metadata
-and/or generate new images using DALL-E
+and/or generate new images using DALL-E or Google AI (Gemini/Imagen)
 """
 
 import os
 import json
 from datetime import datetime
-from typing import Dict, Any, List, Literal, Optional
+from typing import Dict, Any, List, Literal, Optional, Protocol
 from clients.r2 import R2Client
 from clients.openai_vision import VisionClient
+from clients.google_ai import GoogleAIClient
+
+
+class AIProvider(Protocol):
+    """Protocol for AI provider clients"""
+
+    def describe_image(self, image_data: bytes, **kwargs) -> str:
+        """Describe an image"""
+        ...
+
+    def generate_image(self, prompt: str, **kwargs) -> tuple[str, bytes]:
+        """Generate an image from a prompt"""
+        ...
 
 
 def process_images(
@@ -16,7 +29,8 @@ def process_images(
     date_prefix: str,
     mode: Literal["DESCRIBE", "GENERATE", "DESCRIBE_AND_GENERATE"],
     r2_client: R2Client,
-    vision_client: VisionClient,
+    ai_client: AIProvider,
+    provider: Literal["openai", "google"],
     n: Optional[int] = None,
 ) -> List[Dict[str, Any]]:
     """
@@ -27,7 +41,8 @@ def process_images(
         date_prefix: Date prefix to filter images (YYYY-MM-DD format)
         mode: Operation mode - DESCRIBE, GENERATE, or DESCRIBE_AND_GENERATE
         r2_client: Initialized R2 client
-        vision_client: Initialized Vision client
+        ai_client: Initialized AI client (OpenAI or Google)
+        provider: AI provider to use ("openai" or "google")
         n: Optional limit on number of images to process (processes all if None)
 
     Returns:
@@ -87,14 +102,16 @@ def process_images(
                     })
                     continue
 
-                # Generate description using Vision API
-                print(f"Analyzing image with OpenAI Vision API...")
-                description = vision_client.describe_image(image_data)
+                # Generate description using AI provider
+                provider_name = "Google Gemini" if provider == "google" else "OpenAI"
+                print(f"Analyzing image with {provider_name} Vision API...")
+                description = ai_client.describe_image(image_data)
                 print(f"Generated description: {description}")
 
-                # Update metadata with description and timestamp
+                # Update metadata with description, timestamp, and provider
                 metadata["ai_description"] = description
                 metadata["ai_description_timestamp"] = datetime.utcnow().isoformat()
+                metadata["ai_description_provider"] = provider
 
                 # Upload updated metadata back to R2
                 print(f"Updating metadata at {meta_key}...")
@@ -115,11 +132,13 @@ def process_images(
                     # For DESCRIBE_AND_GENERATE, use the newly generated description
                     prompt = description
 
-                print(f"Generating new image using DALL-E with prompt: {prompt[:100]}...")
-                revised_prompt, generated_image_data = vision_client.generate_image(prompt)
+                generation_model = "Google AI (Imagen/Nano Banana Pro)" if provider == "google" else "DALL-E"
+                print(f"Generating new image using {generation_model} with prompt: {prompt[:100]}...")
+                revised_prompt, generated_image_data = ai_client.generate_image(prompt)
 
                 # Upload generated image to R2 (matching scraper pattern: date/folder/id)
-                generated_image_key = f"{date_prefix}/openai_generated_images/{original_image_id}"
+                folder_name = f"{provider}_generated_images"
+                generated_image_key = f"{date_prefix}/{folder_name}/{original_image_id}"
                 print(f"Uploading generated image to {generated_image_key}...")
                 r2_client.put_object(
                     bucket_name,
@@ -129,17 +148,19 @@ def process_images(
                 )
 
                 # Create metadata for generated image
+                model_name = "gemini-2.5-flash-image" if provider == "google" else "dall-e-3"
                 generated_meta = {
                     "original_image_id": original_image_id,
                     "original_image_key": image_key,
                     "generation_prompt": prompt,
                     "revised_prompt": revised_prompt,
                     "generated_at": datetime.utcnow().isoformat(),
-                    "model": "dall-e-3",
+                    "provider": provider,
+                    "model": model_name,
                 }
 
                 # Upload generated image metadata
-                generated_meta_key = f"{date_prefix}/openai_generated_images/{original_image_id}_meta.json"
+                generated_meta_key = f"{date_prefix}/{folder_name}/{original_image_id}_meta.json"
                 print(f"Uploading generated image metadata to {generated_meta_key}...")
                 r2_client.put_json(bucket_name, generated_meta_key, generated_meta)
 
@@ -171,6 +192,9 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
       - DESCRIBE: Only add AI descriptions to metadata
       - GENERATE: Only generate new images using existing descriptions
       - DESCRIBE_AND_GENERATE: Do both operations
+    - provider: AI provider to use (default: google)
+      - "openai": Use OpenAI (GPT-4o-mini for vision, DALL-E 3 for generation)
+      - "google": Use Google AI (Gemini for vision, Imagen 3 for generation)
     - n: Optional limit on number of images to process (default: all images)
 
     Returns:
@@ -183,6 +207,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         bucket_name = event.get("bucketName", "fakeout-videos-dev")
         date_prefix = event.get("datePrefix", datetime.utcnow().strftime("%Y-%m-%d"))
         mode = event.get("mode", "DESCRIBE_AND_GENERATE").upper()
+        provider = event.get("provider", "google").lower()
         n = event.get("n")
 
         # Validate mode
@@ -190,15 +215,26 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         if mode not in valid_modes:
             raise ValueError(f"Invalid mode: {mode}. Must be one of {valid_modes}")
 
+        # Validate provider
+        valid_providers = ["openai", "google"]
+        if provider not in valid_providers:
+            raise ValueError(f"Invalid provider: {provider}. Must be one of {valid_providers}")
+
         print(f"Bucket: {bucket_name}")
         print(f"Date prefix: {date_prefix}")
         print(f"Mode: {mode}")
+        print(f"Provider: {provider}")
         if n is not None:
             print(f"Limit: {n} images")
 
-        # Initialize clients
+        # Initialize R2 client
         r2_client = R2Client()
-        vision_client = VisionClient()
+
+        # Initialize AI client based on provider
+        if provider == "google":
+            ai_client = GoogleAIClient()
+        else:  # openai
+            ai_client = VisionClient()
 
         # Process images
         results = process_images(
@@ -206,7 +242,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             date_prefix=date_prefix,
             mode=mode,
             r2_client=r2_client,
-            vision_client=vision_client,
+            ai_client=ai_client,
+            provider=provider,
             n=n,
         )
 
@@ -223,11 +260,12 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             "statusCode": 200,
             "body": json.dumps({
                 "success": True,
-                "message": f"Successfully processed images in {mode} mode",
+                "message": f"Successfully processed images in {mode} mode using {provider}",
                 "data": {
                     "bucket_name": bucket_name,
                     "date_prefix": date_prefix,
                     "mode": mode,
+                    "provider": provider,
                     "total": len(results),
                     "success": success_count,
                     "skipped": skipped_count,

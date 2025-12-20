@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a media pipeline system that scrapes images/videos from Pexels, stores them in Cloudflare R2, uses OpenAI Vision API to generate descriptions, and creates new images using DALL-E 3. The system includes a Vue.js frontend for viewing content and is provisioned using Terraform. All components run as AWS Lambda functions.
+This is a media pipeline system that scrapes images/videos from Pexels, stores them in Cloudflare R2, uses AI vision APIs (OpenAI or Google Gemini) to generate descriptions, and creates new images using DALL-E 3 or Google Imagen 3. The system includes a Vue.js frontend for viewing content and is provisioned using Terraform. All components run as AWS Lambda functions.
 
 ## Architecture
 
@@ -21,15 +21,19 @@ Node.js Lambda function that fetches media from Pexels API and uploads to Cloudf
 **Storage pattern**: `{YYYY-MM-DD}/pexel_{images|videos}_raw/{number}` with corresponding `{number}_meta.json` metadata files
 
 ### 2. Describe-and-Generate (`code/describe-and-generate/`)
-Python Lambda function that processes images with OpenAI Vision API and DALL-E 3
+Python Lambda function that processes images with AI vision and generation APIs (OpenAI or Google)
 - `main.py`: Lambda handler with three operational modes:
-  - `DESCRIBE`: Analyzes images with GPT-4o-mini, adds descriptions to metadata
-  - `GENERATE`: Creates new images with DALL-E 3 using existing descriptions
+  - `DESCRIBE`: Analyzes images with AI vision (GPT-4o-mini or Gemini), adds descriptions to metadata
+  - `GENERATE`: Creates new images using existing descriptions (DALL-E 3 or Imagen 3)
   - `DESCRIBE_AND_GENERATE` (default): Performs both operations
 - `clients/r2.py`: R2 client wrapper
 - `clients/openai_vision.py`: OpenAI Vision API and DALL-E 3 client
+- `clients/google_ai.py`: Google Gemini Vision and Imagen 3 client
+- Supports provider selection via `provider` parameter (default: "google")
+  - `"openai"`: Uses OpenAI GPT-4o-mini for vision, DALL-E 3 for generation
+  - `"google"`: Uses Gemini 2.0 Flash for vision, Imagen 3 for generation
 
-**Storage pattern**: Generated images saved to `{YYYY-MM-DD}/openai_generated_images/{original_image_id}` with corresponding metadata
+**Storage pattern**: Generated images saved to `{YYYY-MM-DD}/{provider}_generated_images/{original_image_id}` with corresponding metadata
 
 ### 3. Frontend (`code/frontend/`)
 Vue 3 + Vuetify application for displaying content
@@ -89,6 +93,7 @@ R2_ENDPOINT=https://<account_id>.r2.cloudflarestorage.com
 R2_ACCESS_KEY_ID=your-key-id
 R2_SECRET_ACCESS_KEY=your-secret-key
 OPENAI_API_KEY=your-openai-key
+GOOGLE_AI_API_KEY=your-google-ai-key
 ```
 
 **Note**: This project uses `uv` for Python dependency management, not pip or poetry.
@@ -126,8 +131,9 @@ Required `terraform.tfvars`:
 - `r2_access_key_id`: R2 access key
 - `r2_secret_access_key`: R2 secret key
 - `pexels_api_key`: Pexels API key
-- `openai_api_key`: OpenAI API key
-- `aws_region`: AWS region (optional, defaults to us-east-1)
+- `openai_api_key`: OpenAI API key (required if using OpenAI provider)
+- `google_ai_api_key`: Google AI API key (required if using Google provider)
+- `aws_region`: AWS region (optional, defaults to eu-central-1)
 
 See `terraform.tfvars.example` for complete template.
 
@@ -173,10 +179,18 @@ Fetch 5 popular videos:
 
 ### Describe-and-Generate Lambda
 
-Describe and generate for today's images:
+Describe and generate for today's images using Google AI (default):
 ```json
 {
   "mode": "DESCRIBE_AND_GENERATE"
+}
+```
+
+Use OpenAI instead of Google:
+```json
+{
+  "mode": "DESCRIBE_AND_GENERATE",
+  "provider": "openai"
 }
 ```
 
@@ -184,7 +198,8 @@ Only describe images from specific date:
 ```json
 {
   "mode": "DESCRIBE",
-  "datePrefix": "2025-12-07"
+  "datePrefix": "2025-12-07",
+  "provider": "google"
 }
 ```
 
@@ -193,7 +208,8 @@ Generate new images (requires existing descriptions):
 {
   "mode": "GENERATE",
   "datePrefix": "2025-12-07",
-  "n": 5
+  "n": 5,
+  "provider": "google"
 }
 ```
 
@@ -209,8 +225,10 @@ Generate new images (requires existing descriptions):
 
 - Project uses pnpm v10.10.0 for Node.js packages and uv for Python packages
 - Scraper defaults: portrait videos, 5-10 second duration, "cat" search query
-- Describe-and-generate uses gpt-4o-mini for vision analysis (cost efficient)
-- DALL-E 3 configured for standard quality (1024x1024)
+- Describe-and-generate supports two AI providers (default: Google):
+  - **Google** (default): Gemini 2.0 Flash for vision, Imagen 3 for generation
+  - **OpenAI**: GPT-4o-mini for vision, DALL-E 3 for generation
+- Image generation configured for standard quality (1024x1024 or 1:1 aspect ratio)
 - All sensitive credentials in `.env` and `terraform.tfvars` (both gitignored)
 - R2 bucket name: `fakeout-videos-dev` (development environment)
 - Frontend uses Vue 3 composition API with TypeScript and Vuetify 3 component framework
