@@ -62,20 +62,27 @@ export class R2Service {
    */
   buildImageKeys(
     datePrefix: string,
-    type: "pexels_raw" | "openai_generated"
+    type: "pexels_raw" | "openai_generated" | "google_generated"
   ): {
     imageKeyPattern: string;
     metaKeyPattern: string;
   } {
-    return type === "pexels_raw"
-      ? {
-          imageKeyPattern: `${datePrefix}/pexel_images_raw/{number}`,
-          metaKeyPattern: `${datePrefix}/pexel_images_raw/{number}_meta.json`,
-        }
-      : {
-          imageKeyPattern: `${datePrefix}/openai_generated_images/{id}`,
-          metaKeyPattern: `${datePrefix}/openai_generated_images/{id}_meta.json`,
-        };
+    if (type === "pexels_raw") {
+      return {
+        imageKeyPattern: `${datePrefix}/pexel_images_raw/{number}`,
+        metaKeyPattern: `${datePrefix}/pexel_images_raw/{number}_meta.json`,
+      };
+    } else if (type === "google_generated") {
+      return {
+        imageKeyPattern: `${datePrefix}/google_generated_images/{id}`,
+        metaKeyPattern: `${datePrefix}/google_generated_images/{id}_meta.json`,
+      };
+    } else {
+      return {
+        imageKeyPattern: `${datePrefix}/openai_generated_images/{id}`,
+        metaKeyPattern: `${datePrefix}/openai_generated_images/{id}_meta.json`,
+      };
+    }
   }
 
   /**
@@ -91,7 +98,7 @@ export class R2Service {
    */
   async getImagesForDate(
     datePrefix: string,
-    type: "pexels_raw" | "openai_generated",
+    type: "pexels_raw" | "openai_generated" | "google_generated",
     options: {
       start?: number;
       end?: number;
@@ -142,7 +149,7 @@ export class R2Service {
       // For now, we'll try to fetch metadata files if they exist
       // In practice, you'll want to load pexels images first to get the IDs
       console.warn(
-        "Loading openai_generated images requires knowing Pexels IDs. Load pexels_raw images first."
+        "Loading generated images requires knowing Pexels IDs. Load pexels_raw images first."
       );
     }
 
@@ -165,7 +172,7 @@ export class R2Service {
     const images: R2Image[] = [];
     const { imageKeyPattern, metaKeyPattern } = this.buildImageKeys(
       datePrefix,
-      "openai_generated"
+      "google_generated"
     );
 
     for (const id of pexelsIds) {
@@ -179,13 +186,13 @@ export class R2Service {
             key: imageKey,
             url: this.buildUrl(imageKey),
             metadata: metadata as R2GeneratedImageMetadata,
-            type: "openai_generated",
+            type: "google_generated",
           });
         } else {
           images.push({
             key: imageKey,
             url: this.buildUrl(imageKey),
-            type: "openai_generated",
+            type: "google_generated",
           });
         }
       } catch {

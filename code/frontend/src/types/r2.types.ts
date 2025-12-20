@@ -9,26 +9,26 @@
  * Based on code/scraper/index.js metadata structure
  */
 export interface PexelsImageMetadata {
-  id: string
-  width: number
-  height: number
-  url: string
-  photographer: string
-  photographer_url: string
-  photographer_id: number
-  avg_color: string
+  id: string;
+  width: number;
+  height: number;
+  url: string;
+  photographer: string;
+  photographer_url: string;
+  photographer_id: number;
+  avg_color: string;
   src: {
-    original: string
-    large2x: string
-    large: string
-    medium: string
-    small: string
-    portrait: string
-    landscape: string
-    tiny: string
-  }
-  liked: boolean
-  alt: string
+    original: string;
+    large2x: string;
+    large: string;
+    medium: string;
+    small: string;
+    portrait: string;
+    landscape: string;
+    tiny: string;
+  };
+  liked: boolean;
+  alt: string;
 }
 
 /**
@@ -36,8 +36,8 @@ export interface PexelsImageMetadata {
  * Includes ai_description and ai_description_timestamp added by the Lambda
  */
 export interface R2ImageMetadata extends PexelsImageMetadata {
-  ai_description?: string
-  ai_description_timestamp?: string
+  ai_description?: string;
+  ai_description_timestamp?: string;
 }
 
 /**
@@ -45,12 +45,12 @@ export interface R2ImageMetadata extends PexelsImageMetadata {
  * Based on code/describe-and-generate/main.py generated metadata structure
  */
 export interface R2GeneratedImageMetadata {
-  original_image_id: string
-  original_image_key: string
-  generation_prompt: string
-  revised_prompt: string
-  generated_at: string
-  model: string
+  original_image_id: string;
+  original_image_key: string;
+  generation_prompt: string;
+  revised_prompt: string;
+  generated_at: string;
+  model: string;
 }
 
 /**
@@ -58,29 +58,29 @@ export interface R2GeneratedImageMetadata {
  * Unified representation of both real and AI-generated images
  */
 export interface R2Image {
-  key: string
-  url: string
-  metadata?: R2ImageMetadata | R2GeneratedImageMetadata
-  type: 'pexels_raw' | 'openai_generated'
+  key: string;
+  url: string;
+  metadata?: R2ImageMetadata | R2GeneratedImageMetadata;
+  type: "pexels_raw" | "openai_generated" | "google_generated";
 }
 
 /**
  * R2 configuration for parameterized testing
  */
 export interface R2Config {
-  baseUrl: string
-  bucketName: string
-  cdnCacheTtl?: number
+  baseUrl: string;
+  bucketName: string;
+  cdnCacheTtl?: number;
 }
 
 /**
  * Options for querying images from R2
  */
 export interface R2ImageQueryOptions {
-  datePrefix: string
-  type?: 'pexels_raw' | 'openai_generated' | 'both'
-  limit?: number
-  includeMetadata?: boolean
+  datePrefix: string;
+  type?: "pexels_raw" | "openai_generated" | "google_generated" | "both";
+  limit?: number;
+  includeMetadata?: boolean;
 }
 
 /**
@@ -89,7 +89,7 @@ export interface R2ImageQueryOptions {
 export function isPexelsImageMetadata(
   metadata: R2ImageMetadata | R2GeneratedImageMetadata
 ): metadata is R2ImageMetadata {
-  return 'photographer' in metadata
+  return "photographer" in metadata;
 }
 
 /**
@@ -98,5 +98,5 @@ export function isPexelsImageMetadata(
 export function isGeneratedImageMetadata(
   metadata: R2ImageMetadata | R2GeneratedImageMetadata
 ): metadata is R2GeneratedImageMetadata {
-  return 'original_image_id' in metadata && 'generation_prompt' in metadata
+  return "original_image_id" in metadata && "generation_prompt" in metadata;
 }
