@@ -43,7 +43,7 @@ Focus on what makes the image unique and visually interesting."""
         self,
         image_data: bytes,
         max_tokens: int = 300,
-        model: str = "gemini-2.0-flash-exp",
+        model: str = "gemini-2.0-flash",
     ) -> str:
         """
         Generate a detailed description of an image using Gemini Vision API with inline data
@@ -116,6 +116,10 @@ Focus on what makes the image unique and visually interesting."""
                 config=config,
             )
 
+            # Debug: Check if response has parts
+            if not hasattr(response, 'parts') or response.parts is None:
+                raise Exception(f"Response has no parts. Response type: {type(response)}, Response: {response}")
+
             # Extract image from response parts
             for part in response.parts:
                 if part.inline_data is not None:
@@ -127,7 +131,7 @@ Focus on what makes the image unique and visually interesting."""
                     return prompt, image_data
 
             # If no image found in response
-            raise Exception("No image data found in response")
+            raise Exception("No image data found in response parts")
 
         except Exception as e:
             raise Exception(f"Failed to generate image with Google AI: {str(e)}")
