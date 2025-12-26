@@ -54,6 +54,22 @@ export class R2Service {
   }
 
   /**
+   * Fetch the games manifest file listing available dates.
+   * @returns List of available dates (YYYY-MM-DD)
+   */
+  async fetchManifest(): Promise<string[]> {
+    const url = this.buildUrl("games_manifest.json");
+    try {
+      const response = await fetch(url);
+      if (!response.ok) return [];
+      const data = await response.json();
+      return data.dates || [];
+    } catch {
+      return [];
+    }
+  }
+
+  /**
    * Construct R2 key patterns for a given date and type
    *
    * @param datePrefix - Date in YYYY-MM-DD format

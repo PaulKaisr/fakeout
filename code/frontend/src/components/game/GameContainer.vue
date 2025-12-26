@@ -4,7 +4,10 @@
     <header
       class="p-6 flex items-center justify-between border-b border-white/5 bg-[#0a0a0c]/80 backdrop-blur-md sticky top-0 z-50"
     >
-      <div class="flex items-center gap-3">
+      <div
+        class="flex items-center gap-3 cursor-pointer"
+        @click="router.push('/')"
+      >
         <div
           class="size-10 rounded-xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center shadow-lg shadow-primary/20"
         >
@@ -17,6 +20,16 @@
       </div>
 
       <div class="flex items-center gap-6">
+        <v-btn
+          variant="text"
+          color="gray"
+          prepend-icon="mdi-calendar-clock"
+          class="text-none hidden sm:flex"
+          @click="router.push('/archive')"
+        >
+          Past Games
+        </v-btn>
+
         <div
           class="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10"
         >
@@ -156,6 +169,10 @@ import ImageCard from "./ImageCard.vue";
 import ResultScreen from "./ResultScreen.vue";
 import { useRouter } from "vue-router";
 
+const props = defineProps<{
+  date?: string;
+}>();
+
 const router = useRouter();
 const rounds = ref<Round[]>([]);
 const selectedImageId = ref<string | null>(null);
@@ -180,9 +197,11 @@ const loadGame = async () => {
   isLoading.value = true;
   error.value = null;
   try {
-    const fetchedRounds = await getR2GameRounds();
+    const fetchedRounds = await getR2GameRounds(props.date);
     if (fetchedRounds.length === 0) {
-      error.value = "No game rounds found. Check back later!";
+      error.value = props.date
+        ? `No game rounds found for ${props.date}.`
+        : "No game rounds found. Check back later!";
       return;
     }
     rounds.value = fetchedRounds;
@@ -247,8 +266,6 @@ const handleRetry = () => {
   state.history = [];
   selectedImageId.value = null;
   state.status = GameStatus.PLAYING;
-  // Ideally, ensure we reshuffle or reload if needed.
-  // For now, replaying the same set is fine or we can re-fetch.
   // Let's re-fetch to be safe/fresh.
   loadGame();
 };

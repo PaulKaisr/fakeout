@@ -134,7 +134,8 @@ class R2Client:
         bucket_name: str,
         prefix: Optional[str] = None,
         max_keys: int = 1000,
-    ) -> list:
+        delimiter: Optional[str] = None,
+    ) -> Dict[str, Any]:
         """
         List objects in an R2 bucket
 
@@ -142,9 +143,10 @@ class R2Client:
             bucket_name: Name of the R2 bucket
             prefix: Filter objects by prefix
             max_keys: Maximum number of keys to return
+            delimiter: A delimiter is a character you use to group keys.
 
         Returns:
-            List of object metadata dictionaries
+            Dictionary containing 'Contents' (list of objects) and 'CommonPrefixes' (list of folders)
         """
         try:
             kwargs = {
@@ -153,8 +155,13 @@ class R2Client:
             }
             if prefix:
                 kwargs["Prefix"] = prefix
+            if delimiter:
+                kwargs["Delimiter"] = delimiter
 
             response = self.s3_client.list_objects_v2(**kwargs)
-            return response.get("Contents", [])
+            return {
+                "Contents": response.get("Contents", []),
+                "CommonPrefixes": response.get("CommonPrefixes", []),
+            }
         except Exception as e:
             raise Exception(f"Failed to list objects in bucket {bucket_name}: {str(e)}")

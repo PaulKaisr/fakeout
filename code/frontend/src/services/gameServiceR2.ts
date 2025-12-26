@@ -5,31 +5,43 @@ import type { R2Image, R2ImageMetadata } from "@/types/r2.types";
 
 const r2Service = createR2Service(r2Config);
 
-export const getR2GameRounds = async (): Promise<Round[]> => {
-  // 1. Get today's date
-  // 1. Find the latest date with data (lookback 7 days)
-  let targetDate = new Date();
-  const MAX_LOOKBACK = 7;
+export const getR2GameRounds = async (date?: string): Promise<Round[]> => {
+  // 1. Determine which date to use
   let validDate = "";
 
-  for (let i = 0; i <= MAX_LOOKBACK; i++) {
-    const dateStr = targetDate.toISOString().split("T")[0] || "";
-    // Check if data exists for this date
-    const exists = await r2Service.checkDataExistsForDate(dateStr);
-
+  if (date) {
+    // If specific date requested, verify it exists (optional, or just try to load)
+    const exists = await r2Service.checkDataExistsForDate(date);
     if (exists) {
-      validDate = dateStr;
-      console.debug(`Found game data for date: ${validDate}`);
-      break;
+      validDate = date;
+    } else {
+      console.warn(`No game data found for requested date: ${date}`);
+      return [];
+    }
+  } else {
+    // Find the latest date with data (lookback 7 days)
+    let targetDate = new Date();
+    const MAX_LOOKBACK = 7;
+
+    for (let i = 0; i <= MAX_LOOKBACK; i++) {
+      const dateStr = targetDate.toISOString().split("T")[0] || "";
+      // Check if data exists for this date
+      const exists = await r2Service.checkDataExistsForDate(dateStr);
+
+      if (exists) {
+        validDate = dateStr;
+        console.debug(`Found latest game data for date: ${validDate}`);
+        break;
+      }
+
+      // Go back one day
+      targetDate.setDate(targetDate.getDate() - 1);
     }
 
-    // Go back one day
-    targetDate.setDate(targetDate.getDate() - 1);
-  }
-
-  if (!validDate) {
-    console.warn(`No game data found within the last ${MAX_LOOKBACK} days.`);
-    return [];
+    if (!validDate) {
+      console.warn(`No game data found within the last ${MAX_LOOKBACK} days.`);
+      return [];
+    }
   }
 
   // 2. Fetch real images (Pexels) - fetch a batch
