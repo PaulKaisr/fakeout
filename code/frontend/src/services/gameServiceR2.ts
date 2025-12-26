@@ -7,12 +7,35 @@ const r2Service = createR2Service(r2Config);
 
 export const getR2GameRounds = async (): Promise<Round[]> => {
   // 1. Get today's date
-  const today = new Date().toISOString().split("T")[0] || "";
+  // 1. Find the latest date with data (lookback 7 days)
+  let targetDate = new Date();
+  const MAX_LOOKBACK = 7;
+  let validDate = "";
+
+  for (let i = 0; i <= MAX_LOOKBACK; i++) {
+    const dateStr = targetDate.toISOString().split("T")[0] || "";
+    // Check if data exists for this date
+    const exists = await r2Service.checkDataExistsForDate(dateStr);
+
+    if (exists) {
+      validDate = dateStr;
+      console.debug(`Found game data for date: ${validDate}`);
+      break;
+    }
+
+    // Go back one day
+    targetDate.setDate(targetDate.getDate() - 1);
+  }
+
+  if (!validDate) {
+    console.warn(`No game data found within the last ${MAX_LOOKBACK} days.`);
+    return [];
+  }
 
   // 2. Fetch real images (Pexels) - fetch a batch
   // Iterate until we find images. We'll try to fetch 20.
   const realImages: R2Image[] = await r2Service.getImagesForDate(
-    today,
+    validDate,
     "pexels_raw",
     {
       end: 20,
@@ -21,7 +44,7 @@ export const getR2GameRounds = async (): Promise<Round[]> => {
   );
 
   if (realImages.length === 0) {
-    console.warn(`No images found for date ${today}`);
+    console.warn(`No images found for date ${validDate}`);
     return [];
   }
 
@@ -36,7 +59,7 @@ export const getR2GameRounds = async (): Promise<Round[]> => {
   // 4. Fetch generated images for these IDs
   // We used 'google_generated' mode as requested
   const generatedImages = await r2Service.getGeneratedImagesForIds(
-    today,
+    validDate,
     pexelsIds,
     true
   );

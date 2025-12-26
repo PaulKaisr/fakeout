@@ -238,6 +238,23 @@ export class R2Service {
     img.src = this.buildUrl(key);
     // Image loads in background, no need to handle completion
   }
+  /**
+   * Check if data exists for a given date by probing the first image's metadata
+   *
+   * @param datePrefix - Date in YYYY-MM-DD format
+   * @returns True if data exists, false otherwise
+   */
+  async checkDataExistsForDate(datePrefix: string): Promise<boolean> {
+    const { metaKeyPattern } = this.buildImageKeys(datePrefix, "pexels_raw");
+    // Probe the first likely image "001"
+    const probeKey = metaKeyPattern.replace("{number}", "001");
+    try {
+      await this.fetchMetadata(probeKey);
+      return true;
+    } catch {
+      return false;
+    }
+  }
 }
 
 /**
