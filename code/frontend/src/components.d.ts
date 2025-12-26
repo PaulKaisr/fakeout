@@ -14,6 +14,7 @@ declare module 'vue' {
     GameContainer: typeof import('./components/game/GameContainer.vue')['default']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     ImageCard: typeof import('./components/game/ImageCard.vue')['default']
+    ResultScreen: typeof import('./components/game/ResultScreen.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

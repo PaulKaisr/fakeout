@@ -90,6 +90,15 @@
         <v-btn color="primary" class="mt-4" @click="router.go(0)">Retry</v-btn>
       </div>
 
+      <!-- Result Screen -->
+      <ResultScreen
+        v-else-if="state.status === GameStatus.GAME_OVER"
+        :score="state.score"
+        :total-rounds="state.totalRounds"
+        @retry="handleRetry"
+        @home="handleHome"
+      />
+
       <!-- Game Grid -->
       <div
         v-else-if="currentRound"
@@ -144,6 +153,7 @@ import {
 } from "@/types/game";
 import { getR2GameRounds } from "@/services/gameServiceR2";
 import ImageCard from "./ImageCard.vue";
+import ResultScreen from "./ResultScreen.vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -163,10 +173,16 @@ const state = reactive<GameState>({
 const currentRound = computed(() => rounds.value[state.currentRoundIndex]);
 
 onMounted(async () => {
+  await loadGame();
+});
+
+const loadGame = async () => {
+  isLoading.value = true;
+  error.value = null;
   try {
     const fetchedRounds = await getR2GameRounds();
     if (fetchedRounds.length === 0) {
-      error.value = "No game rounds found for today. Check back later!";
+      error.value = "No game rounds found. Check back later!";
       return;
     }
     rounds.value = fetchedRounds;
@@ -178,7 +194,7 @@ onMounted(async () => {
   } finally {
     isLoading.value = false;
   }
-});
+};
 
 const handleSelection = (imageId: string) => {
   if (state.status !== GameStatus.PLAYING) return;
@@ -221,9 +237,24 @@ const nextRound = () => {
     state.status = GameStatus.PLAYING;
   } else {
     state.status = GameStatus.GAME_OVER;
-    alert(`Game Over! Final Score: ${state.score}/${state.totalRounds}`);
-    router.push("/");
   }
+};
+
+const handleRetry = () => {
+  // Reset state
+  state.currentRoundIndex = 0;
+  state.score = 0;
+  state.history = [];
+  selectedImageId.value = null;
+  state.status = GameStatus.PLAYING;
+  // Ideally, ensure we reshuffle or reload if needed.
+  // For now, replaying the same set is fine or we can re-fetch.
+  // Let's re-fetch to be safe/fresh.
+  loadGame();
+};
+
+const handleHome = () => {
+  router.push("/");
 };
 </script>
 
