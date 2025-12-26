@@ -12,6 +12,62 @@ from clients.openai_vision import VisionClient
 from clients.google_ai import GoogleAIClient
 
 
+MANIFEST_KEY = "games_manifest.json"
+
+
+def backfill_manifest(bucket_name: str, r2_client: R2Client) -> List[str]:
+    """
+    Backfill manifest file by listing all date folders in the bucket.
+    """
+    print("Starting manifest backfill...")
+    # List top-level folders
+    response = r2_client.list_objects(bucket_name, delimiter="/", max_keys=1000)
+    common_prefixes = response.get("CommonPrefixes", [])
+    
+    dates = []
+    for prefix_obj in common_prefixes:
+        # Prefix is like "2025-12-25/"
+        folder_name = prefix_obj.get("Prefix", "").strip("/")
+        
+        # Simple validation: checks if it looks like a date YYYY-MM-DD
+        try:
+            datetime.strptime(folder_name, "%Y-%m-%d")
+            # Optional: Check if it actually has content (e.g. pexel_images_raw)
+            # For speed, we might skip this or do a lightweight check
+            dates.append(folder_name)
+        except ValueError:
+            continue
+
+    # Sort descending (newest first)
+    dates.sort(reverse=True)
+    
+    manifest = {"dates": dates, "updated_at": datetime.utcnow().isoformat()}
+    r2_client.put_json(bucket_name, MANIFEST_KEY, manifest)
+    print(f"Manifest updated with {len(dates)} dates: {dates}")
+    return dates
+
+
+def update_manifest(bucket_name: str, date_prefix: str, r2_client: R2Client):
+    """
+    Update manifest with a new date.
+    """
+    try:
+        manifest = r2_client.get_json(bucket_name, MANIFEST_KEY)
+        dates = manifest.get("dates", [])
+    except Exception:
+        print("Manifest not found, starting fresh.")
+        dates = []
+
+    if date_prefix not in dates:
+        dates.append(date_prefix)
+        dates.sort(reverse=True)
+        manifest = {"dates": dates, "updated_at": datetime.utcnow().isoformat()}
+        r2_client.put_json(bucket_name, MANIFEST_KEY, manifest)
+        print(f"Added {date_prefix} to manifest.")
+    else:
+        print(f"Date {date_prefix} already in manifest.")
+
+
 class AIProvider(Protocol):
     """Protocol for AI provider clients"""
 
@@ -54,7 +110,8 @@ def process_images(
     prefix = f"{date_prefix}/pexel_images_raw/"
     print(f"Listing metadata files with prefix: {prefix}")
 
-    objects = r2_client.list_objects(bucket_name, prefix=prefix)
+    response = r2_client.list_objects(bucket_name, prefix=prefix)
+    objects = response.get("Contents", [])
     meta_files = [obj["Key"] for obj in objects if obj["Key"].endswith("_meta.json")]
 
     # Limit to first n files if specified
@@ -209,6 +266,23 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         mode = event.get("mode", "DESCRIBE_AND_GENERATE").upper()
         provider = event.get("provider", "google").lower()
         n = event.get("n")
+        backfill = event.get("backfill", True)  # Default to True as requested
+
+        # Validate mode - extended to allow just BACKFILL if needed, or stick to existing modes
+        # For now, backfill is an additional step
+        
+        # ... logic ...
+
+        # Initialize R2 client
+        r2_client = R2Client()
+
+        # Handle Manifest (Backfill or Update)
+        if backfill:
+            print("Backfill requested (default=True). Updating manifest from all existing folders...")
+            backfill_manifest(bucket_name, r2_client)
+        else:
+            print(f"Updating manifest with current date: {date_prefix}")
+            update_manifest(bucket_name, date_prefix, r2_client)
 
         # Validate mode
         valid_modes = ["DESCRIBE", "GENERATE", "DESCRIBE_AND_GENERATE"]
@@ -227,8 +301,8 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         if n is not None:
             print(f"Limit: {n} images")
 
-        # Initialize R2 client
-        r2_client = R2Client()
+        # Initialize R2 client (already initialized above)
+        # r2_client = R2Client()
 
         # Initialize AI client based on provider
         if provider == "google":
