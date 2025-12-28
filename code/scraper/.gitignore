@@ -1,0 +1,17 @@
+# Environment
+.env
+
+# Lambda package
+lambda.zip
+package/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
