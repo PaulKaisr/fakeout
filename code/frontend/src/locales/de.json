@@ -1,0 +1,57 @@
+{
+  "common": {
+    "language": "Sprache",
+    "play": "Spielen",
+    "loading": "Laden...",
+    "retry": "Wiederholen",
+    "backToHome": "Zurück zur Startseite",
+    "error": "Fehler"
+  },
+  "header": {
+    "title": "KI oder Echt?",
+    "subtitle": "Teste deine Erkennungsfähigkeiten",
+    "pastGames": "Vergangene Spiele",
+    "roundLabel": "Runde",
+    "scoreLabel": "Punkte"
+  },
+  "game": {
+    "question": "Welches Bild ist KI-generiert?",
+    "instructions": "Klicke auf das Bild, von dem du denkst, dass es von künstlicher Intelligenz erstellt wurde",
+    "loadingData": "Spieldaten werden geladen...",
+    "nextRound": "Nächste Runde",
+    "aiGenerated": "KI-generiert",
+    "realPhoto": "Echtes Foto",
+    "correct": "Richtig!",
+    "wrong": "Falsch!"
+  },
+  "results": {
+    "title": "Level abgeschlossen!",
+    "finalScore": "Endergebnis",
+    "shareResult": "Ergebnis teilen",
+    "copiedToClipboard": "In die Zwischenablage kopiert!",
+    "playAgain": "Nochmal spielen",
+    "shareText": "Ich habe {score}/{total} Punkte bei FakeOut erreicht! Kannst du mich schlagen? #FakeOut #KI",
+    "feedback": {
+      "perfect": "Perfekt! Du bist ein KI-Detektor!",
+      "great": "Großartig! Scharfe Augen!",
+      "good": "Nicht schlecht, weiter üben!",
+      "poor": "Die KI hat dich diesmal ausgetrickst!"
+    }
+  },
+  "archive": {
+    "title": "Vergangene Spiele",
+    "subtitle": "Spiele vergangener Tage spielen",
+    "noGames": "Keine vergangenen Spiele im Archiv gefunden."
+  },
+  "languages": {
+    "en": "English",
+    "de": "Deutsch"
+  },
+  "errors": {
+    "noRoundsForDate": "Keine Spielrunden für {date} gefunden.",
+    "noRoundsGeneral": "Keine Spielrunden gefunden. Schaue später noch einmal vorbei!",
+    "failedToLoad": "Fehler beim Laden der Spieldaten.",
+    "failedToLoadImage": "Fehler beim Laden des Bildes",
+    "unknownError": "Unbekannter Fehler beim Laden der Bilder"
+  }
+}

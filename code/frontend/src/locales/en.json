@@ -1,0 +1,57 @@
+{
+  "common": {
+    "language": "Language",
+    "play": "Play",
+    "loading": "Loading...",
+    "retry": "Retry",
+    "backToHome": "Back to Home",
+    "error": "Error"
+  },
+  "header": {
+    "title": "AI or Real?",
+    "subtitle": "Test your detection skills",
+    "pastGames": "Past Games",
+    "roundLabel": "Round",
+    "scoreLabel": "Score"
+  },
+  "game": {
+    "question": "Which image is AI-generated?",
+    "instructions": "Click on the image you think was created by Artificial Intelligence",
+    "loadingData": "Loading game data...",
+    "nextRound": "Next Round",
+    "aiGenerated": "AI Generated",
+    "realPhoto": "Real Photo",
+    "correct": "Correct!",
+    "wrong": "Wrong!"
+  },
+  "results": {
+    "title": "Level Complete!",
+    "finalScore": "Final Score",
+    "shareResult": "Share Result",
+    "copiedToClipboard": "Copied to Clipboard!",
+    "playAgain": "Play Again",
+    "shareText": "I scored {score}/{total} on FakeOut! Can you beat me? #FakeOut #AI",
+    "feedback": {
+      "perfect": "Perfect! You are an AI detector!",
+      "great": "Great job! Sharp eyes!",
+      "good": "Not bad, keep practicing!",
+      "poor": "AI fooled you this time!"
+    }
+  },
+  "archive": {
+    "title": "Past Games",
+    "subtitle": "Play games from previous days",
+    "noGames": "No past games found in the archive."
+  },
+  "languages": {
+    "en": "English",
+    "de": "Deutsch"
+  },
+  "errors": {
+    "noRoundsForDate": "No game rounds found for {date}.",
+    "noRoundsGeneral": "No game rounds found. Check back later!",
+    "failedToLoad": "Failed to load game data.",
+    "failedToLoadImage": "Failed to load image",
+    "unknownError": "Unknown error loading images"
+  }
+}

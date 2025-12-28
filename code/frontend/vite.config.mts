@@ -5,10 +5,14 @@ import Vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 import Fonts from "unplugin-fonts/vite";
 import VueRouter from "unplugin-vue-router/vite";
 import tailwindcss from "@tailwindcss/vite";
+import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 
 // Utilities
 import { defineConfig } from "vite";
 import { fileURLToPath, URL } from "node:url";
+import path from "node:path";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -41,6 +45,9 @@ export default defineConfig({
       },
     }),
     tailwindcss(),
+    VueI18nPlugin({
+      runtimeOnly: false,
+    }),
   ],
   optimizeDeps: {
     exclude: [

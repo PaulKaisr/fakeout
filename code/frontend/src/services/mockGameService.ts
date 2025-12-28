@@ -40,10 +40,12 @@ export const getGameRounds = (count: number = 10): Round[] => {
   const rounds: Round[] = [];
   for (let i = 0; i < count; i++) {
     const template = MOCK_ROUNDS[i % MOCK_ROUNDS.length];
+    if (!template) continue;
     rounds.push({
-      ...template,
       id: i + 1, // distinct IDs for iteration
-    });
+      imageA: template.imageA,
+      imageB: template.imageB,
+    } as Round);
   }
   return rounds;
 };
