@@ -45,7 +45,8 @@
   },
   "languages": {
     "en": "English",
-    "de": "Deutsch"
+    "de": "Deutsch",
+    "bg": "Български"
   },
   "errors": {
     "noRoundsForDate": "Keine Spielrunden für {date} gefunden.",

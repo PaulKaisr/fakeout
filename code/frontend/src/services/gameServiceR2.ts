@@ -44,13 +44,12 @@ export const getR2GameRounds = async (date?: string): Promise<Round[]> => {
     }
   }
 
-  // 2. Fetch real images (Pexels) - fetch a batch
-  // Iterate until we find images. We'll try to fetch 20.
+  // 2. Fetch real images (Pexels) - fetch up to 5 images
   const realImages: R2Image[] = await r2Service.getImagesForDate(
     validDate,
     "pexels_raw",
     {
-      end: 20,
+      end: 5,
       includeMetadata: true,
     }
   );
