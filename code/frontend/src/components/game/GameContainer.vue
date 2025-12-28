@@ -14,12 +14,13 @@
           <v-icon icon="mdi-sparkles" color="white" size="24"></v-icon>
         </div>
         <div>
-          <h1 class="text-lg font-bold leading-none">AI or Real?</h1>
-          <p class="text-xs text-gray-400 mt-1">Test your detection skills</p>
+          <h1 class="text-lg font-bold leading-none">{{ t('header.title') }}</h1>
+          <p class="text-xs text-gray-400 mt-1">{{ t('header.subtitle') }}</p>
         </div>
       </div>
 
       <div class="flex items-center gap-6">
+        <LanguageSwitcher />
         <v-btn
           variant="text"
           color="gray"
@@ -27,7 +28,7 @@
           class="text-none hidden sm:flex"
           @click="router.push('/archive')"
         >
-          Past Games
+          {{ t('header.pastGames') }}
         </v-btn>
 
         <div
@@ -37,7 +38,7 @@
           <div class="flex flex-col items-end">
             <span
               class="text-[10px] text-gray-400 uppercase font-bold tracking-wider"
-              >Round</span
+              >{{ t('header.roundLabel') }}</span
             >
             <span class="text-sm font-bold"
               >{{ state.currentRoundIndex + 1 }}/{{ state.totalRounds }}</span
@@ -56,7 +57,7 @@
           <div class="flex flex-col items-end">
             <span
               class="text-[10px] text-gray-400 uppercase font-bold tracking-wider"
-              >Score</span
+              >{{ t('header.scoreLabel') }}</span
             >
             <span class="text-sm font-bold">{{ state.score }}</span>
           </div>
@@ -73,10 +74,10 @@
         <h2
           class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
         >
-          Which image is AI-generated?
+          {{ t('game.question') }}
         </h2>
         <p class="text-gray-400 text-lg">
-          Click on the image you think was created by Artificial Intelligence
+          {{ t('game.instructions') }}
         </p>
       </div>
 
@@ -90,7 +91,7 @@
           color="primary"
           size="64"
         ></v-progress-circular>
-        <p class="mt-4 text-gray-400">Loading game data...</p>
+        <p class="mt-4 text-gray-400">{{ t('game.loadingData') }}</p>
       </div>
 
       <!-- Error State -->
@@ -100,7 +101,7 @@
       >
         <v-icon icon="mdi-alert-circle" color="error" size="64"></v-icon>
         <p class="mt-4 text-error text-lg">{{ error }}</p>
-        <v-btn color="primary" class="mt-4" @click="router.go(0)">Retry</v-btn>
+        <v-btn color="primary" class="mt-4" @click="router.go(0)">{{ t('common.retry') }}</v-btn>
       </div>
 
       <!-- Result Screen -->
@@ -146,7 +147,7 @@
           class="w-48 text-none font-bold"
           @click="nextRound"
         >
-          Next Round
+          {{ t('game.nextRound') }}
           <template #append>
             <v-icon icon="mdi-arrow-right"></v-icon>
           </template>
@@ -165,9 +166,13 @@ import {
   type Image,
 } from "@/types/game";
 import { getR2GameRounds } from "@/services/gameServiceR2";
+import LanguageSwitcher from "@/components/LanguageSwitcher.vue";
 import ImageCard from "./ImageCard.vue";
 import ResultScreen from "./ResultScreen.vue";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n({ useScope: 'global' });
 
 const props = defineProps<{
   date?: string;
@@ -200,8 +205,8 @@ const loadGame = async () => {
     const fetchedRounds = await getR2GameRounds(props.date);
     if (fetchedRounds.length === 0) {
       error.value = props.date
-        ? `No game rounds found for ${props.date}.`
-        : "No game rounds found. Check back later!";
+        ? t('errors.noRoundsForDate', { date: props.date })
+        : t('errors.noRoundsGeneral');
       return;
     }
     rounds.value = fetchedRounds;
@@ -209,14 +214,14 @@ const loadGame = async () => {
     state.status = GameStatus.PLAYING;
   } catch (e) {
     console.error(e);
-    error.value = "Failed to load game data.";
+    error.value = t('errors.failedToLoad');
   } finally {
     isLoading.value = false;
   }
 };
 
 const handleSelection = (imageId: string) => {
-  if (state.status !== GameStatus.PLAYING) return;
+  if (state.status !== GameStatus.PLAYING || !currentRound.value) return;
 
   selectedImageId.value = imageId;
   state.status = GameStatus.ROUND_RESULT;
@@ -243,6 +248,7 @@ const isSelectionCorrect = (image: Image) => {
 };
 
 const isSelectionCorrectId = (imageId: string) => {
+  if (!currentRound.value) return false;
   const selected = [currentRound.value.imageA, currentRound.value.imageB].find(
     (img) => img.id === imageId
   );

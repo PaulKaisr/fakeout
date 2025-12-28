@@ -12,7 +12,7 @@
       <h2
         class="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-200 to-amber-500"
       >
-        Level Complete!
+        {{ t('results.title') }}
       </h2>
     </div>
 
@@ -20,7 +20,7 @@
       class="bg-white/5 rounded-2xl p-8 mb-8 border border-white/10 w-full max-w-sm"
     >
       <p class="text-gray-400 text-sm uppercase tracking-wider font-bold mb-2">
-        Final Score
+        {{ t('results.finalScore') }}
       </p>
       <div class="text-6xl font-black text-white mb-2">
         {{ score
@@ -43,7 +43,7 @@
         class="text-none font-bold"
         @click="shareResult"
       >
-        {{ copied ? "Copied to Clipboard!" : "Share Result" }}
+        {{ copied ? t('results.copiedToClipboard') : t('results.shareResult') }}
       </v-btn>
 
       <v-btn
@@ -55,7 +55,7 @@
         class="text-none font-bold"
         @click="$emit('retry')"
       >
-        Play Again
+        {{ t('results.playAgain') }}
       </v-btn>
 
       <v-btn
@@ -65,7 +65,7 @@
         class="text-none"
         @click="$emit('home')"
       >
-        Back to Home
+        {{ t('common.backToHome') }}
       </v-btn>
     </div>
   </div>
@@ -73,6 +73,9 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const props = defineProps<{
   score: number;
@@ -89,16 +92,22 @@ const copied = ref(false);
 const percentage = computed(() => (props.score / props.totalRounds) * 100);
 
 const feedbackMessage = computed(() => {
-  if (percentage.value === 100) return "Perfect! You are an AI detector!";
-  if (percentage.value >= 80) return "Great job! Sharp eyes!";
-  if (percentage.value >= 50) return "Not bad, keep practicing!";
-  return "AI fooled you this time!";
+  if (percentage.value === 100) return t('results.feedback.perfect');
+  if (percentage.value >= 80) return t('results.feedback.great');
+  if (percentage.value >= 50) return t('results.feedback.good');
+  return t('results.feedback.poor');
 });
 
+const shareText = computed(() =>
+  t('results.shareText', {
+    score: props.score,
+    total: props.totalRounds
+  })
+);
+
 const shareResult = async () => {
-  const text = `I scored ${props.score}/${props.totalRounds} on FakeOut! Can you beat me? #FakeOut #AI`;
   try {
-    await navigator.clipboard.writeText(text);
+    await navigator.clipboard.writeText(shareText.value);
     copied.value = true;
     setTimeout(() => (copied.value = false), 2000);
   } catch (err) {

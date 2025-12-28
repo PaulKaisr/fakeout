@@ -14,9 +14,9 @@
           <h1
             class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-500"
           >
-            Past Games
+            {{ t('archive.title') }}
           </h1>
-          <p class="text-sm text-gray-400">Play games from previous days</p>
+          <p class="text-sm text-gray-400">{{ t('archive.subtitle') }}</p>
         </div>
       </div>
     </header>
@@ -34,7 +34,7 @@
         class="text-center py-12 text-gray-400"
       >
         <v-icon icon="mdi-calendar-blank" size="48" class="mb-4"></v-icon>
-        <p>No past games found in the archive.</p>
+        <p>{{ t('archive.noGames') }}</p>
       </div>
 
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -76,7 +76,9 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { createR2Service } from "@/services/r2.service";
 import { r2Config } from "@/config/r2.config";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const router = useRouter();
 const r2Service = createR2Service(r2Config);
 const dates = ref<string[]>([]);

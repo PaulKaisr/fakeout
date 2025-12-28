@@ -53,14 +53,14 @@
         :color="image.isAiGenerated ? 'purple-accent-2' : 'cyan-accent-2'"
       ></v-icon>
       <span class="text-h5 font-bold text-white mb-1">
-        {{ image.isAiGenerated ? "AI Generated" : "Real Photo" }}
+        {{ image.isAiGenerated ? t('game.aiGenerated') : t('game.realPhoto') }}
       </span>
       <span
         v-if="isSelected"
         class="text-subtitle-1 font-weight-bold"
         :class="isCorrect ? 'text-success' : 'text-error'"
       >
-        {{ isCorrect ? "Correct!" : "Wrong!" }}
+        {{ isCorrect ? t('game.correct') : t('game.wrong') }}
       </span>
     </div>
   </div>
@@ -68,6 +68,9 @@
 
 <script setup lang="ts">
 import type { Image } from "@/types/game";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 defineProps<{
   image: Image;

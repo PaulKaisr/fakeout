@@ -13,8 +13,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     GameArchive: typeof import('./components/game/GameArchive.vue')['default']
     GameContainer: typeof import('./components/game/GameContainer.vue')['default']
-    HelloWorld: typeof import('./components/HelloWorld.vue')['default']
     ImageCard: typeof import('./components/game/ImageCard.vue')['default']
+    LanguageSwitcher: typeof import('./components/LanguageSwitcher.vue')['default']
     ResultScreen: typeof import('./components/game/ResultScreen.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
