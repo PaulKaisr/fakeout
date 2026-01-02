@@ -48,6 +48,29 @@
     "de": "Deutsch",
     "bg": "Български"
   },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "q1": {
+      "question": "How do you spot AI-generated images?",
+      "answer": "Look for unnatural textures, inconsistent lighting, strange reflections, distorted hands or faces, impossible geometry, and artifacts in fine details like hair or text. AI-generated images often have subtle imperfections that trained eyes can detect."
+    },
+    "q2": {
+      "question": "What is Fakeout game?",
+      "answer": "Fakeout is a free daily challenge game that tests your ability to distinguish between real photographs and AI-generated images. Each day features new image pairs to sharpen your AI detection skills."
+    },
+    "q3": {
+      "question": "How does the AI image detector game work?",
+      "answer": "You're presented with two images - one real photograph and one AI-generated image. Your goal is to identify which one was created by artificial intelligence. After making your selection, you'll receive immediate feedback and learn what to look for."
+    },
+    "q4": {
+      "question": "Can AI-generated images be detected?",
+      "answer": "Yes! While AI image generation is becoming increasingly sophisticated, there are still telltale signs that can help identify AI-generated content. With practice and knowledge of what to look for, you can improve your detection accuracy."
+    },
+    "q5": {
+      "question": "Is Fakeout free to play?",
+      "answer": "Yes, Fakeout is completely free to play. You can test your AI detection skills daily without any cost or registration required."
+    }
+  },
   "errors": {
     "noRoundsForDate": "No game rounds found for {date}.",
     "noRoundsGeneral": "No game rounds found. Check back later!",
