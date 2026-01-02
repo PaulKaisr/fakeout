@@ -22,7 +22,7 @@ router.beforeEach((to, from, next) => {
   if (locale) {
     if (supportedLocales.includes(locale)) {
       if (i18n.global.locale.value !== locale) {
-        i18n.global.locale.value = locale;
+        i18n.global.locale.value = locale as any;
         localStorage.setItem("user-locale", locale);
       }
       return next();

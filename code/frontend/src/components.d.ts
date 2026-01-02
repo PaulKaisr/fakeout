@@ -11,7 +11,6 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    GameArchive: typeof import('./components/game/GameArchive.vue')['default']
     GameContainer: typeof import('./components/game/GameContainer.vue')['default']
     GameFAQ: typeof import('./components/game/GameFAQ.vue')['default']
     ImageCard: typeof import('./components/game/ImageCard.vue')['default']
