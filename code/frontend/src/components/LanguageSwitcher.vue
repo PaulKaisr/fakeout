@@ -30,8 +30,11 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { computed } from "vue";
+import { useRouter, useRoute } from "vue-router";
 
 const { locale: currentLocaleRef, availableLocales, t } = useI18n();
+const router = useRouter();
+const route = useRoute();
 
 const currentLocale = computed(() => currentLocaleRef.value);
 
@@ -42,7 +45,19 @@ const localeFlags: Record<string, string> = {
 };
 
 function changeLocale(newLocale: string) {
-  currentLocaleRef.value = newLocale;
-  localStorage.setItem("user-locale", newLocale);
+  // Locale will be updated by the router guard
+  // localStorage.setItem("user-locale", newLocale); // Router guard does this too
+
+  if ((route.params as any).lang) {
+    // If we are on a localized route, switch the lang param
+    router.push({
+      name: route.name as any,
+      params: { ...route.params, lang: newLocale },
+      query: route.query,
+    });
+  } else {
+    // Fallback: just go to the new locale root
+    router.push(`/${newLocale}`);
+  }
 }
 </script>

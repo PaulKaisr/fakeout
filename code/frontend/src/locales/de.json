@@ -48,6 +48,29 @@
     "de": "Deutsch",
     "bg": "Български"
   },
+  "faq": {
+    "title": "Häufig gestellte Fragen",
+    "q1": {
+      "question": "Wie erkennt man KI-generierte Bilder?",
+      "answer": "Achte auf unnatürliche Texturen, inkonsistente Beleuchtung, seltsame Reflexionen, verzerrte Hände oder Gesichter, unmögliche Geometrie und Artefakte in feinen Details wie Haaren oder Text. KI-generierte Bilder haben oft subtile Unvollkommenheiten, die geschulte Augen erkennen können."
+    },
+    "q2": {
+      "question": "Was ist das Fakeout-Spiel?",
+      "answer": "Fakeout ist ein kostenloses tägliches Herausforderungsspiel, das deine Fähigkeit testet, zwischen echten Fotografien und KI-generierten Bildern zu unterscheiden. Jeden Tag gibt es neue Bildpaare, um deine KI-Erkennungsfähigkeiten zu schärfen."
+    },
+    "q3": {
+      "question": "Wie funktioniert das KI-Bilderkennungsspiel?",
+      "answer": "Dir werden zwei Bilder präsentiert - ein echtes Foto und ein KI-generiertes Bild. Dein Ziel ist es, zu identifizieren, welches von künstlicher Intelligenz erstellt wurde. Nach deiner Auswahl erhältst du sofortiges Feedback und lernst, worauf du achten solltest."
+    },
+    "q4": {
+      "question": "Können KI-generierte Bilder erkannt werden?",
+      "answer": "Ja! Obwohl die KI-Bildgenerierung immer ausgefeilter wird, gibt es immer noch verräterische Anzeichen, die helfen können, KI-generierte Inhalte zu identifizieren. Mit Übung und Wissen darüber, worauf man achten muss, kannst du deine Erkennungsgenauigkeit verbessern."
+    },
+    "q5": {
+      "question": "Ist Fakeout kostenlos spielbar?",
+      "answer": "Ja, Fakeout ist völlig kostenlos spielbar. Du kannst deine KI-Erkennungsfähigkeiten täglich ohne Kosten oder Registrierung testen."
+    }
+  },
   "errors": {
     "noRoundsForDate": "Keine Spielrunden für {date} gefunden.",
     "noRoundsGeneral": "Keine Spielrunden gefunden. Schaue später noch einmal vorbei!",

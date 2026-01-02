@@ -1,9 +1,9 @@
 <template>
-  <GameArchive />
+  <GameContainer />
 </template>
 
 <script setup lang="ts">
-import GameArchive from "@/components/game/GameArchive.vue";
+import GameContainer from "@/components/game/GameContainer.vue";
 </script>
 
 <route lang="yaml">
