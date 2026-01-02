@@ -1,8 +1,11 @@
 <template>
-  <div class="min-h-screen bg-[#0a0a0c] text-white flex flex-col">
+  <v-app class="min-h-screen flex flex-col">
     <!-- Header -->
-    <header
-      class="p-6 flex items-center justify-between border-b border-white/5 bg-[#0a0a0c]/80 backdrop-blur-md sticky top-0 z-50"
+    <v-app-bar
+      flat
+      border
+      color="background"
+      class="backdrop-blur-md sticky top-0 z-50 px-6"
     >
       <div
         class="flex items-center gap-3 cursor-pointer"
@@ -21,15 +24,19 @@
           <h1 class="text-lg font-bold leading-none">
             {{ t("header.title") }}
           </h1>
-          <p class="text-xs text-gray-400 mt-1">{{ t("header.subtitle") }}</p>
+          <p class="text-xs text-medium-emphasis mt-1">
+            {{ t("header.subtitle") }}
+          </p>
         </div>
       </div>
+
+      <v-spacer></v-spacer>
 
       <div class="flex items-center gap-6">
         <LanguageSwitcher />
         <v-btn
           variant="text"
-          color="gray"
+          color="medium-emphasis"
           prepend-icon="mdi-calendar-clock"
           class="text-none hidden sm:flex"
           @click="showArchiveDialog = true"
@@ -37,138 +44,154 @@
           {{ t("header.pastGames") }}
         </v-btn>
 
-        <div
-          class="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10"
+        <v-chip
+          class="px-4 py-2"
+          variant="outlined"
+          color="white"
+          style="border-color: rgba(255, 255, 255, 0.1)"
         >
-          <v-icon icon="mdi-target" class="text-gray-400" size="20"></v-icon>
+          <template v-slot:prepend>
+            <v-icon
+              icon="mdi-target"
+              class="text-medium-emphasis mr-2"
+              size="20"
+            ></v-icon>
+          </template>
           <div class="flex flex-col items-end">
             <span
-              class="text-[10px] text-gray-400 uppercase font-bold tracking-wider"
+              class="text-[10px] text-medium-emphasis uppercase font-bold tracking-wider"
               >{{ t("header.roundLabel") }}</span
             >
             <span class="text-sm font-bold"
               >{{ state.currentRoundIndex + 1 }}/{{ state.totalRounds }}</span
             >
           </div>
-        </div>
+        </v-chip>
 
-        <div
-          class="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10"
+        <v-chip
+          class="px-4 py-2"
+          variant="outlined"
+          color="white"
+          style="border-color: rgba(255, 255, 255, 0.1)"
         >
-          <v-icon
-            icon="mdi-check-circle"
-            class="text-success"
-            size="20"
-          ></v-icon>
+          <template v-slot:prepend>
+            <v-icon
+              icon="mdi-check-circle"
+              class="text-success mr-2"
+              size="20"
+            ></v-icon>
+          </template>
           <div class="flex flex-col items-end">
             <span
-              class="text-[10px] text-gray-400 uppercase font-bold tracking-wider"
+              class="text-[10px] text-medium-emphasis uppercase font-bold tracking-wider"
               >{{ t("header.scoreLabel") }}</span
             >
             <span class="text-sm font-bold">{{ state.score }}</span>
           </div>
-        </div>
+        </v-chip>
       </div>
-    </header>
+    </v-app-bar>
 
     <!-- Main Content -->
-    <main
-      class="flex-1 container mx-auto px-4 py-12 flex flex-col items-center justify-center max-w-7xl"
-    >
-      <!-- Question Section -->
-      <div class="text-center mb-12 animate-slide-up">
-        <h1
-          class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
+    <v-main>
+      <v-container
+        class="py-12 flex flex-col items-center justify-center max-w-7xl"
+      >
+        <!-- Question Section -->
+        <div class="text-center mb-12 animate-slide-up">
+          <h1
+            class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
+          >
+            {{ t("game.question") }}
+          </h1>
+          <p class="text-medium-emphasis text-lg">
+            {{ t("game.instructions") }}
+          </p>
+        </div>
+
+        <!-- Loading State -->
+        <div
+          v-if="isLoading"
+          class="flex flex-col items-center justify-center py-20"
         >
-          {{ t("game.question") }}
-        </h1>
-        <p class="text-gray-400 text-lg">
-          {{ t("game.instructions") }}
-        </p>
-      </div>
+          <v-progress-circular
+            indeterminate
+            color="primary"
+            size="64"
+          ></v-progress-circular>
+          <p class="mt-4 text-medium-emphasis">{{ t("game.loadingData") }}</p>
+        </div>
 
-      <!-- Loading State -->
-      <div
-        v-if="isLoading"
-        class="flex flex-col items-center justify-center py-20"
-      >
-        <v-progress-circular
-          indeterminate
-          color="primary"
-          size="64"
-        ></v-progress-circular>
-        <p class="mt-4 text-gray-400">{{ t("game.loadingData") }}</p>
-      </div>
-
-      <!-- Error State -->
-      <div
-        v-else-if="error"
-        class="flex flex-col items-center justify-center py-20"
-      >
-        <v-icon icon="mdi-alert-circle" color="error" size="64"></v-icon>
-        <p class="mt-4 text-error text-lg">{{ error }}</p>
-        <v-btn color="primary" class="mt-4" @click="router.go(0)">{{
-          t("common.retry")
-        }}</v-btn>
-      </div>
-
-      <!-- Result Screen -->
-      <ResultScreen
-        v-else-if="state.status === GameStatus.GAME_OVER"
-        :score="state.score"
-        :total-rounds="state.totalRounds"
-        @retry="handleRetry"
-        @home="handleHome"
-      />
-
-      <!-- Game Grid -->
-      <div
-        v-else-if="currentRound"
-        class="grid md:grid-cols-2 gap-8 w-full max-w-5xl mb-12"
-      >
-        <ImageCard
-          :image="currentRound.imageA"
-          label="A"
-          :is-selected="selectedImageId === currentRound.imageA.id"
-          :show-result="state.status === GameStatus.ROUND_RESULT"
-          :is-correct="isSelectionCorrect(currentRound.imageA)"
-          @select="handleSelection(currentRound.imageA.id)"
-        />
-        <ImageCard
-          :image="currentRound.imageB"
-          label="B"
-          :is-selected="selectedImageId === currentRound.imageB.id"
-          :show-result="state.status === GameStatus.ROUND_RESULT"
-          :is-correct="isSelectionCorrect(currentRound.imageB)"
-          @select="handleSelection(currentRound.imageB.id)"
-        />
-      </div>
-
-      <!-- Next Buton (only shows after selection) -->
-      <div class="h-20 flex items-center justify-center">
-        <v-btn
-          v-if="state.status === GameStatus.ROUND_RESULT"
-          color="primary"
-          size="x-large"
-          rounded="xl"
-          elevation="4"
-          class="w-48 text-none font-bold"
-          @click="nextRound"
+        <!-- Error State -->
+        <div
+          v-else-if="error"
+          class="flex flex-col items-center justify-center py-20"
         >
-          {{ t("game.nextRound") }}
-          <template #append>
-            <v-icon icon="mdi-arrow-right"></v-icon>
-          </template>
-        </v-btn>
-      </div>
-    </main>
+          <v-icon icon="mdi-alert-circle" color="error" size="64"></v-icon>
+          <p class="mt-4 text-error text-lg">{{ error }}</p>
+          <v-btn color="primary" class="mt-4" @click="router.go(0)">{{
+            t("common.retry")
+          }}</v-btn>
+        </div>
 
-    <!-- FAQ Section -->
-    <GameFAQ />
+        <!-- Result Screen -->
+        <ResultScreen
+          v-else-if="state.status === GameStatus.GAME_OVER"
+          :score="state.score"
+          :total-rounds="state.totalRounds"
+          @retry="handleRetry"
+          @home="handleHome"
+        />
+
+        <!-- Game Grid -->
+        <div
+          v-else-if="currentRound"
+          class="grid md:grid-cols-2 gap-8 w-full max-w-5xl mb-12"
+        >
+          <ImageCard
+            :image="currentRound.imageA"
+            label="A"
+            :is-selected="selectedImageId === currentRound.imageA.id"
+            :show-result="state.status === GameStatus.ROUND_RESULT"
+            :is-correct="isSelectionCorrect(currentRound.imageA)"
+            @select="handleSelection(currentRound.imageA.id)"
+          />
+          <ImageCard
+            :image="currentRound.imageB"
+            label="B"
+            :is-selected="selectedImageId === currentRound.imageB.id"
+            :show-result="state.status === GameStatus.ROUND_RESULT"
+            :is-correct="isSelectionCorrect(currentRound.imageB)"
+            @select="handleSelection(currentRound.imageB.id)"
+          />
+        </div>
+
+        <!-- Next Buton (only shows after selection) -->
+        <div class="h-20 flex items-center justify-center">
+          <v-btn
+            v-if="state.status === GameStatus.ROUND_RESULT"
+            color="primary"
+            size="x-large"
+            rounded="xl"
+            elevation="4"
+            class="w-48 text-none font-bold"
+            @click="nextRound"
+          >
+            {{ t("game.nextRound") }}
+            <template #append>
+              <v-icon icon="mdi-arrow-right"></v-icon>
+            </template>
+          </v-btn>
+        </div>
+
+        <!-- FAQ Section -->
+        <GameFAQ />
+      </v-container>
+    </v-main>
 
     <!-- Past Games Dialog -->
     <PastGamesDialog v-model="showArchiveDialog" />
-  </div>
+  </v-app>
 </template>
 
 <script setup lang="ts">
