@@ -19,7 +19,8 @@ declare module 'vue-router/auto-routes' {
    */
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
-    '/game/[date]': RouteRecordInfo<'/game/[date]', '/game/:date', { date: ParamValue<true> }, { date: ParamValue<false> }>,
+    '/[lang]/': RouteRecordInfo<'/[lang]/', '/:lang', { lang: ParamValue<true> }, { lang: ParamValue<false> }>,
+    '/[lang]/game/[date]': RouteRecordInfo<'/[lang]/game/[date]', '/:lang/game/:date', { lang: ParamValue<true>, date: ParamValue<true> }, { lang: ParamValue<false>, date: ParamValue<false> }>,
   }
 
   /**
@@ -37,8 +38,12 @@ declare module 'vue-router/auto-routes' {
       routes: '/'
       views: never
     }
-    'src/pages/game/[date].vue': {
-      routes: '/game/[date]'
+    'src/pages/[lang]/index.vue': {
+      routes: '/[lang]/'
+      views: never
+    }
+    'src/pages/[lang]/game/[date].vue': {
+      routes: '/[lang]/game/[date]'
       views: never
     }
   }

@@ -5,31 +5,59 @@
  */
 
 // Composables
-import { createRouter, createWebHistory } from 'vue-router'
-import { routes } from 'vue-router/auto-routes'
+import { createRouter, createWebHistory } from "vue-router";
+import { routes } from "vue-router/auto-routes";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
-})
+});
+
+import i18n from "@/i18n";
+
+router.beforeEach((to, from, next) => {
+  const locale = (to.params as any).lang as string;
+  const supportedLocales = ["en", "de", "bg"];
+
+  if (locale) {
+    if (supportedLocales.includes(locale)) {
+      if (i18n.global.locale.value !== locale) {
+        i18n.global.locale.value = locale;
+        localStorage.setItem("user-locale", locale);
+      }
+      return next();
+    } else {
+      // Invalid locale, redirect to default
+      // Attempt to replace the first segment if it looks like a locale
+      const defaultLocale = "en";
+      // This is a bit naive if the user visits /invalid/game/date
+      // But [lang] captures the first segment.
+      // So we redirect /invalid -> /en
+      // /invalid/game/.. -> /en/game/..
+      const newPath = to.path.replace(`/${locale}`, `/${defaultLocale}`);
+      return next(newPath);
+    }
+  }
+  next();
+});
 
 // Workaround for https://github.com/vitejs/vite/issues/11804
 router.onError((err, to) => {
-  if (err?.message?.includes?.('Failed to fetch dynamically imported module')) {
-    if (localStorage.getItem('vuetify:dynamic-reload')) {
-      console.error('Dynamic import error, reloading page did not fix it', err)
+  if (err?.message?.includes?.("Failed to fetch dynamically imported module")) {
+    if (localStorage.getItem("vuetify:dynamic-reload")) {
+      console.error("Dynamic import error, reloading page did not fix it", err);
     } else {
-      console.log('Reloading page to fix dynamic import error')
-      localStorage.setItem('vuetify:dynamic-reload', 'true')
-      location.assign(to.fullPath)
+      console.log("Reloading page to fix dynamic import error");
+      localStorage.setItem("vuetify:dynamic-reload", "true");
+      location.assign(to.fullPath);
     }
   } else {
-    console.error(err)
+    console.error(err);
   }
-})
+});
 
 router.isReady().then(() => {
-  localStorage.removeItem('vuetify:dynamic-reload')
-})
+  localStorage.removeItem("vuetify:dynamic-reload");
+});
 
-export default router
+export default router;

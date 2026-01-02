@@ -13,11 +13,13 @@ declare module 'vue' {
   export interface GlobalComponents {
     GameArchive: typeof import('./components/game/GameArchive.vue')['default']
     GameContainer: typeof import('./components/game/GameContainer.vue')['default']
+    GameFAQ: typeof import('./components/game/GameFAQ.vue')['default']
     ImageCard: typeof import('./components/game/ImageCard.vue')['default']
     LanguageSwitcher: typeof import('./components/LanguageSwitcher.vue')['default']
     PastGamesDialog: typeof import('./components/game/PastGamesDialog.vue')['default']
     ResultScreen: typeof import('./components/game/ResultScreen.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    StructuredData: typeof import('./components/StructuredData.vue')['default']
   }
 }

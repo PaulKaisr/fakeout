@@ -123,7 +123,7 @@ const fetchDates = async () => {
 };
 
 const playGame = (date: string) => {
-  router.push(`/game/${date}`);
+  router.push(`/${locale.value}/game/${date}`);
   closeDialog();
 };
 
