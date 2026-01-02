@@ -19,7 +19,6 @@ declare module 'vue-router/auto-routes' {
    */
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
-    '/archive': RouteRecordInfo<'/archive', '/archive', Record<never, never>, Record<never, never>>,
     '/game/[date]': RouteRecordInfo<'/game/[date]', '/game/:date', { date: ParamValue<true> }, { date: ParamValue<false> }>,
   }
 
@@ -36,10 +35,6 @@ declare module 'vue-router/auto-routes' {
   export interface _RouteFileInfoMap {
     'src/pages/index.vue': {
       routes: '/'
-      views: never
-    }
-    'src/pages/archive.vue': {
-      routes: '/archive'
       views: never
     }
     'src/pages/game/[date].vue': {
