@@ -46,6 +46,15 @@ export async function getPopularVideos(params = {}) {
     max_duration: 10,
   };
   const searchParams = { ...defaultParams, ...params };
-  const res = await client.videos.popular(searchParams);
-  return res.videos;
+
+  try {
+    const res = await client.videos.popular(searchParams);
+    return res.videos;
+  } catch (error) {
+    // Fallback to video search if popular endpoint fails (known Pexels API issue)
+    console.warn(`Popular videos endpoint failed: ${error.message}. Falling back to video search.`);
+    const { min_duration, max_duration, ...searchOnlyParams } = searchParams;
+    const res = await client.videos.search({ ...searchOnlyParams, query: "nature" });
+    return res.videos;
+  }
 }
