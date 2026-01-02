@@ -140,7 +140,6 @@
           :score="state.score"
           :total-rounds="state.totalRounds"
           @archive="showArchiveDialog = true"
-          @home="handleHome"
         />
 
         <!-- Game Grid -->
@@ -303,10 +302,6 @@ const nextRound = () => {
   } else {
     state.status = GameStatus.GAME_OVER;
   }
-};
-
-const handleHome = () => {
-  router.push(`/${locale.value}`);
 };
 </script>
 
