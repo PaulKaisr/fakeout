@@ -111,6 +111,13 @@ export default defineConfig(({ mode }) => ({
   },
   server: {
     port: 3000,
+    proxy: {
+      "/files": {
+        target: "https://pub-285780421745452cbbfeee3b552758f0.r2.dev",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/files/, ""),
+      },
+    },
   },
   css: {
     preprocessorOptions: {

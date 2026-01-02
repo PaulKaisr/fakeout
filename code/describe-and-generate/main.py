@@ -42,7 +42,7 @@ def backfill_manifest(bucket_name: str, r2_client: R2Client) -> List[str]:
     dates.sort(reverse=True)
     
     manifest = {"dates": dates, "updated_at": datetime.utcnow().isoformat()}
-    r2_client.put_json(bucket_name, MANIFEST_KEY, manifest)
+    r2_client.put_json(bucket_name, MANIFEST_KEY, manifest, cache_control="max-age=0, no-cache")
     print(f"Manifest updated with {len(dates)} dates: {dates}")
     return dates
 
@@ -62,7 +62,7 @@ def update_manifest(bucket_name: str, date_prefix: str, r2_client: R2Client):
         dates.append(date_prefix)
         dates.sort(reverse=True)
         manifest = {"dates": dates, "updated_at": datetime.utcnow().isoformat()}
-        r2_client.put_json(bucket_name, MANIFEST_KEY, manifest)
+        r2_client.put_json(bucket_name, MANIFEST_KEY, manifest, cache_control="max-age=0, no-cache")
         print(f"Added {date_prefix} to manifest.")
     else:
         print(f"Date {date_prefix} already in manifest.")
@@ -201,7 +201,8 @@ def process_images(
                     bucket_name,
                     generated_image_key,
                     generated_image_data,
-                    content_type="image/png"
+                    content_type="image/png",
+                    cache_control="public, max-age=31536000, immutable",  # 1 year cache for static images
                 )
 
                 # Create metadata for generated image
@@ -219,7 +220,7 @@ def process_images(
                 # Upload generated image metadata
                 generated_meta_key = f"{date_prefix}/{folder_name}/{original_image_id}_meta.json"
                 print(f"Uploading generated image metadata to {generated_meta_key}...")
-                r2_client.put_json(bucket_name, generated_meta_key, generated_meta)
+                r2_client.put_json(bucket_name, generated_meta_key, generated_meta, cache_control="max-age=0, no-cache")
 
                 result["generated_image_key"] = generated_image_key
                 result["generated_meta_key"] = generated_meta_key
