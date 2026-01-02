@@ -57,16 +57,6 @@
       >
         {{ t("header.pastGames") }}
       </v-btn>
-
-      <v-btn
-        variant="text"
-        color="gray"
-        size="large"
-        class="text-none"
-        @click="$emit('home')"
-      >
-        {{ t("common.backToHome") }}
-      </v-btn>
     </div>
   </div>
 </template>
@@ -84,7 +74,6 @@ const props = defineProps<{
 
 defineEmits<{
   (e: "archive"): void;
-  (e: "home"): void;
 }>();
 
 const copied = ref(false);
