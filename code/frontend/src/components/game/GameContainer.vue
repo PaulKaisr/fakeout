@@ -139,7 +139,7 @@
           v-else-if="state.status === GameStatus.GAME_OVER"
           :score="state.score"
           :total-rounds="state.totalRounds"
-          @retry="handleRetry"
+          @archive="showArchiveDialog = true"
           @home="handleHome"
         />
 
@@ -303,17 +303,6 @@ const nextRound = () => {
   } else {
     state.status = GameStatus.GAME_OVER;
   }
-};
-
-const handleRetry = () => {
-  // Reset state
-  state.currentRoundIndex = 0;
-  state.score = 0;
-  state.history = [];
-  selectedImageId.value = null;
-  state.status = GameStatus.PLAYING;
-  // Let's re-fetch to be safe/fresh.
-  loadGame();
 };
 
 const handleHome = () => {
