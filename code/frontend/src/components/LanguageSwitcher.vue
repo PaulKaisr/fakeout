@@ -48,7 +48,7 @@ function changeLocale(newLocale: string) {
   // Locale will be updated by the router guard
   // localStorage.setItem("user-locale", newLocale); // Router guard does this too
 
-  if (route.params.lang) {
+  if ((route.params as any).lang) {
     // If we are on a localized route, switch the lang param
     router.push({
       name: route.name as any,
