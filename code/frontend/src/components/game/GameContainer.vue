@@ -28,7 +28,7 @@
           color="gray"
           prepend-icon="mdi-calendar-clock"
           class="text-none hidden sm:flex"
-          @click="router.push('/archive')"
+          @click="showArchiveDialog = true"
         >
           {{ t("header.pastGames") }}
         </v-btn>
@@ -158,6 +158,9 @@
         </v-btn>
       </div>
     </main>
+
+    <!-- Past Games Dialog -->
+    <PastGamesDialog v-model="showArchiveDialog" />
   </div>
 </template>
 
@@ -173,6 +176,7 @@ import { getR2GameRounds } from "@/services/gameServiceR2";
 import LanguageSwitcher from "@/components/LanguageSwitcher.vue";
 import ImageCard from "./ImageCard.vue";
 import ResultScreen from "./ResultScreen.vue";
+import PastGamesDialog from "./PastGamesDialog.vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 
@@ -187,6 +191,7 @@ const rounds = ref<Round[]>([]);
 const selectedImageId = ref<string | null>(null);
 const isLoading = ref(true);
 const error = ref<string | null>(null);
+const showArchiveDialog = ref(false);
 
 const state = reactive<GameState>({
   status: GameStatus.INTRO,
