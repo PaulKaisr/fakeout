@@ -15,13 +15,29 @@ import path from "node:path";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
+  esbuild: {
+    pure: mode === "production" ? ["console.log", "console.debug"] : [],
+  },
   build: {
     rollupOptions: {
       output: {
         manualChunks: {
           vendor: ["vue", "vue-router", "vuetify"],
         },
+      },
+    },
+    modulePreload: {
+      resolveDependencies: (_url, deps, _context) => {
+        return deps.filter(
+          (dep) =>
+            !dep.includes(".eot") &&
+            !dep.includes(".ttf") &&
+            !dep.includes(".woff") &&
+            !dep.includes("math") &&
+            !dep.includes("symbols") &&
+            !dep.includes("greek")
+        );
       },
     },
   },
@@ -47,8 +63,27 @@ export default defineConfig({
         families: [
           {
             name: "Roboto",
-            weights: [100, 300, 400, 500, 700, 900],
-            styles: ["normal", "italic"],
+            weights: [300, 400, 500, 700],
+            styles: ["normal"],
+            subset: "latin",
+          },
+          {
+            name: "Roboto",
+            weights: [300, 400, 500, 700],
+            styles: ["normal"],
+            subset: "latin-ext",
+          },
+          {
+            name: "Roboto",
+            weights: [300, 400, 500, 700],
+            styles: ["normal"],
+            subset: "cyrillic",
+          },
+          {
+            name: "Roboto",
+            weights: [300, 400, 500, 700],
+            styles: ["normal"],
+            subset: "cyrillic-ext",
           },
         ],
       },
@@ -77,4 +112,26 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-});
+  css: {
+    preprocessorOptions: {
+      sass: {
+        silenceDeprecations: [
+          "legacy-js-api",
+          "mixed-decls",
+          "color-functions",
+          "global-builtin",
+          "import",
+        ],
+      },
+      scss: {
+        silenceDeprecations: [
+          "legacy-js-api",
+          "mixed-decls",
+          "color-functions",
+          "global-builtin",
+          "import",
+        ],
+      },
+    },
+  },
+}));

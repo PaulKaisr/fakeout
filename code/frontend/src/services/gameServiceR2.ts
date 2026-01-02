@@ -19,27 +19,44 @@ export const getR2GameRounds = async (date?: string): Promise<Round[]> => {
       return [];
     }
   } else {
-    // Find the latest date with data (lookback 7 days)
-    let targetDate = new Date();
-    const MAX_LOOKBACK = 7;
-
-    for (let i = 0; i <= MAX_LOOKBACK; i++) {
-      const dateStr = targetDate.toISOString().split("T")[0] || "";
-      // Check if data exists for this date
-      const exists = await r2Service.checkDataExistsForDate(dateStr);
-
-      if (exists) {
-        validDate = dateStr;
-        console.debug(`Found latest game data for date: ${validDate}`);
-        break;
+    // Find the latest date with data
+    try {
+      const dates = await r2Service.fetchManifest();
+      if (dates.length > 0) {
+        // Sort dates descending
+        dates.sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+        validDate = dates[0]!;
+        console.debug(`Found latest game data from manifest: ${validDate}`);
       }
-
-      // Go back one day
-      targetDate.setDate(targetDate.getDate() - 1);
+    } catch (e) {
+      console.warn("Failed to fetch manifest, falling back to probing", e);
     }
 
     if (!validDate) {
-      console.warn(`No game data found within the last ${MAX_LOOKBACK} days.`);
+      // Fallback: finding the latest date with data (lookback 7 days)
+      let targetDate = new Date();
+      const MAX_LOOKBACK = 7;
+
+      for (let i = 0; i <= MAX_LOOKBACK; i++) {
+        const dateStr = targetDate.toISOString().split("T")[0] || "";
+        // Check if data exists for this date
+        const exists = await r2Service.checkDataExistsForDate(dateStr);
+
+        if (exists) {
+          validDate = dateStr;
+          console.debug(
+            `Found latest game data (via probe) for date: ${validDate}`
+          );
+          break;
+        }
+
+        // Go back one day
+        targetDate.setDate(targetDate.getDate() - 1);
+      }
+    }
+
+    if (!validDate) {
+      console.warn(`No game data found.`);
       return [];
     }
   }
