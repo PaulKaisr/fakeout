@@ -79,6 +79,7 @@ class R2Client:
         key: str,
         body: bytes,
         content_type: Optional[str] = None,
+        cache_control: Optional[str] = None,
     ) -> Dict[str, str]:
         """
         Upload an object to R2
@@ -88,6 +89,7 @@ class R2Client:
             key: Object key/path
             body: Object data as bytes
             content_type: MIME type of the object
+            cache_control: Cache-Control header value
 
         Returns:
             Dictionary with upload details (key, etag)
@@ -100,6 +102,8 @@ class R2Client:
             }
             if content_type:
                 kwargs["ContentType"] = content_type
+            if cache_control:
+                kwargs["CacheControl"] = cache_control
 
             response = self.s3_client.put_object(**kwargs)
             return {
@@ -114,6 +118,7 @@ class R2Client:
         bucket_name: str,
         key: str,
         data: Dict[str, Any],
+        cache_control: str = "max-age=0, no-cache",
     ) -> Dict[str, str]:
         """
         Upload a JSON object to R2
@@ -122,12 +127,19 @@ class R2Client:
             bucket_name: Name of the R2 bucket
             key: Object key/path
             data: Dictionary to serialize as JSON
+            cache_control: Cache-Control header value (default: 'max-age=0, no-cache' for metadata)
 
         Returns:
             Dictionary with upload details (key, etag)
         """
         json_bytes = json.dumps(data, indent=2).encode("utf-8")
-        return self.put_object(bucket_name, key, json_bytes, content_type="application/json")
+        return self.put_object(
+            bucket_name,
+            key,
+            json_bytes,
+            content_type="application/json",
+            cache_control=cache_control,
+        )
 
     def list_objects(
         self,

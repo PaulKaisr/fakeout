@@ -12,7 +12,7 @@
       <h2
         class="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-200 to-amber-500"
       >
-        {{ t('results.title') }}
+        {{ t("results.title") }}
       </h2>
     </div>
 
@@ -20,7 +20,7 @@
       class="bg-white/5 rounded-2xl p-8 mb-8 border border-white/10 w-full max-w-sm"
     >
       <p class="text-gray-400 text-sm uppercase tracking-wider font-bold mb-2">
-        {{ t('results.finalScore') }}
+        {{ t("results.finalScore") }}
       </p>
       <div class="text-6xl font-black text-white mb-2">
         {{ score
@@ -43,7 +43,7 @@
         class="text-none font-bold"
         @click="shareResult"
       >
-        {{ copied ? t('results.copiedToClipboard') : t('results.shareResult') }}
+        {{ copied ? t("results.copiedToClipboard") : t("results.shareResult") }}
       </v-btn>
 
       <v-btn
@@ -51,21 +51,11 @@
         color="white"
         size="x-large"
         rounded="xl"
-        prepend-icon="mdi-refresh"
+        prepend-icon="mdi-calendar-clock"
         class="text-none font-bold"
-        @click="$emit('retry')"
+        @click="$emit('archive')"
       >
-        {{ t('results.playAgain') }}
-      </v-btn>
-
-      <v-btn
-        variant="text"
-        color="gray"
-        size="large"
-        class="text-none"
-        @click="$emit('home')"
-      >
-        {{ t('common.backToHome') }}
+        {{ t("header.pastGames") }}
       </v-btn>
     </div>
   </div>
@@ -83,8 +73,7 @@ const props = defineProps<{
 }>();
 
 defineEmits<{
-  (e: "retry"): void;
-  (e: "home"): void;
+  (e: "archive"): void;
 }>();
 
 const copied = ref(false);
@@ -92,16 +81,16 @@ const copied = ref(false);
 const percentage = computed(() => (props.score / props.totalRounds) * 100);
 
 const feedbackMessage = computed(() => {
-  if (percentage.value === 100) return t('results.feedback.perfect');
-  if (percentage.value >= 80) return t('results.feedback.great');
-  if (percentage.value >= 50) return t('results.feedback.good');
-  return t('results.feedback.poor');
+  if (percentage.value === 100) return t("results.feedback.perfect");
+  if (percentage.value >= 80) return t("results.feedback.great");
+  if (percentage.value >= 50) return t("results.feedback.good");
+  return t("results.feedback.poor");
 });
 
 const shareText = computed(() =>
-  t('results.shareText', {
+  t("results.shareText", {
     score: props.score,
-    total: props.totalRounds
+    total: props.totalRounds,
   })
 );
 
