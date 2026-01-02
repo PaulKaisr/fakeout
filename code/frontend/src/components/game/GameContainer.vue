@@ -9,9 +9,13 @@
         @click="router.push('/')"
       >
         <div
-          class="size-10 rounded-xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center shadow-lg shadow-primary/20"
+          class="size-10 rounded-xl overflow-hidden shadow-lg shadow-primary/20"
         >
-          <v-icon icon="mdi-sparkles" color="white" size="24"></v-icon>
+          <img
+            src="/logo.png"
+            alt="Fakeout Logo"
+            class="w-full h-full object-cover"
+          />
         </div>
         <div>
           <h1 class="text-lg font-bold leading-none">
