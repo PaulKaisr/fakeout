@@ -11,6 +11,11 @@
 import StructuredData from "@/components/StructuredData.vue";
 import { useI18n } from "vue-i18n";
 import { watch } from "vue";
+import { inject } from "@vercel/analytics";
+
+if (import.meta.env.PROD) {
+  inject();
+}
 
 const { locale } = useI18n();
 
