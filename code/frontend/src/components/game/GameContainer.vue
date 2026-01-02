@@ -6,12 +6,16 @@
     >
       <div
         class="flex items-center gap-3 cursor-pointer"
-        @click="router.push('/')"
+        @click="router.push(`/${locale}`)"
       >
         <div
-          class="size-10 rounded-xl bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center shadow-lg shadow-primary/20"
+          class="size-10 rounded-xl overflow-hidden shadow-lg shadow-primary/20"
         >
-          <v-icon icon="mdi-sparkles" color="white" size="24"></v-icon>
+          <img
+            src="/logo.png"
+            alt="Fakeout Logo"
+            class="w-full h-full object-cover"
+          />
         </div>
         <div>
           <h1 class="text-lg font-bold leading-none">
@@ -28,7 +32,7 @@
           color="gray"
           prepend-icon="mdi-calendar-clock"
           class="text-none hidden sm:flex"
-          @click="router.push('/archive')"
+          @click="showArchiveDialog = true"
         >
           {{ t("header.pastGames") }}
         </v-btn>
@@ -73,11 +77,11 @@
     >
       <!-- Question Section -->
       <div class="text-center mb-12 animate-slide-up">
-        <h2
+        <h1
           class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
         >
           {{ t("game.question") }}
-        </h2>
+        </h1>
         <p class="text-gray-400 text-lg">
           {{ t("game.instructions") }}
         </p>
@@ -158,6 +162,12 @@
         </v-btn>
       </div>
     </main>
+
+    <!-- FAQ Section -->
+    <GameFAQ />
+
+    <!-- Past Games Dialog -->
+    <PastGamesDialog v-model="showArchiveDialog" />
   </div>
 </template>
 
@@ -173,10 +183,12 @@ import { getR2GameRounds } from "@/services/gameServiceR2";
 import LanguageSwitcher from "@/components/LanguageSwitcher.vue";
 import ImageCard from "./ImageCard.vue";
 import ResultScreen from "./ResultScreen.vue";
+import PastGamesDialog from "./PastGamesDialog.vue";
+import GameFAQ from "./GameFAQ.vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const props = defineProps<{
   date?: string;
@@ -187,6 +199,7 @@ const rounds = ref<Round[]>([]);
 const selectedImageId = ref<string | null>(null);
 const isLoading = ref(true);
 const error = ref<string | null>(null);
+const showArchiveDialog = ref(false);
 
 const state = reactive<GameState>({
   status: GameStatus.INTRO,
@@ -281,7 +294,7 @@ const handleRetry = () => {
 };
 
 const handleHome = () => {
-  router.push("/");
+  router.push(`/${locale.value}`);
 };
 </script>
 

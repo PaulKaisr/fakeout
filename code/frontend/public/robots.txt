@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Sitemap: https://fakeout.dev/sitemap.xml
+
+Disallow: /api/
