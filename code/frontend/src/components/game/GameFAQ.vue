@@ -4,16 +4,16 @@
       {{ t("faq.title") }}
     </h2>
 
-    <v-expansion-panels variant="accordion" class="bg-transparent">
+    <v-expansion-panels variant="accordion">
       <v-expansion-panel
         v-for="(faq, index) in faqs"
         :key="index"
-        class="bg-white/5 mb-2 rounded-lg"
+        class="mb-2 rounded-lg"
       >
         <v-expansion-panel-title class="text-lg font-medium">
           {{ faq.question }}
         </v-expansion-panel-title>
-        <v-expansion-panel-text class="text-gray-300">
+        <v-expansion-panel-text>
           {{ faq.answer }}
         </v-expansion-panel-text>
       </v-expansion-panel>
