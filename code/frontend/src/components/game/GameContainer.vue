@@ -267,22 +267,26 @@
             class="grid md:grid-cols-2 gap-8 w-full mb-12"
           >
             <ImageCard
+              :key="currentRound.imageA.id"
               :image="currentRound.imageA"
               label="A"
               :is-selected="selectedImageId === currentRound.imageA.id"
               :show-result="state.status === GameStatus.ROUND_RESULT"
               :is-correct="isSelectionCorrect(currentRound.imageA)"
+              :max-duration="commonDuration"
               @select="handleSelection(currentRound.imageA.id)"
-              @load="mediaLoaded.A = true"
+              @load="handleLoad('A', $event)"
             />
             <ImageCard
+              :key="currentRound.imageB.id"
               :image="currentRound.imageB"
               label="B"
               :is-selected="selectedImageId === currentRound.imageB.id"
               :show-result="state.status === GameStatus.ROUND_RESULT"
               :is-correct="isSelectionCorrect(currentRound.imageB)"
+              :max-duration="commonDuration"
               @select="handleSelection(currentRound.imageB.id)"
-              @load="mediaLoaded.B = true"
+              @load="handleLoad('B', $event)"
             />
           </div>
         </div>
@@ -326,7 +330,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, onMounted, watch } from "vue";
+import { ref, reactive, computed, onMounted, watch, nextTick } from "vue";
 import {
   GameStatus,
   type GameState,
@@ -364,10 +368,19 @@ const drawer = ref(false);
 const route = useRoute();
 
 const mediaLoaded = reactive({ A: false, B: false });
+const durations = reactive({ A: 0, B: 0 });
+
 const areBothImagesLoaded = computed(() => {
   // If we're not waiting for images, we consider them loaded
   if (!currentRound.value) return true;
   return mediaLoaded.A && mediaLoaded.B;
+});
+
+const commonDuration = computed(() => {
+  if (durations.A > 0 && durations.B > 0) {
+    return Math.min(durations.A, durations.B);
+  }
+  return undefined;
 });
 
 const state = reactive<GameState>({
@@ -390,6 +403,8 @@ watch(
   () => {
     mediaLoaded.A = false;
     mediaLoaded.B = false;
+    durations.A = 0;
+    durations.B = 0;
   }
 );
 
@@ -404,6 +419,8 @@ watch(
     selectedImageId.value = null;
     mediaLoaded.A = false;
     mediaLoaded.B = false;
+    durations.A = 0;
+    durations.B = 0;
     await loadGame();
   }
 );
@@ -502,8 +519,23 @@ const isSelectionCorrectId = (imageId: string) => {
   return selected?.isAiGenerated ?? false;
 };
 
-const nextRound = () => {
+const handleLoad = (side: "A" | "B", duration?: number) => {
+  mediaLoaded[side] = true;
+  if (typeof duration === "number") {
+    durations[side] = duration;
+  }
+};
+
+const nextRound = async () => {
   if (state.currentRoundIndex < state.totalRounds - 1) {
+    // Reset loading state immediately to hide grid before new content loads
+    mediaLoaded.A = false;
+    mediaLoaded.B = false;
+    durations.A = 0;
+    durations.B = 0;
+
+    await nextTick();
+
     state.currentRoundIndex++;
     selectedImageId.value = null;
     state.status = GameStatus.PLAYING;

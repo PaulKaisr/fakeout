@@ -35,13 +35,15 @@
     <!-- Video -->
     <video
       v-else
+      ref="videoRef"
       :src="image.url"
       class="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-105"
       autoplay
       loop
       muted
       playsinline
-      @loadeddata="$emit('load')"
+      @loadeddata="onVideoLoaded"
+      @timeupdate="onTimeUpdate"
       @error="$emit('load')"
     ></video>
 
@@ -90,18 +92,36 @@
 <script setup lang="ts">
 import type { Image } from "@/types/game";
 import { useI18n } from "vue-i18n";
+import { ref } from "vue";
 
 const { t } = useI18n();
 
-defineProps<{
+const props = defineProps<{
   image: Image;
   label: string;
   isSelected?: boolean;
   showResult?: boolean;
   isCorrect?: boolean;
+  maxDuration?: number;
 }>();
 
-defineEmits(["select", "load"]);
+const emit = defineEmits(["select", "load"]);
+
+const videoRef = ref<HTMLVideoElement | null>(null);
+
+const onVideoLoaded = (event: Event) => {
+  const video = event.target as HTMLVideoElement;
+  emit("load", video.duration);
+};
+
+const onTimeUpdate = () => {
+  if (!videoRef.value || !props.maxDuration) return;
+
+  if (videoRef.value.currentTime >= props.maxDuration) {
+    videoRef.value.currentTime = 0;
+    videoRef.value.play();
+  }
+};
 </script>
 
 <style scoped>
