@@ -15,12 +15,23 @@
     "scoreLabel": "Score"
   },
   "game": {
-    "question": "Which image is AI-generated?",
-    "instructions": "Click on the image you think was created by Artificial Intelligence",
+    "mode": "Mode",
+    "question": {
+      "image": "Which image is AI-generated?",
+      "video": "Which video is AI-generated?"
+    },
+    "instructions": {
+      "image": "Click on the image you think was created by Artificial Intelligence",
+      "video": "Click on the video you think was created by Artificial Intelligence"
+    },
     "loadingData": "Loading game data...",
     "nextRound": "Next Round",
+    "finish": "Finish",
     "aiGenerated": "AI Generated",
-    "realPhoto": "Real Photo",
+    "real": {
+      "image": "Real Photo",
+      "video": "Real Video"
+    },
     "correct": "Correct!",
     "wrong": "Wrong!"
   },
@@ -41,7 +52,9 @@
   "archive": {
     "title": "Past Games",
     "subtitle": "Play games from previous days",
-    "noGames": "No past games found in the archive."
+    "noGames": "No past games found in the archive.",
+    "finished": "Finished",
+    "inProgress": "In Progress"
   },
   "languages": {
     "en": "English",
@@ -77,5 +90,17 @@
     "failedToLoad": "Failed to load game data.",
     "failedToLoadImage": "Failed to load image",
     "unknownError": "Unknown error loading images"
+  },
+  "stats": {
+    "title": "Your Stats",
+    "imageMode": "Image Mode",
+    "imageModeDesc": "Spot AI generated images",
+    "videoMode": "Video Mode",
+    "videoModeDesc": "Spot AI generated videos",
+    "gamesPlayed": "Games Played",
+    "totalScore": "Total Score",
+    "accuracy": "Accuracy",
+    "resetStats": "Reset Statistics",
+    "resetConfirm": "Are you sure you want to reset all your statistics? This cannot be undone."
   }
 }

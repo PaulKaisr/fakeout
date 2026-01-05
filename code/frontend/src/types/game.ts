@@ -3,6 +3,7 @@ export interface Image {
   url: string;
   isAiGenerated: boolean;
   credit?: string;
+  mediaType?: "image" | "video";
 }
 
 export interface Round {

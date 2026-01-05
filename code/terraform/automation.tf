@@ -49,34 +49,89 @@ resource "aws_sfn_state_machine" "weekly_game_generation" {
 
   definition = jsonencode({
     Comment = "Weekly Game Generation Workflow"
-    StartAt = "ScrapeImages"
+    StartAt = "ParallelScrape"
     States = {
-      ScrapeImages = {
+      ParallelScrape = {
+        Type = "Parallel"
+        Branches = [
+          {
+            StartAt = "ScrapeImages"
+            States = {
+              ScrapeImages = {
+                Type     = "Task"
+                Resource = aws_lambda_function.scraper.arn
+                Parameters = {
+                  mode       = "foto"
+                  mediaCount = 5
+                  bucketName = "fakeout-videos-dev"
+                }
+                Retry = [
+                  {
+                    ErrorEquals     = ["States.TaskFailed"]
+                    IntervalSeconds = 15
+                    MaxAttempts     = 3
+                    BackoffRate     = 1.5
+                  }
+                ]
+                End = true
+              }
+            }
+          },
+          {
+            StartAt = "ScrapeVideos"
+            States = {
+              ScrapeVideos = {
+                Type     = "Task"
+                Resource = aws_lambda_function.scraper.arn
+                Parameters = {
+                  mode       = "video"
+                  mediaCount = 5
+                  bucketName = "fakeout-videos-dev"
+                }
+                Retry = [
+                  {
+                    ErrorEquals     = ["States.TaskFailed"]
+                    IntervalSeconds = 15
+                    MaxAttempts     = 3
+                    BackoffRate     = 1.5
+                  }
+                ]
+                End = true
+              }
+            }
+          }
+        ]
+        Next = "GenerateAndDescribeImages"
+      }
+      GenerateAndDescribeImages = {
         Type     = "Task"
-        Resource = aws_lambda_function.scraper.arn
+        Resource = aws_lambda_function.describe_and_generate.arn
         Parameters = {
-          mode       = "foto"
-          mediaCount = 5
+          mode       = "DESCRIBE_AND_GENERATE"
+          mediaType  = "image"
+          provider   = "google"
           bucketName = "fakeout-videos-dev"
+          backfill   = true
         }
         Retry = [
           {
             ErrorEquals     = ["States.TaskFailed"]
-            IntervalSeconds = 15
-            MaxAttempts     = 3
-            BackoffRate     = 1.5
+            IntervalSeconds = 30
+            MaxAttempts     = 2
+            BackoffRate     = 2.0
           }
         ]
-        Next = "GenerateAndDescribe"
+        Next = "GenerateAndDescribeVideos"
       }
-      GenerateAndDescribe = {
+      GenerateAndDescribeVideos = {
         Type     = "Task"
         Resource = aws_lambda_function.describe_and_generate.arn
         Parameters = {
-          mode           = "DESCRIBE_AND_GENERATE"
-          provider       = "google"
-          bucketName     = "fakeout-videos-dev"
-          backfill       = true
+          mode       = "DESCRIBE_AND_GENERATE"
+          mediaType  = "video"
+          provider   = "google"
+          bucketName = "fakeout-videos-dev"
+          backfill   = true
         }
         Retry = [
           {

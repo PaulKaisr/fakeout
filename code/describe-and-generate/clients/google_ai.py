@@ -1,16 +1,17 @@
 """
-Google AI (Gemini) client for vision and image generation
+Google AI (Gemini) client for vision and image/video generation
 """
 
 import os
-import base64
+import time
+import tempfile
 from typing import Optional
 from google import genai
 from google.genai import types
 
 
 class GoogleAIClient:
-    """Client for Google Gemini Vision API and Imagen/Nano Banana Pro for image generation"""
+    """Client for Google Gemini Vision API, Imagen for image generation, and Veo 2 for video generation"""
 
     VISION_SYSTEM_PROMPT = """You are an expert image analyst. Your task is to provide detailed, accurate descriptions of images. The descriptions should be used as prompt for generating the same image using text-to-image models.
 
@@ -22,6 +23,19 @@ Your descriptions should:
 - Be as detailed as necessary to recreate the image accurately
 
 Focus on what makes the image unique and visually interesting."""
+
+    VIDEO_VISION_SYSTEM_PROMPT = """You are an expert video analyst. Your task is to provide detailed, accurate descriptions of videos. The descriptions should be used as prompts for generating similar videos using text-to-video models.
+
+Your descriptions should:
+- Describe the main subject, actions, movements, and any changes throughout the video
+- Capture the setting, environment, colors, lighting, and mood
+- Note camera movements (panning, zooming, static shots)
+- Describe the temporal flow and sequence of events
+- Include details about pace, rhythm, and any transitions
+- Be objective and factual, focusing on visual elements
+- Be detailed enough to recreate a similar video
+
+Focus on what makes the video unique, including both static elements and dynamic motion."""
 
     def __init__(self, api_key: Optional[str] = None):
         """
@@ -79,6 +93,67 @@ Focus on what makes the image unique and visually interesting."""
         except Exception as e:
             raise Exception(f"Failed to describe image with Gemini Vision API: {str(e)}")
 
+    def describe_video(
+        self,
+        video_data: bytes,
+        max_tokens: int = 500,
+        model: str = "gemini-2.0-flash",
+    ) -> str:
+        """
+        Generate a detailed description of a video using Gemini Vision API
+
+        Args:
+            video_data: Video data as bytes
+            max_tokens: Maximum tokens in the response
+            model: Gemini model to use
+
+        Returns:
+            Description of the video
+        """
+        try:
+            # Videos need to be uploaded via Files API (can't be passed inline like images)
+            # Write video to a temporary file and upload
+            with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as tmp_file:
+                tmp_file.write(video_data)
+                tmp_path = tmp_file.name
+
+            try:
+                # Upload video file
+                print(f"Uploading video to Gemini Files API...")
+                video_file = self.client.files.upload(file=tmp_path)
+                print(f"Video uploaded: {video_file.name}")
+
+                # Wait for file to be processed
+                while video_file.state.name == "PROCESSING":
+                    print("Waiting for video processing...")
+                    time.sleep(2)
+                    video_file = self.client.files.get(name=video_file.name)
+
+                if video_file.state.name == "FAILED":
+                    raise Exception(f"Video processing failed: {video_file.state.name}")
+
+                # Call Gemini Vision API with the uploaded video
+                response = self.client.models.generate_content(
+                    model=model,
+                    contents=[
+                        video_file,
+                        f"{self.VIDEO_VISION_SYSTEM_PROMPT}\n\nPlease provide a detailed description of this video.",
+                    ],
+                    config=types.GenerateContentConfig(
+                        max_output_tokens=max_tokens,
+                        temperature=0.7,
+                    ),
+                )
+
+                return response.text.strip()
+
+            finally:
+                # Clean up temporary file
+                os.unlink(tmp_path)
+
+        except Exception as e:
+            raise Exception(f"Failed to describe video with Gemini Vision API: {str(e)}")
+
     def generate_image(
         self,
         prompt: str,
@@ -135,3 +210,99 @@ Focus on what makes the image unique and visually interesting."""
 
         except Exception as e:
             raise Exception(f"Failed to generate image with Google AI: {str(e)}")
+
+    def generate_video(
+        self,
+        prompt: str,
+        model: str = "veo-3.1-generate-preview",
+        duration_seconds: int = 4,
+        aspect_ratio: str = "16:9",
+        timeout_seconds: int = 300,
+    ) -> tuple[str, bytes]:
+        """
+        Generate a video using Veo 3 based on a text prompt
+
+        Args:
+            prompt: Text description of the video to generate
+            model: Model to use (veo-3.1-generate-preview)
+            duration_seconds: Duration of generated video (5-8 seconds for Veo 2)
+            aspect_ratio: Aspect ratio - "16:9", "9:16", "1:1"
+            timeout_seconds: Maximum time to wait for video generation
+
+        Returns:
+            Tuple of (prompt, video_data_bytes)
+        """
+        try:
+            print(f"Starting video generation with Veo 3...")
+            print(f"Prompt: {prompt[:100]}...")
+            print(f"Duration: {duration_seconds}s, Aspect ratio: {aspect_ratio}")
+
+            # Start async video generation operation
+            operation = self.client.models.generate_videos(
+                model=model,
+                prompt=prompt,
+                config=types.GenerateVideosConfig(
+                    number_of_videos=1,
+                    duration_seconds=duration_seconds,
+                    aspect_ratio=aspect_ratio,
+                    # enhance_prompt=True,
+                ),
+            )
+
+            print(f"Video generation started, operation: {operation.name}")
+
+            # Poll for completion
+            start_time = time.time()
+            poll_interval = 10  # Check every 10 seconds
+
+            while not operation.done:
+                elapsed = time.time() - start_time
+                if elapsed > timeout_seconds:
+                    raise Exception(f"Video generation timed out after {timeout_seconds} seconds")
+
+                print(f"Waiting for video generation... ({int(elapsed)}s elapsed)")
+                time.sleep(poll_interval)
+                operation = self.client.operations.get(operation)
+
+            # Check for errors
+            if operation.error:
+                raise Exception(f"Video generation failed: {operation.error}")
+
+            # Extract video from response
+            if not operation.response or not operation.response.generated_videos:
+                raise Exception("No video generated in response")
+
+            generated_video = operation.response.generated_videos[0]
+
+            # Get video data
+            video_data = None
+
+            if hasattr(generated_video, 'video') and generated_video.video:
+                video = generated_video.video
+
+                # First try video_bytes if available (for local videos)
+                if hasattr(video, 'video_bytes') and video.video_bytes:
+                    video_data = video.video_bytes
+                    print("Got video_data from video.video_bytes")
+                # For remote videos, download from URI with API key authentication
+                elif hasattr(video, 'uri') and video.uri:
+                    print(f"Downloading video from URI: {video.uri}")
+                    import requests
+
+                    # Use x-goog-api-key header for authentication
+                    headers = {"x-goog-api-key": self.api_key}
+                    resp = requests.get(video.uri, headers=headers)
+                    resp.raise_for_status()
+                    video_data = resp.content
+                    print(f"Got video_data from URI download: {len(video_data)} bytes")
+
+            if video_data is None:
+                raise Exception(f"Could not extract video bytes from generated video")
+
+            print(f"Video generation complete! Size: {len(video_data)} bytes")
+
+            # Veo 2 doesn't return a revised prompt, return original
+            return prompt, video_data
+
+        except Exception as e:
+            raise Exception(f"Failed to generate video with Veo 3: {str(e)}")
