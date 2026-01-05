@@ -15,12 +15,21 @@
     "scoreLabel": "Score"
   },
   "game": {
-    "question": "Which image is AI-generated?",
-    "instructions": "Click on the image you think was created by Artificial Intelligence",
+    "question": {
+      "image": "Which image is AI-generated?",
+      "video": "Which video is AI-generated?"
+    },
+    "instructions": {
+      "image": "Click on the image you think was created by Artificial Intelligence",
+      "video": "Click on the video you think was created by Artificial Intelligence"
+    },
     "loadingData": "Loading game data...",
     "nextRound": "Next Round",
     "aiGenerated": "AI Generated",
-    "realPhoto": "Real Photo",
+    "real": {
+      "image": "Real Photo",
+      "video": "Real Video"
+    },
     "correct": "Correct!",
     "wrong": "Wrong!"
   },

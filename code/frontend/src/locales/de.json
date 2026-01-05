@@ -15,12 +15,21 @@
     "scoreLabel": "Punkte"
   },
   "game": {
-    "question": "Welches Bild ist KI-generiert?",
-    "instructions": "Klicke auf das Bild, von dem du denkst, dass es von künstlicher Intelligenz erstellt wurde",
+    "question": {
+      "image": "Welches Bild ist KI-generiert?",
+      "video": "Welches Video ist KI-generiert?"
+    },
+    "instructions": {
+      "image": "Klicke auf das Bild, von dem du denkst, dass es von künstlicher Intelligenz erstellt wurde",
+      "video": "Klicke auf das Video, von dem du denkst, dass es von künstlicher Intelligenz erstellt wurde"
+    },
     "loadingData": "Spieldaten werden geladen...",
     "nextRound": "Nächste Runde",
     "aiGenerated": "KI-generiert",
-    "realPhoto": "Echtes Foto",
+    "real": {
+      "image": "Echtes Foto",
+      "video": "Echtes Video"
+    },
     "correct": "Richtig!",
     "wrong": "Falsch!"
   },
