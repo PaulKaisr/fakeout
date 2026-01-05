@@ -189,7 +189,7 @@
     </v-main>
 
     <!-- Past Games Dialog -->
-    <PastGamesDialog v-model="showArchiveDialog" />
+    <PastGamesDialog v-model="showArchiveDialog" :mode="mode" />
   </v-app>
 </template>
 
@@ -214,6 +214,7 @@ const { t, locale } = useI18n();
 
 const props = defineProps<{
   date?: string;
+  mode?: "image" | "video";
 }>();
 
 const router = useRouter();
@@ -241,7 +242,10 @@ const loadGame = async () => {
   isLoading.value = true;
   error.value = null;
   try {
-    const fetchedRounds = await getR2GameRounds(props.date);
+    const fetchedRounds = await getR2GameRounds(
+      props.date,
+      props.mode || "image"
+    );
     if (fetchedRounds.length === 0) {
       error.value = props.date
         ? t("errors.noRoundsForDate", { date: props.date })

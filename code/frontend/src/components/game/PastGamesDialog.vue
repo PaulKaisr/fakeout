@@ -85,6 +85,7 @@ const r2Service = createR2Service(r2Config);
 
 const props = defineProps<{
   modelValue: boolean;
+  mode?: "image" | "video";
 }>();
 
 const emit = defineEmits<{
@@ -114,7 +115,8 @@ watch(
 const fetchDates = async () => {
   loading.value = true;
   try {
-    dates.value = await r2Service.fetchManifest();
+    const manifestMode = props.mode === "video" ? "videos" : "images";
+    dates.value = await r2Service.fetchManifest(manifestMode);
   } catch (e) {
     console.error("Failed to fetch archive", e);
   } finally {
@@ -123,7 +125,8 @@ const fetchDates = async () => {
 };
 
 const playGame = (date: string) => {
-  router.push(`/${locale.value}/game/${date}`);
+  const basePath = props.mode === "video" ? "video" : "game";
+  router.push(`/${locale.value}/${basePath}/${date}`);
   closeDialog();
 };
 

@@ -12,6 +12,7 @@
   >
     <!-- Image -->
     <v-img
+      v-if="image.mediaType !== 'video'"
       :src="image.url"
       class="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-105"
       cover
@@ -27,6 +28,17 @@
         </div>
       </template>
     </v-img>
+
+    <!-- Video -->
+    <video
+      v-else
+      :src="image.url"
+      class="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-105"
+      autoplay
+      loop
+      muted
+      playsinline
+    ></video>
 
     <!-- Label (A or B) -->
     <div
@@ -53,14 +65,14 @@
         :color="image.isAiGenerated ? 'purple-accent-2' : 'cyan-accent-2'"
       ></v-icon>
       <span class="text-h5 font-bold text-white mb-1">
-        {{ image.isAiGenerated ? t('game.aiGenerated') : t('game.realPhoto') }}
+        {{ image.isAiGenerated ? t("game.aiGenerated") : t("game.realPhoto") }}
       </span>
       <span
         v-if="isSelected"
         class="text-subtitle-1 font-weight-bold"
         :class="isCorrect ? 'text-success' : 'text-error'"
       >
-        {{ isCorrect ? t('game.correct') : t('game.wrong') }}
+        {{ isCorrect ? t("game.correct") : t("game.wrong") }}
       </span>
     </div>
   </div>

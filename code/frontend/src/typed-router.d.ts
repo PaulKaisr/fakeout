@@ -21,6 +21,8 @@ declare module 'vue-router/auto-routes' {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/[lang]/': RouteRecordInfo<'/[lang]/', '/:lang', { lang: ParamValue<true> }, { lang: ParamValue<false> }>,
     '/[lang]/game/[date]': RouteRecordInfo<'/[lang]/game/[date]', '/:lang/game/:date', { lang: ParamValue<true>, date: ParamValue<true> }, { lang: ParamValue<false>, date: ParamValue<false> }>,
+    '/[lang]/video/': RouteRecordInfo<'/[lang]/video/', '/:lang/video', { lang: ParamValue<true> }, { lang: ParamValue<false> }>,
+    '/[lang]/video/[date]': RouteRecordInfo<'/[lang]/video/[date]', '/:lang/video/:date', { lang: ParamValue<true>, date: ParamValue<true> }, { lang: ParamValue<false>, date: ParamValue<false> }>,
   }
 
   /**
@@ -44,6 +46,14 @@ declare module 'vue-router/auto-routes' {
     }
     'src/pages/[lang]/game/[date].vue': {
       routes: '/[lang]/game/[date]'
+      views: never
+    }
+    'src/pages/[lang]/video/index.vue': {
+      routes: '/[lang]/video/'
+      views: never
+    }
+    'src/pages/[lang]/video/[date].vue': {
+      routes: '/[lang]/video/[date]'
       views: never
     }
   }
