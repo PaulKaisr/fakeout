@@ -3,7 +3,7 @@
     <!-- Header -->
     <v-app-bar
       flat
-      border
+      :border="true"
       color="background"
       class="backdrop-blur-md sticky top-0 z-50 px-6"
     >
