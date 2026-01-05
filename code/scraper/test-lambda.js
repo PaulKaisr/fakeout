@@ -6,8 +6,8 @@ dotenv.config();
 async function testLambda() {
   // Mock Lambda event
   const event = {
-    mode: process.env.TEST_MODE || "foto", // "foto" or "video"
-    mediaCount: parseInt(process.env.TEST_MEDIA_COUNT) || 2,
+    mode: process.env.TEST_MODE || "video", // "foto" or "video"
+    mediaCount: parseInt(process.env.TEST_MEDIA_COUNT) || 5,
     bucketName: process.env.R2_BUCKET_NAME || "fakeout-videos-dev",
   };
 

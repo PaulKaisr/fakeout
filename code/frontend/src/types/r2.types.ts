@@ -1,4 +1,4 @@
-/**
+  /**
  * R2 Type Definitions
  *
  * TypeScript interfaces for R2 storage structure and metadata
@@ -61,7 +61,12 @@ export interface R2Image {
   key: string;
   url: string;
   metadata?: R2ImageMetadata | R2GeneratedImageMetadata;
-  type: "pexels_raw" | "openai_generated" | "google_generated";
+  type:
+    | "pexels_raw"
+    | "openai_generated"
+    | "google_generated"
+    | "pexels_video_raw"
+    | "google_generated_video";
 }
 
 /**
@@ -78,7 +83,12 @@ export interface R2Config {
  */
 export interface R2ImageQueryOptions {
   datePrefix: string;
-  type?: "pexels_raw" | "openai_generated" | "google_generated" | "both";
+  type?:
+    | "pexels_raw"
+    | "openai_generated"
+    | "google_generated"
+    | "pexels_video_raw"
+    | "google_generated_video";
   limit?: number;
   includeMetadata?: boolean;
 }

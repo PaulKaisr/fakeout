@@ -55,10 +55,17 @@ export class R2Service {
 
   /**
    * Fetch the games manifest file listing available dates.
+   * @param mediaType - Type of media manifest to fetch (default: "images")
    * @returns List of available dates (YYYY-MM-DD)
    */
-  async fetchManifest(): Promise<string[]> {
-    const url = this.buildUrl("games_manifest.json");
+  async fetchManifest(
+    mediaType: "images" | "videos" = "images"
+  ): Promise<string[]> {
+    const manifestKey =
+      mediaType === "videos"
+        ? "games_manifest_videos.json"
+        : "games_manifest_images.json";
+    const url = this.buildUrl(manifestKey);
     try {
       const response = await fetch(url);
       if (!response.ok) return [];
@@ -78,7 +85,12 @@ export class R2Service {
    */
   buildImageKeys(
     datePrefix: string,
-    type: "pexels_raw" | "openai_generated" | "google_generated"
+    type:
+      | "pexels_raw"
+      | "openai_generated"
+      | "google_generated"
+      | "pexels_video_raw"
+      | "google_generated_video"
   ): {
     imageKeyPattern: string;
     metaKeyPattern: string;
@@ -88,10 +100,20 @@ export class R2Service {
         imageKeyPattern: `${datePrefix}/pexel_images_raw/{number}`,
         metaKeyPattern: `${datePrefix}/pexel_images_raw/{number}_meta.json`,
       };
+    } else if (type === "pexels_video_raw") {
+      return {
+        imageKeyPattern: `${datePrefix}/pexel_videos_raw/{number}`,
+        metaKeyPattern: `${datePrefix}/pexel_videos_raw/{number}_meta.json`,
+      };
     } else if (type === "google_generated") {
       return {
         imageKeyPattern: `${datePrefix}/google_generated_images/{id}`,
         metaKeyPattern: `${datePrefix}/google_generated_images/{id}_meta.json`,
+      };
+    } else if (type === "google_generated_video") {
+      return {
+        imageKeyPattern: `${datePrefix}/google_generated_videos/{id}`,
+        metaKeyPattern: `${datePrefix}/google_generated_videos/{id}_meta.json`,
       };
     } else {
       return {
@@ -114,7 +136,12 @@ export class R2Service {
    */
   async getImagesForDate(
     datePrefix: string,
-    type: "pexels_raw" | "openai_generated" | "google_generated",
+    type:
+      | "pexels_raw"
+      | "openai_generated"
+      | "google_generated"
+      | "pexels_video_raw"
+      | "google_generated_video",
     options: {
       start?: number;
       end?: number;
@@ -128,8 +155,8 @@ export class R2Service {
       type
     );
 
-    // For pexels_raw, try sequential numbers (001, 002, 003...)
-    if (type === "pexels_raw") {
+    // For pexels_raw and pexels_video_raw, try sequential numbers (001, 002, 003...)
+    if (type === "pexels_raw" || type === "pexels_video_raw") {
       for (let i = start; i <= end; i++) {
         const number = String(i).padStart(3, "0");
         const imageKey = imageKeyPattern.replace("{number}", number);
@@ -183,12 +210,13 @@ export class R2Service {
   async getGeneratedImagesForIds(
     datePrefix: string,
     pexelsIds: string[],
-    includeMetadata = true
+    includeMetadata = true,
+    type: "google_generated" | "google_generated_video" = "google_generated"
   ): Promise<R2Image[]> {
     const images: R2Image[] = [];
     const { imageKeyPattern, metaKeyPattern } = this.buildImageKeys(
       datePrefix,
-      "google_generated"
+      type
     );
 
     for (const id of pexelsIds) {
@@ -202,13 +230,13 @@ export class R2Service {
             key: imageKey,
             url: this.buildUrl(imageKey),
             metadata: metadata as R2GeneratedImageMetadata,
-            type: "google_generated",
+            type: type,
           });
         } else {
           images.push({
             key: imageKey,
             url: this.buildUrl(imageKey),
-            type: "google_generated",
+            type: type,
           });
         }
       } catch {
@@ -261,14 +289,32 @@ export class R2Service {
    * @returns True if data exists, false otherwise
    */
   async checkDataExistsForDate(datePrefix: string): Promise<boolean> {
-    const { metaKeyPattern } = this.buildImageKeys(datePrefix, "pexels_raw");
-    // Probe the first likely image "001"
-    const probeKey = metaKeyPattern.replace("{number}", "001");
+    // Probe for images (default) - this might need update if we only have video games?
+    // But usually we have images. If not, this check might fail for video-only dates.
+    // Let's check for either.
+    const { metaKeyPattern: imageMetaPattern } = this.buildImageKeys(
+      datePrefix,
+      "pexels_raw"
+    );
+    const { metaKeyPattern: videoMetaPattern } = this.buildImageKeys(
+      datePrefix,
+      "pexels_video_raw"
+    );
+
     try {
+      // Try image first
+      const probeKey = imageMetaPattern.replace("{number}", "001");
       await this.fetchMetadata(probeKey);
       return true;
     } catch {
-      return false;
+      // Try video
+      try {
+        const probeKey = videoMetaPattern.replace("{number}", "001");
+        await this.fetchMetadata(probeKey);
+        return true;
+      } catch {
+        return false;
+      }
     }
   }
 }

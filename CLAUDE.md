@@ -38,7 +38,9 @@ Python Lambda function that processes images with AI vision and generation APIs 
   - `"google"`: Uses Gemini 2.0 Flash for vision, Imagen 3 for generation
 - Includes manifest management:
   - `backfill` parameter (default: `true`): Scans all date folders and rebuilds manifest
-  - Creates/updates `games_manifest.json` at bucket root with available game dates
+  - Creates/updates separate manifest files per media type at bucket root:
+    - `games_manifest_images.json`: Available image game dates
+    - `games_manifest_videos.json`: Available video game dates
 - Image limit parameter `n` for partial processing
 - Fail-fast error handling with enhanced logging
 
@@ -302,19 +304,29 @@ Rebuild entire manifest from all date folders:
 }
 ```
 
+Process videos and update video manifest:
+```json
+{
+  "mode": "DESCRIBE_AND_GENERATE",
+  "mediaType": "video"
+}
+```
+
 ## Key Integration Points
 
 - **Scraper → R2**: Downloads media from Pexels and uploads to R2 with date-prefixed keys
 - **Describe-and-Generate → R2**: Reads images, adds AI descriptions to metadata, generates new images, updates manifest
 - **Frontend → R2**: Fetches game data directly from R2 public URLs (via custom domain)
-  - Loads `games_manifest.json` for archive listing
+  - Loads `games_manifest_images.json` for archive listing (image games only)
   - Fetches raw and generated images with metadata
   - Implements 7-day lookback for finding latest game
 - **Step Functions → Lambdas**: Orchestrates weekly game generation workflow
 - **EventBridge → Step Functions**: Triggers automation every Monday at 9 AM UTC
 - **All Lambdas**: Receive credentials via environment variables configured in Terraform
 - **Storage hierarchy**: All media organized by date (`YYYY-MM-DD/`) for easy querying
-- **Manifest system**: `games_manifest.json` tracks all available game dates in reverse chronological order
+- **Manifest system**: Separate manifest files per media type track available game dates in reverse chronological order
+  - `games_manifest_images.json`: Dates with image game content
+  - `games_manifest_videos.json`: Dates with video game content
 
 ## Configuration Notes
 

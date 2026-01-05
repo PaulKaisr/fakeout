@@ -96,6 +96,78 @@ def test_all_images():
     print(json.dumps(json.loads(result["body"]), indent=2))
 
 
+# ==================== VIDEO TESTS ====================
+
+
+def test_describe_video():
+    """Test DESCRIBE mode for videos - only analyze videos and add descriptions"""
+    load_dotenv()
+
+    event = {
+        "bucketName": "fakeout-videos-dev",
+        "datePrefix": datetime.utcnow().strftime("%Y-%m-%d"),
+        "mediaType": "video",
+        "mode": "DESCRIBE",
+        "n": 1,  # Process only 1 video for testing
+    }
+
+    print("=== Testing Video DESCRIBE Mode ===")
+    print(f"Event: {json.dumps(event, indent=2)}\n")
+
+    result = handler(event, None)
+
+    print("\n=== Result ===")
+    print(f"Status Code: {result['statusCode']}")
+    print(f"Body:")
+    print(json.dumps(json.loads(result["body"]), indent=2))
+
+
+def test_generate_video():
+    """Test GENERATE mode for videos - only generate videos using existing descriptions"""
+    load_dotenv()
+
+    event = {
+        "bucketName": "fakeout-videos-dev",
+        "datePrefix": datetime.utcnow().strftime("%Y-%m-%d"),
+        "mediaType": "video",
+        "mode": "GENERATE",
+        "n": 1,  # Process only 1 video for testing
+    }
+
+    print("=== Testing Video GENERATE Mode ===")
+    print(f"Event: {json.dumps(event, indent=2)}\n")
+
+    result = handler(event, None)
+
+    print("\n=== Result ===")
+    print(f"Status Code: {result['statusCode']}")
+    print(f"Body:")
+    print(json.dumps(json.loads(result["body"]), indent=2))
+
+
+def test_describe_and_generate_video():
+    """Test DESCRIBE_AND_GENERATE mode for videos - do both operations"""
+    load_dotenv()
+
+    event = {
+        "bucketName": "fakeout-videos-dev",
+        "datePrefix": datetime.utcnow().strftime("%Y-%m-%d"),
+        "mediaType": "video",
+        "mode": "DESCRIBE_AND_GENERATE",
+        "n": 1,  # Process only 1 video for testing (expensive!)
+    }
+
+    print("=== Testing Video DESCRIBE_AND_GENERATE Mode ===")
+    print(f"Event: {json.dumps(event, indent=2)}\n")
+
+    result = handler(event, None)
+
+    print("\n=== Result ===")
+    print(f"Status Code: {result['statusCode']}")
+    print(f"Body:")
+    print(json.dumps(json.loads(result["body"]), indent=2))
+
+
 if __name__ == "__main__":
     import sys
 
@@ -106,6 +178,7 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         test_name = sys.argv[1].lower()
 
+        # Image tests
         if test_name == "describe":
             test_describe_only()
         elif test_name == "generate":
@@ -114,12 +187,21 @@ if __name__ == "__main__":
             test_describe_and_generate()
         elif test_name == "full":
             test_all_images()
+        # Video tests
+        elif test_name == "video-describe":
+            test_describe_video()
+        elif test_name == "video-generate":
+            test_generate_video()
+        elif test_name == "video-both":
+            test_describe_and_generate_video()
         else:
             print(f"Unknown test: {test_name}")
-            print("Available tests: describe, generate, both, full")
+            print("\nAvailable image tests: describe, generate, both, full")
+            print("Available video tests: video-describe, video-generate, video-both")
     else:
         # Default: run DESCRIBE mode with limited images
         print("Running default test (DESCRIBE mode, 2 images)")
         print("Use 'python test_local.py <test_name>' to run specific tests")
-        print("Available: describe, generate, both, full\n")
+        print("\nAvailable image tests: describe, generate, both, full")
+        print("Available video tests: video-describe, video-generate, video-both\n")
         test_describe_only()
