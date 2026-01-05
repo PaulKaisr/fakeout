@@ -7,6 +7,12 @@
       color="background"
       class="backdrop-blur-md sticky top-0 z-50 px-6"
     >
+      <v-app-bar-nav-icon
+        variant="text"
+        @click.stop="drawer = !drawer"
+        class="d-md-none mr-2"
+      ></v-app-bar-nav-icon>
+
       <div
         class="flex items-center gap-3 cursor-pointer"
         @click="router.push(`/${locale}`)"
@@ -20,7 +26,7 @@
             class="w-full h-full object-cover"
           />
         </div>
-        <div>
+        <div class="hidden sm:block">
           <h1 class="text-lg font-bold leading-none">
             {{ t("header.title") }}
           </h1>
@@ -41,7 +47,7 @@
           color="primary"
           rounded="lg"
           variant="outlined"
-          class="border"
+          class="border d-none d-md-flex"
           @update:model-value="switchMode"
         >
           <v-btn value="video" size="small" prepend-icon="mdi-video">
@@ -52,13 +58,15 @@
           </v-btn>
         </v-btn-toggle>
 
-        <LanguageSwitcher />
+        <div class="d-none d-md-block">
+          <LanguageSwitcher />
+        </div>
 
         <v-btn
           variant="text"
           color="medium-emphasis"
           prepend-icon="mdi-chart-bar"
-          class="text-none hidden md:flex"
+          class="text-none d-none d-md-flex"
           @click="router.push(`/${locale}/stats`)"
         >
           {{ t("stats.title") }}
@@ -68,7 +76,7 @@
           variant="text"
           color="medium-emphasis"
           prepend-icon="mdi-calendar-clock"
-          class="text-none hidden sm:flex"
+          class="text-none d-none d-md-flex"
           @click="showArchiveDialog = true"
         >
           {{ t("header.pastGames") }}
@@ -122,6 +130,72 @@
       </div>
     </v-app-bar>
 
+    <v-navigation-drawer v-model="drawer" temporary location="left">
+      <div class="p-4">
+        <div class="flex flex-col gap-2">
+          <p class="text-xs font-bold text-medium-emphasis uppercase ml-2 mb-1">
+            {{ t("game.mode") }}
+          </p>
+          <v-list-item
+            rounded="lg"
+            :active="mode === 'video' || (!mode && false)"
+            @click="switchMode('video')"
+            prepend-icon="mdi-video"
+            title="Video Mode"
+          >
+          </v-list-item>
+          <v-list-item
+            rounded="lg"
+            :active="mode === 'image'"
+            @click="switchMode('image')"
+            prepend-icon="mdi-image"
+            title="Image Mode"
+          >
+          </v-list-item>
+        </div>
+
+        <v-divider class="my-4"></v-divider>
+
+        <div class="flex flex-col gap-2">
+          <v-list-item
+            rounded="lg"
+            prepend-icon="mdi-chart-bar"
+            :title="t('stats.title')"
+            @click="router.push(`/${locale}/stats`)"
+          ></v-list-item>
+
+          <v-list-item
+            rounded="lg"
+            prepend-icon="mdi-calendar-clock"
+            :title="t('header.pastGames')"
+            @click="showArchiveDialog = true"
+          ></v-list-item>
+        </div>
+
+        <v-divider class="my-4"></v-divider>
+
+        <div class="flex flex-col gap-2">
+          <p class="text-xs font-bold text-medium-emphasis uppercase ml-2 mb-1">
+            Language
+          </p>
+          <v-list-item
+            v-for="l in ['en', 'de', 'bg']"
+            :key="l"
+            :active="locale === l"
+            @click="switchLanguage(l)"
+            rounded="lg"
+          >
+            <template v-slot:prepend>
+              <span class="text-xl mr-3">{{
+                { en: "🇺🇸", de: "🇩🇪", bg: "🇧🇬" }[l]
+              }}</span>
+            </template>
+            <v-list-item-title>{{ t(`languages.${l}`) }}</v-list-item-title>
+          </v-list-item>
+        </div>
+      </div>
+    </v-navigation-drawer>
+
     <!-- Main Content -->
     <v-main>
       <v-container
@@ -139,7 +213,7 @@
           </p>
         </div>
 
-        <!-- Loading State -->
+        <!-- Loading State (Initial Data Fetch) -->
         <div
           v-if="isLoading"
           class="flex flex-col items-center justify-center py-20"
@@ -172,27 +246,45 @@
           @archive="showArchiveDialog = true"
         />
 
-        <!-- Game Grid -->
-        <div
-          v-else-if="currentRound"
-          class="grid md:grid-cols-2 gap-8 w-full max-w-5xl mb-12"
-        >
-          <ImageCard
-            :image="currentRound.imageA"
-            label="A"
-            :is-selected="selectedImageId === currentRound.imageA.id"
-            :show-result="state.status === GameStatus.ROUND_RESULT"
-            :is-correct="isSelectionCorrect(currentRound.imageA)"
-            @select="handleSelection(currentRound.imageA.id)"
-          />
-          <ImageCard
-            :image="currentRound.imageB"
-            label="B"
-            :is-selected="selectedImageId === currentRound.imageB.id"
-            :show-result="state.status === GameStatus.ROUND_RESULT"
-            :is-correct="isSelectionCorrect(currentRound.imageB)"
-            @select="handleSelection(currentRound.imageB.id)"
-          />
+        <!-- Game Round Area -->
+        <div v-else-if="currentRound" class="w-full max-w-5xl relative">
+          <!-- Image Loading Spinner (Overlay) -->
+          <div
+            v-if="!areBothImagesLoaded"
+            class="absolute inset-0 flex flex-col items-center justify-center z-10"
+          >
+            <v-progress-circular
+              indeterminate
+              color="primary"
+              size="64"
+            ></v-progress-circular>
+            <p class="mt-4 text-medium-emphasis">{{ t("game.loadingData") }}</p>
+          </div>
+
+          <!-- Game Grid (Always rendered to allow loading) -->
+          <div
+            :class="{ invisible: !areBothImagesLoaded }"
+            class="grid md:grid-cols-2 gap-8 w-full mb-12"
+          >
+            <ImageCard
+              :image="currentRound.imageA"
+              label="A"
+              :is-selected="selectedImageId === currentRound.imageA.id"
+              :show-result="state.status === GameStatus.ROUND_RESULT"
+              :is-correct="isSelectionCorrect(currentRound.imageA)"
+              @select="handleSelection(currentRound.imageA.id)"
+              @load="mediaLoaded.A = true"
+            />
+            <ImageCard
+              :image="currentRound.imageB"
+              label="B"
+              :is-selected="selectedImageId === currentRound.imageB.id"
+              :show-result="state.status === GameStatus.ROUND_RESULT"
+              :is-correct="isSelectionCorrect(currentRound.imageB)"
+              @select="handleSelection(currentRound.imageB.id)"
+              @load="mediaLoaded.B = true"
+            />
+          </div>
         </div>
 
         <!-- Next Buton (only shows after selection) -->
@@ -252,7 +344,7 @@ import ImageCard from "./ImageCard.vue";
 import ResultScreen from "./ResultScreen.vue";
 import PastGamesDialog from "./PastGamesDialog.vue";
 import GameFAQ from "./GameFAQ.vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 
 const { t, locale } = useI18n();
@@ -268,6 +360,15 @@ const selectedImageId = ref<string | null>(null);
 const isLoading = ref(true);
 const error = ref<string | null>(null);
 const showArchiveDialog = ref(false);
+const drawer = ref(false);
+const route = useRoute();
+
+const mediaLoaded = reactive({ A: false, B: false });
+const areBothImagesLoaded = computed(() => {
+  // If we're not waiting for images, we consider them loaded
+  if (!currentRound.value) return true;
+  return mediaLoaded.A && mediaLoaded.B;
+});
 
 const state = reactive<GameState>({
   status: GameStatus.INTRO,
@@ -283,6 +384,15 @@ onMounted(async () => {
   await loadGame();
 });
 
+// Watch round index to reset loading state
+watch(
+  () => state.currentRoundIndex,
+  () => {
+    mediaLoaded.A = false;
+    mediaLoaded.B = false;
+  }
+);
+
 watch(
   () => [props.date, props.mode],
   async () => {
@@ -292,6 +402,8 @@ watch(
     state.score = 0;
     state.history = [];
     selectedImageId.value = null;
+    mediaLoaded.A = false;
+    mediaLoaded.B = false;
     await loadGame();
   }
 );
@@ -414,6 +526,20 @@ const switchMode = (newMode: "image" | "video") => {
     // Video is now the default at root
     router.push(`/${locale.value}`);
   }
+};
+
+const switchLanguage = (newLocale: string) => {
+  if (locale.value === newLocale) return;
+  if ((route.params as any).lang) {
+    router.push({
+      name: route.name as any,
+      params: { ...route.params, lang: newLocale },
+      query: route.query,
+    });
+  } else {
+    router.push(`/${newLocale}`);
+  }
+  drawer.value = false;
 };
 </script>
 

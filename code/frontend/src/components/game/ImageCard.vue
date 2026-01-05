@@ -16,6 +16,9 @@
       :src="image.url"
       class="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-105"
       cover
+      eager
+      @load="$emit('load')"
+      @error="$emit('load')"
     >
       <template #placeholder>
         <div
@@ -38,6 +41,8 @@
       loop
       muted
       playsinline
+      @loadeddata="$emit('load')"
+      @error="$emit('load')"
     ></video>
 
     <!-- Label (A or B) -->
@@ -96,7 +101,7 @@ defineProps<{
   isCorrect?: boolean;
 }>();
 
-defineEmits(["select"]);
+defineEmits(["select", "load"]);
 </script>
 
 <style scoped>
