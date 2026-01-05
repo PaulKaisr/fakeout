@@ -15,6 +15,7 @@
     "scoreLabel": "Punkte"
   },
   "game": {
+    "mode": "Modus",
     "question": {
       "image": "Welches Bild ist KI-generiert?",
       "video": "Welches Video ist KI-generiert?"

@@ -15,6 +15,7 @@
     "scoreLabel": "Score"
   },
   "game": {
+    "mode": "Mode",
     "question": {
       "image": "Which image is AI-generated?",
       "video": "Which video is AI-generated?"
