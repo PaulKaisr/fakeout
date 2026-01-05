@@ -5,7 +5,10 @@ import type { R2Image, R2ImageMetadata } from "@/types/r2.types";
 
 const r2Service = createR2Service(r2Config);
 
-export const getR2GameRounds = async (date?: string): Promise<Round[]> => {
+export const getR2GameRounds = async (
+  date?: string,
+  mode: "image" | "video" = "image"
+): Promise<{ rounds: Round[]; date: string }> => {
   // 1. Determine which date to use
   let validDate = "";
 
@@ -16,12 +19,14 @@ export const getR2GameRounds = async (date?: string): Promise<Round[]> => {
       validDate = date;
     } else {
       console.warn(`No game data found for requested date: ${date}`);
-      return [];
+      return { rounds: [], date: "" };
     }
   } else {
     // Find the latest date with data
     try {
-      const dates = await r2Service.fetchManifest();
+      const dates = await r2Service.fetchManifest(
+        mode === "video" ? "videos" : "images"
+      );
       if (dates.length > 0) {
         // Sort dates descending
         dates.sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
@@ -57,14 +62,15 @@ export const getR2GameRounds = async (date?: string): Promise<Round[]> => {
 
     if (!validDate) {
       console.warn(`No game data found.`);
-      return [];
+      return { rounds: [], date: "" };
     }
   }
 
   // 2. Fetch real images (Pexels) - fetch up to 5 images
+  const itemType = mode === "video" ? "pexels_video_raw" : "pexels_raw";
   const realImages: R2Image[] = await r2Service.getImagesForDate(
     validDate,
-    "pexels_raw",
+    itemType,
     {
       end: 5,
       includeMetadata: true,
@@ -73,7 +79,7 @@ export const getR2GameRounds = async (date?: string): Promise<Round[]> => {
 
   if (realImages.length === 0) {
     console.warn(`No images found for date ${validDate}`);
-    return [];
+    return { rounds: [], date: "" };
   }
 
   // 3. Extract IDs to fetch generated images
@@ -85,11 +91,12 @@ export const getR2GameRounds = async (date?: string): Promise<Round[]> => {
   );
 
   // 4. Fetch generated images for these IDs
-  // We used 'google_generated' mode as requested
+  // We used 'google_generated' or 'google_generated_video' mode as requested
   const generatedImages = await r2Service.getGeneratedImagesForIds(
     validDate,
     pexelsIds,
-    true
+    true,
+    mode === "video" ? "google_generated_video" : "google_generated"
   );
 
   // 5. Match pairs
@@ -126,6 +133,7 @@ export const getR2GameRounds = async (date?: string): Promise<Round[]> => {
         url: realImg.url,
         isAiGenerated: false,
         credit: (realImg.metadata as R2ImageMetadata).photographer || "Pexels",
+        mediaType: mode,
       };
 
       const genGameImage: GameImage = {
@@ -133,6 +141,7 @@ export const getR2GameRounds = async (date?: string): Promise<Round[]> => {
         url: genImg.url,
         isAiGenerated: true,
         credit: "Google AI",
+        mediaType: mode,
       };
 
       rounds.push({
@@ -143,5 +152,5 @@ export const getR2GameRounds = async (date?: string): Promise<Round[]> => {
     }
   });
 
-  return rounds;
+  return { rounds, date: validDate };
 };

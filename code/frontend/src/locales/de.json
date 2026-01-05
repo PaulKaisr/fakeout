@@ -15,12 +15,23 @@
     "scoreLabel": "Punkte"
   },
   "game": {
-    "question": "Welches Bild ist KI-generiert?",
-    "instructions": "Klicke auf das Bild, von dem du denkst, dass es von künstlicher Intelligenz erstellt wurde",
+    "mode": "Modus",
+    "question": {
+      "image": "Welches Bild ist KI-generiert?",
+      "video": "Welches Video ist KI-generiert?"
+    },
+    "instructions": {
+      "image": "Klicke auf das Bild, von dem du denkst, dass es von künstlicher Intelligenz erstellt wurde",
+      "video": "Klicke auf das Video, von dem du denkst, dass es von künstlicher Intelligenz erstellt wurde"
+    },
     "loadingData": "Spieldaten werden geladen...",
     "nextRound": "Nächste Runde",
+    "finish": "Beenden",
     "aiGenerated": "KI-generiert",
-    "realPhoto": "Echtes Foto",
+    "real": {
+      "image": "Echtes Foto",
+      "video": "Echtes Video"
+    },
     "correct": "Richtig!",
     "wrong": "Falsch!"
   },
@@ -41,7 +52,9 @@
   "archive": {
     "title": "Vergangene Spiele",
     "subtitle": "Spiele vergangener Tage spielen",
-    "noGames": "Keine vergangenen Spiele im Archiv gefunden."
+    "noGames": "Keine vergangenen Spiele im Archiv gefunden.",
+    "finished": "Abgeschlossen",
+    "inProgress": "Im Gange"
   },
   "languages": {
     "en": "English",
@@ -77,5 +90,17 @@
     "failedToLoad": "Fehler beim Laden der Spieldaten.",
     "failedToLoadImage": "Fehler beim Laden des Bildes",
     "unknownError": "Unbekannter Fehler beim Laden der Bilder"
+  },
+  "stats": {
+    "title": "Deine Statistiken",
+    "imageMode": "Bildmodus",
+    "imageModeDesc": "Erkenne KI-generierte Bilder",
+    "videoMode": "Videomodus",
+    "videoModeDesc": "Erkenne KI-generierte Videos",
+    "gamesPlayed": "Gespielte Spiele",
+    "totalScore": "Gesamtpunktzahl",
+    "accuracy": "Genauigkeit",
+    "resetStats": "Statistiken zurücksetzen",
+    "resetConfirm": "Bist du sicher, dass du alle deine Statistiken zurücksetzen möchtest? Dies kann nicht rückgängig gemacht werden."
   }
 }
