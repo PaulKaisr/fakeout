@@ -51,7 +51,9 @@
   "archive": {
     "title": "Vergangene Spiele",
     "subtitle": "Spiele vergangener Tage spielen",
-    "noGames": "Keine vergangenen Spiele im Archiv gefunden."
+    "noGames": "Keine vergangenen Spiele im Archiv gefunden.",
+    "finished": "Abgeschlossen",
+    "inProgress": "Im Gange"
   },
   "languages": {
     "en": "English",

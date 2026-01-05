@@ -242,7 +242,11 @@ import {
   type Image,
 } from "@/types/game";
 import { getR2GameRounds } from "@/services/gameServiceR2";
-import { recordRoundResult, finishGame } from "@/services/userStatsService";
+import {
+  recordRoundResult,
+  finishGame,
+  getGameStats,
+} from "@/services/userStatsService";
 import LanguageSwitcher from "@/components/LanguageSwitcher.vue";
 import ImageCard from "./ImageCard.vue";
 import ResultScreen from "./ResultScreen.vue";
@@ -292,11 +296,14 @@ watch(
   }
 );
 
+const loadedDate = ref<string | null>(null);
+
 const loadGame = async () => {
   isLoading.value = true;
   error.value = null;
+  loadedDate.value = null;
   try {
-    const fetchedRounds = await getR2GameRounds(
+    const { rounds: fetchedRounds, date } = await getR2GameRounds(
       props.date,
       props.mode || "image"
     );
@@ -307,8 +314,28 @@ const loadGame = async () => {
       return;
     }
     rounds.value = fetchedRounds;
+    loadedDate.value = date;
     state.totalRounds = fetchedRounds.length;
-    state.status = GameStatus.PLAYING;
+
+    // Restore progress
+    const savedProgress = getGameStats(props.mode || "image", date);
+    if (savedProgress && !savedProgress.isFinished) {
+      state.score = savedProgress.score;
+      state.history = savedProgress.history || [];
+
+      if (savedProgress.roundsPlayed >= state.totalRounds) {
+        state.status = GameStatus.GAME_OVER;
+        // Auto-finish if they answered everything but didn't click finish
+        if (loadedDate.value) {
+          finishGame(props.mode || "image", loadedDate.value);
+        }
+      } else {
+        state.currentRoundIndex = savedProgress.roundsPlayed;
+        state.status = GameStatus.PLAYING;
+      }
+    } else {
+      state.status = GameStatus.PLAYING;
+    }
   } catch (e) {
     console.error(e);
     error.value = t("errors.failedToLoad");
@@ -334,7 +361,15 @@ const handleSelection = (imageId: string) => {
   });
 
   // Save stats immediately
-  recordRoundResult(props.mode || "image", isCorrect);
+  if (loadedDate.value) {
+    recordRoundResult(
+      props.mode || "image",
+      loadedDate.value,
+      isCorrect,
+      state.totalRounds,
+      currentRound.value.id
+    );
+  }
 };
 
 const isSelectionCorrect = (image: Image) => {
@@ -362,7 +397,9 @@ const nextRound = () => {
     state.status = GameStatus.PLAYING;
   } else {
     state.status = GameStatus.GAME_OVER;
-    finishGame(props.mode || "image");
+    if (loadedDate.value) {
+      finishGame(props.mode || "image", loadedDate.value);
+    }
   }
 };
 
