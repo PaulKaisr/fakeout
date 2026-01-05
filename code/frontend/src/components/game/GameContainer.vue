@@ -448,13 +448,18 @@ const loadGame = async () => {
 
     // Restore progress
     const savedProgress = getGameStats(props.mode || "image", date);
-    if (savedProgress && !savedProgress.isFinished) {
+    if (savedProgress) {
       state.score = savedProgress.score;
       state.history = savedProgress.history || [];
 
-      if (savedProgress.roundsPlayed >= state.totalRounds) {
+      if (savedProgress.isFinished) {
         state.status = GameStatus.GAME_OVER;
-        // Auto-finish if they answered everything but didn't click finish
+        state.totalRounds = savedProgress.totalRounds; // Trust saved total rounds for finished games
+      } else if (savedProgress.roundsPlayed >= state.totalRounds) {
+        // Edge case: Played all rounds but didn't finish properly?
+        // Or maybe totalRounds changed.
+        // If we have history for all rounds, mark as game over.
+        state.status = GameStatus.GAME_OVER;
         if (loadedDate.value) {
           finishGame(props.mode || "image", loadedDate.value);
         }

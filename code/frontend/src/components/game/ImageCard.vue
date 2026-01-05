@@ -14,7 +14,7 @@
     <v-img
       v-if="image.mediaType !== 'video'"
       :src="image.url"
-      class="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-105"
+      class="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105"
       cover
       eager
       @load="$emit('load')"
@@ -37,7 +37,7 @@
       v-else
       ref="videoRef"
       :src="image.url"
-      class="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-105"
+      class="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105"
       autoplay
       loop
       muted
