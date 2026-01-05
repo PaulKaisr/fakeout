@@ -65,7 +65,11 @@
         :color="image.isAiGenerated ? 'purple-accent-2' : 'cyan-accent-2'"
       ></v-icon>
       <span class="text-h5 font-bold text-white mb-1">
-        {{ image.isAiGenerated ? t("game.aiGenerated") : t("game.realPhoto") }}
+        {{
+          image.isAiGenerated
+            ? t("game.aiGenerated")
+            : t(`game.real.${image.mediaType || "image"}`)
+        }}
       </span>
       <span
         v-if="isSelected"

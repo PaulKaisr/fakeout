@@ -33,7 +33,27 @@
       <v-spacer></v-spacer>
 
       <div class="flex items-center gap-6">
+        <!-- Mode Switcher -->
+        <v-btn-toggle
+          :model-value="mode || 'image'"
+          mandatory
+          density="compact"
+          color="primary"
+          rounded="lg"
+          variant="outlined"
+          class="border"
+          @update:model-value="switchMode"
+        >
+          <v-btn value="image" size="small" prepend-icon="mdi-image">
+            Photo
+          </v-btn>
+          <v-btn value="video" size="small" prepend-icon="mdi-video">
+            Video
+          </v-btn>
+        </v-btn-toggle>
+
         <LanguageSwitcher />
+
         <v-btn
           variant="text"
           color="medium-emphasis"
@@ -102,10 +122,10 @@
           <h1
             class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
           >
-            {{ t("game.question") }}
+            {{ t(`game.question.${mode || "image"}`) }}
           </h1>
           <p class="text-medium-emphasis text-lg">
-            {{ t("game.instructions") }}
+            {{ t(`game.instructions.${mode || "image"}`) }}
           </p>
         </div>
 
@@ -305,6 +325,18 @@ const nextRound = () => {
     state.status = GameStatus.PLAYING;
   } else {
     state.status = GameStatus.GAME_OVER;
+  }
+};
+
+const switchMode = (newMode: "image" | "video") => {
+  if (props.mode === newMode) return;
+
+  // Switch to the other mode's daily game
+  // logic: /en/ (image) <-> /en/video (video)
+  if (newMode === "video") {
+    router.push(`/${locale.value}/video`);
+  } else {
+    router.push(`/${locale.value}`);
   }
 };
 </script>
