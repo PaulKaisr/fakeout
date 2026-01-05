@@ -62,12 +62,6 @@ export function recordRoundResult(
   currentTotalRounds: number,
   roundId: number
 ) {
-  // Update aggregate stats
-  userStats[mode].totalRounds++;
-  if (isCorrect) {
-    userStats[mode].totalScore++;
-  }
-
   // Update specific game stats
   const key = getGameKey(mode, date);
   if (!userStats.games[key]) {
@@ -82,13 +76,25 @@ export function recordRoundResult(
 
   const game = userStats.games[key];
   if (game) {
+    if (!game.history) game.history = []; // Backward compatibility
+
+    // Check for duplicates
+    if (game.history.some((h) => h.roundId === roundId)) {
+      return;
+    }
+
+    // Update aggregate stats (only if not duplicate)
+    userStats[mode].totalRounds++;
+    if (isCorrect) {
+      userStats[mode].totalScore++;
+    }
+
     game.roundsPlayed++;
     // Update total rounds in case it changed or was initialized wrong (though unlikely for same date)
     game.totalRounds = currentTotalRounds;
     if (isCorrect) {
       game.score++;
     }
-    if (!game.history) game.history = []; // Backward compatibility
     game.history.push({ roundId, userCorrect: isCorrect });
   }
 
