@@ -20,8 +20,9 @@ declare module 'vue-router/auto-routes' {
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/[lang]/': RouteRecordInfo<'/[lang]/', '/:lang', { lang: ParamValue<true> }, { lang: ParamValue<false> }>,
-    '/[lang]/game/[date]': RouteRecordInfo<'/[lang]/game/[date]', '/:lang/game/:date', { lang: ParamValue<true>, date: ParamValue<true> }, { lang: ParamValue<false>, date: ParamValue<false> }>,
-    '/[lang]/video/': RouteRecordInfo<'/[lang]/video/', '/:lang/video', { lang: ParamValue<true> }, { lang: ParamValue<false> }>,
+    '/[lang]/image/': RouteRecordInfo<'/[lang]/image/', '/:lang/image', { lang: ParamValue<true> }, { lang: ParamValue<false> }>,
+    '/[lang]/image/[date]': RouteRecordInfo<'/[lang]/image/[date]', '/:lang/image/:date', { lang: ParamValue<true>, date: ParamValue<true> }, { lang: ParamValue<false>, date: ParamValue<false> }>,
+    '/[lang]/stats': RouteRecordInfo<'/[lang]/stats', '/:lang/stats', { lang: ParamValue<true> }, { lang: ParamValue<false> }>,
     '/[lang]/video/[date]': RouteRecordInfo<'/[lang]/video/[date]', '/:lang/video/:date', { lang: ParamValue<true>, date: ParamValue<true> }, { lang: ParamValue<false>, date: ParamValue<false> }>,
   }
 
@@ -44,12 +45,16 @@ declare module 'vue-router/auto-routes' {
       routes: '/[lang]/'
       views: never
     }
-    'src/pages/[lang]/game/[date].vue': {
-      routes: '/[lang]/game/[date]'
+    'src/pages/[lang]/image/index.vue': {
+      routes: '/[lang]/image/'
       views: never
     }
-    'src/pages/[lang]/video/index.vue': {
-      routes: '/[lang]/video/'
+    'src/pages/[lang]/image/[date].vue': {
+      routes: '/[lang]/image/[date]'
+      views: never
+    }
+    'src/pages/[lang]/stats.vue': {
+      routes: '/[lang]/stats'
       views: never
     }
     'src/pages/[lang]/video/[date].vue': {

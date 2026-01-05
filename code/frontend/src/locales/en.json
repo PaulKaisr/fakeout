@@ -25,6 +25,7 @@
     },
     "loadingData": "Loading game data...",
     "nextRound": "Next Round",
+    "finish": "Finish",
     "aiGenerated": "AI Generated",
     "real": {
       "image": "Real Photo",
@@ -86,5 +87,17 @@
     "failedToLoad": "Failed to load game data.",
     "failedToLoadImage": "Failed to load image",
     "unknownError": "Unknown error loading images"
+  },
+  "stats": {
+    "title": "Your Stats",
+    "imageMode": "Image Mode",
+    "imageModeDesc": "Spot AI generated images",
+    "videoMode": "Video Mode",
+    "videoModeDesc": "Spot AI generated videos",
+    "gamesPlayed": "Games Played",
+    "totalScore": "Total Score",
+    "accuracy": "Accuracy",
+    "resetStats": "Reset Statistics",
+    "resetConfirm": "Are you sure you want to reset all your statistics? This cannot be undone."
   }
 }
