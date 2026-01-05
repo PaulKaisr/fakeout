@@ -60,7 +60,44 @@
                   </h3>
                   <p class="text-xs">{{ date }}</p>
                 </div>
-                <v-icon icon="mdi-chevron-right" color="grey"></v-icon>
+
+                <!-- Stats Display -->
+                <div v-if="getGameStatus(date)" class="flex items-center gap-3">
+                  <div class="text-right">
+                    <div class="text-sm font-bold">
+                      {{ getGameStatus(date)?.score }}/{{
+                        getGameStatus(date)?.totalRounds || "?"
+                      }}
+                    </div>
+                    <div
+                      class="text-[10px] uppercase font-bold tracking-wider"
+                      :class="
+                        getGameStatus(date)?.isFinished
+                          ? 'text-success'
+                          : 'text-warning'
+                      "
+                    >
+                      {{
+                        getGameStatus(date)?.isFinished
+                          ? t("archive.finished")
+                          : t("archive.inProgress")
+                      }}
+                    </div>
+                  </div>
+                  <v-icon
+                    :icon="
+                      getGameStatus(date)?.isFinished
+                        ? 'mdi-check-circle'
+                        : 'mdi-progress-clock'
+                    "
+                    :color="
+                      getGameStatus(date)?.isFinished ? 'success' : 'warning'
+                    "
+                    size="24"
+                  ></v-icon>
+                </div>
+
+                <v-icon v-else icon="mdi-chevron-right" color="grey"></v-icon>
               </v-card-text>
             </v-card>
           </v-hover>
@@ -77,11 +114,28 @@ import { createR2Service } from "@/services/r2.service";
 import { r2Config } from "@/config/r2.config";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
+import { getGameStats } from "@/services/userStatsService";
 
 const { t, locale } = useI18n();
 const router = useRouter();
 const { mobile } = useDisplay();
 const r2Service = createR2Service(r2Config);
+
+const getGameStatus = (date: string) => {
+  const game = getGameStats(props.mode || "image", date);
+  if (!game) return null;
+  // If we don't store totalRounds in progress (we only store in aggregate), we might need to guess or assume e.g. 5
+  // But wait, recordRoundResult increments totalRounds in aggregate.
+  // SingleGameProgress has roundsPlayed.
+  // Actually, we don't know totalRounds for a single game unless we store it or assume it.
+  // Let's use roundsPlayed for now, or just show score.
+  // Wait, I didn't add totalRounds to SingleGameProgress!
+  return {
+    score: game.score,
+    totalRounds: game.totalRounds || game.roundsPlayed, // Fallback if old data
+    isFinished: game.isFinished,
+  };
+};
 
 const props = defineProps<{
   modelValue: boolean;

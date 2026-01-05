@@ -6,9 +6,24 @@ export interface GameStats {
   totalRounds: number;
 }
 
+export interface GameHistoryItem {
+  roundId: number;
+  userCorrect: boolean;
+}
+
+export interface SingleGameProgress {
+  score: number;
+  roundsPlayed: number;
+  totalRounds: number;
+  isFinished: boolean;
+  history: GameHistoryItem[];
+}
+
 export interface UserStats {
   image: GameStats;
   video: GameStats;
+  // Key format: "mode-date" e.g. "image-2023-11-28"
+  games: Record<string, SingleGameProgress>;
 }
 
 const STORAGE_KEY = "fakeout-user-stats";
@@ -16,6 +31,7 @@ const STORAGE_KEY = "fakeout-user-stats";
 const defaultStats: UserStats = {
   image: { gamesPlayed: 0, totalScore: 0, totalRounds: 0 },
   video: { gamesPlayed: 0, totalScore: 0, totalRounds: 0 },
+  games: {},
 };
 
 function loadStats(): UserStats {
@@ -35,20 +51,69 @@ function loadStats(): UserStats {
 // Reactive state to be used across components if needed
 export const userStats = reactive<UserStats>(loadStats());
 
-export function recordRoundResult(mode: "image" | "video", isCorrect: boolean) {
-  // Update state
+function getGameKey(mode: "image" | "video", date: string) {
+  return `${mode}-${date}`;
+}
+
+export function recordRoundResult(
+  mode: "image" | "video",
+  date: string,
+  isCorrect: boolean,
+  currentTotalRounds: number,
+  roundId: number
+) {
+  // Update aggregate stats
   userStats[mode].totalRounds++;
   if (isCorrect) {
     userStats[mode].totalScore++;
+  }
+
+  // Update specific game stats
+  const key = getGameKey(mode, date);
+  if (!userStats.games[key]) {
+    userStats.games[key] = {
+      score: 0,
+      roundsPlayed: 0,
+      totalRounds: currentTotalRounds,
+      isFinished: false,
+      history: [],
+    };
+  }
+
+  const game = userStats.games[key];
+  if (game) {
+    game.roundsPlayed++;
+    // Update total rounds in case it changed or was initialized wrong (though unlikely for same date)
+    game.totalRounds = currentTotalRounds;
+    if (isCorrect) {
+      game.score++;
+    }
+    if (!game.history) game.history = []; // Backward compatibility
+    game.history.push({ roundId, userCorrect: isCorrect });
   }
 
   // Persist to localStorage
   localStorage.setItem(STORAGE_KEY, JSON.stringify(userStats));
 }
 
-export function finishGame(mode: "image" | "video") {
+export function finishGame(mode: "image" | "video", date: string) {
+  // Update aggregate
   userStats[mode].gamesPlayed++;
+
+  // Update specific game
+  const key = getGameKey(mode, date);
+  if (userStats.games[key]) {
+    userStats.games[key].isFinished = true;
+  }
+
   localStorage.setItem(STORAGE_KEY, JSON.stringify(userStats));
+}
+
+export function getGameStats(
+  mode: "image" | "video",
+  date: string
+): SingleGameProgress | undefined {
+  return userStats.games[getGameKey(mode, date)];
 }
 
 export function resetStats() {

@@ -8,7 +8,7 @@ const r2Service = createR2Service(r2Config);
 export const getR2GameRounds = async (
   date?: string,
   mode: "image" | "video" = "image"
-): Promise<Round[]> => {
+): Promise<{ rounds: Round[]; date: string }> => {
   // 1. Determine which date to use
   let validDate = "";
 
@@ -19,7 +19,7 @@ export const getR2GameRounds = async (
       validDate = date;
     } else {
       console.warn(`No game data found for requested date: ${date}`);
-      return [];
+      return { rounds: [], date: "" };
     }
   } else {
     // Find the latest date with data
@@ -62,7 +62,7 @@ export const getR2GameRounds = async (
 
     if (!validDate) {
       console.warn(`No game data found.`);
-      return [];
+      return { rounds: [], date: "" };
     }
   }
 
@@ -79,7 +79,7 @@ export const getR2GameRounds = async (
 
   if (realImages.length === 0) {
     console.warn(`No images found for date ${validDate}`);
-    return [];
+    return { rounds: [], date: "" };
   }
 
   // 3. Extract IDs to fetch generated images
@@ -152,5 +152,5 @@ export const getR2GameRounds = async (
     }
   });
 
-  return rounds;
+  return { rounds, date: validDate };
 };
