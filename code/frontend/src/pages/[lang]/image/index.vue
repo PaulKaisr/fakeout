@@ -1,5 +1,5 @@
 <template>
-  <GameContainer mode="video" />
+  <GameContainer mode="image" />
 </template>
 
 <script setup lang="ts">

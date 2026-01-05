@@ -25,6 +25,7 @@
     },
     "loadingData": "Spieldaten werden geladen...",
     "nextRound": "Nächste Runde",
+    "finish": "Beenden",
     "aiGenerated": "KI-generiert",
     "real": {
       "image": "Echtes Foto",
@@ -86,5 +87,17 @@
     "failedToLoad": "Fehler beim Laden der Spieldaten.",
     "failedToLoadImage": "Fehler beim Laden des Bildes",
     "unknownError": "Unbekannter Fehler beim Laden der Bilder"
+  },
+  "stats": {
+    "title": "Deine Statistiken",
+    "imageMode": "Bildmodus",
+    "imageModeDesc": "Erkenne KI-generierte Bilder",
+    "videoMode": "Videomodus",
+    "videoModeDesc": "Erkenne KI-generierte Videos",
+    "gamesPlayed": "Gespielte Spiele",
+    "totalScore": "Gesamtpunktzahl",
+    "accuracy": "Genauigkeit",
+    "resetStats": "Statistiken zurücksetzen",
+    "resetConfirm": "Bist du sicher, dass du alle deine Statistiken zurücksetzen möchtest? Dies kann nicht rückgängig gemacht werden."
   }
 }

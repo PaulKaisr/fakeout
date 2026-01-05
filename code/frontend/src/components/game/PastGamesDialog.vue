@@ -125,7 +125,7 @@ const fetchDates = async () => {
 };
 
 const playGame = (date: string) => {
-  const basePath = props.mode === "video" ? "video" : "game";
+  const basePath = props.mode === "video" ? "video" : "image";
   router.push(`/${locale.value}/${basePath}/${date}`);
   closeDialog();
 };

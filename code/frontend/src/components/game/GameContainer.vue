@@ -44,15 +44,25 @@
           class="border"
           @update:model-value="switchMode"
         >
-          <v-btn value="image" size="small" prepend-icon="mdi-image">
-            Photo
-          </v-btn>
           <v-btn value="video" size="small" prepend-icon="mdi-video">
             Video
+          </v-btn>
+          <v-btn value="image" size="small" prepend-icon="mdi-image">
+            Photo
           </v-btn>
         </v-btn-toggle>
 
         <LanguageSwitcher />
+
+        <v-btn
+          variant="text"
+          color="medium-emphasis"
+          prepend-icon="mdi-chart-bar"
+          class="text-none hidden md:flex"
+          @click="router.push(`/${locale}/stats`)"
+        >
+          {{ t("stats.title") }}
+        </v-btn>
 
         <v-btn
           variant="text"
@@ -196,9 +206,19 @@
             class="w-48 text-none font-bold"
             @click="nextRound"
           >
-            {{ t("game.nextRound") }}
+            {{
+              state.currentRoundIndex < state.totalRounds - 1
+                ? t("game.nextRound")
+                : t("game.finish")
+            }}
             <template #append>
-              <v-icon icon="mdi-arrow-right"></v-icon>
+              <v-icon
+                :icon="
+                  state.currentRoundIndex < state.totalRounds - 1
+                    ? 'mdi-arrow-right'
+                    : 'mdi-flag-checkered'
+                "
+              ></v-icon>
             </template>
           </v-btn>
         </div>
@@ -214,7 +234,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, onMounted } from "vue";
+import { ref, reactive, computed, onMounted, watch } from "vue";
 import {
   GameStatus,
   type GameState,
@@ -222,6 +242,7 @@ import {
   type Image,
 } from "@/types/game";
 import { getR2GameRounds } from "@/services/gameServiceR2";
+import { recordRoundResult, finishGame } from "@/services/userStatsService";
 import LanguageSwitcher from "@/components/LanguageSwitcher.vue";
 import ImageCard from "./ImageCard.vue";
 import ResultScreen from "./ResultScreen.vue";
@@ -257,6 +278,19 @@ const currentRound = computed(() => rounds.value[state.currentRoundIndex]);
 onMounted(async () => {
   await loadGame();
 });
+
+watch(
+  () => [props.date, props.mode],
+  async () => {
+    // Reset state before loading new game
+    state.status = GameStatus.INTRO;
+    state.currentRoundIndex = 0;
+    state.score = 0;
+    state.history = [];
+    selectedImageId.value = null;
+    await loadGame();
+  }
+);
 
 const loadGame = async () => {
   isLoading.value = true;
@@ -298,6 +332,9 @@ const handleSelection = (imageId: string) => {
     roundId: currentRound.value.id,
     userCorrect: isCorrect,
   });
+
+  // Save stats immediately
+  recordRoundResult(props.mode || "image", isCorrect);
 };
 
 const isSelectionCorrect = (image: Image) => {
@@ -325,6 +362,7 @@ const nextRound = () => {
     state.status = GameStatus.PLAYING;
   } else {
     state.status = GameStatus.GAME_OVER;
+    finishGame(props.mode || "image");
   }
 };
 
@@ -332,10 +370,11 @@ const switchMode = (newMode: "image" | "video") => {
   if (props.mode === newMode) return;
 
   // Switch to the other mode's daily game
-  // logic: /en/ (image) <-> /en/video (video)
-  if (newMode === "video") {
-    router.push(`/${locale.value}/video`);
+  // logic: /en/ (video) <-> /en/game (image)
+  if (newMode === "image") {
+    router.push(`/${locale.value}/image`);
   } else {
+    // Video is now the default at root
     router.push(`/${locale.value}`);
   }
 };
