@@ -65,7 +65,7 @@ import { articles } from "@/data/articles";
 const route = useRoute();
 const { locale } = useI18n();
 const currentLocale = computed(() => locale.value as string);
-const slug = computed(() => route.params.slug as string);
+const slug = computed(() => (route.params as any).slug as string);
 
 const article = computed(() => {
   return articles.find((a) => a.slug === slug.value);
