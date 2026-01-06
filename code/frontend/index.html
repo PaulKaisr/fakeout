@@ -1,26 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Google Consent Mode v2 - Must be set BEFORE gtag.js loads -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      // Set default consent to denied for GDPR compliance
+      gtag("consent", "default", {
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+        analytics_storage: "denied",
+        wait_for_update: 500,
+      });
+    </script>
+
     <!-- Google tag (gtag.js) -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-9BDESWHQ64"
     ></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
       gtag("js", new Date());
-
       gtag("config", "G-9BDESWHQ64");
     </script>
 
     <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/logo-192.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="/logo-512.png" />
-    <link rel="apple-touch-icon" href="/logo-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- SEO Meta Tags -->
@@ -70,6 +84,44 @@
     <link rel="alternate" hreflang="de" href="https://fakeout.dev/de" />
     <link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg" />
     <link rel="alternate" hreflang="x-default" href="https://fakeout.dev/" />
+
+    <!-- Preconnect hints for performance -->
+    <link
+      rel="preconnect"
+      href="https://pub-2e17857f3c564e4fa7b0e9e926defc73.r2.dev"
+      crossorigin
+    />
+    <link
+      rel="dns-prefetch"
+      href="https://pub-2e17857f3c564e4fa7b0e9e926defc73.r2.dev"
+    />
+
+    <!-- WebSite & Organization Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Fakeout",
+        "url": "https://fakeout.dev",
+        "description": "Daily AI image detector game - test your ability to distinguish real photos from AI-generated images",
+        "inLanguage": ["en", "de", "bg"],
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://fakeout.dev/en/blog?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Fakeout",
+        "url": "https://fakeout.dev",
+        "logo": "https://fakeout.dev/logo-512.png",
+        "sameAs": []
+      }
+    </script>
   </head>
   <body>
     <div id="app"></div>

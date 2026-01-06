@@ -10,6 +10,9 @@ from typing import Dict, Any, List, Literal, Optional, Protocol
 from clients.r2 import R2Client
 from clients.openai_vision import VisionClient
 from clients.google_ai import GoogleAIClient
+import subprocess
+import tempfile
+import imageio_ffmpeg
 
 
 MANIFEST_KEY_IMAGES = "games_manifest_images.json"
@@ -29,6 +32,7 @@ def backfill_manifest(
     """
     Backfill manifest file by listing all date folders in the bucket.
     Only includes dates that have content for the specified media type.
+    Extracts search_prompt from the first item's metadata if available.
     """
     manifest_key = get_manifest_key(media_type)
     subfolder = "pexel_videos_raw" if media_type == "video" else "pexel_images_raw"
@@ -39,6 +43,8 @@ def backfill_manifest(
     common_prefixes = response.get("CommonPrefixes", [])
 
     dates = []
+    prompts = {}
+
     for prefix_obj in common_prefixes:
         # Prefix is like "2025-12-25/"
         folder_name = prefix_obj.get("Prefix", "").strip("/")
@@ -52,15 +58,34 @@ def backfill_manifest(
         # Check if this date folder has content for the specified media type
         check_prefix = f"{folder_name}/{subfolder}/"
         check_response = r2_client.list_objects(bucket_name, prefix=check_prefix, max_keys=1)
-        if check_response.get("Contents"):
+        
+        contents = check_response.get("Contents")
+        if contents:
             dates.append(folder_name)
+            
+            # Try to read the first metadata file to get the search prompt
+            # We assume the first file is 001_meta.json, but let's just look for any *_meta.json if possible given max_keys=1 might not return it.
+            # Actually, let's list specifically for the first meta file.
+            meta_key_predict = f"{folder_name}/{subfolder}/001_meta.json"
+            try:
+                metadata = r2_client.get_json(bucket_name, meta_key_predict)
+                if metadata and "search_prompt" in metadata:
+                    prompts[folder_name] = metadata["search_prompt"]
+            except Exception:
+                # If 001_meta.json doesn't exist or fails, we skip existing the prompt
+                pass
 
     # Sort descending (newest first)
     dates.sort(reverse=True)
 
-    manifest = {"dates": dates, "updated_at": datetime.utcnow().isoformat()}
+    manifest = {
+        "dates": dates,
+        "prompts": prompts,
+        "updated_at": datetime.utcnow().isoformat()
+    }
     r2_client.put_json(bucket_name, manifest_key, manifest, cache_control="max-age=0, no-cache")
     print(f"Manifest {manifest_key} updated with {len(dates)} dates: {dates}")
+    print(f"Prompts found: {prompts}")
     return dates
 
 
@@ -74,19 +99,36 @@ def update_manifest(
     Update manifest with a new date.
     """
     manifest_key = get_manifest_key(media_type)
+    subfolder = "pexel_videos_raw" if media_type == "video" else "pexel_images_raw"
     try:
         manifest = r2_client.get_json(bucket_name, manifest_key)
         dates = manifest.get("dates", [])
+        prompts = manifest.get("prompts", {})
     except Exception:
         print(f"Manifest {manifest_key} not found, starting fresh.")
         dates = []
+        prompts = {}
 
     if date_prefix not in dates:
         dates.append(date_prefix)
         dates.sort(reverse=True)
-        manifest = {"dates": dates, "updated_at": datetime.utcnow().isoformat()}
+        
+        # Try to get prompt for the new date
+        meta_key_predict = f"{date_prefix}/{subfolder}/001_meta.json"
+        try:
+            metadata = r2_client.get_json(bucket_name, meta_key_predict)
+            if metadata and "search_prompt" in metadata:
+                prompts[date_prefix] = metadata["search_prompt"]
+        except Exception:
+            pass
+
+        manifest = {
+            "dates": dates,
+            "prompts": prompts,
+            "updated_at": datetime.utcnow().isoformat()
+        }
         r2_client.put_json(bucket_name, manifest_key, manifest, cache_control="max-age=0, no-cache")
-        print(f"Added {date_prefix} to manifest {manifest_key}.")
+        print(f"Added {date_prefix} to manifest {manifest_key}. Prompt: {prompts.get(date_prefix)}")
     else:
         print(f"Date {date_prefix} already in manifest {manifest_key}.")
 
@@ -269,6 +311,7 @@ def process_videos(
     r2_client: R2Client,
     ai_client: GoogleAIClient,
     n: Optional[int] = None,
+    max_length: int = 10,
 ) -> List[Dict[str, Any]]:
     """
     Process videos based on mode: describe, generate, or both
@@ -280,6 +323,7 @@ def process_videos(
         r2_client: Initialized R2 client
         ai_client: Initialized Google AI client (only Google supports video)
         n: Optional limit on number of videos to process (processes all if None)
+        max_length: Maximum length of video in seconds (default: 10)
 
     Returns:
         List of processed video results
@@ -320,6 +364,47 @@ def process_videos(
             print(f"Downloading video from {video_key}...")
             video_data = r2_client.get_object(bucket_name, video_key)
             print(f"Video downloaded: {len(video_data)} bytes")
+
+            # Cut video if needed
+            if max_length > 0:
+                try:
+                    with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as input_tmp:
+                        input_tmp.write(video_data)
+                        input_path = input_tmp.name
+                    
+                    output_path = f"{input_path}_cut.mp4"
+                    
+                    print(f"Cutting video to {max_length} seconds...")
+                    ffmpeg_exe = imageio_ffmpeg.get_ffmpeg_exe()
+                    cmd = [
+                        ffmpeg_exe,
+                        "-y",
+                        "-i", input_path,
+                        "-t", str(max_length),
+                        "-c", "copy",  # Copy stream to avoid re-encoding if possible, but might be less precise
+                        output_path
+                    ]
+                    
+                    # Run ffmpeg
+                    subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    
+                    # Read back cut video
+                    with open(output_path, "rb") as f:
+                        video_data = f.read()
+                    
+                    print(f"Video cut: {len(video_data)} bytes")
+                    
+                    # Cleanup
+                    os.unlink(input_path)
+                    os.unlink(output_path)
+                    
+                except Exception as e:
+                    print(f"Warning: Failed to cut video: {e}")
+                    # Continue with original video
+                    if os.path.exists(input_path):
+                        os.unlink(input_path)
+                    if os.path.exists(output_path):
+                        os.unlink(output_path)
 
             result = {
                 "video_number": video_number,
@@ -437,6 +522,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
       - "google": Use Google AI (Gemini for vision, Imagen 3/Veo 2 for generation)
     - n: Optional limit on number of media items to process (default: all)
     - backfill: Whether to rebuild entire manifest (default: true)
+    - maxLength: Maximum length of video in seconds (default: 10)
 
     Returns:
         Lambda response with processing results
@@ -452,6 +538,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         provider = event.get("provider", "google").lower()
         n = event.get("n")
         backfill = event.get("backfill", True)
+        max_length = event.get("maxLength", 10)
 
         # Initialize R2 client
         r2_client = R2Client()
@@ -506,6 +593,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 r2_client=r2_client,
                 ai_client=ai_client,
                 n=n,
+                max_length=max_length,
             )
             item_type = "videos"
         else:

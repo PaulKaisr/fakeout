@@ -1,4 +1,9 @@
-import { searchVideos, getCuratedImages, getPopularVideos } from "./clients/pexel.js";
+import {
+  searchVideos,
+  searchImages,
+  getCuratedImages,
+  getPopularVideos,
+} from "./clients/pexel.js";
 import { putObject } from "./clients/s3.js";
 
 /**
@@ -68,23 +73,40 @@ export async function handler(event, context) {
     const mode = event.mode || "foto";
     const mediaCount = event.mediaCount || 10;
 
+    // Check for search prompt in executionInput (from Step Function) or directly in event
+    const searchPrompt =
+      event.executionInput?.search_prompt || event.search_prompt;
+
     // Get current date in YYYY-MM-DD format
     const now = new Date();
-    const datePrefix = now.toISOString().split('T')[0]; // YYYY-MM-DD
+    const datePrefix = now.toISOString().split("T")[0]; // YYYY-MM-DD
 
     if (mode === "video") {
-      // Video mode: fetch popular videos
-      console.log(`Fetching ${mediaCount} popular videos from Pexels...`);
-      const videos = await getPopularVideos({ per_page: mediaCount });
-      console.log(`Found ${videos.length} popular videos`);
+      let videos;
+      if (searchPrompt) {
+        console.log(
+          `Fetching ${mediaCount} videos for query "${searchPrompt}"...`
+        );
+        videos = await searchVideos({
+          query: searchPrompt,
+          per_page: mediaCount,
+        });
+      } else {
+        // Video mode: fetch popular videos
+        console.log(`Fetching ${mediaCount} popular videos from Pexels...`);
+        videos = await getPopularVideos({ per_page: mediaCount });
+      }
+      console.log(`Found ${videos.length} videos`);
 
       // Download and upload each video to R2
       const uploadPromises = videos.map(async (video, index) => {
         const mediaNumber = index + 1;
-        const mediaNumberPadded = String(mediaNumber).padStart(3, '0');
+        const mediaNumberPadded = String(mediaNumber).padStart(3, "0");
 
         // Find the best quality video file (prefer HD)
-        const videoFile = video.video_files.find(f => f.quality === 'hd') || video.video_files[0];
+        const videoFile =
+          video.video_files.find((f) => f.quality === "hd") ||
+          video.video_files[0];
         const videoUrl = videoFile.link;
         const key = `${datePrefix}/pexel_videos_raw/${mediaNumberPadded}`;
 
@@ -93,7 +115,9 @@ export async function handler(event, context) {
         // Fetch the video
         const response = await fetch(videoUrl);
         if (!response.ok) {
-          throw new Error(`Failed to download video ${mediaNumber}: ${response.statusText}`);
+          throw new Error(
+            `Failed to download video ${mediaNumber}: ${response.statusText}`
+          );
         }
 
         const videoBuffer = await response.arrayBuffer();
@@ -105,7 +129,7 @@ export async function handler(event, context) {
           bucketName,
           key,
           body: buffer,
-          contentType: videoFile.file_type || 'video/mp4',
+          contentType: videoFile.file_type || "video/mp4",
         });
 
         // Upload metadata to R2
@@ -120,14 +144,17 @@ export async function handler(event, context) {
           user: video.user,
           video_files: video.video_files,
           video_pictures: video.video_pictures,
+          search_prompt: searchPrompt || "popular",
         };
 
-        console.log(`Uploading metadata for video ${mediaNumber} to ${metaKey}...`);
+        console.log(
+          `Uploading metadata for video ${mediaNumber} to ${metaKey}...`
+        );
         const metaResult = await putObject({
           bucketName,
           key: metaKey,
           body: JSON.stringify(metadata, null, 2),
-          contentType: 'application/json',
+          contentType: "application/json",
         });
 
         return {
@@ -143,13 +170,17 @@ export async function handler(event, context) {
 
       const uploadResults = await Promise.all(uploadPromises);
 
-      console.log(`✓ Successfully uploaded ${uploadResults.length} videos to R2`);
+      console.log(
+        `✓ Successfully uploaded ${uploadResults.length} videos to R2`
+      );
 
       return {
         statusCode: 200,
         body: JSON.stringify({
           success: true,
-          message: "Successfully fetched and stored popular videos",
+          message: `Successfully fetched and stored ${
+            searchPrompt ? "searched" : "popular"
+          } videos`,
           data: {
             mode,
             mediaCount: videos.length,
@@ -159,15 +190,26 @@ export async function handler(event, context) {
         }),
       };
     } else {
-      // Foto mode: fetch curated images (default)
-      console.log(`Fetching ${mediaCount} curated images from Pexels...`);
-      const images = await getCuratedImages({ per_page: mediaCount });
+      let images;
+      if (searchPrompt) {
+        console.log(
+          `Fetching ${mediaCount} images for query "${searchPrompt}"...`
+        );
+        images = await searchImages({
+          query: searchPrompt,
+          per_page: mediaCount,
+        });
+      } else {
+        // Foto mode: fetch curated images (default)
+        console.log(`Fetching ${mediaCount} curated images from Pexels...`);
+        images = await getCuratedImages({ per_page: mediaCount });
+      }
       console.log(`Found ${images.length} curated images`);
 
       // Download and upload each image to R2
       const uploadPromises = images.map(async (image, index) => {
         const mediaNumber = index + 1;
-        const mediaNumberPadded = String(mediaNumber).padStart(3, '0');
+        const mediaNumberPadded = String(mediaNumber).padStart(3, "0");
         const imageUrl = image.src.original; // Use original quality
         const key = `${datePrefix}/pexel_images_raw/${mediaNumberPadded}`;
 
@@ -176,7 +218,9 @@ export async function handler(event, context) {
         // Fetch the image
         const response = await fetch(imageUrl);
         if (!response.ok) {
-          throw new Error(`Failed to download image ${mediaNumber}: ${response.statusText}`);
+          throw new Error(
+            `Failed to download image ${mediaNumber}: ${response.statusText}`
+          );
         }
 
         const imageBuffer = await response.arrayBuffer();
@@ -188,7 +232,7 @@ export async function handler(event, context) {
           bucketName,
           key,
           body: buffer,
-          contentType: 'image/jpeg',
+          contentType: "image/jpeg",
         });
 
         // Upload metadata to R2
@@ -205,14 +249,17 @@ export async function handler(event, context) {
           alt: image.alt,
           liked: image.liked,
           src: image.src,
+          search_prompt: searchPrompt || "curated",
         };
 
-        console.log(`Uploading metadata for image ${mediaNumber} to ${metaKey}...`);
+        console.log(
+          `Uploading metadata for image ${mediaNumber} to ${metaKey}...`
+        );
         const metaResult = await putObject({
           bucketName,
           key: metaKey,
           body: JSON.stringify(metadata, null, 2),
-          contentType: 'application/json',
+          contentType: "application/json",
         });
 
         return {
@@ -228,13 +275,17 @@ export async function handler(event, context) {
 
       const uploadResults = await Promise.all(uploadPromises);
 
-      console.log(`✓ Successfully uploaded ${uploadResults.length} images to R2`);
+      console.log(
+        `✓ Successfully uploaded ${uploadResults.length} images to R2`
+      );
 
       return {
         statusCode: 200,
         body: JSON.stringify({
           success: true,
-          message: "Successfully fetched and stored curated images",
+          message: `Successfully fetched and stored ${
+            searchPrompt ? "searched" : "curated"
+          } images`,
           data: {
             mode,
             mediaCount: images.length,
@@ -251,7 +302,9 @@ export async function handler(event, context) {
       statusCode: 500,
       body: JSON.stringify({
         success: false,
-        message: `Failed to fetch and store ${event.mode === 'video' ? 'videos' : 'images'}`,
+        message: `Failed to fetch and store ${
+          event.mode === "video" ? "videos" : "images"
+        }`,
         error: error.message,
       }),
     };
