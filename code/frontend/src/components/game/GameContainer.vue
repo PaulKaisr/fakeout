@@ -208,6 +208,12 @@
           >
             {{ t(`game.question.${mode || "image"}`) }}
           </h1>
+          <p
+            v-if="gamePrompt"
+            class="text-xl text-primary font-bold mb-2 uppercase tracking-widest"
+          >
+            "{{ gamePrompt }}"
+          </p>
           <p class="text-medium-emphasis text-lg">
             {{ t(`game.instructions.${mode || "image"}`) }}
           </p>
@@ -366,6 +372,7 @@ const error = ref<string | null>(null);
 const showArchiveDialog = ref(false);
 const drawer = ref(false);
 const route = useRoute();
+const gamePrompt = ref<string | null>(null);
 
 const mediaLoaded = reactive({ A: false, B: false });
 const durations = reactive({ A: 0, B: 0 });
@@ -432,10 +439,11 @@ const loadGame = async () => {
   error.value = null;
   loadedDate.value = null;
   try {
-    const { rounds: fetchedRounds, date } = await getR2GameRounds(
-      props.date,
-      props.mode || "image"
-    );
+    const {
+      rounds: fetchedRounds,
+      date,
+      prompt,
+    } = await getR2GameRounds(props.date, props.mode || "image");
     if (fetchedRounds.length === 0) {
       error.value = props.date
         ? t("errors.noRoundsForDate", { date: props.date })
@@ -444,6 +452,7 @@ const loadGame = async () => {
     }
     rounds.value = fetchedRounds;
     loadedDate.value = date;
+    gamePrompt.value = prompt || null;
     state.totalRounds = fetchedRounds.length;
 
     // Restore progress

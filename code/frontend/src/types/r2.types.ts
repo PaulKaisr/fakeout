@@ -1,4 +1,4 @@
-  /**
+/**
  * R2 Type Definitions
  *
  * TypeScript interfaces for R2 storage structure and metadata
@@ -109,4 +109,13 @@ export function isGeneratedImageMetadata(
   metadata: R2ImageMetadata | R2GeneratedImageMetadata
 ): metadata is R2GeneratedImageMetadata {
   return "original_image_id" in metadata && "generation_prompt" in metadata;
+}
+
+/**
+ * Game Manifest structure
+ */
+export interface GameManifest {
+  dates: string[];
+  prompts?: Record<string, string>;
+  updated_at: string;
 }

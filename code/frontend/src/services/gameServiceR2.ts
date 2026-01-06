@@ -8,7 +8,7 @@ const r2Service = createR2Service(r2Config);
 export const getR2GameRounds = async (
   date?: string,
   mode: "image" | "video" = "image"
-): Promise<{ rounds: Round[]; date: string }> => {
+): Promise<{ rounds: Round[]; date: string; prompt?: string }> => {
   // 1. Determine which date to use
   let validDate = "";
 
@@ -24,14 +24,18 @@ export const getR2GameRounds = async (
   } else {
     // Find the latest date with data
     try {
-      const dates = await r2Service.fetchManifest(
+      const manifest = await r2Service.fetchManifest(
         mode === "video" ? "videos" : "images"
       );
+      const dates = manifest.dates;
       if (dates.length > 0) {
         // Sort dates descending
         dates.sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
         validDate = dates[0]!;
         console.debug(`Found latest game data from manifest: ${validDate}`);
+
+        // Initial prompt extraction (if available for latest date)
+        // We'll return it at the end
       }
     } catch (e) {
       console.warn("Failed to fetch manifest, falling back to probing", e);
@@ -64,6 +68,21 @@ export const getR2GameRounds = async (
       console.warn(`No game data found.`);
       return { rounds: [], date: "" };
     }
+  }
+
+  // Fetch manifest again to get prompt if we didn't already
+  // Use a simple cache or just re-fetch for now (it's fast)
+  // Or better, just fetch it if we have a validDate.
+  let prompt: string | undefined;
+  try {
+    const manifest = await r2Service.fetchManifest(
+      mode === "video" ? "videos" : "images"
+    );
+    if (manifest.prompts && manifest.prompts[validDate]) {
+      prompt = manifest.prompts[validDate];
+    }
+  } catch (e) {
+    // ignore
   }
 
   // 2. Fetch real images (Pexels) - fetch up to 5 images
@@ -152,5 +171,5 @@ export const getR2GameRounds = async (
     }
   });
 
-  return { rounds, date: validDate };
+  return { rounds, date: validDate, prompt };
 };

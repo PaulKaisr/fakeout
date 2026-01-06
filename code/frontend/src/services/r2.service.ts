@@ -10,6 +10,7 @@ import type {
   R2GeneratedImageMetadata,
   R2Image,
   R2ImageMetadata,
+  GameManifest,
 } from "@/types/r2.types";
 
 /**
@@ -60,19 +61,26 @@ export class R2Service {
    */
   async fetchManifest(
     mediaType: "images" | "videos" = "images"
-  ): Promise<string[]> {
+  ): Promise<GameManifest> {
     const manifestKey =
       mediaType === "videos"
         ? "games_manifest_videos.json"
         : "games_manifest_images.json";
-    const url = this.buildUrl(manifestKey);
+    const url = `${this.buildUrl(manifestKey)}?t=${Date.now()}`;
     try {
       const response = await fetch(url);
-      if (!response.ok) return [];
+      if (!response.ok) {
+        return { dates: [], updated_at: new Date().toISOString() };
+      }
       const data = await response.json();
-      return data.dates || [];
+      // Ensure backwards compatibility if prompts are missing
+      return {
+        dates: data.dates || [],
+        prompts: data.prompts || {},
+        updated_at: data.updated_at || new Date().toISOString(),
+      };
     } catch {
-      return [];
+      return { dates: [], updated_at: new Date().toISOString() };
     }
   }
 
