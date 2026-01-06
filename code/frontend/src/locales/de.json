@@ -33,7 +33,10 @@
       "video": "Echtes Video"
     },
     "correct": "Richtig!",
-    "wrong": "Falsch!"
+    "wrong": "Falsch!",
+    "photoBy": "Foto von",
+    "videoBy": "Video von",
+    "viewOnPexels": "Auf Pexels ansehen"
   },
   "results": {
     "title": "Level abgeschlossen!",

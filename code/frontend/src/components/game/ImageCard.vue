@@ -85,6 +85,41 @@
       >
         {{ isCorrect ? t("game.correct") : t("game.wrong") }}
       </span>
+
+      <!-- Artist Credit -->
+      <div v-if="!image.isAiGenerated && image.credit" class="mt-4 text-center">
+        <p class="text-body-2 text-white/80 mb-1">
+          {{
+            image.mediaType === "video" ? t("game.videoBy") : t("game.photoBy")
+          }}
+        </p>
+        <a
+          v-if="image.creditUrl"
+          :href="image.creditUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-body-1 font-weight-bold text-white hover:text-primary transition-colors no-underline block"
+          @click.stop
+        >
+          {{ image.credit }}
+        </a>
+        <span v-else class="text-body-1 font-weight-bold text-white block">
+          {{ image.credit }}
+        </span>
+
+        <div v-if="image.sourceUrl" class="mt-2">
+          <a
+            :href="image.sourceUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-caption text-white/50 hover:text-white transition-colors flex items-center justify-center gap-1 no-underline"
+            @click.stop
+          >
+            {{ t("game.viewOnPexels") }}
+            <v-icon icon="mdi-open-in-new" size="x-small"></v-icon>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </template>

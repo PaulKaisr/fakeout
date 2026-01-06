@@ -33,7 +33,10 @@
       "video": "Истинско видео"
     },
     "correct": "Правилно!",
-    "wrong": "Грешно!"
+    "wrong": "Грешно!",
+    "photoBy": "Снимка от",
+    "videoBy": "Видео от",
+    "viewOnPexels": "Вижте в Pexels"
   },
   "results": {
     "title": "Ниво завършено!",

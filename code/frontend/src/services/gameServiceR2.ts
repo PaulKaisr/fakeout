@@ -152,6 +152,8 @@ export const getR2GameRounds = async (
         url: realImg.url,
         isAiGenerated: false,
         credit: (realImg.metadata as R2ImageMetadata).photographer || "Pexels",
+        creditUrl: (realImg.metadata as R2ImageMetadata).photographer_url,
+        sourceUrl: (realImg.metadata as R2ImageMetadata).url,
         mediaType: mode,
       };
 

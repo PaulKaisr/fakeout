@@ -33,7 +33,10 @@
       "video": "Real Video"
     },
     "correct": "Correct!",
-    "wrong": "Wrong!"
+    "wrong": "Wrong!",
+    "photoBy": "Photo by",
+    "videoBy": "Video by",
+    "viewOnPexels": "View on Pexels"
   },
   "results": {
     "title": "Level Complete!",
