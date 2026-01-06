@@ -6,6 +6,7 @@ import Fonts from "unplugin-fonts/vite";
 import VueRouter from "unplugin-vue-router/vite";
 import tailwindcss from "@tailwindcss/vite";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
+import Sitemap from "vite-plugin-sitemap";
 
 // Utilities
 import { defineConfig } from "vite";
@@ -13,6 +14,33 @@ import { fileURLToPath, URL } from "node:url";
 import path from "node:path";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Supported locales
+const LOCALES = ["en", "de", "bg"] as const;
+
+// Blog article slugs (keep in sync with src/data/articles.ts)
+const ARTICLE_SLUGS = ["how-fakeout-works", "ai-generation-concerns"];
+
+// Generate dynamic routes for sitemap
+function generateSitemapRoutes(): string[] {
+  const routes: string[] = [];
+
+  // Static pages per locale
+  const staticPages = ["", "/image", "/blog", "/stats", "/about", "/faq"];
+
+  for (const locale of LOCALES) {
+    for (const page of staticPages) {
+      routes.push(`/${locale}${page}`);
+    }
+
+    // Blog article pages
+    for (const slug of ARTICLE_SLUGS) {
+      routes.push(`/${locale}/blog/${slug}`);
+    }
+  }
+
+  return routes;
+}
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -91,6 +119,16 @@ export default defineConfig(({ mode }) => ({
     tailwindcss(),
     VueI18nPlugin({
       runtimeOnly: false,
+    }),
+    Sitemap({
+      hostname: "https://fakeout.dev",
+      dynamicRoutes: generateSitemapRoutes(),
+      exclude: ["/"],
+      generateRobotsTxt: false, // We already have a robots.txt
+      changefreq: "daily",
+      priority: 0.8,
+      lastmod: new Date(),
+      readable: true,
     }),
   ],
   optimizeDeps: {
