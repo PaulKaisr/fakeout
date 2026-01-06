@@ -195,5 +195,53 @@ export function useSeoTranslations() {
         ? "Spiele die KI-Bilderkennungs-Herausforderung. Vergleiche zwei Bilder und identifiziere, welches von KI generiert wurde."
         : "Играй предизвикателството за откриване на ИИ изображения. Сравни две изображения и идентифицирай кое е генерирано от ИИ."
     ),
+
+    // Privacy Policy page
+    privacyTitle: computed(() =>
+      locale.value === "en"
+        ? "Privacy Policy"
+        : locale.value === "de"
+        ? "Datenschutzerklärung"
+        : "Политика за поверителност"
+    ),
+    privacyDescription: computed(() =>
+      locale.value === "en"
+        ? "Learn how Fakeout collects, uses, and protects your personal information. Read our privacy policy for details on data handling and your rights."
+        : locale.value === "de"
+        ? "Erfahren Sie, wie Fakeout Ihre persönlichen Daten sammelt, verwendet und schützt. Lesen Sie unsere Datenschutzerklärung."
+        : "Научете как Fakeout събира, използва и защитава вашата лична информация. Прочетете нашата политика за поверителност."
+    ),
+
+    // Terms of Service page
+    termsTitle: computed(() =>
+      locale.value === "en"
+        ? "Terms of Service"
+        : locale.value === "de"
+        ? "Nutzungsbedingungen"
+        : "Условия за ползване"
+    ),
+    termsDescription: computed(() =>
+      locale.value === "en"
+        ? "Read the terms and conditions for using Fakeout. Understand your rights and responsibilities when using our AI detection game."
+        : locale.value === "de"
+        ? "Lesen Sie die Nutzungsbedingungen für Fakeout. Verstehen Sie Ihre Rechte und Pflichten bei der Nutzung unseres KI-Erkennungsspiels."
+        : "Прочетете условията за ползване на Fakeout. Разберете вашите права и отговорности при използване на нашата игра за откриване на ИИ."
+    ),
+
+    // Contact page
+    contactTitle: computed(() =>
+      locale.value === "en"
+        ? "Contact Us"
+        : locale.value === "de"
+        ? "Kontakt"
+        : "Контакти"
+    ),
+    contactDescription: computed(() =>
+      locale.value === "en"
+        ? "Get in touch with the Fakeout team. Contact us for support, feedback, business inquiries, or privacy concerns."
+        : locale.value === "de"
+        ? "Kontaktieren Sie das Fakeout-Team. Wenden Sie sich an uns für Support, Feedback, geschäftliche Anfragen oder Datenschutzfragen."
+        : "Свържете се с екипа на Fakeout. Пишете ни за поддръжка, обратна връзка, бизнес запитвания или въпроси за поверителност."
+    ),
   };
 }
