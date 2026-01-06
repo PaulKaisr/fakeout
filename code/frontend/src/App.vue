@@ -4,10 +4,12 @@
     <v-main>
       <router-view />
     </v-main>
+    <AppFooter />
   </v-app>
 </template>
 
 <script lang="ts" setup>
+import AppFooter from "@/components/AppFooter.vue";
 import StructuredData from "@/components/StructuredData.vue";
 import { useI18n } from "vue-i18n";
 import { watch } from "vue";
