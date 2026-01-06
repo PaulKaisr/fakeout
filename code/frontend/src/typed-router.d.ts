@@ -23,10 +23,13 @@ declare module 'vue-router/auto-routes' {
     '/[lang]/about': RouteRecordInfo<'/[lang]/about', '/:lang/about', { lang: ParamValue<true> }, { lang: ParamValue<false> }>,
     '/[lang]/blog/': RouteRecordInfo<'/[lang]/blog/', '/:lang/blog', { lang: ParamValue<true> }, { lang: ParamValue<false> }>,
     '/[lang]/blog/[slug]': RouteRecordInfo<'/[lang]/blog/[slug]', '/:lang/blog/:slug', { lang: ParamValue<true>, slug: ParamValue<true> }, { lang: ParamValue<false>, slug: ParamValue<false> }>,
+    '/[lang]/contact': RouteRecordInfo<'/[lang]/contact', '/:lang/contact', { lang: ParamValue<true> }, { lang: ParamValue<false> }>,
     '/[lang]/faq': RouteRecordInfo<'/[lang]/faq', '/:lang/faq', { lang: ParamValue<true> }, { lang: ParamValue<false> }>,
     '/[lang]/image/': RouteRecordInfo<'/[lang]/image/', '/:lang/image', { lang: ParamValue<true> }, { lang: ParamValue<false> }>,
     '/[lang]/image/[date]': RouteRecordInfo<'/[lang]/image/[date]', '/:lang/image/:date', { lang: ParamValue<true>, date: ParamValue<true> }, { lang: ParamValue<false>, date: ParamValue<false> }>,
+    '/[lang]/privacy': RouteRecordInfo<'/[lang]/privacy', '/:lang/privacy', { lang: ParamValue<true> }, { lang: ParamValue<false> }>,
     '/[lang]/stats': RouteRecordInfo<'/[lang]/stats', '/:lang/stats', { lang: ParamValue<true> }, { lang: ParamValue<false> }>,
+    '/[lang]/terms': RouteRecordInfo<'/[lang]/terms', '/:lang/terms', { lang: ParamValue<true> }, { lang: ParamValue<false> }>,
     '/[lang]/video/[date]': RouteRecordInfo<'/[lang]/video/[date]', '/:lang/video/:date', { lang: ParamValue<true>, date: ParamValue<true> }, { lang: ParamValue<false>, date: ParamValue<false> }>,
   }
 
@@ -61,6 +64,10 @@ declare module 'vue-router/auto-routes' {
       routes: '/[lang]/blog/[slug]'
       views: never
     }
+    'src/pages/[lang]/contact.vue': {
+      routes: '/[lang]/contact'
+      views: never
+    }
     'src/pages/[lang]/faq.vue': {
       routes: '/[lang]/faq'
       views: never
@@ -73,8 +80,16 @@ declare module 'vue-router/auto-routes' {
       routes: '/[lang]/image/[date]'
       views: never
     }
+    'src/pages/[lang]/privacy.vue': {
+      routes: '/[lang]/privacy'
+      views: never
+    }
     'src/pages/[lang]/stats.vue': {
       routes: '/[lang]/stats'
+      views: never
+    }
+    'src/pages/[lang]/terms.vue': {
+      routes: '/[lang]/terms'
       views: never
     }
     'src/pages/[lang]/video/[date].vue': {
