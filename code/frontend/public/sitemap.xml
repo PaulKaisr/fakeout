@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://fakeout.dev/</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://fakeout.dev/en"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg"/>
+  </url>
+  <url>
     <loc>https://fakeout.dev/en</loc>
-    <lastmod>2026-01-02</lastmod>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en"/>
@@ -11,7 +21,7 @@
   </url>
   <url>
     <loc>https://fakeout.dev/de</loc>
-    <lastmod>2026-01-02</lastmod>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en"/>
@@ -20,11 +30,200 @@
   </url>
   <url>
     <loc>https://fakeout.dev/bg</loc>
-    <lastmod>2026-01-02</lastmod>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de"/>
     <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg"/>
+  </url>
+  <url>
+    <loc>https://fakeout.dev/en/image</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en/image"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de/image"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg/image"/>
+  </url>
+  <url>
+    <loc>https://fakeout.dev/de/image</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en/image"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de/image"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg/image"/>
+  </url>
+  <url>
+    <loc>https://fakeout.dev/bg/image</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en/image"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de/image"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg/image"/>
+  </url>
+  <url>
+    <loc>https://fakeout.dev/en/blog</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de/blog"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg/blog"/>
+  </url>
+  <url>
+    <loc>https://fakeout.dev/de/blog</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de/blog"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg/blog"/>
+  </url>
+  <url>
+    <loc>https://fakeout.dev/bg/blog</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en/blog"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de/blog"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg/blog"/>
+  </url>
+  <url>
+    <loc>https://fakeout.dev/en/blog/how-fakeout-works</loc>
+    <lastmod>2026-01-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en/blog/how-fakeout-works"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de/blog/how-fakeout-works"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg/blog/how-fakeout-works"/>
+  </url>
+  <url>
+    <loc>https://fakeout.dev/de/blog/how-fakeout-works</loc>
+    <lastmod>2026-01-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en/blog/how-fakeout-works"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de/blog/how-fakeout-works"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg/blog/how-fakeout-works"/>
+  </url>
+  <url>
+    <loc>https://fakeout.dev/bg/blog/how-fakeout-works</loc>
+    <lastmod>2026-01-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en/blog/how-fakeout-works"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de/blog/how-fakeout-works"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg/blog/how-fakeout-works"/>
+  </url>
+  <url>
+    <loc>https://fakeout.dev/en/blog/ai-generation-concerns</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en/blog/ai-generation-concerns"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de/blog/ai-generation-concerns"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg/blog/ai-generation-concerns"/>
+  </url>
+  <url>
+    <loc>https://fakeout.dev/de/blog/ai-generation-concerns</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en/blog/ai-generation-concerns"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de/blog/ai-generation-concerns"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg/blog/ai-generation-concerns"/>
+  </url>
+  <url>
+    <loc>https://fakeout.dev/bg/blog/ai-generation-concerns</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en/blog/ai-generation-concerns"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de/blog/ai-generation-concerns"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg/blog/ai-generation-concerns"/>
+  </url>
+  <url>
+    <loc>https://fakeout.dev/en/stats</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en/stats"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de/stats"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg/stats"/>
+  </url>
+  <url>
+    <loc>https://fakeout.dev/de/stats</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en/stats"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de/stats"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg/stats"/>
+  </url>
+  <url>
+    <loc>https://fakeout.dev/bg/stats</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en/stats"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de/stats"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg/stats"/>
+  </url>
+  <url>
+    <loc>https://fakeout.dev/en/about</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en/about"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de/about"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg/about"/>
+  </url>
+  <url>
+    <loc>https://fakeout.dev/de/about</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en/about"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de/about"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg/about"/>
+  </url>
+  <url>
+    <loc>https://fakeout.dev/bg/about</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en/about"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de/about"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg/about"/>
+  </url>
+  <url>
+    <loc>https://fakeout.dev/en/faq</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg/faq"/>
+  </url>
+  <url>
+    <loc>https://fakeout.dev/de/faq</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg/faq"/>
+  </url>
+  <url>
+    <loc>https://fakeout.dev/bg/faq</loc>
+    <lastmod>2026-01-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://fakeout.dev/en/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://fakeout.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg/faq"/>
   </url>
 </urlset>
