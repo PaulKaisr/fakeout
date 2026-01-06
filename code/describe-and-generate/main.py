@@ -29,6 +29,7 @@ def backfill_manifest(
     """
     Backfill manifest file by listing all date folders in the bucket.
     Only includes dates that have content for the specified media type.
+    Extracts search_prompt from the first item's metadata if available.
     """
     manifest_key = get_manifest_key(media_type)
     subfolder = "pexel_videos_raw" if media_type == "video" else "pexel_images_raw"
@@ -39,6 +40,8 @@ def backfill_manifest(
     common_prefixes = response.get("CommonPrefixes", [])
 
     dates = []
+    prompts = {}
+
     for prefix_obj in common_prefixes:
         # Prefix is like "2025-12-25/"
         folder_name = prefix_obj.get("Prefix", "").strip("/")
@@ -52,15 +55,34 @@ def backfill_manifest(
         # Check if this date folder has content for the specified media type
         check_prefix = f"{folder_name}/{subfolder}/"
         check_response = r2_client.list_objects(bucket_name, prefix=check_prefix, max_keys=1)
-        if check_response.get("Contents"):
+        
+        contents = check_response.get("Contents")
+        if contents:
             dates.append(folder_name)
+            
+            # Try to read the first metadata file to get the search prompt
+            # We assume the first file is 001_meta.json, but let's just look for any *_meta.json if possible given max_keys=1 might not return it.
+            # Actually, let's list specifically for the first meta file.
+            meta_key_predict = f"{folder_name}/{subfolder}/001_meta.json"
+            try:
+                metadata = r2_client.get_json(bucket_name, meta_key_predict)
+                if metadata and "search_prompt" in metadata:
+                    prompts[folder_name] = metadata["search_prompt"]
+            except Exception:
+                # If 001_meta.json doesn't exist or fails, we skip existing the prompt
+                pass
 
     # Sort descending (newest first)
     dates.sort(reverse=True)
 
-    manifest = {"dates": dates, "updated_at": datetime.utcnow().isoformat()}
+    manifest = {
+        "dates": dates,
+        "prompts": prompts,
+        "updated_at": datetime.utcnow().isoformat()
+    }
     r2_client.put_json(bucket_name, manifest_key, manifest, cache_control="max-age=0, no-cache")
     print(f"Manifest {manifest_key} updated with {len(dates)} dates: {dates}")
+    print(f"Prompts found: {prompts}")
     return dates
 
 
@@ -74,19 +96,36 @@ def update_manifest(
     Update manifest with a new date.
     """
     manifest_key = get_manifest_key(media_type)
+    subfolder = "pexel_videos_raw" if media_type == "video" else "pexel_images_raw"
     try:
         manifest = r2_client.get_json(bucket_name, manifest_key)
         dates = manifest.get("dates", [])
+        prompts = manifest.get("prompts", {})
     except Exception:
         print(f"Manifest {manifest_key} not found, starting fresh.")
         dates = []
+        prompts = {}
 
     if date_prefix not in dates:
         dates.append(date_prefix)
         dates.sort(reverse=True)
-        manifest = {"dates": dates, "updated_at": datetime.utcnow().isoformat()}
+        
+        # Try to get prompt for the new date
+        meta_key_predict = f"{date_prefix}/{subfolder}/001_meta.json"
+        try:
+            metadata = r2_client.get_json(bucket_name, meta_key_predict)
+            if metadata and "search_prompt" in metadata:
+                prompts[date_prefix] = metadata["search_prompt"]
+        except Exception:
+            pass
+
+        manifest = {
+            "dates": dates,
+            "prompts": prompts,
+            "updated_at": datetime.utcnow().isoformat()
+        }
         r2_client.put_json(bucket_name, manifest_key, manifest, cache_control="max-age=0, no-cache")
-        print(f"Added {date_prefix} to manifest {manifest_key}.")
+        print(f"Added {date_prefix} to manifest {manifest_key}. Prompt: {prompts.get(date_prefix)}")
     else:
         print(f"Date {date_prefix} already in manifest {manifest_key}.")
 

@@ -9,6 +9,7 @@ async function testLambda() {
     mode: process.env.TEST_MODE || "video", // "foto" or "video"
     mediaCount: parseInt(process.env.TEST_MEDIA_COUNT) || 5,
     bucketName: process.env.R2_BUCKET_NAME || "fakeout-videos-dev",
+    search_prompt: process.env.TEST_SEARCH_PROMPT,
   };
 
   // Mock Lambda context (minimal)
