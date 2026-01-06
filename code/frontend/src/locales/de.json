@@ -106,6 +106,8 @@
   "footer": {
     "home": "Startseite",
     "blog": "Blog",
+    "about": "Über uns",
+    "faq": "FAQ",
     "copyright": "© {year} Fakeout. Alle Rechte vorbehalten."
   },
   "blog": {
@@ -114,5 +116,16 @@
     "readMore": "Weiterlesen",
     "backToBlog": "Zurück zum Blog",
     "publishedOn": "Veröffentlicht am {date}"
+  },
+  "about": {
+    "title": "Über Fakeout",
+    "mission": {
+      "title": "Unsere Mission",
+      "text": "Fakeout zielt darauf ab, KI-Kompetenz zu demokratisieren. Indem wir die Erkennung synthetischer Medien in ein Spiel verwandeln, helfen wir Menschen, ihren Blick für die subtilen Unvollkommenheiten von KI-generierten Bildern und Videos zu schärfen."
+    },
+    "story": {
+      "title": "Die Geschichte",
+      "text": "Gestartet als kleines Experiment im Jahr 2024, ist Fakeout zu einer täglichen Herausforderung für Tausende von Nutzern gewachsen, die im Zeitalter der generativen KI die Nase vorn haben wollen."
+    }
   }
 }
