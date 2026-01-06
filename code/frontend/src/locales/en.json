@@ -106,6 +106,8 @@
   "footer": {
     "home": "Home",
     "blog": "Blog",
+    "about": "About",
+    "faq": "FAQ",
     "copyright": "© {year} Fakeout. All rights reserved."
   },
   "blog": {
@@ -114,5 +116,16 @@
     "readMore": "Read More",
     "backToBlog": "Back to Blog",
     "publishedOn": "Published on {date}"
+  },
+  "about": {
+    "title": "About Fakeout",
+    "mission": {
+      "title": "Our Mission",
+      "text": "Fakeout aims to democratize AI literacy. By turning the detection of synthetic media into a game, we help people train their eyes to spot the subtle imperfections of AI-generated images and videos."
+    },
+    "story": {
+      "title": "The Story",
+      "text": "Started as a small experiment in 2024, Fakeout has grown into a daily challenge for thousands of users who want to stay ahead of the curve in the age of generative AI."
+    }
   }
 }
