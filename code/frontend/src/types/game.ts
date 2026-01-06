@@ -3,6 +3,8 @@ export interface Image {
   url: string;
   isAiGenerated: boolean;
   credit?: string;
+  creditUrl?: string;
+  sourceUrl?: string;
   mediaType?: "image" | "video";
 }
 
