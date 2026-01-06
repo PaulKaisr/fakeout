@@ -59,6 +59,15 @@
                     {{ formatDate(date) }}
                   </h3>
                   <p class="text-xs">{{ date }}</p>
+                  <p
+                    v-if="prompts[date]"
+                    class="text-xs text-primary font-bold mt-1 uppercase"
+                  >
+                    "{{
+                      prompts[date].slice(0, 30) +
+                      (prompts[date].length > 30 ? "..." : "")
+                    }}"
+                  </p>
                 </div>
 
                 <!-- Stats Display -->
@@ -147,6 +156,7 @@ const emit = defineEmits<{
 }>();
 
 const dates = ref<string[]>([]);
+const prompts = ref<Record<string, string>>({});
 const loading = ref(false);
 const isMobile = computed(() => mobile.value);
 
@@ -170,7 +180,9 @@ const fetchDates = async () => {
   loading.value = true;
   try {
     const manifestMode = props.mode === "video" ? "videos" : "images";
-    dates.value = await r2Service.fetchManifest(manifestMode);
+    const manifest = await r2Service.fetchManifest(manifestMode);
+    dates.value = manifest.dates;
+    prompts.value = manifest.prompts || {};
   } catch (e) {
     console.error("Failed to fetch archive", e);
   } finally {

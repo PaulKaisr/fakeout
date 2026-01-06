@@ -102,5 +102,184 @@
     "accuracy": "Accuracy",
     "resetStats": "Reset Statistics",
     "resetConfirm": "Are you sure you want to reset all your statistics? This cannot be undone."
+  },
+  "footer": {
+    "home": "Home",
+    "blog": "Blog",
+    "about": "About",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "copyright": "© {year} Fakeout. All rights reserved."
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Latest news and articles",
+    "readMore": "Read More",
+    "backToBlog": "Back to Blog",
+    "publishedOn": "Published on {date}"
+  },
+  "about": {
+    "title": "About Fakeout",
+    "mission": {
+      "title": "Our Mission",
+      "text": "Fakeout aims to democratize AI literacy. By turning the detection of synthetic media into a game, we help people train their eyes to spot the subtle imperfections of AI-generated images and videos."
+    },
+    "story": {
+      "title": "The Story",
+      "text": "Started as a small experiment in 2024, Fakeout has grown into a daily challenge for thousands of users who want to stay ahead of the curve in the age of generative AI."
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last Updated",
+    "sections": {
+      "intro": {
+        "title": "Introduction",
+        "text": "Welcome to Fakeout. We respect your privacy and are committed to protecting your personal data. This privacy policy explains how we collect, use, and safeguard your information when you use our AI image detection game."
+      },
+      "dataCollection": {
+        "title": "Information We Collect",
+        "text": "We collect the following types of information:",
+        "items": {
+          "localStorage": "Game progress and statistics stored locally in your browser (localStorage)",
+          "analytics": "Anonymous usage data through Google Analytics (page views, session duration, device type)",
+          "cookies": "Cookies for functionality, analytics, and advertising purposes"
+        }
+      },
+      "cookies": {
+        "title": "Cookies and Tracking",
+        "text": "We use cookies and similar tracking technologies to improve your experience on our site.",
+        "thirdParty": "Third-party vendors, including Google, use cookies to serve ads based on your prior visits to our website or other websites.",
+        "googleInfo": "Google's use of advertising cookies enables it and its partners to serve ads to you based on your visit to our site and/or other sites on the Internet.",
+        "googleLink": "Learn how Google uses data when you use our site",
+        "optOut": "You may opt out of personalized advertising by visiting:"
+      },
+      "thirdParty": {
+        "title": "Third-Party Services",
+        "text": "We use the following third-party services that may collect data:",
+        "googleAnalytics": "Website analytics and performance monitoring",
+        "googleAdsense": "Advertising services to support our free game",
+        "vercel": "Hosting and performance analytics"
+      },
+      "rights": {
+        "title": "Your Rights",
+        "text": "Under GDPR and similar regulations, you have the following rights:",
+        "items": {
+          "access": "Right to access your personal data",
+          "rectification": "Right to correct inaccurate data",
+          "erasure": "Right to request deletion of your data",
+          "portability": "Right to data portability",
+          "withdraw": "Right to withdraw consent at any time"
+        }
+      },
+      "children": {
+        "title": "Children's Privacy",
+        "text": "Fakeout is not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us."
+      },
+      "changes": {
+        "title": "Changes to This Policy",
+        "text": "We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the 'Last Updated' date."
+      },
+      "contact": {
+        "title": "Contact Us",
+        "text": "If you have any questions about this privacy policy or our data practices, please contact us:"
+      }
+    }
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last Updated",
+    "sections": {
+      "acceptance": {
+        "title": "Acceptance of Terms",
+        "text": "By accessing and using Fakeout, you accept and agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our service."
+      },
+      "description": {
+        "title": "Service Description",
+        "text": "Fakeout is a free online game that challenges users to distinguish between real photographs and AI-generated images. The game is provided for entertainment and educational purposes."
+      },
+      "usage": {
+        "title": "Acceptable Use",
+        "text": "When using Fakeout, you agree to:",
+        "items": {
+          "lawful": "Use the service only for lawful purposes",
+          "noHarm": "Not attempt to harm, disrupt, or exploit the service",
+          "noInterference": "Not interfere with other users' enjoyment of the service",
+          "noAutomation": "Not use automated systems or bots to interact with the service"
+        }
+      },
+      "intellectualProperty": {
+        "title": "Intellectual Property",
+        "text": "All content on Fakeout, including but not limited to text, graphics, logos, and software, is the property of Fakeout or its content suppliers and is protected by intellectual property laws. The images used in the game are sourced from licensed stock photography and AI generation tools."
+      },
+      "disclaimer": {
+        "title": "Disclaimer of Warranties",
+        "text": "Fakeout is provided 'as is' without any warranties, express or implied. We do not guarantee that the service will be uninterrupted, secure, or error-free. The game results are for entertainment purposes only and should not be relied upon for any professional AI detection needs."
+      },
+      "limitation": {
+        "title": "Limitation of Liability",
+        "text": "To the fullest extent permitted by law, Fakeout shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the service."
+      },
+      "changes": {
+        "title": "Changes to Terms",
+        "text": "We reserve the right to modify these terms at any time. Continued use of the service after changes constitutes acceptance of the new terms."
+      },
+      "governing": {
+        "title": "Governing Law",
+        "text": "These terms shall be governed by and construed in accordance with applicable laws, without regard to conflict of law principles."
+      },
+      "contact": {
+        "title": "Contact",
+        "text": "For any questions regarding these terms, please contact us:"
+      }
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "We'd love to hear from you. Choose the best way to reach us.",
+    "email": {
+      "title": "General Inquiries",
+      "description": "For general questions, feedback, or suggestions about Fakeout."
+    },
+    "support": {
+      "title": "Technical Support",
+      "description": "Having issues with the game? Report bugs or technical problems."
+    },
+    "business": {
+      "title": "Business Inquiries",
+      "description": "For partnerships, advertising, or business opportunities."
+    },
+    "privacy": {
+      "title": "Privacy Concerns",
+      "description": "Questions about your data or privacy-related requests."
+    },
+    "social": {
+      "title": "Follow Us",
+      "description": "Stay updated with the latest news and updates from Fakeout."
+    },
+    "responseTime": "We typically respond within 24-48 hours"
+  },
+  "cookieConsent": {
+    "title": "We use cookies",
+    "description": "We use cookies and similar technologies to provide you with the best experience. Some cookies are necessary for the site to function, while others help us improve your experience and show personalized content and ads.",
+    "acceptAll": "Accept All",
+    "acceptNecessary": "Necessary Only",
+    "preferences": "Manage Preferences",
+    "necessary": {
+      "title": "Necessary Cookies",
+      "description": "These cookies are essential for the website to function properly. They enable basic features like page navigation and access to secure areas."
+    },
+    "analytics": {
+      "title": "Analytics Cookies",
+      "description": "These cookies help us understand how visitors interact with our website by collecting and reporting information anonymously."
+    },
+    "advertising": {
+      "title": "Advertising Cookies",
+      "description": "These cookies are used to deliver relevant ads and track ad campaign performance across websites."
+    },
+    "save": "Save Preferences",
+    "privacyPolicy": "Privacy Policy"
   }
 }

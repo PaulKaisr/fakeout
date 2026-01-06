@@ -102,5 +102,184 @@
     "accuracy": "Genauigkeit",
     "resetStats": "Statistiken zurücksetzen",
     "resetConfirm": "Bist du sicher, dass du alle deine Statistiken zurücksetzen möchtest? Dies kann nicht rückgängig gemacht werden."
+  },
+  "footer": {
+    "home": "Startseite",
+    "blog": "Blog",
+    "about": "Über uns",
+    "faq": "FAQ",
+    "contact": "Kontakt",
+    "privacy": "Datenschutz",
+    "terms": "Nutzungsbedingungen",
+    "copyright": "© {year} Fakeout. Alle Rechte vorbehalten."
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Aktuelle Nachrichten und Artikel",
+    "readMore": "Weiterlesen",
+    "backToBlog": "Zurück zum Blog",
+    "publishedOn": "Veröffentlicht am {date}"
+  },
+  "about": {
+    "title": "Über Fakeout",
+    "mission": {
+      "title": "Unsere Mission",
+      "text": "Fakeout zielt darauf ab, KI-Kompetenz zu demokratisieren. Indem wir die Erkennung synthetischer Medien in ein Spiel verwandeln, helfen wir Menschen, ihren Blick für die subtilen Unvollkommenheiten von KI-generierten Bildern und Videos zu schärfen."
+    },
+    "story": {
+      "title": "Die Geschichte",
+      "text": "Gestartet als kleines Experiment im Jahr 2024, ist Fakeout zu einer täglichen Herausforderung für Tausende von Nutzern gewachsen, die im Zeitalter der generativen KI die Nase vorn haben wollen."
+    }
+  },
+  "privacy": {
+    "title": "Datenschutzerklärung",
+    "lastUpdated": "Zuletzt aktualisiert",
+    "sections": {
+      "intro": {
+        "title": "Einführung",
+        "text": "Willkommen bei Fakeout. Wir respektieren Ihre Privatsphäre und verpflichten uns, Ihre persönlichen Daten zu schützen. Diese Datenschutzerklärung erläutert, wie wir Ihre Informationen sammeln, verwenden und schützen, wenn Sie unser KI-Bilderkennungsspiel nutzen."
+      },
+      "dataCollection": {
+        "title": "Welche Daten wir sammeln",
+        "text": "Wir sammeln folgende Arten von Informationen:",
+        "items": {
+          "localStorage": "Spielfortschritt und Statistiken, die lokal in Ihrem Browser gespeichert werden (localStorage)",
+          "analytics": "Anonyme Nutzungsdaten über Google Analytics (Seitenaufrufe, Sitzungsdauer, Gerätetyp)",
+          "cookies": "Cookies für Funktionalität, Analysen und Werbezwecke"
+        }
+      },
+      "cookies": {
+        "title": "Cookies und Tracking",
+        "text": "Wir verwenden Cookies und ähnliche Tracking-Technologien, um Ihr Erlebnis auf unserer Website zu verbessern.",
+        "thirdParty": "Drittanbieter, einschließlich Google, verwenden Cookies, um Anzeigen basierend auf Ihren früheren Besuchen auf unserer Website oder anderen Websites zu schalten.",
+        "googleInfo": "Googles Verwendung von Werbe-Cookies ermöglicht es Google und seinen Partnern, Ihnen Anzeigen basierend auf Ihrem Besuch auf unserer Website und/oder anderen Websites im Internet zu zeigen.",
+        "googleLink": "Erfahren Sie, wie Google Daten verwendet, wenn Sie unsere Website nutzen",
+        "optOut": "Sie können personalisierte Werbung deaktivieren unter:"
+      },
+      "thirdParty": {
+        "title": "Drittanbieterdienste",
+        "text": "Wir nutzen folgende Drittanbieterdienste, die Daten sammeln können:",
+        "googleAnalytics": "Website-Analyse und Leistungsüberwachung",
+        "googleAdsense": "Werbedienste zur Unterstützung unseres kostenlosen Spiels",
+        "vercel": "Hosting und Leistungsanalysen"
+      },
+      "rights": {
+        "title": "Ihre Rechte",
+        "text": "Gemäß DSGVO und ähnlichen Vorschriften haben Sie folgende Rechte:",
+        "items": {
+          "access": "Recht auf Zugang zu Ihren persönlichen Daten",
+          "rectification": "Recht auf Berichtigung ungenauer Daten",
+          "erasure": "Recht auf Löschung Ihrer Daten",
+          "portability": "Recht auf Datenübertragbarkeit",
+          "withdraw": "Recht, Ihre Einwilligung jederzeit zu widerrufen"
+        }
+      },
+      "children": {
+        "title": "Datenschutz für Kinder",
+        "text": "Fakeout ist nicht für Kinder unter 13 Jahren bestimmt. Wir sammeln wissentlich keine persönlichen Daten von Kindern unter 13 Jahren. Wenn Sie ein Elternteil oder Erziehungsberechtigter sind und glauben, dass Ihr Kind uns persönliche Daten gegeben hat, kontaktieren Sie uns bitte."
+      },
+      "changes": {
+        "title": "Änderungen dieser Richtlinie",
+        "text": "Wir können diese Datenschutzerklärung von Zeit zu Zeit aktualisieren. Wir werden Sie über Änderungen informieren, indem wir die neue Richtlinie auf dieser Seite veröffentlichen und das Datum 'Zuletzt aktualisiert' aktualisieren."
+      },
+      "contact": {
+        "title": "Kontakt",
+        "text": "Wenn Sie Fragen zu dieser Datenschutzerklärung oder unseren Datenpraktiken haben, kontaktieren Sie uns bitte:"
+      }
+    }
+  },
+  "terms": {
+    "title": "Nutzungsbedingungen",
+    "lastUpdated": "Zuletzt aktualisiert",
+    "sections": {
+      "acceptance": {
+        "title": "Annahme der Bedingungen",
+        "text": "Durch den Zugriff auf und die Nutzung von Fakeout akzeptieren Sie diese Nutzungsbedingungen. Wenn Sie diesen Bedingungen nicht zustimmen, nutzen Sie unseren Dienst bitte nicht."
+      },
+      "description": {
+        "title": "Dienstbeschreibung",
+        "text": "Fakeout ist ein kostenloses Online-Spiel, das Benutzer herausfordert, zwischen echten Fotografien und KI-generierten Bildern zu unterscheiden. Das Spiel wird zu Unterhaltungs- und Bildungszwecken bereitgestellt."
+      },
+      "usage": {
+        "title": "Zulässige Nutzung",
+        "text": "Bei der Nutzung von Fakeout stimmen Sie zu:",
+        "items": {
+          "lawful": "Den Dienst nur für rechtmäßige Zwecke zu nutzen",
+          "noHarm": "Nicht zu versuchen, den Dienst zu schädigen, zu stören oder auszunutzen",
+          "noInterference": "Andere Benutzer nicht bei der Nutzung des Dienstes zu stören",
+          "noAutomation": "Keine automatisierten Systeme oder Bots zur Interaktion mit dem Dienst zu verwenden"
+        }
+      },
+      "intellectualProperty": {
+        "title": "Geistiges Eigentum",
+        "text": "Alle Inhalte auf Fakeout, einschließlich, aber nicht beschränkt auf Texte, Grafiken, Logos und Software, sind Eigentum von Fakeout oder seinen Inhaltslieferanten und durch Gesetze zum geistigen Eigentum geschützt. Die im Spiel verwendeten Bilder stammen aus lizenzierten Stockfoto-Bibliotheken und KI-Generierungstools."
+      },
+      "disclaimer": {
+        "title": "Haftungsausschluss",
+        "text": "Fakeout wird 'wie besehen' ohne jegliche Garantien, ausdrücklich oder stillschweigend, bereitgestellt. Wir garantieren nicht, dass der Dienst ununterbrochen, sicher oder fehlerfrei sein wird. Die Spielergebnisse dienen nur Unterhaltungszwecken und sollten nicht für professionelle KI-Erkennungsanforderungen herangezogen werden."
+      },
+      "limitation": {
+        "title": "Haftungsbeschränkung",
+        "text": "Im größtmöglichen gesetzlich zulässigen Umfang haftet Fakeout nicht für indirekte, zufällige, besondere, Folge- oder Strafschäden, die sich aus Ihrer Nutzung des Dienstes ergeben."
+      },
+      "changes": {
+        "title": "Änderungen der Bedingungen",
+        "text": "Wir behalten uns das Recht vor, diese Bedingungen jederzeit zu ändern. Die fortgesetzte Nutzung des Dienstes nach Änderungen bedeutet die Annahme der neuen Bedingungen."
+      },
+      "governing": {
+        "title": "Anwendbares Recht",
+        "text": "Diese Bedingungen unterliegen dem anwendbaren Recht, ohne Berücksichtigung von Kollisionsnormen."
+      },
+      "contact": {
+        "title": "Kontakt",
+        "text": "Bei Fragen zu diesen Bedingungen kontaktieren Sie uns bitte:"
+      }
+    }
+  },
+  "contact": {
+    "title": "Kontakt",
+    "subtitle": "Wir freuen uns von Ihnen zu hören. Wählen Sie den besten Weg, uns zu erreichen.",
+    "email": {
+      "title": "Allgemeine Anfragen",
+      "description": "Für allgemeine Fragen, Feedback oder Vorschläge zu Fakeout."
+    },
+    "support": {
+      "title": "Technischer Support",
+      "description": "Probleme mit dem Spiel? Melden Sie Fehler oder technische Probleme."
+    },
+    "business": {
+      "title": "Geschäftliche Anfragen",
+      "description": "Für Partnerschaften, Werbung oder Geschäftsmöglichkeiten."
+    },
+    "privacy": {
+      "title": "Datenschutzfragen",
+      "description": "Fragen zu Ihren Daten oder datenschutzbezogene Anfragen."
+    },
+    "social": {
+      "title": "Folgen Sie uns",
+      "description": "Bleiben Sie über die neuesten Nachrichten und Updates von Fakeout informiert."
+    },
+    "responseTime": "Wir antworten normalerweise innerhalb von 24-48 Stunden"
+  },
+  "cookieConsent": {
+    "title": "Wir verwenden Cookies",
+    "description": "Wir verwenden Cookies und ähnliche Technologien, um Ihnen das beste Erlebnis zu bieten. Einige Cookies sind für die Funktion der Website erforderlich, während andere uns helfen, Ihr Erlebnis zu verbessern und personalisierte Inhalte und Anzeigen anzuzeigen.",
+    "acceptAll": "Alle akzeptieren",
+    "acceptNecessary": "Nur notwendige",
+    "preferences": "Einstellungen verwalten",
+    "necessary": {
+      "title": "Notwendige Cookies",
+      "description": "Diese Cookies sind für das ordnungsgemäße Funktionieren der Website unerlässlich. Sie ermöglichen grundlegende Funktionen wie Seitennavigation und Zugang zu sicheren Bereichen."
+    },
+    "analytics": {
+      "title": "Analyse-Cookies",
+      "description": "Diese Cookies helfen uns zu verstehen, wie Besucher mit unserer Website interagieren, indem sie Informationen anonym sammeln und melden."
+    },
+    "advertising": {
+      "title": "Werbe-Cookies",
+      "description": "Diese Cookies werden verwendet, um relevante Anzeigen zu liefern und die Leistung von Werbekampagnen über Websites hinweg zu verfolgen."
+    },
+    "save": "Einstellungen speichern",
+    "privacyPolicy": "Datenschutzerklärung"
   }
 }
