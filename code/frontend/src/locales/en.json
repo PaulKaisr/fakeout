@@ -102,5 +102,17 @@
     "accuracy": "Accuracy",
     "resetStats": "Reset Statistics",
     "resetConfirm": "Are you sure you want to reset all your statistics? This cannot be undone."
+  },
+  "footer": {
+    "home": "Home",
+    "blog": "Blog",
+    "copyright": "© {year} Fakeout. All rights reserved."
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Latest news and articles",
+    "readMore": "Read More",
+    "backToBlog": "Back to Blog",
+    "publishedOn": "Published on {date}"
   }
 }

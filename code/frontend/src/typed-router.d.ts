@@ -20,6 +20,8 @@ declare module 'vue-router/auto-routes' {
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/[lang]/': RouteRecordInfo<'/[lang]/', '/:lang', { lang: ParamValue<true> }, { lang: ParamValue<false> }>,
+    '/[lang]/blog/': RouteRecordInfo<'/[lang]/blog/', '/:lang/blog', { lang: ParamValue<true> }, { lang: ParamValue<false> }>,
+    '/[lang]/blog/[slug]': RouteRecordInfo<'/[lang]/blog/[slug]', '/:lang/blog/:slug', { lang: ParamValue<true>, slug: ParamValue<true> }, { lang: ParamValue<false>, slug: ParamValue<false> }>,
     '/[lang]/image/': RouteRecordInfo<'/[lang]/image/', '/:lang/image', { lang: ParamValue<true> }, { lang: ParamValue<false> }>,
     '/[lang]/image/[date]': RouteRecordInfo<'/[lang]/image/[date]', '/:lang/image/:date', { lang: ParamValue<true>, date: ParamValue<true> }, { lang: ParamValue<false>, date: ParamValue<false> }>,
     '/[lang]/stats': RouteRecordInfo<'/[lang]/stats', '/:lang/stats', { lang: ParamValue<true> }, { lang: ParamValue<false> }>,
@@ -43,6 +45,14 @@ declare module 'vue-router/auto-routes' {
     }
     'src/pages/[lang]/index.vue': {
       routes: '/[lang]/'
+      views: never
+    }
+    'src/pages/[lang]/blog/index.vue': {
+      routes: '/[lang]/blog/'
+      views: never
+    }
+    'src/pages/[lang]/blog/[slug].vue': {
+      routes: '/[lang]/blog/[slug]'
       views: never
     }
     'src/pages/[lang]/image/index.vue': {

@@ -102,5 +102,17 @@
     "accuracy": "Genauigkeit",
     "resetStats": "Statistiken zurücksetzen",
     "resetConfirm": "Bist du sicher, dass du alle deine Statistiken zurücksetzen möchtest? Dies kann nicht rückgängig gemacht werden."
+  },
+  "footer": {
+    "home": "Startseite",
+    "blog": "Blog",
+    "copyright": "© {year} Fakeout. Alle Rechte vorbehalten."
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Aktuelle Nachrichten und Artikel",
+    "readMore": "Weiterlesen",
+    "backToBlog": "Zurück zum Blog",
+    "publishedOn": "Veröffentlicht am {date}"
   }
 }
