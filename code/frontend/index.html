@@ -73,6 +73,37 @@
     <link rel="alternate" hreflang="de" href="https://fakeout.dev/de" />
     <link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg" />
     <link rel="alternate" hreflang="x-default" href="https://fakeout.dev/" />
+
+    <!-- Preconnect hints for performance -->
+    <link rel="preconnect" href="https://pub-2e17857f3c564e4fa7b0e9e926defc73.r2.dev" crossorigin />
+    <link rel="dns-prefetch" href="https://pub-2e17857f3c564e4fa7b0e9e926defc73.r2.dev" />
+
+    <!-- WebSite & Organization Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Fakeout",
+        "url": "https://fakeout.dev",
+        "description": "Daily AI image detector game - test your ability to distinguish real photos from AI-generated images",
+        "inLanguage": ["en", "de", "bg"],
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://fakeout.dev/en/blog?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Fakeout",
+        "url": "https://fakeout.dev",
+        "logo": "https://fakeout.dev/logo-512.png",
+        "sameAs": []
+      }
+    </script>
   </head>
   <body>
     <div id="app"></div>

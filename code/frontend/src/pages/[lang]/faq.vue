@@ -23,15 +23,49 @@
         :text="$t(`faq.q${i}.answer`)"
       ></v-expansion-panel>
     </v-expansion-panels>
+
+    <!-- FAQ Structured Data -->
+    <component
+      :is="'script'"
+      type="application/ld+json"
+      v-html="faqStructuredData"
+    ></component>
   </v-container>
 </template>
 
 <script lang="ts" setup>
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import { useSeoMeta, useSeoTranslations } from "@/composables/useSeoMeta";
 
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 const currentLocale = computed(() => locale.value as string);
+const seoTranslations = useSeoTranslations();
+
+useSeoMeta({
+  title: seoTranslations.faqTitle,
+  description: seoTranslations.faqDescription,
+});
+
+// FAQ structured data for rich results
+const faqStructuredData = computed(() => {
+  const faqItems = [];
+  for (let i = 1; i <= 5; i++) {
+    faqItems.push({
+      "@type": "Question",
+      name: t(`faq.q${i}.question`),
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: t(`faq.q${i}.answer`),
+      },
+    });
+  }
+  return JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems,
+  });
+});
 </script>
 
 <style scoped>

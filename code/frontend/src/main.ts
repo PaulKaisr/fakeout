@@ -12,13 +12,16 @@ import App from "./App.vue";
 
 // Composables
 import { createApp } from "vue";
+import { createHead } from "@unhead/vue/client";
 
 // Styles
 import "unfonts.css";
 import "./assets/tailwind.css";
 
 const app = createApp(App);
+const head = createHead();
 
+app.use(head);
 registerPlugins(app);
 
 app.mount("#app");

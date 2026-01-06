@@ -44,9 +44,16 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import { useSeoMeta, useSeoTranslations } from "@/composables/useSeoMeta";
 
 const { locale } = useI18n();
 const currentLocale = computed(() => locale.value as string);
+const seoTranslations = useSeoTranslations();
+
+useSeoMeta({
+  title: seoTranslations.aboutTitle,
+  description: seoTranslations.aboutDescription,
+});
 </script>
 
 <style scoped>
