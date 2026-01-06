@@ -18,16 +18,16 @@ const pageTitle = computed(() =>
   locale.value === "en"
     ? `Image Game - ${date.value}`
     : locale.value === "de"
-      ? `Bildspiel - ${date.value}`
-      : `Игра с изображения - ${date.value}`
+    ? `Bildspiel - ${date.value}`
+    : `Игра с изображения - ${date.value}`
 );
 
 const pageDescription = computed(() =>
   locale.value === "en"
     ? `Play the Fakeout AI image detection challenge from ${date.value}.`
     : locale.value === "de"
-      ? `Spiele die Fakeout KI-Bilderkennungs-Herausforderung vom ${date.value}.`
-      : `Играй предизвикателството за ИИ изображения от ${date.value}.`
+    ? `Spiele die Fakeout KI-Bilderkennungs-Herausforderung vom ${date.value}.`
+    : `Играй предизвикателството за ИИ изображения от ${date.value}.`
 );
 
 useSeoMeta({

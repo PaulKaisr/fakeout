@@ -98,8 +98,10 @@ const blogPostingSchema = computed(() => {
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    headline: article.value.title[currentLocale.value] || article.value.title.en,
-    description: article.value.summary[currentLocale.value] || article.value.summary.en,
+    headline:
+      article.value.title[currentLocale.value] || article.value.title.en,
+    description:
+      article.value.summary[currentLocale.value] || article.value.summary.en,
     datePublished: article.value.date,
     dateModified: article.value.date,
     author: {
