@@ -181,8 +181,8 @@
           <p>{{ $t("privacy.sections.contact.text") }}</p>
           <p class="mt-2">
             <strong>Email:</strong>
-            <a href="mailto:privacy@fakeout.dev" class="text-primary"
-              >privacy@fakeout.dev</a
+            <a href="mailto:onedevshow@gmail.com" class="text-primary"
+              >onedevshow@gmail.com</a
             >
           </p>
         </v-card-text>

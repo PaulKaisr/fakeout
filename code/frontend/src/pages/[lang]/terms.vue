@@ -125,8 +125,8 @@
           <p>{{ $t("terms.sections.contact.text") }}</p>
           <p class="mt-2">
             <strong>Email:</strong>
-            <a href="mailto:legal@fakeout.dev" class="text-primary"
-              >legal@fakeout.dev</a
+            <a href="mailto:onedevshow@gmail.com" class="text-primary"
+              >onedevshow@gmail.com</a
             >
           </p>
         </v-card-text>
