@@ -174,9 +174,16 @@ import {
 } from "@/services/userStatsService";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
+import { useSeoMeta, useSeoTranslations } from "@/composables/useSeoMeta";
 
 const router = useRouter();
 const { t } = useI18n();
+const seoTranslations = useSeoTranslations();
+
+useSeoMeta({
+  title: seoTranslations.statsTitle,
+  description: seoTranslations.statsDescription,
+});
 
 const confirmReset = () => {
   if (confirm(t("stats.resetConfirm"))) {

@@ -54,9 +54,16 @@
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { articles, type Article } from "@/data/articles";
+import { useSeoMeta, useSeoTranslations } from "@/composables/useSeoMeta";
 
 const { locale } = useI18n();
 const currentLocale = computed(() => locale.value as string);
+const seoTranslations = useSeoTranslations();
+
+useSeoMeta({
+  title: seoTranslations.blogTitle,
+  description: seoTranslations.blogDescription,
+});
 
 const sortedArticles = computed(() => {
   return [...articles].sort((a, b) => {

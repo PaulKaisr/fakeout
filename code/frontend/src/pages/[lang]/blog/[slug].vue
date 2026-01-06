@@ -56,11 +56,13 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import MarkdownIt from "markdown-it";
 import { articles } from "@/data/articles";
+import { useSeoMeta } from "@/composables/useSeoMeta";
+import { useHead } from "@unhead/vue";
 
 const route = useRoute();
 const { locale } = useI18n();
@@ -69,6 +71,68 @@ const slug = computed(() => (route.params as any).slug as string);
 
 const article = computed(() => {
   return articles.find((a) => a.slug === slug.value);
+});
+
+// SEO meta for article
+const articleTitle = computed(() => {
+  if (!article.value) return "Article Not Found";
+  return article.value.title[currentLocale.value] || article.value.title.en;
+});
+
+const articleDescription = computed(() => {
+  if (!article.value) return "";
+  return article.value.summary[currentLocale.value] || article.value.summary.en;
+});
+
+useSeoMeta({
+  title: articleTitle,
+  description: articleDescription,
+  ogType: "article",
+  publishedTime: computed(() => article.value?.date),
+  author: computed(() => article.value?.author),
+});
+
+// BlogPosting structured data
+const blogPostingSchema = computed(() => {
+  if (!article.value) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: article.value.title[currentLocale.value] || article.value.title.en,
+    description: article.value.summary[currentLocale.value] || article.value.summary.en,
+    datePublished: article.value.date,
+    dateModified: article.value.date,
+    author: {
+      "@type": "Person",
+      name: article.value.author,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Fakeout",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://fakeout.dev/logo-512.png",
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://fakeout.dev/${currentLocale.value}/blog/${article.value.slug}`,
+    },
+    inLanguage: currentLocale.value,
+  };
+});
+
+useHead({
+  script: computed(() =>
+    blogPostingSchema.value
+      ? [
+          {
+            type: "application/ld+json",
+            innerHTML: JSON.stringify(blogPostingSchema.value),
+          },
+        ]
+      : []
+  ),
 });
 
 const md = new MarkdownIt({
