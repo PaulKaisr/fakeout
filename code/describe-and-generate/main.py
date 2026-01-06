@@ -10,6 +10,9 @@ from typing import Dict, Any, List, Literal, Optional, Protocol
 from clients.r2 import R2Client
 from clients.openai_vision import VisionClient
 from clients.google_ai import GoogleAIClient
+import subprocess
+import tempfile
+import imageio_ffmpeg
 
 
 MANIFEST_KEY_IMAGES = "games_manifest_images.json"
@@ -308,6 +311,7 @@ def process_videos(
     r2_client: R2Client,
     ai_client: GoogleAIClient,
     n: Optional[int] = None,
+    max_length: int = 10,
 ) -> List[Dict[str, Any]]:
     """
     Process videos based on mode: describe, generate, or both
@@ -319,6 +323,7 @@ def process_videos(
         r2_client: Initialized R2 client
         ai_client: Initialized Google AI client (only Google supports video)
         n: Optional limit on number of videos to process (processes all if None)
+        max_length: Maximum length of video in seconds (default: 10)
 
     Returns:
         List of processed video results
@@ -359,6 +364,47 @@ def process_videos(
             print(f"Downloading video from {video_key}...")
             video_data = r2_client.get_object(bucket_name, video_key)
             print(f"Video downloaded: {len(video_data)} bytes")
+
+            # Cut video if needed
+            if max_length > 0:
+                try:
+                    with tempfile.NamedTemporaryFile(suffix=".mp4", delete=False) as input_tmp:
+                        input_tmp.write(video_data)
+                        input_path = input_tmp.name
+                    
+                    output_path = f"{input_path}_cut.mp4"
+                    
+                    print(f"Cutting video to {max_length} seconds...")
+                    ffmpeg_exe = imageio_ffmpeg.get_ffmpeg_exe()
+                    cmd = [
+                        ffmpeg_exe,
+                        "-y",
+                        "-i", input_path,
+                        "-t", str(max_length),
+                        "-c", "copy",  # Copy stream to avoid re-encoding if possible, but might be less precise
+                        output_path
+                    ]
+                    
+                    # Run ffmpeg
+                    subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    
+                    # Read back cut video
+                    with open(output_path, "rb") as f:
+                        video_data = f.read()
+                    
+                    print(f"Video cut: {len(video_data)} bytes")
+                    
+                    # Cleanup
+                    os.unlink(input_path)
+                    os.unlink(output_path)
+                    
+                except Exception as e:
+                    print(f"Warning: Failed to cut video: {e}")
+                    # Continue with original video
+                    if os.path.exists(input_path):
+                        os.unlink(input_path)
+                    if os.path.exists(output_path):
+                        os.unlink(output_path)
 
             result = {
                 "video_number": video_number,
@@ -476,6 +522,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
       - "google": Use Google AI (Gemini for vision, Imagen 3/Veo 2 for generation)
     - n: Optional limit on number of media items to process (default: all)
     - backfill: Whether to rebuild entire manifest (default: true)
+    - maxLength: Maximum length of video in seconds (default: 10)
 
     Returns:
         Lambda response with processing results
@@ -491,6 +538,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         provider = event.get("provider", "google").lower()
         n = event.get("n")
         backfill = event.get("backfill", True)
+        max_length = event.get("maxLength", 10)
 
         # Initialize R2 client
         r2_client = R2Client()
@@ -545,6 +593,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 r2_client=r2_client,
                 ai_client=ai_client,
                 n=n,
+                max_length=max_length,
             )
             item_type = "videos"
         else:
