@@ -34,8 +34,8 @@
             </v-card-title>
             <v-card-text class="text-body-1">
               <p class="mb-2">{{ $t("contact.email.description") }}</p>
-              <a href="mailto:hello@fakeout.dev" class="text-primary text-h6">
-                hello@fakeout.dev
+              <a href="mailto:onedevshow@gmail.com" class="text-primary text-h6">
+                onedevshow@gmail.com
               </a>
             </v-card-text>
           </v-card-item>
@@ -51,8 +51,8 @@
             </v-card-title>
             <v-card-text class="text-body-1">
               <p class="mb-2">{{ $t("contact.support.description") }}</p>
-              <a href="mailto:support@fakeout.dev" class="text-primary text-h6">
-                support@fakeout.dev
+              <a href="mailto:onedevshow@gmail.com" class="text-primary text-h6">
+                onedevshow@gmail.com
               </a>
             </v-card-text>
           </v-card-item>
@@ -73,10 +73,10 @@
             <v-card-text class="text-body-1">
               <p class="mb-2">{{ $t("contact.business.description") }}</p>
               <a
-                href="mailto:business@fakeout.dev"
+                href="mailto:onedevshow@gmail.com"
                 class="text-primary text-h6"
               >
-                business@fakeout.dev
+                onedevshow@gmail.com
               </a>
             </v-card-text>
           </v-card-item>
@@ -96,8 +96,8 @@
             </v-card-title>
             <v-card-text class="text-body-1">
               <p class="mb-2">{{ $t("contact.privacy.description") }}</p>
-              <a href="mailto:privacy@fakeout.dev" class="text-primary text-h6">
-                privacy@fakeout.dev
+              <a href="mailto:onedevshow@gmail.com" class="text-primary text-h6">
+                onedevshow@gmail.com
               </a>
             </v-card-text>
           </v-card-item>
