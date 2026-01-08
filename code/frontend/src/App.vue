@@ -33,4 +33,13 @@ watch(
   },
   { immediate: true }
 );
+
+import { supabaseService } from "@/services/supabaseService";
+import { onMounted } from "vue";
+
+onMounted(() => {
+  if (import.meta.env.PROD) {
+    supabaseService.trackVisitor();
+  }
+});
 </script>
