@@ -33,7 +33,13 @@
       "video": "Real Video"
     },
     "correct": "Correct!",
-    "wrong": "Wrong!"
+    "wrong": "Wrong!",
+    "photoBy": "Photo by",
+    "videoBy": "Video by",
+    "viewOnPexels": "View on Pexels",
+    "guessedCorrectly": "of players guessed correctly",
+    "plays": "Plays so far",
+    "theme": "Theme"
   },
   "results": {
     "title": "Level Complete!",

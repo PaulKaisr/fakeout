@@ -33,7 +33,13 @@
       "video": "Echtes Video"
     },
     "correct": "Richtig!",
-    "wrong": "Falsch!"
+    "wrong": "Falsch!",
+    "photoBy": "Foto von",
+    "videoBy": "Video von",
+    "viewOnPexels": "Auf Pexels ansehen",
+    "guessedCorrectly": "der Spieler lagen richtig",
+    "plays": "Spiele bisher",
+    "theme": "Thema"
   },
   "results": {
     "title": "Level abgeschlossen!",

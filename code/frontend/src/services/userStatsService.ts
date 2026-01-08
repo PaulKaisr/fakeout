@@ -55,12 +55,17 @@ function getGameKey(mode: "image" | "video", date: string) {
   return `${mode}-${date}`;
 }
 
+import { supabaseService } from "./supabaseService";
+
+// ... (existing helper functions)
+
 export function recordRoundResult(
   mode: "image" | "video",
   date: string,
   isCorrect: boolean,
   currentTotalRounds: number,
-  roundId: number
+  roundId: number,
+  pairId?: string
 ) {
   // Update specific game stats
   const key = getGameKey(mode, date);
@@ -96,6 +101,18 @@ export function recordRoundResult(
       game.score++;
     }
     game.history.push({ roundId, userCorrect: isCorrect });
+
+    // Track to Supabase (only in Prod)
+    if (import.meta.env.PROD) {
+      // 1. Game Start: If this is the first round played, we count it as a start
+      if (game.roundsPlayed === 1) {
+        supabaseService.trackGameStart(mode, date);
+      }
+      // 2. Guess: Track the individual guess
+      if (pairId) {
+        supabaseService.trackGuess(pairId, mode, isCorrect);
+      }
+    }
   }
 
   // Persist to localStorage

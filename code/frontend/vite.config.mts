@@ -19,7 +19,13 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const LOCALES = ["en", "de", "bg"] as const;
 
 // Blog article slugs (keep in sync with src/data/articles.ts)
-const ARTICLE_SLUGS = ["how-fakeout-works", "ai-generation-concerns"];
+const ARTICLE_SLUGS = [
+  "how-fakeout-works",
+  "ai-generation-concerns",
+  "spotting-ai-hands-guide",
+  "ai-video-detection-tips",
+  "spotting-ai-tips",
+];
 
 // Generate dynamic routes for sitemap
 function generateSitemapRoutes(): string[] {
