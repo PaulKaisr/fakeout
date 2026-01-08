@@ -36,7 +36,10 @@
     "wrong": "Wrong!",
     "photoBy": "Photo by",
     "videoBy": "Video by",
-    "viewOnPexels": "View on Pexels"
+    "viewOnPexels": "View on Pexels",
+    "guessedCorrectly": "of players guessed correctly",
+    "plays": "Plays so far",
+    "theme": "Theme"
   },
   "results": {
     "title": "Level Complete!",

@@ -68,6 +68,21 @@
                       (prompts[date].length > 30 ? "..." : "")
                     }}"
                   </p>
+
+                  <!-- Play Count -->
+                  <div
+                    v-if="playCounts[date] && playCounts[date] > 0"
+                    class="flex items-center gap-1 mt-1"
+                  >
+                    <v-icon
+                      icon="mdi-account-group"
+                      size="x-small"
+                      color="medium-emphasis"
+                    ></v-icon>
+                    <span class="text-[10px] text-medium-emphasis font-medium">
+                      {{ playCounts[date] }} {{ t("game.plays") }}
+                    </span>
+                  </div>
                 </div>
 
                 <!-- Stats Display -->
@@ -124,6 +139,7 @@ import { r2Config } from "@/config/r2.config";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 import { getGameStats } from "@/services/userStatsService";
+import { supabaseService } from "@/services/supabaseService";
 
 const { t, locale } = useI18n();
 const router = useRouter();
@@ -157,6 +173,7 @@ const emit = defineEmits<{
 
 const dates = ref<string[]>([]);
 const prompts = ref<Record<string, string>>({});
+const playCounts = ref<Record<string, number>>({});
 const loading = ref(false);
 const isMobile = computed(() => mobile.value);
 
@@ -183,6 +200,20 @@ const fetchDates = async () => {
     const manifest = await r2Service.fetchManifest(manifestMode);
     dates.value = manifest.dates;
     prompts.value = manifest.prompts || {};
+
+    // Fetch play counts in parallel
+    // We do this without blocking the UI loading state completely if we wanted,
+    // but honestly it's better to show them when ready.
+    // Let's just fire and forget or await if fast.
+    // Iterating one by one is slow. But let's just do it.
+    // To avoid blinking, we can just let them populate.
+    dates.value.forEach(async (date) => {
+      const count = await supabaseService.getGamePlayCount(
+        props.mode || "image",
+        date
+      );
+      playCounts.value[date] = count;
+    });
   } catch (e) {
     console.error("Failed to fetch archive", e);
   } finally {
