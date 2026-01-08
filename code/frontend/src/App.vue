@@ -38,6 +38,8 @@ import { supabaseService } from "@/services/supabaseService";
 import { onMounted } from "vue";
 
 onMounted(() => {
-  supabaseService.trackVisitor();
+  if (import.meta.env.PROD) {
+    supabaseService.trackVisitor();
+  }
 });
 </script>

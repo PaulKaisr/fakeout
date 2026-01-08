@@ -102,14 +102,16 @@ export function recordRoundResult(
     }
     game.history.push({ roundId, userCorrect: isCorrect });
 
-    // Track to Supabase
-    // 1. Game Start: If this is the first round played, we count it as a start
-    if (game.roundsPlayed === 1) {
-      supabaseService.trackGameStart(mode, date);
-    }
-    // 2. Guess: Track the individual guess
-    if (pairId) {
-      supabaseService.trackGuess(pairId, mode, isCorrect);
+    // Track to Supabase (only in Prod)
+    if (import.meta.env.PROD) {
+      // 1. Game Start: If this is the first round played, we count it as a start
+      if (game.roundsPlayed === 1) {
+        supabaseService.trackGameStart(mode, date);
+      }
+      // 2. Guess: Track the individual guess
+      if (pairId) {
+        supabaseService.trackGuess(pairId, mode, isCorrect);
+      }
     }
   }
 
