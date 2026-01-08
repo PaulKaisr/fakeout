@@ -212,8 +212,22 @@
             v-if="gamePrompt"
             class="text-xl text-primary font-bold mb-2 uppercase tracking-widest"
           >
+            <span class="mr-2 text-white">{{ t("game.theme") }}:</span>
             "{{ gamePrompt }}"
           </p>
+          <div
+            v-if="gamePlayCount > 0"
+            class="flex items-center justify-center gap-2 mb-2"
+          >
+            <v-icon
+              icon="mdi-account-group"
+              size="small"
+              color="medium-emphasis"
+            ></v-icon>
+            <span class="text-sm font-medium text-medium-emphasis">
+              {{ gamePlayCount }} {{ t("game.plays") }}
+            </span>
+          </div>
           <p class="text-medium-emphasis text-lg">
             {{ t(`game.instructions.${mode || "image"}`) }}
           </p>
@@ -297,6 +311,19 @@
           </div>
         </div>
 
+        <!-- Global Stats -->
+        <div
+          v-if="
+            state.status === GameStatus.ROUND_RESULT &&
+            currentGlobalStats !== null
+          "
+          class="text-center mb-6 animate-slide-up"
+        >
+          <span class="text-h5 font-weight-bold text-white">
+            {{ currentGlobalStats }}% {{ t("game.guessedCorrectly") }}
+          </span>
+        </div>
+
         <!-- Next Buton (only shows after selection) -->
         <div class="h-20 flex items-center justify-center">
           <v-btn
@@ -349,6 +376,7 @@ import {
   finishGame,
   getGameStats,
 } from "@/services/userStatsService";
+import { supabaseService } from "@/services/supabaseService";
 import LanguageSwitcher from "@/components/LanguageSwitcher.vue";
 import ImageCard from "./ImageCard.vue";
 import ResultScreen from "./ResultScreen.vue";
@@ -373,6 +401,7 @@ const showArchiveDialog = ref(false);
 const drawer = ref(false);
 const route = useRoute();
 const gamePrompt = ref<string | null>(null);
+const gamePlayCount = ref(0);
 
 const mediaLoaded = reactive({ A: false, B: false });
 const durations = reactive({ A: 0, B: 0 });
@@ -428,6 +457,7 @@ watch(
     mediaLoaded.B = false;
     durations.A = 0;
     durations.B = 0;
+    gamePlayCount.value = 0;
     await loadGame();
   }
 );
@@ -438,6 +468,7 @@ const loadGame = async () => {
   isLoading.value = true;
   error.value = null;
   loadedDate.value = null;
+  gamePlayCount.value = 0;
   try {
     const {
       rounds: fetchedRounds,
@@ -453,7 +484,16 @@ const loadGame = async () => {
     rounds.value = fetchedRounds;
     loadedDate.value = date;
     gamePrompt.value = prompt || null;
+
     state.totalRounds = fetchedRounds.length;
+
+    // Fetch play count
+    if (date) {
+      gamePlayCount.value = await supabaseService.getGamePlayCount(
+        props.mode || "image",
+        date
+      );
+    }
 
     // Restore progress
     const savedProgress = getGameStats(props.mode || "image", date);
@@ -505,14 +545,28 @@ const handleSelection = (imageId: string) => {
 
   // Save stats immediately
   if (loadedDate.value) {
+    // Extract pair ID from image IDs (format: "real-{id}" or "ai-{id}")
+    const pairId = currentRound.value.imageA.id.split("-")[1] || "";
     recordRoundResult(
       props.mode || "image",
       loadedDate.value,
       isCorrect,
       state.totalRounds,
-      currentRound.value.id
+      currentRound.value.id,
+      pairId
     );
+
+    // Fetch global stats
+    fetchGlobalStats(pairId);
   }
+};
+
+const currentGlobalStats = ref<number | null>(null);
+
+const fetchGlobalStats = async (pairId: string) => {
+  currentGlobalStats.value = null;
+  const percentage = await supabaseService.getGuessPercentage(pairId);
+  currentGlobalStats.value = percentage;
 };
 
 const isSelectionCorrect = (image: Image) => {
@@ -547,6 +601,7 @@ const nextRound = async () => {
     mediaLoaded.B = false;
     durations.A = 0;
     durations.B = 0;
+    currentGlobalStats.value = null;
 
     await nextTick();
 
