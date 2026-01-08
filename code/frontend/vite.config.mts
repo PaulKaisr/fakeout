@@ -25,6 +25,8 @@ const ARTICLE_SLUGS = [
   "spotting-ai-hands-guide",
   "ai-video-detection-tips",
   "spotting-ai-tips",
+  "focus-on-faces-ai-detection",
+  "free-hosting-for-solo-developers",
 ];
 
 // Generate dynamic routes for sitemap
