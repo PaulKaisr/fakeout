@@ -47,13 +47,16 @@
     "shareResult": "Сподели резултата",
     "copiedToClipboard": "Копирано в клипборда!",
     "playAgain": "Играй отново",
-    "shareText": "Постигнах {score}/{total} във FakeOut! Можеш ли да ме победиш? #FakeOut #AI",
+    "shareText": "Постигнах {score}/{total} във FakeOut! Можеш ли да ме победиш? https://fakeout.dev",
     "feedback": {
       "perfect": "Перфектно! Ти си истински ИИ детектор!",
       "great": "Страхотно! Остро око!",
       "good": "Не е лошо, продължавай да тренираш!",
       "poor": "ИИ те излъга този път!"
-    }
+    },
+    "playMore": "Играй още",
+    "tryOtherMode": "Пробвай режим {mode}",
+    "nextGameIn": "Нова игра след:"
   },
   "archive": {
     "title": "Минали игри",
@@ -115,6 +118,7 @@
     "about": "За нас",
     "faq": "ЧЗВ",
     "contact": "Контакти",
+    "reddit": "Reddit",
     "privacy": "Поверителност",
     "terms": "Условия за ползване",
     "copyright": "© {year} Fakeout. Всички права запазени."

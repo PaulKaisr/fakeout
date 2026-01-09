@@ -47,13 +47,16 @@
     "shareResult": "Ergebnis teilen",
     "copiedToClipboard": "In die Zwischenablage kopiert!",
     "playAgain": "Nochmal spielen",
-    "shareText": "Ich habe {score}/{total} Punkte bei FakeOut erreicht! Kannst du mich schlagen? #FakeOut #KI",
+    "shareText": "Ich habe {score}/{total} Punkte bei FakeOut erreicht! Kannst du mich schlagen? https://fakeout.dev",
     "feedback": {
       "perfect": "Perfekt! Du bist ein KI-Detektor!",
       "great": "Großartig! Scharfe Augen!",
       "good": "Nicht schlecht, weiter üben!",
       "poor": "Die KI hat dich diesmal ausgetrickst!"
-    }
+    },
+    "playMore": "Mehr spielen",
+    "tryOtherMode": "Probiere den {mode}-Modus",
+    "nextGameIn": "Neues Spiel verfügbar in:"
   },
   "archive": {
     "title": "Vergangene Spiele",
@@ -115,6 +118,7 @@
     "about": "Über uns",
     "faq": "FAQ",
     "contact": "Kontakt",
+    "reddit": "Reddit",
     "privacy": "Datenschutz",
     "terms": "Nutzungsbedingungen",
     "copyright": "© {year} Fakeout. Alle Rechte vorbehalten."

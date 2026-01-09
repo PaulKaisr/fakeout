@@ -24,7 +24,9 @@
     ></script>
     <script>
       gtag("js", new Date());
-      gtag("config", "G-9BDESWHQ64");
+      gtag("config", "G-9BDESWHQ64", {
+        send_page_view: window.location.pathname !== "/",
+      });
     </script>
 
     <meta charset="UTF-8" />
