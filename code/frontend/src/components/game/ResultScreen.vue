@@ -85,6 +85,8 @@
       >
         {{ copied ? t("results.copiedToClipboard") : t("results.shareResult") }}
       </v-btn>
+
+      <NewsletterSignup />
     </div>
   </div>
 </template>
@@ -93,6 +95,7 @@
 import { computed, ref, onMounted, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import NewsletterSignup from "@/components/NewsletterSignup.vue";
 
 const { t, locale } = useI18n();
 const router = useRouter();
