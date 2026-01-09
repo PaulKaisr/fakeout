@@ -80,3 +80,8 @@ variable "cloudflare_zone_id" {
   default     = ""
 }
 
+variable "sender_email" {
+  description = "Verified SES sender email address"
+  type        = string
+  default     = "notifications@fakeout.dev"
+}

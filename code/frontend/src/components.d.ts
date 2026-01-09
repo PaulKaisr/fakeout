@@ -16,6 +16,7 @@ declare module 'vue' {
     GameFAQ: typeof import('./components/game/GameFAQ.vue')['default']
     ImageCard: typeof import('./components/game/ImageCard.vue')['default']
     LanguageSwitcher: typeof import('./components/LanguageSwitcher.vue')['default']
+    NewsletterSignup: typeof import('./components/NewsletterSignup.vue')['default']
     PastGamesDialog: typeof import('./components/game/PastGamesDialog.vue')['default']
     ResultScreen: typeof import('./components/game/ResultScreen.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

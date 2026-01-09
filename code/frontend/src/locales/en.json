@@ -54,7 +54,7 @@
       "good": "Not bad, keep practicing!",
       "poor": "AI fooled you this time!"
     },
-    "playMore": "Play More",
+    "playMore": "Check out past games",
     "tryOtherMode": "Try out {mode} mode",
     "nextGameIn": "New game available in:"
   },
@@ -270,6 +270,19 @@
       "description": "Stay updated with the latest news and updates from Fakeout."
     },
     "responseTime": "We typically respond within 24-48 hours"
+  },
+  "newsletter": {
+    "title": "Stay Updated",
+    "stayUpdated": "Get notified",
+    "description": "Get notified when new daily challenges are available.",
+    "emailPlaceholder": "Enter your email",
+    "subscribe": "Subscribe",
+    "subscribed": "Subscribed!",
+    "success": "Thanks for subscribing!",
+    "errors": {
+      "alreadySubscribed": "You are already subscribed.",
+      "general": "Something went wrong. Please try again."
+    }
   },
   "cookieConsent": {
     "title": "We use cookies",
