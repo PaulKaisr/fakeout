@@ -47,13 +47,16 @@
     "shareResult": "Share Result",
     "copiedToClipboard": "Copied to Clipboard!",
     "playAgain": "Play Again",
-    "shareText": "I scored {score}/{total} on FakeOut! Can you beat me? https://fakeout.dev #FakeOut #AI",
+    "shareText": "I scored {score}/{total} on FakeOut! Can you beat me? https://fakeout.dev",
     "feedback": {
       "perfect": "Perfect! You are an AI detector!",
       "great": "Great job! Sharp eyes!",
       "good": "Not bad, keep practicing!",
       "poor": "AI fooled you this time!"
-    }
+    },
+    "playMore": "Play More",
+    "tryOtherMode": "Try out {mode} mode",
+    "nextGameIn": "New game available in:"
   },
   "archive": {
     "title": "Past Games",
@@ -115,6 +118,7 @@
     "about": "About",
     "faq": "FAQ",
     "contact": "Contact",
+    "reddit": "Reddit",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "copyright": "© {year} Fakeout. All rights reserved."

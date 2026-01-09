@@ -61,6 +61,19 @@
       >
         {{ $t("footer.contact") }}
       </v-btn>
+      <v-btn
+        variant="text"
+        size="small"
+        color="secondary"
+        class="normal-case px-2"
+        rounded="xl"
+        href="https://www.reddit.com/r/FakeOutGame/"
+        target="_blank"
+        rel="noopener noreferrer"
+        prepend-icon="mdi-reddit"
+      >
+        {{ $t("footer.reddit") }}
+      </v-btn>
     </div>
 
     <!-- Legal Links -->
