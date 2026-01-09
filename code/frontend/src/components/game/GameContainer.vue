@@ -21,7 +21,7 @@
           class="size-10 rounded-xl overflow-hidden shadow-lg shadow-primary/20"
         >
           <img
-            src="/logo.png"
+            src="/android-chrome-192x192.png"
             alt="Fakeout Logo"
             class="w-full h-full object-cover"
           />
@@ -202,7 +202,10 @@
         class="py-12 flex flex-col items-center justify-center max-w-7xl"
       >
         <!-- Question Section -->
-        <div class="text-center mb-12 animate-slide-up">
+        <div
+          v-if="state.status !== GameStatus.GAME_OVER"
+          class="text-center mb-12 animate-slide-up"
+        >
           <h1
             class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
           >
@@ -263,6 +266,8 @@
           v-else-if="state.status === GameStatus.GAME_OVER"
           :score="state.score"
           :total-rounds="state.totalRounds"
+          :mode="mode || 'image'"
+          :is-latest-game="!props.date"
           @archive="showArchiveDialog = true"
         />
 
