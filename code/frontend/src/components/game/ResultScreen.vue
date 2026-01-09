@@ -35,6 +35,46 @@
     </div>
 
     <div class="flex flex-col gap-4 w-full max-w-sm">
+      <div v-if="isLatestGame" class="text-center mb-2">
+        <p
+          class="text-gray-400 text-xs uppercase tracking-wider font-bold mb-1"
+        >
+          {{ t("results.nextGameIn") }}
+        </p>
+        <div class="text-2xl font-mono font-bold text-primary">
+          {{ formattedTime }}
+        </div>
+      </div>
+
+      <!-- Cross promotion -->
+      <v-btn
+        variant="tonal"
+        color="secondary"
+        size="x-large"
+        rounded="xl"
+        :prepend-icon="otherMode === 'image' ? 'mdi-image' : 'mdi-video'"
+        class="text-none font-bold animate-pulse-gentle"
+        @click="tryOtherMode"
+      >
+        {{
+          t("results.tryOtherMode", {
+            mode: otherMode === "image" ? "Photo" : "Video",
+          })
+        }}
+      </v-btn>
+
+      <v-btn
+        variant="text"
+        color="medium-emphasis"
+        size="large"
+        rounded="xl"
+        prepend-icon="mdi-calendar-clock"
+        class="text-none font-bold"
+        @click="$emit('archive')"
+      >
+        {{ t("results.playMore") }}
+      </v-btn>
+
       <v-btn
         color="primary"
         size="x-large"
@@ -45,31 +85,23 @@
       >
         {{ copied ? t("results.copiedToClipboard") : t("results.shareResult") }}
       </v-btn>
-
-      <v-btn
-        variant="tonal"
-        color="white"
-        size="x-large"
-        rounded="xl"
-        prepend-icon="mdi-calendar-clock"
-        class="text-none font-bold"
-        @click="$emit('archive')"
-      >
-        {{ t("header.pastGames") }}
-      </v-btn>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, onMounted, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
+const router = useRouter();
 
 const props = defineProps<{
   score: number;
   totalRounds: number;
+  mode: "image" | "video";
+  isLatestGame: boolean;
 }>();
 
 defineEmits<{
@@ -77,6 +109,8 @@ defineEmits<{
 }>();
 
 const copied = ref(false);
+const timeRemaining = ref(0);
+const countdownInterval = ref<ReturnType<typeof setInterval> | null>(null);
 
 const percentage = computed(() => (props.score / props.totalRounds) * 100);
 
@@ -94,6 +128,45 @@ const shareText = computed(() =>
   })
 );
 
+const otherMode = computed(() => (props.mode === "image" ? "video" : "image"));
+
+const formattedTime = computed(() => {
+  const ms = timeRemaining.value;
+  if (ms <= 0) return "00:00:00";
+
+  const seconds = Math.floor((ms / 1000) % 60);
+  const minutes = Math.floor((ms / (1000 * 60)) % 60);
+  const hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
+  const days = Math.floor(ms / (1000 * 60 * 60 * 24));
+
+  const pad = (n: number) => n.toString().padStart(2, "0");
+
+  if (days > 0) {
+    return `${days}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+  }
+  return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+});
+
+const updateCountdown = () => {
+  const now = new Date();
+  const nextGame = new Date();
+
+  // Target: Next Monday 00:00 UTC
+  const daysUntilMonday = (1 + 7 - now.getUTCDay()) % 7;
+  nextGame.setDate(now.getDate() + daysUntilMonday);
+  nextGame.setUTCHours(0, 0, 0, 0);
+
+  // If we are past this Monday 00:00 UTC, aim for next week
+  // But wait, if today IS Monday, daysUntilMonday is 0.
+  // If now is Monday 10:00, nextGame is Monday 00:00 (past).
+  // So we need to add 7 days.
+  if (nextGame <= now) {
+    nextGame.setDate(nextGame.getDate() + 7);
+  }
+
+  timeRemaining.value = Math.max(0, nextGame.getTime() - now.getTime());
+};
+
 const shareResult = async () => {
   try {
     await navigator.clipboard.writeText(shareText.value);
@@ -103,6 +176,27 @@ const shareResult = async () => {
     console.error("Failed to copy:", err);
   }
 };
+
+const tryOtherMode = () => {
+  if (otherMode.value === "image") {
+    router.push(`/${locale.value}/image`);
+  } else {
+    router.push(`/${locale.value}`);
+  }
+};
+
+onMounted(() => {
+  if (props.isLatestGame) {
+    updateCountdown();
+    countdownInterval.value = setInterval(updateCountdown, 1000);
+  }
+});
+
+onUnmounted(() => {
+  if (countdownInterval.value) {
+    clearInterval(countdownInterval.value);
+  }
+});
 </script>
 
 <style scoped>
@@ -118,6 +212,22 @@ const shareResult = async () => {
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+.animate-pulse-gentle {
+  animation: pulse-gentle 2s infinite;
+}
+
+@keyframes pulse-gentle {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.02);
   }
 }
 </style>
