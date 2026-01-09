@@ -44,7 +44,7 @@ resource "aws_ses_template" "fakeout_new_game" {
             </div>
         </div>
         <div class="footer">
-            <p>© 2025 FakeOut. All rights reserved.</p>
+            <p>© 2026 FakeOut. All rights reserved.</p>
             <p>
                 <a href="{{unsubscribe_link}}" class="unsubscribe">Unsubscribe</a>
             </p>
@@ -123,7 +123,7 @@ resource "aws_lambda_function" "notify_users" {
 
   environment {
     variables = {
-      SENDER_EMAIL      = var.sender_email
+      SENDER_EMAIL      = "FakeOut <${var.sender_email}>"
       CONTACT_LIST_NAME = aws_sesv2_contact_list.fakeout_subscribers.contact_list_name
     }
   }
@@ -138,7 +138,7 @@ resource "aws_lambda_function_url" "notify_users_url" {
 
   cors {
     allow_credentials = true
-    allow_origins     = ["http://localhost:3000", "https://fakeout.dev", "https://www.fakeout.dev"]
+    allow_origins     = ["https://fakeout.dev", "https://www.fakeout.dev"]
     allow_methods     = ["POST", "GET"]
     allow_headers     = ["*"]
     expose_headers    = ["keep-alive", "date"]
