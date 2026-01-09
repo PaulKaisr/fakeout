@@ -41,8 +41,19 @@
         >
           {{ t("results.nextGameIn") }}
         </p>
-        <div class="text-2xl font-mono font-bold text-primary">
+        <div class="text-2xl font-mono font-bold">
           {{ formattedTime }}
+        </div>
+        <div class="text-center">
+          <v-btn
+            variant="plain"
+            color="primary"
+            class="text-none animate-pulse-gentle"
+            prepend-icon="mdi-email-outline"
+            @click="showNewsletterDialog = true"
+          >
+            {{ $t("newsletter.stayUpdated") }}
+          </v-btn>
         </div>
       </div>
 
@@ -53,7 +64,7 @@
         size="x-large"
         rounded="xl"
         :prepend-icon="otherMode === 'image' ? 'mdi-image' : 'mdi-video'"
-        class="text-none font-bold animate-pulse-gentle"
+        class="text-none font-bold"
         @click="tryOtherMode"
       >
         {{
@@ -85,6 +96,10 @@
       >
         {{ copied ? t("results.copiedToClipboard") : t("results.shareResult") }}
       </v-btn>
+
+      <v-dialog v-model="showNewsletterDialog" max-width="450">
+        <NewsletterSignup />
+      </v-dialog>
     </div>
   </div>
 </template>
@@ -93,6 +108,7 @@
 import { computed, ref, onMounted, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import NewsletterSignup from "@/components/NewsletterSignup.vue";
 
 const { t, locale } = useI18n();
 const router = useRouter();
@@ -109,6 +125,7 @@ defineEmits<{
 }>();
 
 const copied = ref(false);
+const showNewsletterDialog = ref(false);
 const timeRemaining = ref(0);
 const countdownInterval = ref<ReturnType<typeof setInterval> | null>(null);
 
