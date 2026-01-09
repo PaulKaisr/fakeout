@@ -1,67 +1,68 @@
 <template>
-  <div
-    class="newsletter-signup bg-surface-variant rounded-xl p-6 mt-8 w-full max-w-md mx-auto relative overflow-hidden"
-  >
-    <!-- Gradient blob for visual flair -->
-    <div
-      class="absolute -top-10 -right-10 w-32 h-32 bg-primary/20 blur-3xl rounded-full pointer-events-none"
-    ></div>
+  <v-card class="newsletter-signup mx-auto" max-width="450" color="surface">
+    <div class="position-relative overflow-hidden">
+      <!-- Gradient blob for visual flair -->
+      <div class="blob-gradient"></div>
 
-    <div class="relative z-10 flex flex-col gap-4">
-      <div class="text-center">
-        <h3 class="text-h6 font-weight-bold mb-1">
+      <v-card-item class="text-center pt-6 pb-2 position-relative z-10">
+        <div class="text-h5 font-weight-bold mb-2">
           {{ $t("newsletter.title") }}
-        </h3>
-        <p class="text-body-2 text-medium-emphasis">
+        </div>
+        <div class="text-subtitle-1 text-medium-emphasis">
           {{ $t("newsletter.description") }}
-        </p>
-      </div>
+        </div>
+      </v-card-item>
 
-      <v-form @submit.prevent="subscribe" class="flex flex-col gap-3">
-        <v-text-field
-          v-model="email"
-          :placeholder="$t('newsletter.emailPlaceholder')"
-          variant="solo"
-          density="comfortable"
-          hide-details
-          rounded="lg"
-          prepend-inner-icon="mdi-email-outline"
-          :loading="loading"
-          :disabled="subscribed"
-        ></v-text-field>
+      <v-card-text class="position-relative z-10 pb-6">
+        <v-form @submit.prevent="subscribe" class="d-flex flex-column gap-3">
+          <v-text-field
+            v-model="email"
+            :placeholder="$t('newsletter.emailPlaceholder')"
+            variant="outlined"
+            density="comfortable"
+            hide-details
+            rounded="xl"
+            bg-color="surface-variant"
+            prepend-inner-icon="mdi-email-outline"
+            :loading="loading"
+            :disabled="subscribed"
+            color="primary"
+          ></v-text-field>
 
-        <v-btn
-          type="submit"
-          color="primary"
-          block
-          rounded="lg"
-          size="large"
-          :loading="loading"
-          :disabled="!isValidEmail || subscribed"
-          class="normal-case font-weight-bold"
+          <v-btn
+            type="submit"
+            color="primary"
+            block
+            rounded="xl"
+            size="large"
+            :loading="loading"
+            :disabled="!isValidEmail || subscribed"
+            class="text-none font-weight-bold"
+            elevation="2"
+          >
+            {{
+              subscribed
+                ? $t("newsletter.subscribed")
+                : $t("newsletter.subscribe")
+            }}
+            <template v-if="subscribed" #append>
+              <v-icon icon="mdi-check" color="white"></v-icon>
+            </template>
+          </v-btn>
+        </v-form>
+
+        <div
+          v-if="message"
+          :class="[
+            'text-caption text-center mt-3',
+            error ? 'text-error' : 'text-success',
+          ]"
         >
-          {{
-            subscribed
-              ? $t("newsletter.subscribed")
-              : $t("newsletter.subscribe")
-          }}
-          <template v-if="subscribed" #append>
-            <v-icon icon="mdi-check" color="white"></v-icon>
-          </template>
-        </v-btn>
-      </v-form>
-
-      <div
-        v-if="message"
-        :class="[
-          'text-caption text-center',
-          error ? 'text-error' : 'text-success',
-        ]"
-      >
-        {{ message }}
-      </div>
+          {{ message }}
+        </div>
+      </v-card-text>
     </div>
-  </div>
+  </v-card>
 </template>
 
 <script lang="ts" setup>
@@ -124,8 +125,6 @@ async function subscribe() {
 }
 </script>
 
-<style scoped>
-.newsletter-signup {
-  border: 1px solid rgba(var(--v-border-color), 0.1);
-}
-</style>
+.blob-gradient { position: absolute; top: -40px; right: -40px; width: 150px;
+height: 150px; background: rgba(var(--v-theme-primary), 0.15); filter:
+blur(50px); border-radius: 50%; pointer-events: none; } .gap-3 { gap: 12px; }

@@ -54,7 +54,7 @@
       "good": "Not bad, keep practicing!",
       "poor": "AI fooled you this time!"
     },
-    "playMore": "Play More",
+    "playMore": "Check out past games",
     "tryOtherMode": "Try out {mode} mode",
     "nextGameIn": "New game available in:"
   },
@@ -273,6 +273,7 @@
   },
   "newsletter": {
     "title": "Stay Updated",
+    "stayUpdated": "Get notified",
     "description": "Get notified when new daily challenges are available.",
     "emailPlaceholder": "Enter your email",
     "subscribe": "Subscribe",
