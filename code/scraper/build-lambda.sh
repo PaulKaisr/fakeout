@@ -20,6 +20,14 @@ echo "Copying source files..."
 cp -r clients lambda-package/
 cp index.js lambda-package/
 
+# Download and include FFmpeg static binary
+echo "Downloading FFmpeg static binary..."
+curl -O https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
+mkdir -p ffmpeg-temp
+tar -xf ffmpeg-release-amd64-static.tar.xz -C ffmpeg-temp --strip-components=1
+cp ffmpeg-temp/ffmpeg lambda-package/
+rm -rf ffmpeg-temp ffmpeg-release-amd64-static.tar.xz
+
 # Install production dependencies in the Lambda package directory
 echo "Installing production dependencies..."
 cd lambda-package
@@ -34,7 +42,9 @@ cat > package.json << 'EOF'
     "@aws-sdk/client-s3": "^3.943.0",
     "dotenv": "^17.2.3",
     "isomorphic-fetch": "^3.0.0",
-    "pexels": "^1.4.0"
+    "pexels": "^1.4.0",
+    "fluent-ffmpeg": "^2.1.3",
+    "@supabase/supabase-js": "^2.39.0"
   }
 }
 EOF
