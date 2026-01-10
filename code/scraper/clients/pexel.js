@@ -10,9 +10,7 @@ export async function searchVideos(params = {}) {
   const defaultParams = {
     query: "cat",
     per_page: 10,
-    orientation: "portrait",
     min_duration: 5,
-    max_duration: 10,
   };
   const searchParams = { ...defaultParams, ...params };
   const res = await client.videos.search(searchParams);
@@ -23,7 +21,6 @@ export async function searchImages(params = {}) {
   const defaultParams = {
     query: "cat",
     per_page: 10,
-    orientation: "portrait",
   };
   const searchParams = { ...defaultParams, ...params };
   const res = await client.photos.search(searchParams);
@@ -43,7 +40,6 @@ export async function getPopularVideos(params = {}) {
   const defaultParams = {
     per_page: 10,
     min_duration: 5,
-    max_duration: 10,
   };
   const searchParams = { ...defaultParams, ...params };
 
@@ -52,9 +48,14 @@ export async function getPopularVideos(params = {}) {
     return res.videos;
   } catch (error) {
     // Fallback to video search if popular endpoint fails (known Pexels API issue)
-    console.warn(`Popular videos endpoint failed: ${error.message}. Falling back to video search.`);
-    const { min_duration, max_duration, ...searchOnlyParams } = searchParams;
-    const res = await client.videos.search({ ...searchOnlyParams, query: "nature" });
+    console.warn(
+      `Popular videos endpoint failed: ${error.message}. Falling back to video search.`
+    );
+    const { min_duration, ...searchOnlyParams } = searchParams;
+    const res = await client.videos.search({
+      ...searchOnlyParams,
+      query: "nature",
+    });
     return res.videos;
   }
 }
