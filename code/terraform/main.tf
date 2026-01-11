@@ -117,6 +117,8 @@ resource "aws_lambda_function" "scraper" {
       R2_SECRET_ACCESS_KEY   = var.r2_secret_access_key
       PEXELS_API_KEY         = var.pexels_api_key
       R2_BUCKET_NAME         = cloudflare_r2_bucket.fakeout_videos_dev.name
+      SUPABASE_URL           = var.supabase_url
+      SUPABASE_SERVICE_ROLE_KEY = var.supabase_service_role_key
     }
   }
 
