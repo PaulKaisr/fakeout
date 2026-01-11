@@ -68,6 +68,18 @@ variable "google_ai_api_key" {
   sensitive   = true
 }
 
+variable "supabase_url" {
+  description = "Supabase API URL"
+  type        = string
+  sensitive   = true
+}
+
+variable "supabase_service_role_key" {
+  description = "Supabase Service Role Key"
+  type        = string
+  sensitive   = true
+}
+
 variable "r2_custom_domain" {
   description = "Custom domain for R2 public access (e.g., media.yourdomain.com)"
   type        = string

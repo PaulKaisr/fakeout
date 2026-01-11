@@ -19,18 +19,21 @@ if (supabaseUrl && supabaseKey) {
 }
 
 /**
- * Gets a prompt that hasn't been used yet (or the one used longest ago)
+ * Gets a prompt that hasn't been used yet for the specific mode (or the one used longest ago)
+ * @param {string} mode - "video" or "image"
  * @returns {Promise<string|null>} The prompt text or null if failed/empty
  */
-export async function getNextPrompt() {
+export async function getNextPrompt(mode = "video") {
   if (!supabase) return null;
 
+  const column = mode === "image" ? "last_used_image_at" : "last_used_video_at";
+
   try {
-    // 1. Try to find a prompt that has NEVER been used
+    // 1. Try to find a prompt that has NEVER been used for this mode
     let { data, error } = await supabase
       .from("search_prompts")
       .select("prompt")
-      .is("last_used_at", null)
+      .is(column, null)
       .limit(1)
       .single();
 
@@ -38,17 +41,17 @@ export async function getNextPrompt() {
       return data.prompt;
     }
 
-    // 2. If all have been used, pick the one used least recently
+    // 2. If all have been used, pick the one used least recently for this mode
     const { data: recycledData, error: recycledError } = await supabase
       .from("search_prompts")
       .select("prompt")
-      .order("last_used_at", { ascending: true }) // Oldest timestamp first
+      .order(column, { ascending: true }) // Oldest timestamp first
       .limit(1)
       .single();
 
     if (recycledError) {
       console.error(
-        "Error fetching recycled prompt from Supabase:",
+        `Error fetching recycled prompt for ${mode} from Supabase:`,
         recycledError
       );
       return null;
@@ -62,22 +65,30 @@ export async function getNextPrompt() {
 }
 
 /**
- * Marks a prompt as used with the current timestamp
+ * Marks a prompt as used with the current timestamp for the specific mode
  * @param {string} prompt - The prompt to update
+ * @param {string} mode - "video" or "image"
  */
-export async function markPromptAsUsed(prompt) {
+export async function markPromptAsUsed(prompt, mode = "video") {
   if (!supabase || !prompt) return;
+
+  const column = mode === "image" ? "last_used_image_at" : "last_used_video_at";
 
   try {
     const { error } = await supabase
       .from("search_prompts")
-      .update({ last_used_at: new Date().toISOString() })
+      .update({ [column]: new Date().toISOString() })
       .eq("prompt", prompt);
 
     if (error) {
-      console.error(`Error marking prompt '${prompt}' as used:`, error);
+      console.error(
+        `Error marking prompt '${prompt}' as used for ${mode}:`,
+        error
+      );
     } else {
-      console.log(`Successfully marked prompt '${prompt}' as used.`);
+      console.log(
+        `Successfully marked prompt '${prompt}' as used for ${mode}.`
+      );
     }
   } catch (err) {
     console.error("Unexpected error in markPromptAsUsed:", err);
