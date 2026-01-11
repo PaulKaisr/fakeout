@@ -197,27 +197,7 @@ resource "aws_iam_role_policy_attachment" "notify_scheduler_policy_attach" {
   policy_arn = aws_iam_policy.notify_scheduler_policy.arn
 }
 
-# EventBridge Scheduler for Daily Notifications
-resource "aws_scheduler_schedule" "daily_notifications" {
-  name       = "fakeout-daily-notification"
-  group_name = "default"
 
-  flexible_time_window {
-    mode = "OFF"
-  }
-
-  # Run daily at 10 AM UTC
-  schedule_expression = "cron(0 10 * * ? *)"
-
-  target {
-    arn      = aws_lambda_function.notify_users.arn
-    role_arn = aws_iam_role.notify_scheduler_role.arn
-    
-    input = jsonencode({
-      public_url = aws_lambda_function_url.notify_users_url.function_url
-    })
-  }
-}
 
 output "notify_users_api_url" {
   value = aws_lambda_function_url.notify_users_url.function_url

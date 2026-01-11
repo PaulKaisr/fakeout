@@ -30,8 +30,10 @@ resource "aws_iam_policy" "step_functions_policy" {
         ]
         Resource = [
           aws_lambda_function.scraper.arn,
-          aws_lambda_function.describe_and_generate.arn
+          aws_lambda_function.describe_and_generate.arn,
+          aws_lambda_function.notify_users.arn
         ]
+
       }
     ]
   })
@@ -134,6 +136,22 @@ resource "aws_sfn_state_machine" "weekly_game_generation" {
           provider   = "google"
           bucketName = "fakeout-videos-dev"
           backfill   = true
+        }
+        Retry = [
+          {
+            ErrorEquals     = ["States.TaskFailed"]
+            IntervalSeconds = 30
+            MaxAttempts     = 2
+            BackoffRate     = 2.0
+          }
+        ]
+        Next = "NotifyUsers"
+      }
+      NotifyUsers = {
+        Type     = "Task"
+        Resource = aws_lambda_function.notify_users.arn
+        Parameters = {
+          public_url = aws_lambda_function_url.notify_users_url.function_url
         }
         Retry = [
           {
