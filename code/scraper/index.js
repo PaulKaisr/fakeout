@@ -159,7 +159,7 @@ export async function handler(event, context) {
       // If no prompt provided, try to get one from Supabase
       if (!effectiveSearchPrompt) {
         console.log("No search prompt provided. Fetching from Supabase...");
-        const dbPrompt = await getNextPrompt();
+        const dbPrompt = await getNextPrompt("video");
         if (dbPrompt) {
           effectiveSearchPrompt = dbPrompt;
           usedSupabasePrompt = true;
@@ -281,7 +281,7 @@ export async function handler(event, context) {
         usedSupabasePrompt &&
         uploadResults.some((r) => r.status !== "failed")
       ) {
-        await markPromptAsUsed(effectiveSearchPrompt);
+        await markPromptAsUsed(effectiveSearchPrompt, "video");
       }
 
       console.log(
@@ -305,12 +305,34 @@ export async function handler(event, context) {
       };
     } else {
       let images;
-      if (searchPrompt) {
+      let effectiveSearchPrompt = searchPrompt;
+      let usedSupabasePrompt = false;
+
+      // If no prompt provided, try to get one from Supabase (Image Mode)
+      if (!effectiveSearchPrompt) {
         console.log(
-          `Fetching ${mediaCount} images for query "${searchPrompt}"...`
+          "No search prompt provided for images. Fetching from Supabase..."
+        );
+        const dbPrompt = await getNextPrompt("image");
+        if (dbPrompt) {
+          effectiveSearchPrompt = dbPrompt;
+          usedSupabasePrompt = true;
+          console.log(
+            `Fetched usage prompt for images: '${effectiveSearchPrompt}'`
+          );
+        } else {
+          console.log(
+            "No prompt available from Supabase. Falling back to curated images."
+          );
+        }
+      }
+
+      if (effectiveSearchPrompt) {
+        console.log(
+          `Fetching ${mediaCount} images for query "${effectiveSearchPrompt}"...`
         );
         images = await searchImages({
-          query: searchPrompt,
+          query: effectiveSearchPrompt,
           per_page: mediaCount,
         });
       } else {
@@ -318,7 +340,7 @@ export async function handler(event, context) {
         console.log(`Fetching ${mediaCount} curated images from Pexels...`);
         images = await getCuratedImages({ per_page: mediaCount });
       }
-      console.log(`Found ${images.length} curated images`);
+      console.log(`Found ${images.length} images`);
 
       // Download and upload each image to R2
       const uploadPromises = images.map(async (image, index) => {
@@ -363,7 +385,7 @@ export async function handler(event, context) {
           alt: image.alt,
           liked: image.liked,
           src: image.src,
-          search_prompt: searchPrompt || "curated",
+          search_prompt: effectiveSearchPrompt || "curated",
         };
 
         console.log(
@@ -389,6 +411,14 @@ export async function handler(event, context) {
 
       const uploadResults = await Promise.all(uploadPromises);
 
+      // Successfully uploaded? Mark prompt as used for images
+      if (
+        usedSupabasePrompt &&
+        uploadResults.some((r) => r.status !== "failed")
+      ) {
+        await markPromptAsUsed(effectiveSearchPrompt, "image");
+      }
+
       console.log(
         `✓ Successfully uploaded ${uploadResults.length} images to R2`
       );
@@ -398,7 +428,7 @@ export async function handler(event, context) {
         body: JSON.stringify({
           success: true,
           message: `Successfully fetched and stored ${
-            searchPrompt ? "searched" : "curated"
+            effectiveSearchPrompt ? "searched" : "curated"
           } images`,
           data: {
             mode,
