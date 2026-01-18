@@ -81,7 +81,7 @@ export const supabaseService = {
 
       if (correctError || correct === null) return null;
 
-      return Math.round((correct / total) * 100);
+      return (correct / total) * 100;
     } catch (e) {
       console.warn("Exception fetching guess stats:", e);
       return null;
