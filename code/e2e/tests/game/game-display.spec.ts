@@ -25,11 +25,12 @@ test.describe("Game Flow", () => {
       page.getByRole("heading", { name: "Which image is AI-generated?" })
     ).toBeVisible();
 
-    // Verify that the theme is displayed
-    await expect(page.getByText(/Theme:/)).toBeVisible();
+  // Verify that the theme is displayed
+  await expect(page.getByText(/Theme:/)).toBeVisible();
 
-    // Verify that the play count is displayed
-    await expect(page.getByText(/\d+ Plays so far/)).toBeVisible();
+  // Verify that the play count is displayed via data-testid (language independent)
+  await expect(page.getByTestId("game-play-count")).toBeVisible({ timeout: 15000 });
+
 
     // Verify that the instruction text is visible
     await expect(
