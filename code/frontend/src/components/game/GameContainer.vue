@@ -228,7 +228,7 @@
               size="small"
               color="medium-emphasis"
             ></v-icon>
-            <span class="text-sm font-medium text-medium-emphasis">
+            <span class="text-sm font-medium text-medium-emphasis" data-testid="game-play-count">
               {{ gamePlayCount }} {{ t("game.plays") }}
             </span>
           </div>
