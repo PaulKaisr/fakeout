@@ -142,6 +142,8 @@ const shareText = computed(() =>
   t("results.shareText", {
     score: props.score,
     total: props.totalRounds,
+    mode: t(props.mode === "image" ? "stats.imageMode" : "stats.videoMode"),
+    url: window.location.href,
   }),
 );
 

@@ -47,7 +47,7 @@
     "shareResult": "Share Result",
     "copiedToClipboard": "Copied to Clipboard!",
     "playAgain": "Play Again",
-    "shareText": "I scored {score}/{total} on FakeOut! Can you beat me? https://fakeout.dev",
+    "shareText": "I scored {score}/{total} on FakeOut ({mode})! Can you beat me? {url}",
     "feedback": {
       "perfect": "Perfect! You are an AI detector!",
       "great": "Great job! Sharp eyes!",

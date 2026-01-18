@@ -47,7 +47,7 @@
     "shareResult": "Ergebnis teilen",
     "copiedToClipboard": "In die Zwischenablage kopiert!",
     "playAgain": "Nochmal spielen",
-    "shareText": "Ich habe {score}/{total} Punkte bei FakeOut erreicht! Kannst du mich schlagen? https://fakeout.dev",
+    "shareText": "Ich habe {score}/{total} Punkte bei FakeOut ({mode}) erreicht! Kannst du mich schlagen? {url}",
     "feedback": {
       "perfect": "Perfekt! Du bist ein KI-Detektor!",
       "great": "Großartig! Scharfe Augen!",
