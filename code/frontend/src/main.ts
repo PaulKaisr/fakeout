@@ -32,9 +32,9 @@ app.mount("#app");
 // Initialize cookie consent after app is mounted
 // Get locale from URL or default to 'en'
 const pathLocale = window.location.pathname.split("/")[1];
-const supportedLocales = ["en", "de", "bg"] as const;
+const supportedLocales = ["en", "de", "bg", "pl"] as const;
 const locale = supportedLocales.includes(pathLocale as any)
-  ? (pathLocale as "en" | "de" | "bg")
+  ? (pathLocale as "en" | "de" | "bg" | "pl")
   : "en";
 
 initCookieConsent(locale);
