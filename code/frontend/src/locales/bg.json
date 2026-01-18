@@ -47,7 +47,7 @@
     "shareResult": "Сподели резултата",
     "copiedToClipboard": "Копирано в клипборда!",
     "playAgain": "Играй отново",
-    "shareText": "Постигнах {score}/{total} във FakeOut! Можеш ли да ме победиш? https://fakeout.dev",
+    "shareText": "Постигнах {score}/{total} във FakeOut ({mode})! Можеш ли да ме победиш? {url}",
     "feedback": {
       "perfect": "Перфектно! Ти си истински ИИ детектор!",
       "great": "Страхотно! Остро око!",
@@ -68,7 +68,8 @@
   "languages": {
     "en": "English",
     "de": "Deutsch",
-    "bg": "Български"
+    "bg": "Български",
+    "pl": "Polski"
   },
   "faq": {
     "title": "Често задавани въпроси",

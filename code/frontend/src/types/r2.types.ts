@@ -97,7 +97,7 @@ export interface R2ImageQueryOptions {
  * Type guard to check if metadata is from a Pexels image
  */
 export function isPexelsImageMetadata(
-  metadata: R2ImageMetadata | R2GeneratedImageMetadata
+  metadata: R2ImageMetadata | R2GeneratedImageMetadata,
 ): metadata is R2ImageMetadata {
   return "photographer" in metadata;
 }
@@ -106,7 +106,7 @@ export function isPexelsImageMetadata(
  * Type guard to check if metadata is from a generated image
  */
 export function isGeneratedImageMetadata(
-  metadata: R2ImageMetadata | R2GeneratedImageMetadata
+  metadata: R2ImageMetadata | R2GeneratedImageMetadata,
 ): metadata is R2GeneratedImageMetadata {
   return "original_image_id" in metadata && "generation_prompt" in metadata;
 }

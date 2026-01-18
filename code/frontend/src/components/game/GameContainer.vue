@@ -199,7 +199,8 @@
     <!-- Main Content -->
     <v-main>
       <v-container
-        class="py-12 flex flex-col items-center justify-center max-w-7xl"
+        fluid
+        class="py-12 flex flex-col items-center justify-center max-w-[1800px] mx-auto"
       >
         <!-- Question Section -->
         <div
@@ -227,7 +228,7 @@
               size="small"
               color="medium-emphasis"
             ></v-icon>
-            <span class="text-sm font-medium text-medium-emphasis">
+            <span class="text-sm font-medium text-medium-emphasis" data-testid="game-play-count">
               {{ gamePlayCount }} {{ t("game.plays") }}
             </span>
           </div>
@@ -268,11 +269,12 @@
           :total-rounds="state.totalRounds"
           :mode="mode || 'image'"
           :is-latest-game="!props.date"
+          :game-date="loadedDate"
           @archive="showArchiveDialog = true"
         />
 
         <!-- Game Round Area -->
-        <div v-else-if="currentRound" class="w-full max-w-5xl relative">
+        <div v-else-if="currentRound" class="w-full relative">
           <!-- Image Loading Spinner (Overlay) -->
           <div
             v-if="!areBothImagesLoaded"
@@ -325,7 +327,8 @@
           class="text-center mb-6 animate-slide-up"
         >
           <span class="text-h5 font-weight-bold text-white">
-            {{ currentGlobalStats }}% {{ t("game.guessedCorrectly") }}
+            {{ formattedGlobalStats }}%
+            {{ t("game.guessedCorrectly") }}
           </span>
         </div>
 
@@ -446,7 +449,7 @@ watch(
     mediaLoaded.B = false;
     durations.A = 0;
     durations.B = 0;
-  }
+  },
 );
 
 watch(
@@ -464,7 +467,7 @@ watch(
     durations.B = 0;
     gamePlayCount.value = 0;
     await loadGame();
-  }
+  },
 );
 
 const loadedDate = ref<string | null>(null);
@@ -496,7 +499,7 @@ const loadGame = async () => {
     if (date) {
       gamePlayCount.value = await supabaseService.getGamePlayCount(
         props.mode || "image",
-        date
+        date,
       );
     }
 
@@ -558,7 +561,7 @@ const handleSelection = (imageId: string) => {
       isCorrect,
       state.totalRounds,
       currentRound.value.id,
-      pairId
+      pairId,
     );
 
     // Fetch global stats
@@ -574,6 +577,14 @@ const fetchGlobalStats = async (pairId: string) => {
   currentGlobalStats.value = percentage;
 };
 
+const formattedGlobalStats = computed(() => {
+  if (currentGlobalStats.value === null) return null;
+  return currentGlobalStats.value.toLocaleString(locale.value, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+});
+
 const isSelectionCorrect = (image: Image) => {
   // If user selected this image, was it AI?
   if (selectedImageId.value === image.id) {
@@ -587,7 +598,7 @@ const isSelectionCorrect = (image: Image) => {
 const isSelectionCorrectId = (imageId: string) => {
   if (!currentRound.value) return false;
   const selected = [currentRound.value.imageA, currentRound.value.imageB].find(
-    (img) => img.id === imageId
+    (img) => img.id === imageId,
   );
   return selected?.isAiGenerated ?? false;
 };
