@@ -118,6 +118,7 @@ const props = defineProps<{
   totalRounds: number;
   mode: "image" | "video";
   isLatestGame: boolean;
+  gameDate: string | null;
 }>();
 
 defineEmits<{
@@ -138,12 +139,19 @@ const feedbackMessage = computed(() => {
   return t("results.feedback.poor");
 });
 
+const shareUrl = computed(() => {
+  if (props.gameDate) {
+    return `${window.location.origin}/${locale.value}/${props.mode}/${props.gameDate}`;
+  }
+  return window.location.href;
+});
+
 const shareText = computed(() =>
   t("results.shareText", {
     score: props.score,
     total: props.totalRounds,
     mode: t(props.mode === "image" ? "stats.imageMode" : "stats.videoMode"),
-    url: window.location.href,
+    url: shareUrl.value,
   }),
 );
 
