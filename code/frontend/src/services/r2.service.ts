@@ -40,14 +40,14 @@ export class R2Service {
    * @throws Error if fetch fails or response is not ok
    */
   async fetchMetadata(
-    key: string
+    key: string,
   ): Promise<R2ImageMetadata | R2GeneratedImageMetadata> {
     const url = this.buildUrl(key);
     const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error(
-        `Failed to fetch metadata from ${key}: ${response.status} ${response.statusText}`
+        `Failed to fetch metadata from ${key}: ${response.status} ${response.statusText}`,
       );
     }
 
@@ -60,7 +60,7 @@ export class R2Service {
    * @returns List of available dates (YYYY-MM-DD)
    */
   async fetchManifest(
-    mediaType: "images" | "videos" = "images"
+    mediaType: "images" | "videos" = "images",
   ): Promise<GameManifest> {
     const manifestKey =
       mediaType === "videos"
@@ -98,7 +98,7 @@ export class R2Service {
       | "openai_generated"
       | "google_generated"
       | "pexels_video_raw"
-      | "google_generated_video"
+      | "google_generated_video",
   ): {
     imageKeyPattern: string;
     metaKeyPattern: string;
@@ -154,13 +154,13 @@ export class R2Service {
       start?: number;
       end?: number;
       includeMetadata?: boolean;
-    } = {}
+    } = {},
   ): Promise<R2Image[]> {
     const { start = 1, end = 50, includeMetadata = true } = options;
     const images: R2Image[] = [];
     const { imageKeyPattern, metaKeyPattern } = this.buildImageKeys(
       datePrefix,
-      type
+      type,
     );
 
     // For pexels_raw and pexels_video_raw, try sequential numbers (001, 002, 003...)
@@ -200,7 +200,7 @@ export class R2Service {
       // For now, we'll try to fetch metadata files if they exist
       // In practice, you'll want to load pexels images first to get the IDs
       console.warn(
-        "Loading generated images requires knowing Pexels IDs. Load pexels_raw images first."
+        "Loading generated images requires knowing Pexels IDs. Load pexels_raw images first.",
       );
     }
 
@@ -219,12 +219,12 @@ export class R2Service {
     datePrefix: string,
     pexelsIds: string[],
     includeMetadata = true,
-    type: "google_generated" | "google_generated_video" = "google_generated"
+    type: "google_generated" | "google_generated_video" = "google_generated",
   ): Promise<R2Image[]> {
     const images: R2Image[] = [];
     const { imageKeyPattern, metaKeyPattern } = this.buildImageKeys(
       datePrefix,
-      type
+      type,
     );
 
     for (const id of pexelsIds) {
@@ -249,7 +249,7 @@ export class R2Service {
         }
       } catch {
         console.debug(
-          `Generated image not found for Pexels ID ${id} on ${datePrefix}`
+          `Generated image not found for Pexels ID ${id} on ${datePrefix}`,
         );
       }
     }
@@ -270,7 +270,7 @@ export class R2Service {
 
     if (!response.ok) {
       throw new Error(
-        `Failed to load image from ${key}: ${response.status} ${response.statusText}`
+        `Failed to load image from ${key}: ${response.status} ${response.statusText}`,
       );
     }
 
@@ -302,11 +302,11 @@ export class R2Service {
     // Let's check for either.
     const { metaKeyPattern: imageMetaPattern } = this.buildImageKeys(
       datePrefix,
-      "pexels_raw"
+      "pexels_raw",
     );
     const { metaKeyPattern: videoMetaPattern } = this.buildImageKeys(
       datePrefix,
-      "pexels_video_raw"
+      "pexels_video_raw",
     );
 
     try {

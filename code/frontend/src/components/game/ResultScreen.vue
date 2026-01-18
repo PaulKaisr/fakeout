@@ -142,7 +142,7 @@ const shareText = computed(() =>
   t("results.shareText", {
     score: props.score,
     total: props.totalRounds,
-  })
+  }),
 );
 
 const otherMode = computed(() => (props.mode === "image" ? "video" : "image"));

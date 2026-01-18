@@ -45,7 +45,7 @@ export const supabaseService = {
   async trackGuess(
     pairId: string,
     mode: "image" | "video",
-    isCorrect: boolean
+    isCorrect: boolean,
   ) {
     if (!supabase) return;
     try {
@@ -89,7 +89,7 @@ export const supabaseService = {
   },
   async getGamePlayCount(
     mode: "image" | "video",
-    date: string
+    date: string,
   ): Promise<number> {
     if (!supabase) return 0;
     try {

@@ -69,6 +69,6 @@ const faqSchema = computed(() =>
         text: faq.answer,
       },
     })),
-  })
+  }),
 );
 </script>

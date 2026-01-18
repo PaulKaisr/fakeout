@@ -65,7 +65,7 @@ export function recordRoundResult(
   isCorrect: boolean,
   currentTotalRounds: number,
   roundId: number,
-  pairId?: string
+  pairId?: string,
 ) {
   // Update specific game stats
   const key = getGameKey(mode, date);
@@ -134,7 +134,7 @@ export function finishGame(mode: "image" | "video", date: string) {
 
 export function getGameStats(
   mode: "image" | "video",
-  date: string
+  date: string,
 ): SingleGameProgress | undefined {
   return userStats.games[getGameKey(mode, date)];
 }

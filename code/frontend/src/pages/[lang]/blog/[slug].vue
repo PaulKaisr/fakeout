@@ -133,7 +133,7 @@ useHead({
             innerHTML: JSON.stringify(blogPostingSchema.value),
           },
         ]
-      : []
+      : [],
   ),
 });
 
