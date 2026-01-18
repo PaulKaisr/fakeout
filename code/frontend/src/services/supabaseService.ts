@@ -45,7 +45,7 @@ export const supabaseService = {
   async trackGuess(
     pairId: string,
     mode: "image" | "video",
-    isCorrect: boolean
+    isCorrect: boolean,
   ) {
     if (!supabase) return;
     try {
@@ -81,7 +81,7 @@ export const supabaseService = {
 
       if (correctError || correct === null) return null;
 
-      return Math.round((correct / total) * 100);
+      return (correct / total) * 100;
     } catch (e) {
       console.warn("Exception fetching guess stats:", e);
       return null;
@@ -89,7 +89,7 @@ export const supabaseService = {
   },
   async getGamePlayCount(
     mode: "image" | "video",
-    date: string
+    date: string,
   ): Promise<number> {
     if (!supabase) return 0;
     try {

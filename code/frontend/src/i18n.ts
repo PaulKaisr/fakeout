@@ -4,6 +4,7 @@ import { createI18n } from "vue-i18n";
 import en from "./locales/en.json";
 import de from "./locales/de.json";
 import bg from "./locales/bg.json";
+import pl from "./locales/pl.json";
 
 const savedLocale = localStorage.getItem("user-locale");
 const browserLocale = (
@@ -11,7 +12,7 @@ const browserLocale = (
 ) as string;
 const locale: string =
   savedLocale ||
-  (["en", "de", "bg"].includes(browserLocale) ? browserLocale : "en");
+  (["en", "de", "bg", "pl"].includes(browserLocale) ? browserLocale : "en");
 
 export default createI18n({
   legacy: false,
@@ -22,5 +23,6 @@ export default createI18n({
     en,
     de,
     bg,
+    pl,
   },
 });

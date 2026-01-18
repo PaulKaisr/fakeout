@@ -1,0 +1,309 @@
+{
+  "common": {
+    "language": "Język",
+    "play": "Graj",
+    "loading": "Ładowanie...",
+    "retry": "Spróbuj ponownie",
+    "backToHome": "Powrót do strony głównej",
+    "error": "Błąd"
+  },
+  "header": {
+    "title": "AI czy Prawdziwe?",
+    "subtitle": "Sprawdź swoje umiejętności detekcji",
+    "pastGames": "Poprzednie gry",
+    "roundLabel": "Runda",
+    "scoreLabel": "Wynik"
+  },
+  "game": {
+    "mode": "Tryb",
+    "question": {
+      "image": "Które zdjęcie jest wygenerowane przez AI?",
+      "video": "Które wideo jest wygenerowane przez AI?"
+    },
+    "instructions": {
+      "image": "Kliknij na zdjęcie, które twoim zdaniem zostało stworzone przez Sztuczną Inteligencję",
+      "video": "Kliknij na wideo, które twoim zdaniem zostało stworzone przez Sztuczną Inteligencję"
+    },
+    "loadingData": "Ładowanie danych gry...",
+    "nextRound": "Następna runda",
+    "finish": "Zakończ",
+    "aiGenerated": "Wygenerowane przez AI",
+    "real": {
+      "image": "Prawdziwe zdjęcie",
+      "video": "Prawdziwe wideo"
+    },
+    "correct": "Dobrze!",
+    "wrong": "Źle!",
+    "photoBy": "Zdjęcie autorstwa",
+    "videoBy": "Wideo autorstwa",
+    "viewOnPexels": "Zobacz na Pexels",
+    "guessedCorrectly": "graczy zgadło poprawnie",
+    "plays": "Gier dotychczas",
+    "theme": "Motyw"
+  },
+  "results": {
+    "title": "Poziom ukończony!",
+    "finalScore": "Wynik końcowy",
+    "shareResult": "Udostępnij wynik",
+    "copiedToClipboard": "Skopiowano do schowka!",
+    "playAgain": "Zagraj ponownie",
+    "shareText": "Mój wynik to {score}/{total} w FakeOut ({mode})! Czy mnie pokonasz? {url}",
+    "feedback": {
+      "perfect": "Perfekcyjnie! Jesteś wykrywaczem AI!",
+      "great": "Świetna robota! Masz bystre oko!",
+      "good": "Nieźle, ćwicz dalej!",
+      "poor": "AI cię oszukało tym razem!"
+    },
+    "playMore": "Sprawdź poprzednie gry",
+    "tryOtherMode": "Wypróbuj tryb {mode}",
+    "nextGameIn": "Nowa gra dostępna za:"
+  },
+  "archive": {
+    "title": "Poprzednie gry",
+    "subtitle": "Zagraj w gry z poprzednich dni",
+    "noGames": "Nie znaleziono poprzednich gier w archiwum.",
+    "finished": "Ukończone",
+    "inProgress": "W trakcie"
+  },
+  "languages": {
+    "en": "English",
+    "de": "Deutsch",
+    "bg": "Български",
+    "pl": "Polski"
+  },
+  "faq": {
+    "title": "Często Zadawane Pytania",
+    "q1": {
+      "question": "Jak rozpoznać obrazy wygenerowane przez AI?",
+      "answer": "Szukaj nienaturalnych tekstur, niespójnego oświetlenia, dziwnych odbić, zniekształconych dłoni lub twarzy, niemożliwej geometrii oraz artefaktów w drobnych szczegółach, takich jak włosy czy tekst. Obrazy wygenerowane przez AI często mają subtelne niedoskonałości, które wprawne oko może wykryć."
+    },
+    "q2": {
+      "question": "Czym jest gra Fakeout?",
+      "answer": "Fakeout to darmowa codzienna gra, która testuje twoją zdolność odróżniania prawdziwych fotografii od obrazów wygenerowanych przez AI. Każdego dnia pojawiają się nowe pary obrazów, aby wyostrzyć twoje umiejętności detekcji AI."
+    },
+    "q3": {
+      "question": "Jak działa gra w detektora obrazów AI?",
+      "answer": "Prezentowane są dwa obrazy - jedna prawdziwa fotografia i jeden obraz wygenerowany przez AI. Twoim celem jest wskazanie, który z nich został stworzony przez sztuczną inteligencję. Po dokonaniu wyboru otrzymasz natychmiastową informację zwrotną i dowiesz się, na co zwracać uwagę."
+    },
+    "q4": {
+      "question": "Czy obrazy wygenerowane przez AI można wykryć?",
+      "answer": "Tak! Chociaż generowanie obrazów przez AI staje się coraz bardziej zaawansowane, nadal istnieją charakterystyczne oznaki, które pomagają zidentyfikować treści wygenerowane przez AI. Dzięki praktyce i wiedzy, na co zwracać uwagę, możesz poprawić swoją dokładność detekcji."
+    },
+    "q5": {
+      "question": "Czy Fakeout jest darmowy?",
+      "answer": "Tak, Fakeout jest całkowicie darmowy. Możesz testować swoje umiejętności detekcji AI codziennie bez żadnych kosztów ani konieczności rejestracji."
+    }
+  },
+  "errors": {
+    "noRoundsForDate": "Nie znaleziono rund gry dla daty {date}.",
+    "noRoundsGeneral": "Nie znaleziono rund gry. Sprawdź później!",
+    "failedToLoad": "Nie udało się załadować danych gry.",
+    "failedToLoadImage": "Nie udało się załadować obrazu",
+    "unknownError": "Nieznany błąd podczas ładowania obrazów"
+  },
+  "stats": {
+    "title": "Twoje Statystyki",
+    "imageMode": "Tryb zdjęć",
+    "imageModeDesc": "Znajdź zdjęcia AI",
+    "videoMode": "Tryb wideo",
+    "videoModeDesc": "Znajdź wideo AI",
+    "gamesPlayed": "Rozegrane gry",
+    "totalScore": "Całkowity wynik",
+    "accuracy": "Dokładność",
+    "resetStats": "Resetuj statystyki",
+    "resetConfirm": "Czy na pewno chcesz zresetować wszystkie statystyki? Tej operacji nie można cofnąć."
+  },
+  "footer": {
+    "home": "Strona główna",
+    "blog": "Blog",
+    "about": "O nas",
+    "faq": "FAQ",
+    "contact": "Kontakt",
+    "reddit": "Reddit",
+    "privacy": "Polityka Prywatności",
+    "terms": "Warunki Świadczenia Usług",
+    "copyright": "© {year} Fakeout. Wszelkie prawa zastrzeżone."
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Najnowsze wiadomości i artykuły",
+    "readMore": "Czytaj więcej",
+    "backToBlog": "Powrót do bloga",
+    "publishedOn": "Opublikowano {date}"
+  },
+  "about": {
+    "title": "O Fakeout",
+    "mission": {
+      "title": "Nasza Misja",
+      "text": "Celem Fakeout jest demokratyzacja wiedzy o AI. Zamieniając wykrywanie syntetycznych mediów w grę, pomagamy ludziom trenować wzrok, aby dostrzegali subtelne niedoskonałości obrazów i wideo wygenerowanych przez AI."
+    },
+    "story": {
+      "title": "Historia",
+      "text": "Rozpoczęty jako mały eksperyment w 2024 roku, Fakeout wyrósł na codzienne wyzwanie dla tysięcy użytkowników, którzy chcą być na bieżąco w erze generatywnego AI."
+    }
+  },
+  "privacy": {
+    "title": "Polityka Prywatności",
+    "lastUpdated": "Ostatnia aktualizacja",
+    "sections": {
+      "intro": {
+        "title": "Wstęp",
+        "text": "Witamy w Fakeout. Szanujemy twoją prywatność i jesteśmy zobowiązani do ochrony twoich danych osobowych. Ta polityka prywatności wyjaśnia, w jaki sposób zbieramy, wykorzystujemy i chronimy twoje informacje, gdy korzystasz z naszej gry w detekcję obrazów AI."
+      },
+      "dataCollection": {
+        "title": "Informacje, które gromadzimy",
+        "text": "Gromadzimy następujące rodzaje informacji:",
+        "items": {
+          "localStorage": "Postęp w grze i statystyki przechowywane lokalnie w twojej przeglądarce (localStorage)",
+          "analytics": "Anonimowe dane o użytkowaniu poprzez Google Analytics (wyświetlenia stron, czas trwania sesji, typ urządzenia)",
+          "cookies": "Pliki cookie do celów funkcjonalnych, analitycznych i reklamowych"
+        }
+      },
+      "cookies": {
+        "title": "Pliki Cookies i Śledzenie",
+        "text": "Używamy plików cookie i podobnych technologii śledzenia, aby poprawić twoje doświadczenia na naszej stronie.",
+        "thirdParty": "Osoby trzecie, w tym Google, używają plików cookie do wyświetlania reklam na podstawie twoich poprzednich wizyt na naszej stronie lub innych stronach.",
+        "googleInfo": "Użycie plików cookie reklamowych przez Google umożliwia firmie i jej partnerom wyświetlanie reklam użytkownikom na podstawie ich wizyt w twojej witrynie i/lub innych witrynach w Internecie.",
+        "googleLink": "Dowiedz się, jak Google wykorzystuje dane, gdy korzystasz z naszej witryny",
+        "optOut": "Możesz zrezygnować ze spersonalizowanych reklam, odwiedzając:"
+      },
+      "thirdParty": {
+        "title": "Usługi Osób Trzecich",
+        "text": "Korzystamy z następujących usług osób trzecich, które mogą gromadzić dane:",
+        "googleAnalytics": "Analityka strony i monitorowanie wydajności",
+        "googleAdsense": "Usługi reklamowe wspierające naszą darmową grę",
+        "vercel": "Hosting i analityka wydajności"
+      },
+      "rights": {
+        "title": "Twoje Prawa",
+        "text": "Zgodnie z RODO i podobnymi przepisami, masz następujące prawa:",
+        "items": {
+          "access": "Prawo dostępu do swoich danych osobowych",
+          "rectification": "Prawo do sprostowania niedokładnych danych",
+          "erasure": "Prawo do żądania usunięcia swoich danych",
+          "portability": "Prawo do przenoszenia danych",
+          "withdraw": "Prawo do wycofania zgody w dowolnym momencie"
+        }
+      },
+      "children": {
+        "title": "Prywatność Dzieci",
+        "text": "Fakeout nie jest przeznaczony dla dzieci poniżej 13 roku życia. Świadomie nie zbieramy danych osobowych od dzieci poniżej 13 lat. Jeśli jesteś rodzicem lub opiekunem i uważasz, że twoje dziecko przekazało nam dane osobowe, skontaktuj się z nami."
+      },
+      "changes": {
+        "title": "Zmiany w tej Polityce",
+        "text": "Możemy od czasu do czasu aktualizować niniejszą politykę prywatności. Powiadomimy cię o wszelkich zmianach, publikując nową politykę na tej stronie i aktualizując datę 'Ostatnia aktualizacja'."
+      },
+      "contact": {
+        "title": "Skontaktuj się z nami",
+        "text": "Jeśli masz jakiekolwiek pytania dotyczące tej polityki prywatności lub naszych praktyk dotyczących danych, skontaktuj się z nami:"
+      }
+    }
+  },
+  "terms": {
+    "title": "Warunki Świadczenia Usług",
+    "lastUpdated": "Ostatnia aktualizacja",
+    "sections": {
+      "acceptance": {
+        "title": "Akceptacja Warunków",
+        "text": "Uzyskując dostęp i korzystając z Fakeout, akceptujesz i zgadzasz się na przestrzeganie niniejszych Warunków Świadczenia Usług. Jeśli nie zgadzasz się z tymi warunkami, prosimy nie korzystać z naszych usług."
+      },
+      "description": {
+        "title": "Opis Usługi",
+        "text": "Fakeout to darmowa gra online, która rzuca wyzwanie użytkownikom w odróżnianiu prawdziwych fotografii od obrazów wygenerowanych przez AI. Gra jest udostępniana w celach rozrywkowych i edukacyjnych."
+      },
+      "usage": {
+        "title": "Dopuszczalne Użytkowanie",
+        "text": "Korzystając z Fakeout, zgadzasz się:",
+        "items": {
+          "lawful": "Korzystać z usługi wyłącznie w celach zgodnych z prawem",
+          "noHarm": "Nie próbować szkodzić, zakłócać ani wykorzystywać usługi",
+          "noInterference": "Nie zakłócać korzystania z usługi przez innych użytkowników",
+          "noAutomation": "Nie używać zautomatyzowanych systemów ani botów do interakcji z usługą"
+        }
+      },
+      "intellectualProperty": {
+        "title": "Własność Intelektualna",
+        "text": "Wszelkie treści w Fakeout, w tym między innymi tekst, grafika, logo i oprogramowanie, są własnością Fakeout lub jego dostawców treści i są chronione prawami własności intelektualnej. Obrazy użyte w grze pochodzą z licencjonowanych fotografii stockowych i narzędzi do generowania AI."
+      },
+      "disclaimer": {
+        "title": "Wyłączenie Gwarancji",
+        "text": "Fakeout jest dostarczany w stanie 'tak jak jest' bez żadnych gwarancji, wyraźnych ani dorozumianych. Nie gwarantujemy, że usługa będzie nieprzerwana, bezpieczna lub wolna od błędów. Wyniki gry służą wyłącznie celom rozrywkowym i nie należy na nich polegać w profesjonalnych potrzebach detekcji AI."
+      },
+      "limitation": {
+        "title": "Ograniczenie Odpowiedzialności",
+        "text": "W najszerszym zakresie dozwolonym przez prawo, Fakeout nie ponosi odpowiedzialności za jakiekolwiek szkody pośrednie, przypadkowe, specjalne, wynikowe lub karne wynikające z korzystania z usługi."
+      },
+      "changes": {
+        "title": "Zmiany Warunków",
+        "text": "Zastrzegamy sobie prawo do modyfikacji niniejszych warunków w dowolnym momencie. Dalsze korzystanie z usługi po wprowadzeniu zmian oznacza akceptację nowych warunków."
+      },
+      "governing": {
+        "title": "Obowiązujące Prawo",
+        "text": "Niniejsze warunki podlegają i są interpretowane zgodnie z obowiązującym prawem, bez względu na normy kolizyjne."
+      },
+      "contact": {
+        "title": "Kontakt",
+        "text": "W przypadku jakichkolwiek pytań dotyczących niniejszych warunków, prosimy o kontakt:"
+      }
+    }
+  },
+  "contact": {
+    "title": "Skontaktuj się z nami",
+    "subtitle": "Chcielibyśmy usłyszeć od Ciebie. Wybierz najlepszy sposób kontaktu.",
+    "email": {
+      "title": "Zapytania Ogólne",
+      "description": "Pytania ogólne, opinie lub sugestie dotyczące Fakeout."
+    },
+    "support": {
+      "title": "Wsparcie Techniczne",
+      "description": "Masz problemy z grą? Zgłoś błędy lub problemy techniczne."
+    },
+    "business": {
+      "title": "Zapytania Biznesowe",
+      "description": "Partnerstwa, reklama lub możliwości biznesowe."
+    },
+    "privacy": {
+      "title": "Obawy dot. Prywatności",
+      "description": "Pytania dotyczące twoich danych lub wnioski związane z prywatnością."
+    },
+    "social": {
+      "title": "Śledź Nas",
+      "description": "Bądź na bieżąco z najnowszymi wiadomościami i aktualizacjami od Fakeout."
+    },
+    "responseTime": "Zazwyczaj odpowiadamy w ciągu 24-48 godzin"
+  },
+  "newsletter": {
+    "title": "Bądź na bieżąco",
+    "stayUpdated": "Powiadom mnie",
+    "description": "Otrzymuj powiadomienia o nowych codziennych wyzwaniach.",
+    "emailPlaceholder": "Wpisz swój email",
+    "subscribe": "Subskrybuj",
+    "subscribed": "Zasubskrybowano!",
+    "success": "Dziękujemy za subskrypcję!",
+    "errors": {
+      "alreadySubscribed": "Już subskrybujesz.",
+      "general": "Coś poszło nie tak. Spróbuj ponownie."
+    }
+  },
+  "cookieConsent": {
+    "title": "Używamy plików cookie",
+    "description": "Używamy plików cookie i podobnych technologii, aby zapewnić ci najlepsze wrażenia. Niektóre pliki cookie są niezbędne do funkcjonowania strony, podczas gdy inne pomagają nam ulepszać twoje wrażenia i wyświetlać spersonalizowane treści i reklamy.",
+    "acceptAll": "Zaakceptuj Wszystkie",
+    "acceptNecessary": "Tylko Niezbędne",
+    "preferences": "Zarządzaj Preferencjami",
+    "necessary": {
+      "title": "Niezbędne Pliki Cookie",
+      "description": "Te pliki cookie są niezbędne do prawidłowego funkcjonowania strony internetowej. Umożliwiają podstawowe funkcje, takie jak nawigacja po stronie i dostęp do bezpiecznych obszarów."
+    },
+    "analytics": {
+      "title": "Analityczne Pliki Cookie",
+      "description": "Te pliki cookie pomagają nam zrozumieć, jak odwiedzający wchodzą w interakcję z naszą stroną internetową, zbierając i raportując informacje anonimowo."
+    },
+    "advertising": {
+      "title": "Reklamowe Pliki Cookie",
+      "description": "Te pliki cookie są używane do dostarczania trafnych reklam i śledzenia wydajności kampanii reklamowych na różnych stronach internetowych."
+    },
+    "save": "Zapisz Preferencje",
+    "privacyPolicy": "Polityka Prywatności"
+  }
+}

@@ -34,7 +34,10 @@
             </v-card-title>
             <v-card-text class="text-body-1">
               <p class="mb-2">{{ $t("contact.email.description") }}</p>
-              <a href="mailto:onedevshow@gmail.com" class="text-primary text-h6">
+              <a
+                href="mailto:onedevshow@gmail.com"
+                class="text-primary text-h6"
+              >
                 onedevshow@gmail.com
               </a>
             </v-card-text>
@@ -51,7 +54,10 @@
             </v-card-title>
             <v-card-text class="text-body-1">
               <p class="mb-2">{{ $t("contact.support.description") }}</p>
-              <a href="mailto:onedevshow@gmail.com" class="text-primary text-h6">
+              <a
+                href="mailto:onedevshow@gmail.com"
+                class="text-primary text-h6"
+              >
                 onedevshow@gmail.com
               </a>
             </v-card-text>
@@ -96,7 +102,10 @@
             </v-card-title>
             <v-card-text class="text-body-1">
               <p class="mb-2">{{ $t("contact.privacy.description") }}</p>
-              <a href="mailto:onedevshow@gmail.com" class="text-primary text-h6">
+              <a
+                href="mailto:onedevshow@gmail.com"
+                class="text-primary text-h6"
+              >
                 onedevshow@gmail.com
               </a>
             </v-card-text>

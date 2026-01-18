@@ -190,7 +190,7 @@ watch(
     if (newValue && dates.value.length === 0) {
       await fetchDates();
     }
-  }
+  },
 );
 
 const fetchDates = async () => {
@@ -210,7 +210,7 @@ const fetchDates = async () => {
     dates.value.forEach(async (date) => {
       const count = await supabaseService.getGamePlayCount(
         props.mode || "image",
-        date
+        date,
       );
       playCounts.value[date] = count;
     });

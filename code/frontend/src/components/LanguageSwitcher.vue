@@ -42,6 +42,7 @@ const localeFlags: Record<string, string> = {
   en: "🇺🇸",
   de: "🇩🇪",
   bg: "🇧🇬",
+  pl: "🇵🇱",
 };
 
 function changeLocale(newLocale: string) {

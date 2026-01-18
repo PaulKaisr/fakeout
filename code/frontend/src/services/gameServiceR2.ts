@@ -7,7 +7,7 @@ const r2Service = createR2Service(r2Config);
 
 export const getR2GameRounds = async (
   date?: string,
-  mode: "image" | "video" = "image"
+  mode: "image" | "video" = "image",
 ): Promise<{ rounds: Round[]; date: string; prompt?: string }> => {
   // 1. Determine which date to use
   let validDate = "";
@@ -25,7 +25,7 @@ export const getR2GameRounds = async (
     // Find the latest date with data
     try {
       const manifest = await r2Service.fetchManifest(
-        mode === "video" ? "videos" : "images"
+        mode === "video" ? "videos" : "images",
       );
       const dates = manifest.dates;
       if (dates.length > 0) {
@@ -54,7 +54,7 @@ export const getR2GameRounds = async (
         if (exists) {
           validDate = dateStr;
           console.debug(
-            `Found latest game data (via probe) for date: ${validDate}`
+            `Found latest game data (via probe) for date: ${validDate}`,
           );
           break;
         }
@@ -76,7 +76,7 @@ export const getR2GameRounds = async (
   let prompt: string | undefined;
   try {
     const manifest = await r2Service.fetchManifest(
-      mode === "video" ? "videos" : "images"
+      mode === "video" ? "videos" : "images",
     );
     if (manifest.prompts && manifest.prompts[validDate]) {
       prompt = manifest.prompts[validDate];
@@ -93,7 +93,7 @@ export const getR2GameRounds = async (
     {
       end: 5,
       includeMetadata: true,
-    }
+    },
   );
 
   if (realImages.length === 0) {
@@ -103,10 +103,10 @@ export const getR2GameRounds = async (
 
   // 3. Extract IDs to fetch generated images
   const realImagesWithId = realImages.filter(
-    (img) => img.metadata && "id" in img.metadata
+    (img) => img.metadata && "id" in img.metadata,
   );
   const pexelsIds = realImagesWithId.map(
-    (img) => (img.metadata as R2ImageMetadata).id
+    (img) => (img.metadata as R2ImageMetadata).id,
   );
 
   // 4. Fetch generated images for these IDs
@@ -115,7 +115,7 @@ export const getR2GameRounds = async (
     validDate,
     pexelsIds,
     true,
-    mode === "video" ? "google_generated_video" : "google_generated"
+    mode === "video" ? "google_generated_video" : "google_generated",
   );
 
   // 5. Match pairs
@@ -139,7 +139,7 @@ export const getR2GameRounds = async (
     if (!genIdFromKey) return;
 
     const realImg = realImagesWithId.find(
-      (r) => String((r.metadata as R2ImageMetadata).id) === genIdFromKey
+      (r) => String((r.metadata as R2ImageMetadata).id) === genIdFromKey,
     );
 
     if (realImg && genImg) {
