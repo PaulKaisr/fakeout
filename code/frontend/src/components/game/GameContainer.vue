@@ -269,6 +269,7 @@
           :total-rounds="state.totalRounds"
           :mode="mode || 'image'"
           :is-latest-game="!props.date"
+          :game-date="loadedDate"
           @archive="showArchiveDialog = true"
         />
 
