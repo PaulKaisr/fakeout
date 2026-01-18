@@ -8,7 +8,7 @@
 import "vanilla-cookieconsent/dist/cookieconsent.css";
 import * as CookieConsent from "vanilla-cookieconsent";
 
-type SupportedLanguage = "en" | "de" | "bg";
+type SupportedLanguage = "en" | "de" | "bg" | "pl";
 
 const translations: Record<SupportedLanguage, CookieConsent.Translation> = {
   en: {
@@ -148,6 +148,53 @@ const translations: Record<SupportedLanguage, CookieConsent.Translation> = {
         {
           title: "Повече информация",
           description: `При въпроси относно нашата политика за бисквитки, моля <a href="/bg/contact">свържете се с нас</a>. Можете също да прочетете пълната ни <a href="/bg/privacy">Политика за поверителност</a>.`,
+        },
+      ],
+    },
+  },
+  pl: {
+    consentModal: {
+      title: "Używamy plików cookie 🍪",
+      description:
+        "Używamy plików cookie i podobnych technologii, aby zapewnić najlepsze wrażenia. Niektóre pliki cookie są niezbędne do działania strony, podczas gdy inne pomagają nam ulepszać Twoje doświadczenie i wyświetlać spersonalizowane treści i reklamy.",
+      acceptAllBtn: "Akceptuj wszystkie",
+      acceptNecessaryBtn: "Tylko niezbędne",
+      showPreferencesBtn: "Zarządzaj preferencjami",
+      footer: `<a href="/pl/privacy">Polityka prywatności</a>`,
+    },
+    preferencesModal: {
+      title: "Preferencje plików cookie",
+      acceptAllBtn: "Akceptuj wszystkie",
+      acceptNecessaryBtn: "Tylko niezbędne",
+      savePreferencesBtn: "Zapisz preferencje",
+      closeIconLabel: "Zamknij",
+      sections: [
+        {
+          title: "Wykorzystanie plików cookie",
+          description:
+            "Używamy plików cookie, aby zapewnić podstawowe funkcje witryny i poprawić Twoje wrażenia online. Możesz w każdej chwili włączyć lub wyłączyć dowolną kategorię.",
+        },
+        {
+          title: "Niezbędne pliki cookie",
+          description:
+            "Te pliki cookie są niezbędne do prawidłowego działania witryny. Umożliwiają podstawowe funkcje, takie jak nawigacja po stronach i dostęp do zabezpieczonych obszarów. Witryna nie może działać poprawnie bez tych plików cookie.",
+          linkedCategory: "necessary",
+        },
+        {
+          title: "Pliki cookie analityczne",
+          description:
+            "Te pliki cookie pomagają nam zrozumieć, jak użytkownicy wchodzą w interakcję z naszą witryną, zbierając i raportując informacje anonimowo. Używamy Google Analytics do analizy ruchu i poprawy naszego serwisu.",
+          linkedCategory: "analytics",
+        },
+        {
+          title: "Pliki cookie reklamowe",
+          description:
+            "Te pliki cookie służą do dostarczania odpowiednich reklam i śledzenia wydajności kampanii reklamowych w różnych witrynach. Mogą być ustawione przez nas lub przez dostawców zewnętrznych (np. Google AdSense), których usługi dodaliśmy do naszych stron.",
+          linkedCategory: "advertising",
+        },
+        {
+          title: "Więcej informacji",
+          description: `W przypadku pytań dotyczących naszej polityki plików cookie, prosimy <a href="/pl/contact">skontaktować się z nami</a>. Możesz także przeczytać naszą pełną <a href="/pl/privacy">Politykę prywatności</a>.`,
         },
       ],
     },

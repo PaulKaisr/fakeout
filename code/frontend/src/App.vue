@@ -27,8 +27,8 @@ watch(
   (newLocale) => {
     document.documentElement.lang = newLocale;
     // Update cookie consent language when locale changes
-    if (["en", "de", "bg"].includes(newLocale)) {
-      updateCookieConsentLanguage(newLocale as "en" | "de" | "bg");
+    if (["en", "de", "bg", "pl"].includes(newLocale)) {
+      updateCookieConsentLanguage(newLocale as "en" | "de" | "bg" | "pl");
     }
   },
   { immediate: true },
