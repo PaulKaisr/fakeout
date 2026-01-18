@@ -72,7 +72,7 @@ export default defineConfig(({ mode }) => ({
             !dep.includes(".woff") &&
             !dep.includes("math") &&
             !dep.includes("symbols") &&
-            !dep.includes("greek")
+            !dep.includes("greek"),
         );
       },
     },

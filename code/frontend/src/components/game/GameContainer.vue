@@ -446,7 +446,7 @@ watch(
     mediaLoaded.B = false;
     durations.A = 0;
     durations.B = 0;
-  }
+  },
 );
 
 watch(
@@ -464,7 +464,7 @@ watch(
     durations.B = 0;
     gamePlayCount.value = 0;
     await loadGame();
-  }
+  },
 );
 
 const loadedDate = ref<string | null>(null);
@@ -496,7 +496,7 @@ const loadGame = async () => {
     if (date) {
       gamePlayCount.value = await supabaseService.getGamePlayCount(
         props.mode || "image",
-        date
+        date,
       );
     }
 
@@ -558,7 +558,7 @@ const handleSelection = (imageId: string) => {
       isCorrect,
       state.totalRounds,
       currentRound.value.id,
-      pairId
+      pairId,
     );
 
     // Fetch global stats
@@ -587,7 +587,7 @@ const isSelectionCorrect = (image: Image) => {
 const isSelectionCorrectId = (imageId: string) => {
   if (!currentRound.value) return false;
   const selected = [currentRound.value.imageA, currentRound.value.imageB].find(
-    (img) => img.id === imageId
+    (img) => img.id === imageId,
   );
   return selected?.isAiGenerated ?? false;
 };

@@ -31,6 +31,6 @@ const structuredData = computed(() =>
     },
     keywords:
       "AI image detector, AI or real, spot AI images, AI detection game, deepfake detector",
-  })
+  }),
 );
 </script>

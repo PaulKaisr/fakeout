@@ -31,7 +31,7 @@ watch(
       updateCookieConsentLanguage(newLocale as "en" | "de" | "bg");
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 import { supabaseService } from "@/services/supabaseService";

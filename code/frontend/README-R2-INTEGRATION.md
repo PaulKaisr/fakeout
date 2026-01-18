@@ -60,13 +60,19 @@ VITE_R2_BUCKET_NAME=fakeout-videos-dev
 2. **Enable Public Access** in bucket settings
 3. **Add CORS Policy** (Settings > CORS):
    ```json
-   [{
-     "AllowedOrigins": ["https://*.vercel.app", "https://yourdomain.com", "http://localhost:3000"],
-     "AllowedMethods": ["GET", "HEAD"],
-     "AllowedHeaders": ["*"],
-     "ExposeHeaders": ["ETag"],
-     "MaxAgeSeconds": 3600
-   }]
+   [
+     {
+       "AllowedOrigins": [
+         "https://*.vercel.app",
+         "https://yourdomain.com",
+         "http://localhost:3000"
+       ],
+       "AllowedMethods": ["GET", "HEAD"],
+       "AllowedHeaders": ["*"],
+       "ExposeHeaders": ["ETag"],
+       "MaxAgeSeconds": 3600
+     }
+   ]
    ```
 4. **Link Custom Domain** (Settings > Custom Domains):
    - Add domain: `media.yourdomain.com`
@@ -91,17 +97,17 @@ Visit `http://localhost:3000/test-r2` to test the integration.
 
 ```vue
 <script setup>
-import { useR2Images } from '@/composables/useR2Images'
+import { useR2Images } from "@/composables/useR2Images";
 
-const { images, loading, error, loadImages } = useR2Images()
+const { images, loading, error, loadImages } = useR2Images();
 
 // Load images for a specific date
 await loadImages({
-  datePrefix: '2025-12-10',
-  type: 'both',           // 'pexels_raw' | 'openai_generated' | 'both'
+  datePrefix: "2025-12-10",
+  type: "both", // 'pexels_raw' | 'openai_generated' | 'both'
   limit: 20,
-  includeMetadata: true
-})
+  includeMetadata: true,
+});
 </script>
 
 <template>
@@ -118,14 +124,14 @@ await loadImages({
 ### With Custom Configuration
 
 ```ts
-import { useR2Images } from '@/composables/useR2Images'
+import { useR2Images } from "@/composables/useR2Images";
 
 const customConfig = {
-  baseUrl: 'https://test.example.com',
-  bucketName: 'test-bucket'
-}
+  baseUrl: "https://test.example.com",
+  bucketName: "test-bucket",
+};
 
-const { loadImages } = useR2Images(customConfig)
+const { loadImages } = useR2Images(customConfig);
 ```
 
 ### Available Composables
