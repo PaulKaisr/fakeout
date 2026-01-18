@@ -5,7 +5,11 @@
       "destination": "https://pub-285780421745452cbbfeee3b552758f0.r2.dev/:path*"
     },
     {
-      "source": "/:path((?!files/).*)",
+      "source": "/assets/:path*",
+      "destination": "/assets/:path*"
+    },
+    {
+      "source": "/:path((?!files/|assets/).*)",
       "destination": "/index.html"
     }
   ]
