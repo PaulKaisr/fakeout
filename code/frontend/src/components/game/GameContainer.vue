@@ -326,7 +326,8 @@
           class="text-center mb-6 animate-slide-up"
         >
           <span class="text-h5 font-weight-bold text-white">
-            {{ currentGlobalStats }}% {{ t("game.guessedCorrectly") }}
+            {{ formattedGlobalStats }}%
+            {{ t("game.guessedCorrectly") }}
           </span>
         </div>
 
@@ -574,6 +575,14 @@ const fetchGlobalStats = async (pairId: string) => {
   const percentage = await supabaseService.getGuessPercentage(pairId);
   currentGlobalStats.value = percentage;
 };
+
+const formattedGlobalStats = computed(() => {
+  if (currentGlobalStats.value === null) return null;
+  return currentGlobalStats.value.toLocaleString(locale.value, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+});
 
 const isSelectionCorrect = (image: Image) => {
   // If user selected this image, was it AI?
