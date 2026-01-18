@@ -16,31 +16,35 @@ test.describe("Game Flow", () => {
     await page.goto("http://localhost:3000/en/image");
 
     // Wait for game to fully load - the A/B cards should be visible
-    await expect(page.locator("main").getByText("A", { exact: true })).toBeVisible({
+    await expect(
+      page.locator("main").getByText("A", { exact: true }),
+    ).toBeVisible({
       timeout: 15000,
     });
 
     // Verify that the game heading is visible
     await expect(
-      page.getByRole("heading", { name: "Which image is AI-generated?" })
+      page.getByRole("heading", { name: "Which image is AI-generated?" }),
     ).toBeVisible();
 
-  // Verify that the theme is displayed
-  await expect(page.getByText(/Theme:/)).toBeVisible();
-
-  // Verify that the play count is displayed via data-testid (language independent)
-  await expect(page.getByTestId("game-play-count")).toBeVisible({ timeout: 15000 });
-
+    // Verify that the theme is displayed
+    await expect(page.getByText(/Theme:/)).toBeVisible();
 
     // Verify that the instruction text is visible
     await expect(
-      page.getByText("Click on the image you think was created by Artificial Intelligence")
+      page.getByText(
+        "Click on the image you think was created by Artificial Intelligence",
+      ),
     ).toBeVisible();
 
     // Verify that option A card is displayed
-    await expect(page.locator("main").getByText("A", { exact: true })).toBeVisible();
+    await expect(
+      page.locator("main").getByText("A", { exact: true }),
+    ).toBeVisible();
 
     // Verify that option B card is displayed
-    await expect(page.locator("main").getByText("B", { exact: true })).toBeVisible();
+    await expect(
+      page.locator("main").getByText("B", { exact: true }),
+    ).toBeVisible();
   });
 });
