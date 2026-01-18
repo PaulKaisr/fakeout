@@ -199,7 +199,8 @@
     <!-- Main Content -->
     <v-main>
       <v-container
-        class="py-12 flex flex-col items-center justify-center max-w-7xl"
+        fluid
+        class="py-12 flex flex-col items-center justify-center max-w-[1800px] mx-auto"
       >
         <!-- Question Section -->
         <div
@@ -272,7 +273,7 @@
         />
 
         <!-- Game Round Area -->
-        <div v-else-if="currentRound" class="w-full max-w-5xl relative">
+        <div v-else-if="currentRound" class="w-full relative">
           <!-- Image Loading Spinner (Overlay) -->
           <div
             v-if="!areBothImagesLoaded"
