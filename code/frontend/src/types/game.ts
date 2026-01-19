@@ -6,6 +6,7 @@ export interface Image {
   creditUrl?: string;
   sourceUrl?: string;
   mediaType?: "image" | "video";
+  prompt?: string;
 }
 
 export interface Round {

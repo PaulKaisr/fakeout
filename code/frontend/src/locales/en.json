@@ -39,7 +39,9 @@
     "viewOnPexels": "View on Pexels",
     "guessedCorrectly": "of players guessed correctly",
     "plays": "Plays so far",
-    "theme": "Theme"
+    "theme": "Theme",
+    "viewPrompt": "View Prompt",
+    "prompt": "Prompt"
   },
   "results": {
     "title": "Level Complete!",
