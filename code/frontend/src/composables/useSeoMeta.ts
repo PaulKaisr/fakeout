@@ -145,17 +145,17 @@ export function useSeoTranslations() {
   return {
     // Page titles
     homeTitle: pick(
-      "AI Image Detector Game | Can You Spot AI Generated Images?",
-      "KI-Bilderkennungsspiel | Kannst du KI-generierte Bilder erkennen?",
-      "Игра за откриване на ИИ изображения | Можеш ли да разпознаеш ИИ?",
-      "Gra wykrywająca obrazy AI | Czy potrafisz rozpoznać obrazy wygenerowane przez AI?",
+      "AI or Real Game | Spot AI Generated Videos & Images",
+      "KI oder Echt Spiel | Erkenne KI-generierte Videos & Bilder",
+      "ИИ или Истинско | Разпознай ИИ видеа и изображения",
+      "AI czy Prawdziwe | Rozpoznaj wygenerowane przez AI filmy i obrazy",
     ),
 
     homeDescription: pick(
-      "Test your skills with Fakeout, the daily AI image detector game. Can you spot which images are AI-generated vs real? Play free daily challenges to train your eye for AI detection.",
-      "Teste deine Fähigkeiten mit Fakeout, dem täglichen KI-Bilderkennungsspiel. Kannst du erkennen, welche Bilder KI-generiert sind? Spiele kostenlose tägliche Herausforderungen.",
-      "Тествай уменията си с Fakeout, ежедневната игра за откриване на ИИ изображения. Можеш ли да разпознаеш кои изображения са генерирани от ИИ?",
-      "Przetestuj swoje umiejętności z Fakeout, codzienną grą wykrywającą obrazy AI. Czy potrafisz rozpoznać, które obrazy są wygenerowane przez AI, a które są prawdziwe?",
+      "Test your skills with Fakeout, the daily AI detection game. Can you spot AI-generated videos and images vs real ones? Play free daily challenges to train your eye for deepfakes.",
+      "Teste deine Fähigkeiten mit Fakeout, dem täglichen KI-Erkennungsspiel. Kannst du KI-generierte Videos und Bilder erkennen? Spiele kostenlose tägliche Herausforderungen.",
+      "Тествай уменията си с Fakeout, ежедневната игра за откриване на ИИ. Можеш ли да разпознаеш ИИ видеа и изображения от истински?",
+      "Przetestuj swoje umiejętności z Fakeout, codzienną grą wykrywającą AI. Czy potrafisz rozpoznać filmy i obrazy wygenerowane przez AI od prawdziwych?",
     ),
 
     // About page
@@ -165,10 +165,10 @@ export function useSeoTranslations() {
     // FAQ page
     faqTitle: computed(() => t("faq.title")),
     faqDescription: pick(
-      "Find answers to common questions about Fakeout, the AI image detector game. Learn how to spot AI-generated images and improve your detection skills.",
-      "Finden Sie Antworten auf häufige Fragen zu Fakeout, dem KI-Bilderkennungsspiel. Lernen Sie, KI-generierte Bilder zu erkennen.",
-      "Намерете отговори на често задавани въпроси за Fakeout, играта за откриване на ИИ изображения.",
-      "Znajdź odpowiedzi na często zadawane pytania dotyczące Fakeout, gry wykrywającej obrazy AI. Dowiedz się, jak rozpoznawać obrazy wygenerowane przez AI i poprawić swoje umiejętności detekcji.",
+      "Find answers to common questions about Fakeout, the AI detection game. Learn how to spot AI-generated videos and images, identify deepfakes, and improve your detection skills.",
+      "Finden Sie Antworten auf häufige Fragen zu Fakeout, dem KI-Erkennungsspiel. Lernen Sie, KI-generierte Videos und Bilder zu erkennen.",
+      "Намерете отговори на често задавани въпроси за Fakeout, играта за откриване на ИИ. Научете как да разпознавате ИИ видеа и изображения.",
+      "Znajdź odpowiedzi na często zadawane pytania dotyczące Fakeout, gry wykrywającej AI. Dowiedz się, jak rozpoznawać filmy i obrazy wygenerowane przez AI.",
     ),
 
     // Stats page
@@ -183,10 +183,10 @@ export function useSeoTranslations() {
     // Blog page
     blogTitle: computed(() => t("blog.title")),
     blogDescription: pick(
-      "Latest articles and insights about AI image detection, deepfakes, and synthetic media. Stay informed about AI technology.",
-      "Aktuelle Artikel und Einblicke in KI-Bilderkennung, Deepfakes und synthetische Medien.",
-      "Последни статии и прозрения за откриване на ИИ изображения, deepfakes и синтетични медии.",
-      "Najnowsze artykuły i przemyślenia na temat wykrywania obrazów AI, deepfake’ów i mediów syntetycznych. Bądź na bieżąco z technologią AI.",
+      "Latest articles and insights about AI video and image detection, deepfakes, and synthetic media. Stay informed about AI-generated content.",
+      "Aktuelle Artikel und Einblicke in KI-Video- und Bilderkennung, Deepfakes und synthetische Medien.",
+      "Последни статии и прозрения за откриване на ИИ видеа и изображения, deepfakes и синтетични медии.",
+      "Najnowsze artykuły i przemyślenia na temat wykrywania filmów i obrazów AI, deepfake'ów i mediów syntetycznych.",
     ),
 
     // Image mode page
