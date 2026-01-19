@@ -14,8 +14,9 @@ const structuredData = computed(() =>
     "@context": "https://schema.org",
     "@type": "VideoGame",
     name: "Fakeout",
+    alternateName: "AI or Real Game",
     description:
-      "A daily challenge game where players test their ability to distinguish between real photographs and AI-generated images",
+      "A daily challenge game where players test their ability to distinguish between real videos/photographs and AI-generated deepfakes",
     genre: ["Puzzle", "Educational", "Quiz"],
     gamePlatform: "Web Browser",
     applicationCategory: "Game",
@@ -30,7 +31,7 @@ const structuredData = computed(() =>
       ratingCount: "1250",
     },
     keywords:
-      "AI image detector, AI or real, spot AI images, AI detection game, deepfake detector",
+      "AI or real game, AI video detection, spot AI videos, deepfake detector, AI image detector, fake video game, AI generated content detection",
   }),
 );
 </script>
