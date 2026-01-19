@@ -2,8 +2,8 @@
   <v-menu location="bottom end" transition="scale-transition">
     <template v-slot:activator="{ props }">
       <v-btn v-bind="props" variant="text" class="text-none" :icon="false">
-        <span class="text-2xl mr-2">{{ localeFlags[currentLocale] }}</span>
-        <v-icon icon="mdi-chevron-down" size="small"></v-icon>
+        <span class="font-semibold text-sm">{{ localeAbbr[currentLocale] }}</span>
+        <v-icon icon="mdi-chevron-down" size="small" class="ml-1"></v-icon>
       </v-btn>
     </template>
 
@@ -17,7 +17,7 @@
         class="min-w-[140px]"
       >
         <template v-slot:prepend>
-          <span class="text-xl mr-3">{{ localeFlags[locale] }}</span>
+          <span class="font-semibold text-sm mr-3">{{ localeAbbr[locale] }}</span>
         </template>
         <v-list-item-title class="font-medium text-sm">
           {{ t(`languages.${locale}`) }}
@@ -38,11 +38,11 @@ const route = useRoute();
 
 const currentLocale = computed(() => currentLocaleRef.value);
 
-const localeFlags: Record<string, string> = {
-  en: "🇺🇸",
-  de: "🇩🇪",
-  bg: "🇧🇬",
-  pl: "🇵🇱",
+const localeAbbr: Record<string, string> = {
+  en: "EN",
+  de: "DE",
+  bg: "BG",
+  pl: "PL",
 };
 
 function changeLocale(newLocale: string) {
