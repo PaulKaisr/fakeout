@@ -232,12 +232,7 @@ export function useSeoTranslations() {
     ),
 
     // Contact page
-    contactTitle: pick(
-      "Contact Us",
-      "Kontakt",
-      "Контакти",
-      "Kontakt",
-    ),
+    contactTitle: pick("Contact Us", "Kontakt", "Контакти", "Kontakt"),
     contactDescription: pick(
       "Get in touch with the Fakeout team. Contact us for support, feedback, business inquiries, or privacy concerns.",
       "Kontaktieren Sie das Fakeout-Team. Wenden Sie sich an uns für Support, Feedback, geschäftliche Anfragen oder Datenschutzfragen.",
