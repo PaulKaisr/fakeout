@@ -39,7 +39,9 @@
     "viewOnPexels": "Вижте в Pexels",
     "guessedCorrectly": "от играчите познаха правилно",
     "plays": "игри до момента",
-    "theme": "Тема"
+    "theme": "Тема",
+    "viewPrompt": "Виж промпт",
+    "prompt": "Промпт"
   },
   "results": {
     "title": "Ниво завършено!",
