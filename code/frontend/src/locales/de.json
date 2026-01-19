@@ -39,7 +39,9 @@
     "viewOnPexels": "Auf Pexels ansehen",
     "guessedCorrectly": "der Spieler lagen richtig",
     "plays": "Spiele bisher",
-    "theme": "Thema"
+    "theme": "Thema",
+    "viewPrompt": "Prompt anzeigen",
+    "prompt": "Prompt"
   },
   "results": {
     "title": "Level abgeschlossen!",

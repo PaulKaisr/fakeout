@@ -39,7 +39,9 @@
     "viewOnPexels": "Zobacz na Pexels",
     "guessedCorrectly": "graczy zgadło poprawnie",
     "plays": "Gier dotychczas",
-    "theme": "Motyw"
+    "theme": "Motyw",
+    "viewPrompt": "Zobacz prompt",
+    "prompt": "Prompt"
   },
   "results": {
     "title": "Poziom ukończony!",

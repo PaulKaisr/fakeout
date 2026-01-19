@@ -163,6 +163,7 @@ export const getR2GameRounds = async (
         isAiGenerated: true,
         credit: "Google AI",
         mediaType: mode,
+        prompt: (genImg.metadata as any)?.generation_prompt,
       };
 
       rounds.push({
