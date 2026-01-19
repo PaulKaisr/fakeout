@@ -36,6 +36,7 @@
     "eslint": "^9.35.0",
     "eslint-config-vuetify": "^4.2.0",
     "npm-run-all2": "^8.0.4",
+    "prettier": "^3.8.0",
     "sass-embedded": "^1.92.1",
     "tailwindcss": "^4.1.18",
     "typescript": "~5.9.2",
