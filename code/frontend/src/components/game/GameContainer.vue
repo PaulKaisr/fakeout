@@ -179,15 +179,15 @@
             Language
           </p>
           <v-list-item
-            v-for="l in ['en', 'de', 'bg']"
+            v-for="l in availableLocales"
             :key="l"
             :active="locale === l"
             @click="switchLanguage(l)"
             rounded="lg"
           >
             <template v-slot:prepend>
-              <span class="text-xl mr-3">{{
-                { en: "🇺🇸", de: "🇩🇪", bg: "🇧🇬" }[l]
+              <span class="font-semibold text-sm mr-3">{{
+                localeAbbr[l]
               }}</span>
             </template>
             <v-list-item-title>{{ t(`languages.${l}`) }}</v-list-item-title>
@@ -396,7 +396,14 @@ import GameFAQ from "./GameFAQ.vue";
 import { useRouter, useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 
-const { t, locale } = useI18n();
+const { t, locale, availableLocales } = useI18n();
+
+const localeAbbr: Record<string, string> = {
+  en: "EN",
+  de: "DE",
+  bg: "BG",
+  pl: "PL",
+};
 
 const props = defineProps<{
   date?: string;
