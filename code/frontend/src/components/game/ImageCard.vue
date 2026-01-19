@@ -120,6 +120,38 @@
           </a>
         </div>
       </div>
+
+      <!-- AI Prompt Display -->
+      <div
+        v-if="image.isAiGenerated && image.prompt"
+        class="mt-4 flex flex-col items-center"
+      >
+        <v-menu location="top" :close-on-content-click="false">
+          <template v-slot:activator="{ props }">
+            <v-btn
+              v-bind="props"
+              variant="text"
+              density="comfortable"
+              class="text-none text-white/70 hover:text-white"
+              prepend-icon="mdi-text-box-search-outline"
+              size="small"
+              @click.stop
+            >
+              {{ t("game.viewPrompt") || "View Prompt" }}
+            </v-btn>
+          </template>
+          <v-card
+            class="max-w-[300px] max-h-[400px] overflow-y-auto bg-surface-light"
+          >
+            <v-card-text class="text-xs">
+              <span class="font-bold block mb-1 text-primary uppercase"
+                >{{ t("game.prompt") || "Prompt" }}:</span
+              >
+              <div class="markdown-body" v-html="md.render(image.prompt)"></div>
+            </v-card-text>
+          </v-card>
+        </v-menu>
+      </div>
     </div>
   </div>
 </template>
@@ -128,7 +160,9 @@
 import type { Image } from "@/types/game";
 import { useI18n } from "vue-i18n";
 import { ref } from "vue";
+import MarkdownIt from "markdown-it";
 
+const md = new MarkdownIt();
 const { t } = useI18n();
 
 const props = defineProps<{
