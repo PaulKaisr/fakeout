@@ -185,7 +185,7 @@
             Language
           </p>
           <v-list-item
-            v-for="l in availableLocales"
+            v-for="l in SUPPORTED_LOCALES"
             :key="l"
             :active="locale === l"
             @click="switchLanguage(l)"
@@ -410,8 +410,9 @@ import PastGamesDialog from "./PastGamesDialog.vue";
 import GameFAQ from "./GameFAQ.vue";
 import { useRouter, useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
+import { SUPPORTED_LOCALES } from "@/i18n";
 
-const { t, locale, availableLocales } = useI18n();
+const { t, locale } = useI18n();
 
 const localeAbbr: Record<string, string> = {
   en: "EN",

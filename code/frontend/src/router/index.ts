@@ -13,16 +13,22 @@ const router = createRouter({
   routes,
 });
 
-import i18n from "@/i18n";
+import i18n, {
+  loadLocaleMessages,
+  SUPPORTED_LOCALES,
+  type SupportedLocale,
+} from "@/i18n";
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, _from, next) => {
   const locale = (to.params as any).lang as string;
-  const supportedLocales = ["en", "de", "bg", "pl", "es"];
 
   if (locale) {
-    if (supportedLocales.includes(locale)) {
+    if (SUPPORTED_LOCALES.includes(locale as SupportedLocale)) {
+      // Load locale messages if needed (async, will be quick if already loaded)
+      await loadLocaleMessages(locale as SupportedLocale);
+
       if (i18n.global.locale.value !== locale) {
-        i18n.global.locale.value = locale as any;
+        (i18n.global.locale as { value: string }).value = locale;
         localStorage.setItem("user-locale", locale);
       }
       return next();
