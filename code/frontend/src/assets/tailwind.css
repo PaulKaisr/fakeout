@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+/* Ensure fonts use swap display to prevent blocking LCP */
+@font-face {
+  font-family: "Roboto";
+  font-display: swap;
+}

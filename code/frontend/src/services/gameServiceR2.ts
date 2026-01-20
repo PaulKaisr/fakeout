@@ -1,7 +1,7 @@
 import { createR2Service } from "@/services/r2.service";
 import { r2Config } from "@/config/r2.config";
 import type { Round, Image as GameImage } from "@/types/game";
-import type { R2Image, R2ImageMetadata } from "@/types/r2.types";
+import type { R2Image, R2ImageMetadata, GameManifest } from "@/types/r2.types";
 
 const r2Service = createR2Service(r2Config);
 
@@ -9,11 +9,22 @@ export const getR2GameRounds = async (
   date?: string,
   mode: "image" | "video" = "image",
 ): Promise<{ rounds: Round[]; date: string; prompt?: string }> => {
-  // 1. Determine which date to use
+  // 1. Fetch manifest once and reuse for date lookup and prompt extraction
+  let manifest: GameManifest | null = null;
   let validDate = "";
+  let prompt: string | undefined;
+
+  // Fetch manifest early - we'll need it for both date lookup and prompt
+  try {
+    manifest = await r2Service.fetchManifest(
+      mode === "video" ? "videos" : "images",
+    );
+  } catch (e) {
+    console.warn("Failed to fetch manifest", e);
+  }
 
   if (date) {
-    // If specific date requested, verify it exists (optional, or just try to load)
+    // If specific date requested, verify it exists
     const exists = await r2Service.checkDataExistsForDate(date);
     if (exists) {
       validDate = date;
@@ -21,68 +32,41 @@ export const getR2GameRounds = async (
       console.warn(`No game data found for requested date: ${date}`);
       return { rounds: [], date: "" };
     }
+  } else if (manifest && manifest.dates.length > 0) {
+    // Find the latest date from manifest
+    const dates = [...manifest.dates];
+    dates.sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+    validDate = dates[0]!;
+    console.debug(`Found latest game data from manifest: ${validDate}`);
   } else {
-    // Find the latest date with data
-    try {
-      const manifest = await r2Service.fetchManifest(
-        mode === "video" ? "videos" : "images",
-      );
-      const dates = manifest.dates;
-      if (dates.length > 0) {
-        // Sort dates descending
-        dates.sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
-        validDate = dates[0]!;
-        console.debug(`Found latest game data from manifest: ${validDate}`);
+    // Fallback: finding the latest date with data (lookback 7 days)
+    let targetDate = new Date();
+    const MAX_LOOKBACK = 7;
 
-        // Initial prompt extraction (if available for latest date)
-        // We'll return it at the end
+    for (let i = 0; i <= MAX_LOOKBACK; i++) {
+      const dateStr = targetDate.toISOString().split("T")[0] || "";
+      const exists = await r2Service.checkDataExistsForDate(dateStr);
+
+      if (exists) {
+        validDate = dateStr;
+        console.debug(
+          `Found latest game data (via probe) for date: ${validDate}`,
+        );
+        break;
       }
-    } catch (e) {
-      console.warn("Failed to fetch manifest, falling back to probing", e);
-    }
 
-    if (!validDate) {
-      // Fallback: finding the latest date with data (lookback 7 days)
-      let targetDate = new Date();
-      const MAX_LOOKBACK = 7;
-
-      for (let i = 0; i <= MAX_LOOKBACK; i++) {
-        const dateStr = targetDate.toISOString().split("T")[0] || "";
-        // Check if data exists for this date
-        const exists = await r2Service.checkDataExistsForDate(dateStr);
-
-        if (exists) {
-          validDate = dateStr;
-          console.debug(
-            `Found latest game data (via probe) for date: ${validDate}`,
-          );
-          break;
-        }
-
-        // Go back one day
-        targetDate.setDate(targetDate.getDate() - 1);
-      }
-    }
-
-    if (!validDate) {
-      console.warn(`No game data found.`);
-      return { rounds: [], date: "" };
+      targetDate.setDate(targetDate.getDate() - 1);
     }
   }
 
-  // Fetch manifest again to get prompt if we didn't already
-  // Use a simple cache or just re-fetch for now (it's fast)
-  // Or better, just fetch it if we have a validDate.
-  let prompt: string | undefined;
-  try {
-    const manifest = await r2Service.fetchManifest(
-      mode === "video" ? "videos" : "images",
-    );
-    if (manifest.prompts && manifest.prompts[validDate]) {
-      prompt = manifest.prompts[validDate];
-    }
-  } catch (e) {
-    // ignore
+  if (!validDate) {
+    console.warn(`No game data found.`);
+    return { rounds: [], date: "" };
+  }
+
+  // Extract prompt from the already-fetched manifest
+  if (manifest?.prompts && manifest.prompts[validDate]) {
+    prompt = manifest.prompts[validDate];
   }
 
   // 2. Fetch real images (Pexels) - fetch up to 5 images
@@ -174,5 +158,31 @@ export const getR2GameRounds = async (
     }
   });
 
+  // 6. Preload first round images for faster LCP
+  if (rounds.length > 0) {
+    preloadFirstRoundImages(rounds[0]!);
+  }
+
   return { rounds, date: validDate, prompt };
 };
+
+/**
+ * Preload images for the first round to improve LCP.
+ * Injects <link rel="preload"> tags into the document head.
+ */
+function preloadFirstRoundImages(round: Round): void {
+  const urls = [round.imageA.url, round.imageB.url];
+
+  for (const url of urls) {
+    // Check if preload link already exists
+    const existingLink = document.querySelector(`link[href="${url}"]`);
+    if (existingLink) continue;
+
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = url;
+    link.fetchPriority = "high";
+    document.head.appendChild(link);
+  }
+}
