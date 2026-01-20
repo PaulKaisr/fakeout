@@ -150,7 +150,7 @@
               <span class="font-bold block mb-1 text-primary uppercase"
                 >{{ t("game.prompt") || "Prompt" }}:</span
               >
-              <div class="markdown-body" v-html="md.render(image.prompt)"></div>
+              <div class="markdown-body" v-html="renderedPrompt"></div>
             </v-card-text>
           </v-card>
         </v-menu>
@@ -162,10 +162,18 @@
 <script setup lang="ts">
 import type { Image } from "@/types/game";
 import { useI18n } from "vue-i18n";
-import { ref } from "vue";
-import MarkdownIt from "markdown-it";
+import { ref, watch } from "vue";
 
-const md = new MarkdownIt();
+// Lazy-load markdown-it only when needed (reduces initial bundle)
+let mdInstance: any = null;
+const getMd = async () => {
+  if (!mdInstance) {
+    const MarkdownIt = (await import("markdown-it")).default;
+    mdInstance = new MarkdownIt();
+  }
+  return mdInstance;
+};
+
 const { t } = useI18n();
 
 const props = defineProps<{
@@ -180,14 +188,41 @@ const props = defineProps<{
 const emit = defineEmits(["select", "load"]);
 
 const videoRef = ref<HTMLVideoElement | null>(null);
+const renderedPrompt = ref<string>("");
+
+// Render markdown only when prompt is shown
+const renderPrompt = async () => {
+  if (props.image.prompt && !renderedPrompt.value) {
+    const md = await getMd();
+    renderedPrompt.value = md.render(props.image.prompt);
+  }
+};
+
+// Watch for when we need to show the prompt and render markdown
+watch(
+  () => props.showResult && props.image.isAiGenerated && props.image.prompt,
+  (shouldShow) => {
+    if (shouldShow) {
+      renderPrompt();
+    }
+  },
+  { immediate: true },
+);
 
 const onVideoLoaded = (event: Event) => {
   const video = event.target as HTMLVideoElement;
   emit("load", video.duration);
 };
 
+// Throttled timeupdate handler to reduce main thread blocking
+let lastTimeCheck = 0;
 const onTimeUpdate = () => {
   if (!videoRef.value || !props.maxDuration) return;
+
+  // Throttle to max 4 checks per second (every 250ms)
+  const now = performance.now();
+  if (now - lastTimeCheck < 250) return;
+  lastTimeCheck = now;
 
   if (videoRef.value.currentTime >= props.maxDuration) {
     videoRef.value.currentTime = 0;
@@ -197,6 +232,11 @@ const onTimeUpdate = () => {
 </script>
 
 <style scoped>
+/* Optimize hover transforms by hinting to browser */
+.group {
+  will-change: transform, box-shadow;
+}
+
 .animate-fade-in {
   animation: fadeIn 0.3s ease-out forwards;
 }
