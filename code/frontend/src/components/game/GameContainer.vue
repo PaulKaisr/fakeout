@@ -23,7 +23,7 @@
           class="size-10 rounded-xl overflow-hidden shadow-lg shadow-primary/20"
         >
           <img
-            src="/android-chrome-192x192.png"
+            src="/favicon-32x32.png"
             alt="Fakeout Logo"
             width="40"
             height="40"
