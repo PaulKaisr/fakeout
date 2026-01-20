@@ -42,4 +42,4 @@ const initConsent = () => {
 
 // Defer cookie consent to after LCP measurement window
 // LCP can be measured up to page load completion, so wait longer
-setTimeout(initConsent, 3000);
+setTimeout(initConsent, 500);
