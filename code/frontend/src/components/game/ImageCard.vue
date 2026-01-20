@@ -44,6 +44,7 @@
         loop
         muted
         playsinline
+        @loadedmetadata="onVideoMetadataLoaded"
         @loadeddata="onVideoLoaded"
         @timeupdate="onTimeUpdate"
         @error="$emit('load')"
@@ -209,9 +210,28 @@ watch(
   { immediate: true },
 );
 
-const onVideoLoaded = (event: Event) => {
+// Track whether we've already emitted the load event to avoid duplicates
+let hasEmittedLoad = false;
+
+// Capture duration from loadedmetadata event (when metadata is reliably available)
+const onVideoMetadataLoaded = (event: Event) => {
+  if (hasEmittedLoad) return;
+
   const video = event.target as HTMLVideoElement;
-  emit("load", video.duration);
+  const duration = video.duration;
+
+  // Validate duration is a sensible value (not NaN, Infinity, or too short)
+  if (Number.isFinite(duration) && duration > 0.5) {
+    hasEmittedLoad = true;
+    emit("load", duration);
+  }
+};
+
+// Fallback: emit load without duration if metadata event didn't provide valid duration
+const onVideoLoaded = () => {
+  if (hasEmittedLoad) return;
+  hasEmittedLoad = true;
+  emit("load");
 };
 
 // Throttled timeupdate handler to reduce main thread blocking

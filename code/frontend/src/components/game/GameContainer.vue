@@ -615,7 +615,8 @@ const isSelectionCorrectId = (imageId: string) => {
 
 const handleLoad = (side: "A" | "B", duration?: number) => {
   mediaLoaded[side] = true;
-  if (typeof duration === "number") {
+  // Only accept valid durations (finite, positive, and at least 0.5 seconds)
+  if (typeof duration === "number" && Number.isFinite(duration) && duration > 0.5) {
     durations[side] = duration;
   }
 };
