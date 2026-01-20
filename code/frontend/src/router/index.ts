@@ -17,7 +17,7 @@ import i18n from "@/i18n";
 
 router.beforeEach((to, from, next) => {
   const locale = (to.params as any).lang as string;
-  const supportedLocales = ["en", "de", "bg", "pl"];
+  const supportedLocales = ["en", "de", "bg", "pl", "es"];
 
   if (locale) {
     if (supportedLocales.includes(locale)) {

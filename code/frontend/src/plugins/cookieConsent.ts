@@ -8,7 +8,7 @@
 import "vanilla-cookieconsent/dist/cookieconsent.css";
 import * as CookieConsent from "vanilla-cookieconsent";
 
-type SupportedLanguage = "en" | "de" | "bg" | "pl";
+type SupportedLanguage = "en" | "de" | "bg" | "pl" | "es";
 
 const translations: Record<SupportedLanguage, CookieConsent.Translation> = {
   en: {
@@ -195,6 +195,53 @@ const translations: Record<SupportedLanguage, CookieConsent.Translation> = {
         {
           title: "Więcej informacji",
           description: `W przypadku pytań dotyczących naszej polityki plików cookie, prosimy <a href="/pl/contact">skontaktować się z nami</a>. Możesz także przeczytać naszą pełną <a href="/pl/privacy">Politykę prywatności</a>.`,
+        },
+      ],
+    },
+  },
+  es: {
+    consentModal: {
+      title: "Usamos cookies 🍪",
+      description:
+        "Usamos cookies y tecnologías similares para brindarte la mejor experiencia. Algunas cookies son necesarias para que el sitio funcione, mientras que otras nos ayudan a mejorar tu experiencia y mostrar contenido y anuncios personalizados.",
+      acceptAllBtn: "Aceptar todo",
+      acceptNecessaryBtn: "Solo necesarias",
+      showPreferencesBtn: "Gestionar preferencias",
+      footer: `<a href="/es/privacy">Política de privacidad</a>`,
+    },
+    preferencesModal: {
+      title: "Preferencias de cookies",
+      acceptAllBtn: "Aceptar todo",
+      acceptNecessaryBtn: "Solo necesarias",
+      savePreferencesBtn: "Guardar preferencias",
+      closeIconLabel: "Cerrar",
+      sections: [
+        {
+          title: "Uso de cookies",
+          description:
+            "Usamos cookies para garantizar las funciones básicas del sitio web y mejorar tu experiencia en línea. Puedes optar por incluir o excluir cada categoría cuando quieras.",
+        },
+        {
+          title: "Cookies necesarias",
+          description:
+            "Estas cookies son esenciales para el correcto funcionamiento del sitio web. Habilitan funciones básicas como la navegación de páginas y el acceso a áreas seguras. El sitio web no puede funcionar correctamente sin estas cookies.",
+          linkedCategory: "necessary",
+        },
+        {
+          title: "Cookies de análisis",
+          description:
+            "Estas cookies nos ayudan a entender cómo los visitantes interactúan con nuestro sitio web recopilando y reportando información de forma anónima. Usamos Google Analytics para analizar el tráfico y mejorar nuestro servicio.",
+          linkedCategory: "analytics",
+        },
+        {
+          title: "Cookies publicitarias",
+          description:
+            "Estas cookies se utilizan para ofrecer anuncios relevantes y rastrear el rendimiento de las campañas publicitarias en diferentes sitios web. Pueden ser configuradas por nosotros o por proveedores externos (como Google AdSense) cuyos servicios hemos añadido a nuestras páginas.",
+          linkedCategory: "advertising",
+        },
+        {
+          title: "Más información",
+          description: `Si tienes preguntas sobre nuestra política de cookies, por favor <a href="/es/contact">contáctanos</a>. También puedes leer nuestra <a href="/es/privacy">Política de privacidad</a> completa.`,
         },
       ],
     },
