@@ -14,10 +14,12 @@ import StructuredData from "@/components/StructuredData.vue";
 import { useI18n } from "vue-i18n";
 import { watch } from "vue";
 import { inject } from "@vercel/analytics";
+import { injectSpeedInsights } from "@vercel/speed-insights";
 import { updateCookieConsentLanguage } from "@/plugins/cookieConsent";
 
 if (import.meta.env.PROD) {
   inject();
+  injectSpeedInsights();
 }
 
 const { locale } = useI18n();
