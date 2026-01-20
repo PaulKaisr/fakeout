@@ -1,16 +1,18 @@
 <template>
   <v-app class="min-h-screen flex flex-col">
-    <!-- Header -->
+    <!-- Header - explicit height prevents CLS -->
     <v-app-bar
       flat
       :border="true"
       color="background"
+      height="64"
       class="backdrop-blur-md sticky top-0 z-50 px-6"
     >
       <v-app-bar-nav-icon
         variant="text"
         @click.stop="drawer = !drawer"
         class="d-md-none mr-2"
+        aria-label="Open navigation menu"
       ></v-app-bar-nav-icon>
 
       <div
@@ -21,8 +23,10 @@
           class="size-10 rounded-xl overflow-hidden shadow-lg shadow-primary/20"
         >
           <img
-            src="/android-chrome-192x192.png"
+            src="/favicon-32x32.png"
             alt="Fakeout Logo"
+            width="40"
+            height="40"
             class="w-full h-full object-cover"
           />
         </div>
@@ -124,7 +128,9 @@
               class="text-[10px] text-medium-emphasis uppercase font-bold tracking-wider"
               >{{ t("header.scoreLabel") }}</span
             >
-            <span class="text-sm font-bold tabular-nums">{{ state.score }}</span>
+            <span class="text-sm font-bold tabular-nums">{{
+              state.score
+            }}</span>
           </div>
         </v-chip>
       </div>
@@ -202,26 +208,28 @@
         fluid
         class="py-12 flex flex-col items-center justify-center max-w-[1800px] mx-auto"
       >
-        <!-- Question Section - min-height reserves space to prevent CLS -->
+        <!-- Question Section - fixed height reserves space to prevent CLS -->
         <div
           v-if="state.status !== GameStatus.GAME_OVER"
-          class="text-center mb-12 animate-slide-up min-h-[140px] md:min-h-[160px]"
+          class="text-center mb-12 h-44 md:h-48 flex flex-col justify-center"
         >
           <h1
-            class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
+            class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-linear-to-r from-white to-gray-400"
           >
             {{ t(`game.question.${mode || "image"}`) }}
           </h1>
+          <!-- Theme line - always reserve space with min-height -->
           <p
-            v-if="gamePrompt"
-            class="text-xl text-primary font-bold mb-2 uppercase tracking-widest"
+            class="text-xl text-primary font-bold mb-2 uppercase tracking-widest min-h-7"
+            :class="{ invisible: !gamePrompt }"
           >
             <span class="mr-2 text-white">{{ t("game.theme") }}:</span>
-            "{{ gamePrompt }}"
+            "{{ gamePrompt || "..." }}"
           </p>
+          <!-- Play count - always reserve space with min-height -->
           <div
-            v-if="gamePlayCount > 0"
-            class="flex items-center justify-center gap-2 mb-2"
+            class="flex items-center justify-center gap-2 mb-2 min-h-5"
+            :class="{ invisible: gamePlayCount <= 0 }"
           >
             <v-icon
               icon="mdi-account-group"
@@ -232,7 +240,7 @@
               class="text-sm font-medium text-medium-emphasis"
               data-testid="game-play-count"
             >
-              {{ gamePlayCount }} {{ t("game.plays") }}
+              {{ gamePlayCount || 0 }} {{ t("game.plays") }}
             </span>
           </div>
           <p class="text-medium-emphasis text-lg">
@@ -240,10 +248,10 @@
           </p>
         </div>
 
-        <!-- Loading State (Initial Data Fetch) -->
+        <!-- Loading State (Initial Data Fetch) - same min-height as game grid -->
         <div
           v-if="isLoading"
-          class="flex flex-col items-center justify-center py-20"
+          class="flex flex-col items-center justify-center py-20 game-grid-container"
         >
           <v-progress-circular
             indeterminate
@@ -253,10 +261,10 @@
           <p class="mt-4 text-medium-emphasis">{{ t("game.loadingData") }}</p>
         </div>
 
-        <!-- Error State -->
+        <!-- Error State - same min-height as game grid -->
         <div
           v-else-if="error"
-          class="flex flex-col items-center justify-center py-20"
+          class="flex flex-col items-center justify-center py-20 game-grid-container"
         >
           <v-icon icon="mdi-alert-circle" color="error" size="64"></v-icon>
           <p class="mt-4 text-error text-lg">{{ error }}</p>
@@ -265,19 +273,26 @@
           }}</v-btn>
         </div>
 
-        <!-- Result Screen -->
-        <ResultScreen
+        <!-- Result Screen - wrapped in game-grid-container for consistent height -->
+        <div
           v-else-if="state.status === GameStatus.GAME_OVER"
-          :score="state.score"
-          :total-rounds="state.totalRounds"
-          :mode="mode || 'image'"
-          :is-latest-game="!props.date"
-          :game-date="loadedDate"
-          @archive="showArchiveDialog = true"
-        />
+          class="w-full game-grid-container flex items-center justify-center"
+        >
+          <ResultScreen
+            :score="state.score"
+            :total-rounds="state.totalRounds"
+            :mode="mode || 'image'"
+            :is-latest-game="!props.date"
+            :game-date="loadedDate"
+            @archive="showArchiveDialog = true"
+          />
+        </div>
 
-        <!-- Game Round Area -->
-        <div v-else-if="currentRound" class="w-full relative">
+        <!-- Game Round Area - fixed aspect ratio container prevents CLS -->
+        <div
+          v-else-if="currentRound"
+          class="w-full relative game-grid-container"
+        >
           <!-- Image Loading Spinner (Overlay) -->
           <div
             v-if="!areBothImagesLoaded"
@@ -616,7 +631,11 @@ const isSelectionCorrectId = (imageId: string) => {
 const handleLoad = (side: "A" | "B", duration?: number) => {
   mediaLoaded[side] = true;
   // Only accept valid durations (finite, positive, and at least 0.5 seconds)
-  if (typeof duration === "number" && Number.isFinite(duration) && duration > 0.5) {
+  if (
+    typeof duration === "number" &&
+    Number.isFinite(duration) &&
+    duration > 0.5
+  ) {
     durations[side] = duration;
   }
 };
@@ -684,6 +703,22 @@ const switchLanguage = (newLocale: string) => {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Reserve space for game grid to prevent CLS during loading */
+.game-grid-container {
+  /* On mobile: single column, each card has 4:3 aspect ratio (2 cards stacked + gap)
+     Use max() to ensure a minimum height even on very small screens */
+  min-height: max(500px, calc((100vw - 2rem) * 0.75 * 2 + 2rem));
+  contain: layout style;
+}
+
+@media (min-width: 768px) {
+  .game-grid-container {
+    /* On desktop: two columns, cards share width minus gap
+       Use max() for robust minimum height regardless of viewport */
+    min-height: max(400px, calc((50vw - 3rem) * 0.75 + 3rem));
   }
 }
 </style>

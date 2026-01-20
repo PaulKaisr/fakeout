@@ -65,6 +65,7 @@ export default defineConfig(({ mode }) => ({
     },
     modulePreload: {
       resolveDependencies: (_url, deps, _context) => {
+        // Filter out fonts and non-critical resources from preload
         return deps.filter(
           (dep) =>
             !dep.includes(".eot") &&
@@ -72,7 +73,10 @@ export default defineConfig(({ mode }) => ({
             !dep.includes(".woff") &&
             !dep.includes("math") &&
             !dep.includes("symbols") &&
-            !dep.includes("greek"),
+            !dep.includes("greek") &&
+            !dep.includes("materialdesignicons") &&
+            !dep.includes("cyrillic") &&
+            !dep.includes("latin-ext"),
         );
       },
     },
@@ -95,11 +99,12 @@ export default defineConfig(({ mode }) => ({
       dts: "src/components.d.ts",
     }),
     Fonts({
+      // Disable font preloading to improve LCP - fonts load async with font-display: swap
       fontsource: {
         families: [
           {
             name: "Roboto",
-            weights: [300, 400, 500, 700],
+            weights: [400, 700],
             styles: ["normal"],
             subset: "latin",
           },

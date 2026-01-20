@@ -1,7 +1,13 @@
 @import "tailwindcss";
 
-/* Ensure fonts use swap display to prevent blocking LCP */
+/* Roboto fallback with size-adjust to minimize CLS during font swap */
 @font-face {
-  font-family: "Roboto";
-  font-display: swap;
+  font-family: "Roboto Fallback";
+  src:
+    local("Arial"), local("Helvetica Neue"), local("Helvetica"),
+    local("sans-serif");
+  size-adjust: 100.5%;
+  ascent-override: 92%;
+  descent-override: 20%;
+  line-gap-override: 0%;
 }

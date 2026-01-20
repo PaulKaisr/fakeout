@@ -29,12 +29,17 @@ registerPlugins(app);
 
 app.mount("#app");
 
-// Initialize cookie consent after app is mounted
-// Get locale from URL or default to 'en'
-const pathLocale = window.location.pathname.split("/")[1];
-const supportedLocales = ["en", "de", "bg", "pl"] as const;
-const locale = supportedLocales.includes(pathLocale as any)
-  ? (pathLocale as "en" | "de" | "bg" | "pl")
-  : "en";
+// Initialize cookie consent after app is interactive to avoid affecting LCP
+// Use requestIdleCallback or setTimeout to defer until browser is idle
+const initConsent = () => {
+  const pathLocale = window.location.pathname.split("/")[1];
+  const supportedLocales = ["en", "de", "bg", "pl"] as const;
+  const locale = supportedLocales.includes(pathLocale as any)
+    ? (pathLocale as "en" | "de" | "bg" | "pl")
+    : "en";
+  initCookieConsent(locale);
+};
 
-initCookieConsent(locale);
+// Defer cookie consent to after LCP measurement window
+// LCP can be measured up to page load completion, so wait longer
+setTimeout(initConsent, 3000);

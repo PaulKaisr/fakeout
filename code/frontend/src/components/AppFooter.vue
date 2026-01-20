@@ -1,6 +1,6 @@
 <template>
   <v-footer
-    class="text-center flex flex-col py-6 w-full !bg-[rgba(var(--v-theme-surface),0.8)] backdrop-blur-[10px] border-t border-[rgba(var(--v-border-color),0.1)] mt-auto relative z-10"
+    class="text-center flex flex-col py-6 w-full !bg-[rgba(var(--v-theme-surface),0.8)] backdrop-blur-[10px] border-t border-[rgba(var(--v-border-color),0.1)] mt-auto relative z-10 min-h-[140px]"
   >
     <!-- Main Navigation -->
     <div
