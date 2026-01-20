@@ -10,42 +10,45 @@
     }"
     @click="$emit('select')"
   >
-    <!-- Image -->
-    <v-img
-      v-if="image.mediaType !== 'video'"
-      :src="image.url"
-      class="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105"
-      cover
-      eager
-      @load="$emit('load')"
-      @error="$emit('load')"
-    >
-      <template #placeholder>
-        <div
-          class="d-flex align-center justify-center fill-height bg-grey-darken-4"
-        >
-          <v-progress-circular
-            indeterminate
-            color="primary"
-          ></v-progress-circular>
-        </div>
-      </template>
-    </v-img>
+    <!-- Media Container - reserves space with fixed aspect ratio to prevent CLS -->
+    <div class="relative w-full aspect-[4/3] bg-grey-darken-4">
+      <!-- Image -->
+      <v-img
+        v-if="image.mediaType !== 'video'"
+        :src="image.url"
+        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        cover
+        eager
+        @load="$emit('load')"
+        @error="$emit('load')"
+      >
+        <template #placeholder>
+          <div
+            class="d-flex align-center justify-center fill-height bg-grey-darken-4"
+          >
+            <v-progress-circular
+              indeterminate
+              color="primary"
+            ></v-progress-circular>
+          </div>
+        </template>
+      </v-img>
 
-    <!-- Video -->
-    <video
-      v-else
-      ref="videoRef"
-      :src="image.url"
-      class="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105"
-      autoplay
-      loop
-      muted
-      playsinline
-      @loadeddata="onVideoLoaded"
-      @timeupdate="onTimeUpdate"
-      @error="$emit('load')"
-    ></video>
+      <!-- Video -->
+      <video
+        v-else
+        ref="videoRef"
+        :src="image.url"
+        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        autoplay
+        loop
+        muted
+        playsinline
+        @loadeddata="onVideoLoaded"
+        @timeupdate="onTimeUpdate"
+        @error="$emit('load')"
+      ></video>
+    </div>
 
     <!-- Label (A or B) -->
     <div
@@ -201,11 +204,9 @@ const onTimeUpdate = () => {
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: scale(0.95);
   }
   to {
     opacity: 1;
-    transform: scale(1);
   }
 }
 </style>
