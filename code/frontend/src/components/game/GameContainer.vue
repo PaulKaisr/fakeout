@@ -12,6 +12,7 @@
         variant="text"
         @click.stop="drawer = !drawer"
         class="d-md-none mr-2"
+        aria-label="Open navigation menu"
       ></v-app-bar-nav-icon>
 
       <div
