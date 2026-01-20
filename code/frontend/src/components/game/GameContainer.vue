@@ -83,7 +83,7 @@
         </v-btn>
 
         <v-chip
-          class="px-4 py-2"
+          class="px-4 py-2 min-w-20"
           variant="outlined"
           color="white"
           style="border-color: rgba(255, 255, 255, 0.1)"
@@ -100,14 +100,14 @@
               class="text-[10px] text-medium-emphasis uppercase font-bold tracking-wider"
               >{{ t("header.roundLabel") }}</span
             >
-            <span class="text-sm font-bold"
+            <span class="text-sm font-bold tabular-nums"
               >{{ state.currentRoundIndex + 1 }}/{{ state.totalRounds }}</span
             >
           </div>
         </v-chip>
 
         <v-chip
-          class="px-4 py-2"
+          class="px-4 py-2 min-w-20"
           variant="outlined"
           color="white"
           style="border-color: rgba(255, 255, 255, 0.1)"
@@ -124,7 +124,7 @@
               class="text-[10px] text-medium-emphasis uppercase font-bold tracking-wider"
               >{{ t("header.scoreLabel") }}</span
             >
-            <span class="text-sm font-bold">{{ state.score }}</span>
+            <span class="text-sm font-bold tabular-nums">{{ state.score }}</span>
           </div>
         </v-chip>
       </div>
@@ -202,10 +202,10 @@
         fluid
         class="py-12 flex flex-col items-center justify-center max-w-[1800px] mx-auto"
       >
-        <!-- Question Section -->
+        <!-- Question Section - min-height reserves space to prevent CLS -->
         <div
           v-if="state.status !== GameStatus.GAME_OVER"
-          class="text-center mb-12 animate-slide-up"
+          class="text-center mb-12 animate-slide-up min-h-[140px] md:min-h-[160px]"
         >
           <h1
             class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
@@ -321,15 +321,15 @@
           </div>
         </div>
 
-        <!-- Global Stats -->
-        <div
-          v-if="
-            state.status === GameStatus.ROUND_RESULT &&
-            currentGlobalStats !== null
-          "
-          class="text-center mb-6 animate-slide-up"
-        >
-          <span class="text-h5 font-weight-bold text-white">
+        <!-- Global Stats - fixed height container to prevent CLS -->
+        <div class="h-12 flex items-center justify-center mb-6">
+          <span
+            v-if="
+              state.status === GameStatus.ROUND_RESULT &&
+              currentGlobalStats !== null
+            "
+            class="text-h5 font-weight-bold text-white animate-slide-up"
+          >
             {{ formattedGlobalStats }}%
             {{ t("game.guessedCorrectly") }}
           </span>
@@ -615,7 +615,8 @@ const isSelectionCorrectId = (imageId: string) => {
 
 const handleLoad = (side: "A" | "B", duration?: number) => {
   mediaLoaded[side] = true;
-  if (typeof duration === "number") {
+  // Only accept valid durations (finite, positive, and at least 0.5 seconds)
+  if (typeof duration === "number" && Number.isFinite(duration) && duration > 0.5) {
     durations[side] = duration;
   }
 };

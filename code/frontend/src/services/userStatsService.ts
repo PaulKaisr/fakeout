@@ -34,6 +34,25 @@ const defaultStats: UserStats = {
   games: {},
 };
 
+// Deferred localStorage write to avoid blocking main thread during interactions
+let pendingSave = false;
+function deferredSaveStats() {
+  if (pendingSave) return;
+  pendingSave = true;
+
+  const save = () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(userStats));
+    pendingSave = false;
+  };
+
+  // Use requestIdleCallback if available, otherwise setTimeout
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(save, { timeout: 1000 });
+  } else {
+    setTimeout(save, 0);
+  }
+}
+
 function loadStats(): UserStats {
   const stored = localStorage.getItem(STORAGE_KEY);
   if (stored) {
@@ -115,8 +134,8 @@ export function recordRoundResult(
     }
   }
 
-  // Persist to localStorage
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(userStats));
+  // Persist to localStorage (deferred to avoid blocking UI)
+  deferredSaveStats();
 }
 
 export function finishGame(mode: "image" | "video", date: string) {
@@ -129,7 +148,8 @@ export function finishGame(mode: "image" | "video", date: string) {
     userStats.games[key].isFinished = true;
   }
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(userStats));
+  // Persist to localStorage (deferred to avoid blocking UI)
+  deferredSaveStats();
 }
 
 export function getGameStats(

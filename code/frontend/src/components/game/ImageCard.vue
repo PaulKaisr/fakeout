@@ -10,42 +10,46 @@
     }"
     @click="$emit('select')"
   >
-    <!-- Image -->
-    <v-img
-      v-if="image.mediaType !== 'video'"
-      :src="image.url"
-      class="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105"
-      cover
-      eager
-      @load="$emit('load')"
-      @error="$emit('load')"
-    >
-      <template #placeholder>
-        <div
-          class="d-flex align-center justify-center fill-height bg-grey-darken-4"
-        >
-          <v-progress-circular
-            indeterminate
-            color="primary"
-          ></v-progress-circular>
-        </div>
-      </template>
-    </v-img>
+    <!-- Media Container - reserves space with fixed aspect ratio to prevent CLS -->
+    <div class="relative w-full aspect-[4/3] bg-grey-darken-4">
+      <!-- Image -->
+      <v-img
+        v-if="image.mediaType !== 'video'"
+        :src="image.url"
+        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        cover
+        eager
+        @load="$emit('load')"
+        @error="$emit('load')"
+      >
+        <template #placeholder>
+          <div
+            class="d-flex align-center justify-center fill-height bg-grey-darken-4"
+          >
+            <v-progress-circular
+              indeterminate
+              color="primary"
+            ></v-progress-circular>
+          </div>
+        </template>
+      </v-img>
 
-    <!-- Video -->
-    <video
-      v-else
-      ref="videoRef"
-      :src="image.url"
-      class="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105"
-      autoplay
-      loop
-      muted
-      playsinline
-      @loadeddata="onVideoLoaded"
-      @timeupdate="onTimeUpdate"
-      @error="$emit('load')"
-    ></video>
+      <!-- Video -->
+      <video
+        v-else
+        ref="videoRef"
+        :src="image.url"
+        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        autoplay
+        loop
+        muted
+        playsinline
+        @loadedmetadata="onVideoMetadataLoaded"
+        @loadeddata="onVideoLoaded"
+        @timeupdate="onTimeUpdate"
+        @error="$emit('load')"
+      ></video>
+    </div>
 
     <!-- Label (A or B) -->
     <div
@@ -147,7 +151,7 @@
               <span class="font-bold block mb-1 text-primary uppercase"
                 >{{ t("game.prompt") || "Prompt" }}:</span
               >
-              <div class="markdown-body" v-html="md.render(image.prompt)"></div>
+              <div class="markdown-body" v-html="renderedPrompt"></div>
             </v-card-text>
           </v-card>
         </v-menu>
@@ -159,10 +163,18 @@
 <script setup lang="ts">
 import type { Image } from "@/types/game";
 import { useI18n } from "vue-i18n";
-import { ref } from "vue";
-import MarkdownIt from "markdown-it";
+import { ref, watch } from "vue";
 
-const md = new MarkdownIt();
+// Lazy-load markdown-it only when needed (reduces initial bundle)
+let mdInstance: any = null;
+const getMd = async () => {
+  if (!mdInstance) {
+    const MarkdownIt = (await import("markdown-it")).default;
+    mdInstance = new MarkdownIt();
+  }
+  return mdInstance;
+};
+
 const { t } = useI18n();
 
 const props = defineProps<{
@@ -177,14 +189,60 @@ const props = defineProps<{
 const emit = defineEmits(["select", "load"]);
 
 const videoRef = ref<HTMLVideoElement | null>(null);
+const renderedPrompt = ref<string>("");
 
-const onVideoLoaded = (event: Event) => {
-  const video = event.target as HTMLVideoElement;
-  emit("load", video.duration);
+// Render markdown only when prompt is shown
+const renderPrompt = async () => {
+  if (props.image.prompt && !renderedPrompt.value) {
+    const md = await getMd();
+    renderedPrompt.value = md.render(props.image.prompt);
+  }
 };
 
+// Watch for when we need to show the prompt and render markdown
+watch(
+  () => props.showResult && props.image.isAiGenerated && props.image.prompt,
+  (shouldShow) => {
+    if (shouldShow) {
+      renderPrompt();
+    }
+  },
+  { immediate: true },
+);
+
+// Track whether we've already emitted the load event to avoid duplicates
+let hasEmittedLoad = false;
+
+// Capture duration from loadedmetadata event (when metadata is reliably available)
+const onVideoMetadataLoaded = (event: Event) => {
+  if (hasEmittedLoad) return;
+
+  const video = event.target as HTMLVideoElement;
+  const duration = video.duration;
+
+  // Validate duration is a sensible value (not NaN, Infinity, or too short)
+  if (Number.isFinite(duration) && duration > 0.5) {
+    hasEmittedLoad = true;
+    emit("load", duration);
+  }
+};
+
+// Fallback: emit load without duration if metadata event didn't provide valid duration
+const onVideoLoaded = () => {
+  if (hasEmittedLoad) return;
+  hasEmittedLoad = true;
+  emit("load");
+};
+
+// Throttled timeupdate handler to reduce main thread blocking
+let lastTimeCheck = 0;
 const onTimeUpdate = () => {
   if (!videoRef.value || !props.maxDuration) return;
+
+  // Throttle to max 4 checks per second (every 250ms)
+  const now = performance.now();
+  if (now - lastTimeCheck < 250) return;
+  lastTimeCheck = now;
 
   if (videoRef.value.currentTime >= props.maxDuration) {
     videoRef.value.currentTime = 0;
@@ -194,6 +252,11 @@ const onTimeUpdate = () => {
 </script>
 
 <style scoped>
+/* Optimize hover transforms by hinting to browser */
+.group {
+  will-change: transform, box-shadow;
+}
+
 .animate-fade-in {
   animation: fadeIn 0.3s ease-out forwards;
 }
@@ -201,11 +264,9 @@ const onTimeUpdate = () => {
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: scale(0.95);
   }
   to {
     opacity: 1;
-    transform: scale(1);
   }
 }
 </style>

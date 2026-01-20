@@ -66,7 +66,7 @@ export class R2Service {
       mediaType === "videos"
         ? "games_manifest_videos.json"
         : "games_manifest_images.json";
-    const url = `${this.buildUrl(manifestKey)}?t=${Date.now()}`;
+    const url = this.buildUrl(manifestKey);
     try {
       const response = await fetch(url);
       if (!response.ok) {
@@ -165,33 +165,51 @@ export class R2Service {
 
     // For pexels_raw and pexels_video_raw, try sequential numbers (001, 002, 003...)
     if (type === "pexels_raw" || type === "pexels_video_raw") {
-      for (let i = start; i <= end; i++) {
-        const number = String(i).padStart(3, "0");
-        const imageKey = imageKeyPattern.replace("{number}", number);
-        const metaKey = metaKeyPattern.replace("{number}", number);
+      if (includeMetadata) {
+        // Parallel fetch: Build all requests upfront and fetch in parallel
+        const fetchPromises: Promise<{
+          imageKey: string;
+          metadata: R2ImageMetadata | null;
+        }>[] = [];
 
-        try {
-          if (includeMetadata) {
-            // Fetch metadata first to check if image exists
-            const metadata = await this.fetchMetadata(metaKey);
+        for (let i = start; i <= end; i++) {
+          const number = String(i).padStart(3, "0");
+          const imageKey = imageKeyPattern.replace("{number}", number);
+          const metaKey = metaKeyPattern.replace("{number}", number);
+
+          fetchPromises.push(
+            this.fetchMetadata(metaKey)
+              .then((metadata) => ({
+                imageKey,
+                metadata: metadata as R2ImageMetadata,
+              }))
+              .catch(() => ({ imageKey, metadata: null })),
+          );
+        }
+
+        const results = await Promise.all(fetchPromises);
+
+        // Filter out failed fetches and build image array
+        for (const result of results) {
+          if (result.metadata) {
             images.push({
-              key: imageKey,
-              url: this.buildUrl(imageKey),
-              metadata: metadata as R2ImageMetadata,
-              type,
-            });
-          } else {
-            // Just build URL without verifying
-            images.push({
-              key: imageKey,
-              url: this.buildUrl(imageKey),
+              key: result.imageKey,
+              url: this.buildUrl(result.imageKey),
+              metadata: result.metadata,
               type,
             });
           }
-        } catch {
-          // Stop at first missing image
-          console.debug(`Image ${number} not found for ${datePrefix}/${type}`);
-          break;
+        }
+      } else {
+        // Just build URLs without verifying
+        for (let i = start; i <= end; i++) {
+          const number = String(i).padStart(3, "0");
+          const imageKey = imageKeyPattern.replace("{number}", number);
+          images.push({
+            key: imageKey,
+            url: this.buildUrl(imageKey),
+            type,
+          });
         }
       }
     } else {
@@ -227,30 +245,46 @@ export class R2Service {
       type,
     );
 
-    for (const id of pexelsIds) {
-      const imageKey = imageKeyPattern.replace("{id}", id);
-      const metaKey = metaKeyPattern.replace("{id}", id);
+    if (includeMetadata) {
+      // Parallel fetch all metadata
+      const fetchPromises = pexelsIds.map((id) => {
+        const imageKey = imageKeyPattern.replace("{id}", id);
+        const metaKey = metaKeyPattern.replace("{id}", id);
 
-      try {
-        if (includeMetadata) {
-          const metadata = await this.fetchMetadata(metaKey);
-          images.push({
-            key: imageKey,
-            url: this.buildUrl(imageKey),
+        return this.fetchMetadata(metaKey)
+          .then((metadata) => ({
+            imageKey,
             metadata: metadata as R2GeneratedImageMetadata,
-            type: type,
+          }))
+          .catch(() => {
+            console.debug(
+              `Generated image not found for Pexels ID ${id} on ${datePrefix}`,
+            );
+            return { imageKey, metadata: null };
           });
-        } else {
+      });
+
+      const results = await Promise.all(fetchPromises);
+
+      for (const result of results) {
+        if (result.metadata) {
           images.push({
-            key: imageKey,
-            url: this.buildUrl(imageKey),
+            key: result.imageKey,
+            url: this.buildUrl(result.imageKey),
+            metadata: result.metadata,
             type: type,
           });
         }
-      } catch {
-        console.debug(
-          `Generated image not found for Pexels ID ${id} on ${datePrefix}`,
-        );
+      }
+    } else {
+      // Just build URLs without fetching metadata
+      for (const id of pexelsIds) {
+        const imageKey = imageKeyPattern.replace("{id}", id);
+        images.push({
+          key: imageKey,
+          url: this.buildUrl(imageKey),
+          type: type,
+        });
       }
     }
 
