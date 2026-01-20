@@ -3,5 +3,8 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always"
+  },
+  "chat.tools.terminal.autoApprove": {
+    "npx lighthouse": true
   }
 }
