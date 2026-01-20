@@ -11,7 +11,7 @@
 
     <v-list>
       <v-list-item
-        v-for="locale in availableLocales"
+        v-for="locale in SUPPORTED_LOCALES"
         :key="locale"
         :active="locale === currentLocale"
         @click="changeLocale(locale)"
@@ -35,8 +35,9 @@
 import { useI18n } from "vue-i18n";
 import { computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import { SUPPORTED_LOCALES } from "@/i18n";
 
-const { locale: currentLocaleRef, availableLocales, t } = useI18n();
+const { locale: currentLocaleRef, t } = useI18n();
 const router = useRouter();
 const route = useRoute();
 
