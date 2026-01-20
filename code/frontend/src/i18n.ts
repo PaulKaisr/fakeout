@@ -5,6 +5,7 @@ import en from "./locales/en.json";
 import de from "./locales/de.json";
 import bg from "./locales/bg.json";
 import pl from "./locales/pl.json";
+import es from "./locales/es.json";
 
 const savedLocale = localStorage.getItem("user-locale");
 const browserLocale = (
@@ -12,7 +13,9 @@ const browserLocale = (
 ) as string;
 const locale: string =
   savedLocale ||
-  (["en", "de", "bg", "pl"].includes(browserLocale) ? browserLocale : "en");
+  (["en", "de", "bg", "pl", "es"].includes(browserLocale)
+    ? browserLocale
+    : "en");
 
 export default createI18n({
   legacy: false,
@@ -24,5 +27,6 @@ export default createI18n({
     de,
     bg,
     pl,
+    es,
   },
 });
