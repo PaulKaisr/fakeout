@@ -33,9 +33,9 @@ app.mount("#app");
 // Use requestIdleCallback or setTimeout to defer until browser is idle
 const initConsent = () => {
   const pathLocale = window.location.pathname.split("/")[1];
-  const supportedLocales = ["en", "de", "bg", "pl"] as const;
+  const supportedLocales = ["en", "de", "bg", "pl", "es"] as const;
   const locale = supportedLocales.includes(pathLocale as any)
-    ? (pathLocale as "en" | "de" | "bg" | "pl")
+    ? (pathLocale as "en" | "de" | "bg" | "pl" | "es")
     : "en";
   initCookieConsent(locale);
 };

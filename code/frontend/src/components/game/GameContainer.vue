@@ -418,6 +418,7 @@ const localeAbbr: Record<string, string> = {
   de: "DE",
   bg: "BG",
   pl: "PL",
+  es: "ES",
 };
 
 const props = defineProps<{

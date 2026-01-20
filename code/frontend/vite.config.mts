@@ -16,7 +16,7 @@ import path from "node:path";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Supported locales
-const LOCALES = ["en", "de", "bg"] as const;
+const LOCALES = ["en", "de", "bg", "pl", "es"] as const;
 
 // Blog article slugs (keep in sync with src/data/articles.ts)
 const ARTICLE_SLUGS = [
