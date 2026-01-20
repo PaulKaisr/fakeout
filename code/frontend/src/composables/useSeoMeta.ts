@@ -23,10 +23,11 @@ export interface SeoMetaOptions {
   articleSection?: MaybeRefOrGetter<string>;
 }
 
+import { SUPPORTED_LOCALES } from "@/i18n";
+
 const SITE_NAME = "Fakeout";
 const SITE_URL = "https://fakeout.dev";
 const DEFAULT_OG_IMAGE = `${SITE_URL}/logo-512.png`;
-const SUPPORTED_LOCALES = ["en", "de", "bg", "pl", "es"] as const;
 
 /**
  * Composable for managing SEO meta tags dynamically
