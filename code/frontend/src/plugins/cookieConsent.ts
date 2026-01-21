@@ -368,12 +368,26 @@ function disableGoogleAnalytics() {
 
 function enableGoogleAdsense() {
   // Enable Google AdSense
-  if (typeof window !== "undefined" && (window as any).gtag) {
-    (window as any).gtag("consent", "update", {
-      ad_storage: "granted",
-      ad_user_data: "granted",
-      ad_personalization: "granted",
-    });
+  if (typeof window !== "undefined") {
+    // Update consent via gtag
+    if ((window as any).gtag) {
+      (window as any).gtag("consent", "update", {
+        ad_storage: "granted",
+        ad_user_data: "granted",
+        ad_personalization: "granted",
+      });
+    }
+
+    // Load AdSense script if not already loaded
+    if (!document.getElementById("google-adsense-script")) {
+      const script = document.createElement("script");
+      script.id = "google-adsense-script";
+      script.src =
+        "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8170200247971328";
+      script.async = true;
+      script.crossOrigin = "anonymous";
+      document.head.appendChild(script);
+    }
   }
 }
 
