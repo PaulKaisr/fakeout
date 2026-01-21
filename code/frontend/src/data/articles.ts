@@ -1558,4 +1558,770 @@ Backend-ът е мястото, където разходите обикнове
 `,
     },
   },
+  {
+    id: "7",
+    slug: "training-your-digital-eye",
+    date: "2026-01-21",
+    author: "Fakeout Team",
+    title: {
+      en: "Training Your Digital Eye: A Complete Guide to Recognizing AI-Generated Content",
+      de: "Trainiere dein digitales Auge: Der vollständige Leitfaden zur Erkennung von KI-generierten Inhalten",
+      bg: "Обучете дигиталното си око: Пълно ръководство за разпознаване на съдържание, генерирано от ИИ",
+      pl: "Trenuj swoje cyfrowe oko: Kompletny przewodnik rozpoznawania treści generowanych przez AI",
+      es: "Entrena tu ojo digital: Guía completa para reconocer contenido generado por IA",
+    },
+    summary: {
+      en: "Master the essential skill of spotting AI-generated images and videos. Learn systematic detection techniques, video-specific patterns like camera panning and centered action, and how regular practice with Fakeout trains your digital eye.",
+      de: "Meistere die essenzielle Fähigkeit, KI-generierte Bilder und Videos zu erkennen. Lerne systematische Erkennungstechniken, video-spezifische Muster wie Kameraschwenks und zentrierte Aktion, und wie regelmäßiges Üben mit Fakeout dein digitales Auge trainiert.",
+      bg: "Овладейте основното умение да разпознавате изображения и видеоклипове, генерирани от ИИ. Научете систематични техники за откриване, специфични за видеото модели като панорамиране на камерата и центрирано действие, и как редовната практика с Fakeout тренира дигиталното ви око.",
+      pl: "Opanuj niezbędną umiejętność rozpoznawania obrazów i filmów generowanych przez AI. Poznaj systematyczne techniki wykrywania, wzorce specyficzne dla wideo, takie jak panoramowanie kamery i wyśrodkowana akcja, oraz jak regularna praktyka z Fakeout trenuje twoje cyfrowe oko.",
+      es: "Domina la habilidad esencial de detectar imágenes y videos generados por IA. Aprende técnicas sistemáticas de detección, patrones específicos de video como el paneo de cámara y la acción centrada, y cómo la práctica regular con Fakeout entrena tu ojo digital.",
+    },
+    content: {
+      en: `
+# Training Your Digital Eye: A Complete Guide to Recognizing AI-Generated Content
+
+We live in an unprecedented era. The viral image of the Pope wearing a stylish white puffer coat? AI-generated. Those photos of Donald Trump being arrested that spread across social media? Fabricated by algorithms. A recent study from Lancaster University found that when asked to distinguish between AI-generated faces and real photographs of people, participants performed at essentially chance levels—barely better than flipping a coin.
+
+This isn't science fiction. This is our present reality.
+
+At Fakeout, we believe that developing the ability to recognize AI-generated content isn't just a fun skill—it's becoming an essential form of digital literacy. Our mission goes beyond entertainment: we're building training grounds where you can sharpen your perception and become a more resilient consumer of visual media.
+
+## Why Human Detection Skills Still Matter
+
+You might wonder: can't AI detection tools solve this problem? While automated detectors exist, they have significant limitations. Most only work reliably on specific AI generators and fail when confronted with images from different systems. They can be fooled by simple modifications like cropping, compression, or adding noise. And critically, they're not accessible to the average person scrolling through their social media feed.
+
+**This is where human expertise becomes invaluable.**
+
+Our brains are remarkably sophisticated pattern-recognition machines, finely tuned over millions of years to detect when something is "off"—even when we can't immediately articulate why. This instinctive response is something no algorithm can perfectly replicate. Moreover, human judgment can incorporate context: Is this photograph plausible given what we know about the world? Would this person realistically be in this situation?
+
+Research shows that training can improve detection accuracy by approximately 10-15%. That might sound modest, but in a world where we each consume thousands of images daily, those percentage points translate to catching countless deceptive images that might otherwise influence our beliefs and decisions.
+
+The goal isn't to make you paranoid about every image you see. It's to develop an informed skepticism—a trained eye that knows what to look for.
+
+## The F.A.C.E.S. Framework: A Systematic Approach
+
+Rather than relying on random tips, we recommend a systematic approach to analyzing potentially AI-generated content. We call it the **F.A.C.E.S. Framework**:
+
+- **F - Focus & Framing**: Where is attention directed? Is the composition artificially perfect?
+- **A - Anatomy & Action**: Do bodies, movements, and interactions look natural?
+- **C - Consistency**: Are elements consistent across the entire image or video?
+- **E - Edges & Environment**: What's happening at boundaries, backgrounds, and peripheral areas?
+- **S - Surface Details**: Examine textures, text, shadows, and reflections closely.
+
+Using a framework prevents you from fixating on one aspect while missing obvious tells elsewhere. It gives you a mental checklist that makes your analysis systematic rather than haphazard.
+
+## Image-Specific Detection Features
+
+Let's dive deep into what to look for in static images.
+
+### Hands and Fingers: The Classic Tell
+
+For years, hands have been AI's most reliable giveaway. Human hands contain 26 bones and multiple joints that must articulate naturally. Our brains are exquisitely tuned to detect hand abnormalities because hands are so central to human communication and interaction.
+
+**What to check:**
+- **Finger count**: The classic test. Systematically count from thumb to pinky.
+- **Joint logic**: Do knuckles bend in anatomically possible directions?
+- **Proportions**: Are fingers of consistent, realistic lengths relative to each other?
+- **Grip mechanics**: When holding objects, do fingers actually wrap around them naturally, or do they merge into the object?
+- **Both hands**: Check both—one is often correct while the other fails.
+
+While models like DALL-E 3 and Midjourney v6 have dramatically improved hand generation, they still struggle with complex scenarios: handshakes, hands gripping unusual objects, partially obscured hands, or unusual poses.
+
+### Text and Symbols: AI's Semantic Blindness
+
+AI treats text as a visual texture rather than meaningful symbols. This fundamental limitation often produces telltale artifacts.
+
+**Look for:**
+- Street signs, book covers, or logos in backgrounds
+- Letters that look almost right but contain subtle malformations
+- Text that resembles "alien hieroglyphs" or blurry gibberish
+- Numbers that don't quite make sense
+- Brand logos that are close but not quite accurate
+
+Even when text initially looks correct, zoom in. You'll often find subtle distortions that reveal the artificial origin.
+
+### Lighting and Shadows: The Physics Problem
+
+AI generators often default to dramatic, aesthetically pleasing lighting that defies physical laws.
+
+**Red flags include:**
+- **Multiple shadow directions**: In a real scene, all shadows should fall consistently based on light sources
+- **Rim lighting from nowhere**: AI loves adding glowing rim lights around subjects even when there's no logical light source behind them
+- **Mismatched reflections**: Check eyes, mirrors, and reflective surfaces—do the reflections match the actual environment?
+- **Impossible highlights**: Light behaving in ways that contradict the apparent light source
+
+### Background Coherence: Where AI Cuts Corners
+
+AI models prioritize their primary subjects, often at the expense of background coherence. The subject might be flawless, but the world behind them tells a different story.
+
+**Examine:**
+- Objects that seem to "morph" or blend into each other
+- Architectural elements with impossible geometry—doorways that lead nowhere, windows of inconsistent sizes
+- Straight lines that warp or disappear randomly
+- Crowd scenes with people who merge together or have duplicated features
+- Nature elements (trees, clouds) with repetitive or unnatural patterns
+
+### Skin and Texture: The AI Glaze
+
+AI often creates skin that's aesthetically perfect but uncannily artificial—sometimes called the "AI glaze."
+
+**Signs to watch for:**
+- Skin lacking pores, freckles, or natural imperfections
+- An overly smooth, almost plastic sheen
+- Hair that behaves like a solid mass rather than individual strands
+- Jewelry and accessories that don't quite connect properly to the body
+- Fabric textures that seem painted on rather than draped naturally
+
+## Video-Specific Detection Features
+
+Video introduces temporal dimensions that create entirely new categories of AI artifacts. These patterns are increasingly important as AI video generation advances rapidly.
+
+### The "Center Stage" Problem
+
+One of the most distinctive tells in AI-generated video is an unnatural tendency to keep the main action perfectly centered in the frame.
+
+Real cameras are operated by humans who anticipate movement, make adjustments, and occasionally lose their subjects briefly. Real subjects move in and out of perfect framing. But AI videos often lock subjects dead-center like a tracking shot that never varies—creating an uncanny "video game" feel.
+
+**What to notice:**
+- Does the subject seem "glued" to the center of frame?
+- Are there natural moments where framing is slightly off?
+- Does the camera operator seem to anticipate movements realistically?
+
+### Camera Movement Artifacts
+
+Camera panning and movement reveal AI's limitations in maintaining spatial coherence.
+
+**During panning shots:**
+- Real camera pans have subtle imperfections—slight shake, speed variations, micro-adjustments
+- AI pans often look too smooth, too perfect
+- Background elements may "slide" or warp as the camera moves
+- The relationship between foreground and background motion may feel disconnected
+
+**During dolly/tracking shots:**
+- Background objects might morph or change shape as perspective shifts
+- Parallax effects may be inconsistent or missing
+- Objects at different depths might not move relative to each other correctly
+
+**During zooms:**
+- Digital zoom in AI often creates strange distortions
+- Edge details may break down as the frame zooms
+- Focus transitions may be unrealistic
+
+### Temporal Consistency Issues
+
+Maintaining consistency across multiple frames is enormously challenging for AI systems.
+
+**The "rubber world" effect:**
+- Surfaces that appear to stretch and compress unnaturally
+- Buildings or solid structures that subtly wobble
+- Text or logos that distort as the camera moves
+
+**Object persistence problems:**
+- Elements that appear and disappear between frames
+- Background objects that change position or shape
+- Details that exist in one frame but vanish in the next
+
+**Face morphing:**
+- Facial features that subtly shift between frames
+- Expressions that seem to "slide" across the face
+- Bone structure that appears to change
+
+### Physics and Motion
+
+AI models learn from patterns, not from understanding physical laws. This creates characteristic motion artifacts.
+
+**Gravity anomalies:**
+- Objects falling too slowly or too quickly
+- Momentum that doesn't transfer correctly between colliding objects
+- Jumps or throws with unrealistic trajectories
+
+**Fluid dynamics:**
+- Water that behaves like gelatin—too thick, too slow
+- Smoke or fire that moves in repetitive, looping patterns
+- Splashes that don't disperse naturally
+
+**Particle behavior:**
+- Hair that flows unnaturally or clips through objects
+- Fabric that doesn't respond to wind or movement realistically
+- Dust, snow, or rain with repetitive patterns
+
+### Human Movement
+
+Watch carefully how people move in suspected AI videos.
+
+**Eye movements:**
+- Real eyes make rapid, irregular movements (saccades)
+- AI eyes often move too smoothly or in overly mechanical patterns
+- Tracking of objects in the scene may be unrealistic
+
+**Blinking:**
+- Real blink patterns are irregular and varied
+- AI often produces blinking that's too regular or completely absent
+- Blinks should sync naturally with other facial expressions
+
+**Lip synchronization:**
+- Watch for subtle mismatches between mouth movements and speech
+- Lip shapes may not fully match the phonemes being spoken
+- The timing might be slightly off
+
+**Gait and locomotion:**
+- Walking should show realistic weight transfer and ground contact
+- Arms should swing naturally opposite to leg movement
+- Feet may appear to slide or not properly connect with the ground
+
+### Audio-Visual Synchronization
+
+When AI video includes audio, synchronization issues can reveal its artificial nature.
+
+**Listen for:**
+- Sound effects that don't precisely match visible actions
+- Ambient audio (room tone, environmental sounds) that loops awkwardly or seems disconnected from the visual environment
+- The "uncanny silence"—AI often lacks appropriate environmental sounds that real recordings would capture
+
+## Practical Exercises to Sharpen Your Skills
+
+Developing a keen eye for AI-generated content requires practice. Here are exercises you can do regularly:
+
+### Exercise 1: The Slow-Motion Detective
+
+When watching suspected AI video, slow it down to 0.25x or 0.5x speed. Many artifacts that are invisible at full speed become glaringly obvious when slowed. Pay particular attention to:
+- Edges and boundaries between objects
+- Transitions and movement
+- Facial expressions and eye movements
+
+### Exercise 2: The Finger Count
+
+Make it a habit: whenever you see hands in an image, count systematically from thumb to pinky on each hand. Check:
+- That there are exactly five digits per hand
+- That the thumb is on the correct side
+- That fingers grip objects naturally
+- Both hands, since one is often wrong while the other passes
+
+### Exercise 3: The Background Inspector
+
+Cover the main subject with your hand or a piece of paper. Study only the background. Since AI prioritizes the subject, backgrounds often contain the most obvious flaws:
+- Architectural impossibilities
+- Text and signage errors
+- Geometric inconsistencies
+- Crowd anomalies
+
+### Exercise 4: The Context Question
+
+Before examining technical details, ask: "Does this make sense?"
+- Is this person in a place they'd realistically be?
+- Does the lighting match the claimed time of day or location?
+- Are there details that seem anachronistic or impossible?
+- Does the scenario align with what you know about real-world events?
+
+Sometimes the biggest tell isn't technical—it's contextual implausibility.
+
+### Exercise 5: Play Fakeout Daily
+
+Of course, the best way to develop your detection skills is through regular, structured practice. Fakeout provides:
+- Fresh challenges daily with diverse content
+- Immediate feedback so you learn from mistakes
+- Score tracking to monitor your improvement over time
+- Both image and video modes to train different perceptual skills
+
+## The Fakeout Mission: Gamified Learning
+
+At Fakeout, we've designed our platform around a simple insight: **games are more effective than lectures**.
+
+When learning feels like play, you engage more deeply. When you get immediate feedback, you learn faster. When you track progress over time, you stay motivated. These aren't just nice-to-haves—they're fundamental principles of effective education.
+
+Our daily challenges expose you to a wide variety of AI generation styles and techniques. Some use DALL-E, others use Imagen, others use various video generation systems. This variety ensures that your skills transfer across different generators rather than becoming overly specialized.
+
+**We believe media literacy is the best defense against misinformation.**
+
+Technology to detect AI will never be perfect. AI detectors will always lag behind AI generators. But a population of informed, skeptical consumers—people who know what to look for—represents a resilient defense that no technology can bypass.
+
+By making this learning fun, accessible, and regular, we're helping build that informed population one player at a time.
+
+## Conclusion: Your Eyes Are the Ultimate Tool
+
+AI-generated content will only become more sophisticated. The techniques that expose today's AI images may be obsolete within a year as models improve. But the fundamental skill—systematic observation, informed skepticism, and trained perception—will remain valuable.
+
+Here's what we hope you take away:
+
+1. **AI detection is a learnable skill** that improves with practice
+2. **A systematic approach** (like F.A.C.E.S.) is more effective than random scrutiny
+3. **Different content types have different tells**—images and videos require distinct strategies
+4. **Video-specific patterns** like centered action and artificial camera movement are increasingly important
+5. **Regular practice** builds pattern recognition that becomes instinctive
+6. **The goal isn't paranoia**—it's informed engagement with visual media
+
+The technology creating these synthetic images isn't going away. The question isn't whether AI-generated content will be part of our information landscape—it already is. The question is whether we'll develop the literacy to navigate it wisely.
+
+Start training your digital eye today. Your future self—making decisions based on visual information—will thank you.
+
+*Ready to practice? Try Fakeout's image mode or video mode and see how your detection skills measure up.*
+`,
+      de: `
+# Trainiere dein digitales Auge: Der vollständige Leitfaden zur Erkennung von KI-generierten Inhalten
+
+Wir leben in einer beispiellosen Ära. Das virale Bild des Papstes in einer stylischen weißen Daunenjacke? KI-generiert. Die Fotos von Donald Trumps Verhaftung, die sich in den sozialen Medien verbreiteten? Von Algorithmen fabriziert. Eine kürzliche Studie der Universität Lancaster ergab, dass Teilnehmer, die zwischen KI-generierten Gesichtern und echten Fotografien unterscheiden sollten, praktisch Zufallsergebnisse erzielten – kaum besser als Münzwerfen.
+
+Das ist keine Science-Fiction. Das ist unsere gegenwärtige Realität.
+
+Bei Fakeout glauben wir, dass die Fähigkeit, KI-generierte Inhalte zu erkennen, nicht nur eine unterhaltsame Fertigkeit ist – sie wird zu einer essenziellen Form der digitalen Kompetenz. Unsere Mission geht über Unterhaltung hinaus: Wir bauen Trainingsplätze, auf denen du deine Wahrnehmung schärfen und ein widerstandsfähigerer Konsument visueller Medien werden kannst.
+
+## Warum menschliche Erkennungsfähigkeiten immer noch wichtig sind
+
+Du fragst dich vielleicht: Können KI-Erkennungstools dieses Problem nicht lösen? Obwohl automatisierte Detektoren existieren, haben sie erhebliche Einschränkungen. Die meisten funktionieren nur zuverlässig bei bestimmten KI-Generatoren und versagen bei Bildern aus anderen Systemen. Sie können durch einfache Modifikationen wie Zuschneiden, Komprimierung oder Hinzufügen von Rauschen getäuscht werden. Und kritischerweise sind sie für den durchschnittlichen Menschen, der durch seinen Social-Media-Feed scrollt, nicht zugänglich.
+
+**Hier wird menschliche Expertise unschätzbar wertvoll.**
+
+Unsere Gehirne sind bemerkenswert ausgefeilte Mustererkennungsmaschinen, über Millionen von Jahren darauf abgestimmt zu erkennen, wenn etwas "nicht stimmt" – selbst wenn wir nicht sofort artikulieren können, warum. Diese instinktive Reaktion kann kein Algorithmus perfekt replizieren. Darüber hinaus kann menschliches Urteilsvermögen Kontext einbeziehen: Ist dieses Foto plausibel angesichts dessen, was wir über die Welt wissen? Würde diese Person realistisch in dieser Situation sein?
+
+Forschung zeigt, dass Training die Erkennungsgenauigkeit um etwa 10-15% verbessern kann. Das mag bescheiden klingen, aber in einer Welt, in der wir täglich Tausende von Bildern konsumieren, bedeuten diese Prozentpunkte das Erkennen unzähliger irreführender Bilder, die sonst unsere Überzeugungen und Entscheidungen beeinflussen könnten.
+
+Das Ziel ist nicht, dich paranoid gegenüber jedem Bild zu machen, das du siehst. Es geht darum, eine informierte Skepsis zu entwickeln – ein geschultes Auge, das weiß, worauf es achten muss.
+
+## Das F.A.C.E.S.-Framework: Ein systematischer Ansatz
+
+Anstatt sich auf zufällige Tipps zu verlassen, empfehlen wir einen systematischen Ansatz zur Analyse potenziell KI-generierter Inhalte. Wir nennen es das **F.A.C.E.S.-Framework**:
+
+- **F - Fokus & Framing**: Wohin wird die Aufmerksamkeit gelenkt? Ist die Komposition künstlich perfekt?
+- **A - Anatomie & Aktion**: Sehen Körper, Bewegungen und Interaktionen natürlich aus?
+- **C - Konsistenz**: Sind Elemente über das gesamte Bild oder Video hinweg konsistent?
+- **E - Edges & Environment (Kanten & Umgebung)**: Was passiert an Grenzen, Hintergründen und peripheren Bereichen?
+- **S - Surface Details (Oberflächendetails)**: Untersuche Texturen, Text, Schatten und Reflexionen genau.
+
+Die Verwendung eines Frameworks verhindert, dass du dich auf einen Aspekt fixierst und dabei offensichtliche Hinweise an anderer Stelle übersiehst.
+
+## Bildspezifische Erkennungsmerkmale
+
+Lass uns tief in das eintauchen, worauf bei statischen Bildern zu achten ist.
+
+### Hände und Finger: Der klassische Hinweis
+
+Jahrelang waren Hände der zuverlässigste Verräter der KI. Menschliche Hände enthalten 26 Knochen und mehrere Gelenke, die sich natürlich bewegen müssen.
+
+**Was zu prüfen ist:**
+- **Fingerzahl**: Der klassische Test. Zähle systematisch vom Daumen bis zum kleinen Finger.
+- **Gelenklogik**: Biegen sich die Knöchel in anatomisch mögliche Richtungen?
+- **Griff-Mechanik**: Wenn Objekte gehalten werden, umschließen die Finger sie tatsächlich natürlich?
+- **Beide Hände**: Prüfe beide – eine ist oft korrekt, während die andere versagt.
+
+### Text und Symbole: KIs semantische Blindheit
+
+KI behandelt Text als visuelle Textur und nicht als bedeutungsvolle Symbole.
+
+**Achte auf:**
+- Straßenschilder, Buchcover oder Logos in Hintergründen
+- Buchstaben, die fast richtig aussehen, aber subtile Missbildungen enthalten
+- Text, der "außerirdischen Hieroglyphen" oder verschwommenem Kauderwelsch ähnelt
+
+### Beleuchtung und Schatten: Das Physikproblem
+
+KI-Generatoren greifen oft standardmäßig auf dramatische Beleuchtung zurück, die physikalische Gesetze missachtet.
+
+**Warnsignale:**
+- Mehrere Schattenrichtungen
+- Kantenlicht aus dem Nichts
+- Nicht übereinstimmende Reflexionen
+
+### Hintergrund-Kohärenz
+
+KI-Modelle priorisieren ihre Hauptmotive, oft auf Kosten der Hintergrund-Kohärenz.
+
+**Untersuche:**
+- Objekte, die zu "morphen" oder ineinander zu verschmelzen scheinen
+- Architektonische Elemente mit unmöglicher Geometrie
+- Gerade Linien, die sich verzerren oder zufällig verschwinden
+
+## Videospezifische Erkennungsmerkmale
+
+Video führt zeitliche Dimensionen ein, die völlig neue Kategorien von KI-Artefakten erzeugen.
+
+### Das "Center Stage"-Problem
+
+Einer der auffälligsten Hinweise in KI-generierten Videos ist eine unnatürliche Tendenz, die Hauptaktion perfekt in der Bildmitte zu halten.
+
+Echte Kameras werden von Menschen bedient, die Bewegungen antizipieren, Anpassungen vornehmen und gelegentlich ihre Motive kurz verlieren. Aber KI-Videos sperren Motive oft wie festgeklebt in die Bildmitte – was ein unheimliches "Videospiel"-Gefühl erzeugt.
+
+**Was zu beachten ist:**
+- Scheint das Motiv in der Bildmitte "festgeklebt" zu sein?
+- Gibt es natürliche Momente, in denen das Framing leicht daneben liegt?
+- Scheint der Kameramann Bewegungen realistisch zu antizipieren?
+
+### Artefakte bei Kamerabewegungen
+
+Kameraschwenks enthüllen KIs Einschränkungen bei der Aufrechterhaltung räumlicher Kohärenz.
+
+**Bei Schwenks:**
+- Echte Schwenks haben subtile Unvollkommenheiten – leichtes Wackeln, Geschwindigkeitsvariationen
+- KI-Schwenks sehen oft zu glatt, zu perfekt aus
+- Hintergrundelemente können "rutschen" oder sich verzerren
+
+### Zeitliche Konsistenzprobleme
+
+Die Aufrechterhaltung der Konsistenz über mehrere Frames hinweg ist für KI-Systeme enorm herausfordernd.
+
+**Der "Gummiwelt"-Effekt:**
+- Oberflächen, die sich unnatürlich zu dehnen und zusammenzuziehen scheinen
+- Gebäude oder Strukturen, die leicht wackeln
+- Text oder Logos, die sich verzerren, wenn sich die Kamera bewegt
+
+### Physik und Bewegung
+
+KI-Modelle lernen aus Mustern, nicht aus dem Verständnis physikalischer Gesetze.
+
+**Schwerkraft-Anomalien:**
+- Objekte, die zu langsam oder zu schnell fallen
+- Impuls, der nicht korrekt übertragen wird
+
+**Fluiddynamik:**
+- Wasser, das sich wie Gelatine verhält
+- Rauch oder Feuer, das sich in sich wiederholenden Mustern bewegt
+
+### Menschliche Bewegung
+
+**Augenbewegungen:**
+- Echte Augen machen schnelle, unregelmäßige Bewegungen
+- KI-Augen bewegen sich oft zu glatt
+
+**Blinzeln:**
+- Echte Blinzelmuster sind unregelmäßig
+- KI produziert oft Blinzeln, das zu regelmäßig ist oder ganz fehlt
+
+## Praktische Übungen zur Schärfung deiner Fähigkeiten
+
+### Übung 1: Der Zeitlupen-Detektiv
+
+Wenn du verdächtige KI-Videos anschaust, verlangsame sie auf 0,25x oder 0,5x Geschwindigkeit. Viele Artefakte, die bei voller Geschwindigkeit unsichtbar sind, werden offensichtlich.
+
+### Übung 2: Die Fingerzählung
+
+Mach es zur Gewohnheit: Wann immer du Hände in einem Bild siehst, zähle systematisch von Daumen bis kleinem Finger an jeder Hand.
+
+### Übung 3: Der Hintergrund-Inspektor
+
+Bedecke das Hauptmotiv. Studiere nur den Hintergrund. Da KI das Motiv priorisiert, enthalten Hintergründe oft die offensichtlichsten Fehler.
+
+### Übung 4: Die Kontextfrage
+
+Bevor du technische Details untersuchst, frage: "Ergibt das Sinn?"
+- Ist diese Person an einem Ort, an dem sie realistisch sein würde?
+- Passt die Beleuchtung zur behaupteten Tageszeit oder zum Ort?
+
+### Übung 5: Spiele Fakeout täglich
+
+Natürlich ist der beste Weg, deine Erkennungsfähigkeiten zu entwickeln, regelmäßiges, strukturiertes Üben. Fakeout bietet tägliche Herausforderungen mit sofortigem Feedback.
+
+## Die Fakeout-Mission: Spielerisches Lernen
+
+Bei Fakeout haben wir unsere Plattform um eine einfache Erkenntnis herum gestaltet: **Spiele sind effektiver als Vorträge.**
+
+Wir glauben, dass Medienkompetenz die beste Verteidigung gegen Fehlinformationen ist.
+
+## Fazit: Deine Augen sind das ultimative Werkzeug
+
+KI-generierte Inhalte werden nur noch ausgefeilter werden. Aber die grundlegende Fähigkeit – systematische Beobachtung, informierte Skepsis und geschulte Wahrnehmung – wird wertvoll bleiben.
+
+Die Technologie, die diese synthetischen Bilder erzeugt, wird nicht verschwinden. Die Frage ist, ob wir die Kompetenz entwickeln werden, weise damit umzugehen.
+
+Beginne heute damit, dein digitales Auge zu trainieren. Dein zukünftiges Ich wird dir dankbar sein.
+
+*Bereit zu üben? Probiere Fakeouts Bildmodus oder Videomodus und sieh, wie deine Erkennungsfähigkeiten abschneiden.*
+`,
+      bg: `
+# Обучете дигиталното си око: Пълно ръководство за разпознаване на съдържание, генерирано от ИИ
+
+Живеем в безпрецедентна ера. Вирусното изображение на папата с елегантно бяло пухено яке? Генерирано от ИИ. Снимките на ареста на Доналд Тръмп, разпространили се в социалните мрежи? Фабрикувани от алгоритми. Скорошно проучване на Университета Ланкастър установи, че когато бяха помолени да различат генерирани от ИИ лица от истински снимки, участниците показаха резултати на ниво случаен шанс – едва по-добре от хвърляне на монета.
+
+Това не е научна фантастика. Това е нашата настояща реалност.
+
+Във Fakeout вярваме, че развиването на способността да разпознаваме съдържание, генерирано от ИИ, не е просто забавно умение – то се превръща в съществена форма на дигитална грамотност.
+
+## Защо човешките умения за откриване все още имат значение
+
+Автоматизираните детектори съществуват, но имат значителни ограничения. Повечето работят надеждно само при конкретни ИИ генератори. Могат да бъдат излъгани с прости модификации. И критично важно – не са достъпни за средния човек.
+
+**Тук човешката експертиза става безценна.**
+
+Нашите мозъци са забележително сложни машини за разпознаване на модели, фино настроени да откриват кога нещо е "грешно" – дори когато не можем веднага да формулираме защо.
+
+## Рамката F.A.C.E.S.: Систематичен подход
+
+- **F - Focus & Framing (Фокус и рамкиране)**: Накъде е насочено вниманието?
+- **A - Anatomy & Action (Анатомия и действие)**: Изглеждат ли телата и движенията естествено?
+- **C - Consistency (Консистентност)**: Последователни ли са елементите в цялото изображение?
+- **E - Edges & Environment (Ръбове и среда)**: Какво се случва на границите и фона?
+- **S - Surface Details (Повърхностни детайли)**: Изследвайте текстури, текст, сенки и отражения.
+
+## Характеристики за откриване, специфични за изображения
+
+### Ръце и пръсти: Класическият знак
+
+С години ръцете са най-надеждният издайнически знак на ИИ.
+
+**Какво да проверите:**
+- Брой на пръстите
+- Логика на ставите
+- Механика на захвата
+- И двете ръце
+
+### Текст и символи
+
+ИИ третира текста като визуална текстура, а не като смислени символи.
+
+### Осветление и сенки
+
+ИИ генераторите често по подразбиране използват драматично осветление, което нарушава физическите закони.
+
+## Характеристики за откриване, специфични за видео
+
+### Проблемът "Сцена в центъра"
+
+Един от най-отличителните знаци в генерирано от ИИ видео е неестествената тенденция главното действие да остава перфектно центрирано в кадъра.
+
+Истинските камери се управляват от хора, които предвиждат движение и правят корекции. Но ИИ видеоклиповете често заключват обектите точно в центъра – създавайки неприятно усещане за "видеоигра".
+
+### Артефакти при движение на камерата
+
+Панорамирането на камерата разкрива ограниченията на ИИ.
+
+**При снимки с панорамиране:**
+- Истинските панорами имат фини несъвършенства
+- ИИ панорамите често изглеждат прекалено гладки
+- Елементите на фона могат да се "плъзгат" или изкривяват
+
+### Проблеми с времевата консистентност
+
+**Ефектът "гумен свят":**
+- Повърхности, които се разтягат и свиват неестествено
+- Сгради, които леко се люлеят
+- Текст, който се изкривява при движение на камерата
+
+### Физика и движение
+
+- Обекти, падащи твърде бавно или бързо
+- Вода, която се държи като желатин
+- Дим или огън с повтарящи се модели
+
+### Човешко движение
+
+- Движения на очите, които са твърде гладки
+- Модели на мигане, които са твърде редовни или липсват
+
+## Практически упражнения
+
+### Упражнение 1: Детективът на забавен каданс
+
+Гледайте видеоклипове при 0,25x или 0,5x скорост.
+
+### Упражнение 2: Броене на пръсти
+
+Винаги когато видите ръце, бройте систематично.
+
+### Упражнение 3: Инспекторът на фона
+
+Покрийте главния обект и изучавайте само фона.
+
+### Упражнение 4: Въпросът за контекста
+
+Преди да изследвате технически детайли, питайте: "Има ли смисъл това?"
+
+### Упражнение 5: Играйте Fakeout всеки ден
+
+Най-добрият начин да развиете уменията си е чрез редовна практика.
+
+## Мисията на Fakeout: Учене чрез игра
+
+Във Fakeout сме проектирали платформата около прост извод: **игрите са по-ефективни от лекциите.**
+
+Вярваме, че медийната грамотност е най-добрата защита срещу дезинформацията.
+
+## Заключение: Очите ви са върховният инструмент
+
+Съдържанието, генерирано от ИИ, ще става само по-сложно. Но основното умение – систематично наблюдение, информиран скептицизъм и обучено възприятие – ще остане ценно.
+
+Технологията, създаваща тези синтетични изображения, няма да изчезне. Въпросът е дали ще развием грамотността да я навигираме мъдро.
+
+Започнете да тренирате дигиталното си око днес.
+
+*Готови за практика? Опитайте режима за изображения или видео режима на Fakeout.*
+`,
+      pl: `
+# Trenuj swoje cyfrowe oko: Kompletny przewodnik rozpoznawania treści generowanych przez AI
+
+Żyjemy w bezprecedensowej erze. Wirusowe zdjęcie papieża w stylowej białej kurtce puchowej? Wygenerowane przez AI. Zdjęcia aresztowania Donalda Trumpa, które rozprzestrzeniły się w mediach społecznościowych? Sfabrykowane przez algorytmy. Ostatnie badanie z Uniwersytetu Lancaster wykazało, że uczestnicy proszeni o odróżnienie twarzy wygenerowanych przez AI od prawdziwych fotografii osiągali wyniki na poziomie przypadku – niewiele lepiej niż rzut monetą.
+
+To nie jest science fiction. To nasza obecna rzeczywistość.
+
+W Fakeout wierzymy, że rozwijanie umiejętności rozpoznawania treści generowanych przez AI to nie tylko zabawna umiejętność – staje się ona niezbędną formą cyfrowej alfabetyzacji.
+
+## Dlaczego ludzkie umiejętności wykrywania nadal mają znaczenie
+
+Automatyczne detektory istnieją, ale mają znaczące ograniczenia. Większość działa niezawodnie tylko na konkretnych generatorach AI i nie rozpoznaje obrazów z innych systemów.
+
+**Tu ludzka ekspertyza staje się nieoceniona.**
+
+Nasze mózgi są niezwykle zaawansowanymi maszynami do rozpoznawania wzorców, precyzyjnie dostrojonymi przez miliony lat ewolucji do wykrywania, gdy coś jest "nie tak".
+
+## Ramka F.A.C.E.S.: Systematyczne podejście
+
+- **F - Focus & Framing**: Gdzie jest skierowana uwaga?
+- **A - Anatomy & Action**: Czy ciała i ruchy wyglądają naturalnie?
+- **C - Consistency**: Czy elementy są spójne w całym obrazie?
+- **E - Edges & Environment**: Co dzieje się na krawędziach i w tle?
+- **S - Surface Details**: Zbadaj tekstury, tekst, cienie i odbicia.
+
+## Cechy wykrywania specyficzne dla obrazów
+
+### Ręce i palce
+
+Przez lata ręce były najbardziej niezawodnym znakiem rozpoznawczym AI.
+
+### Tekst i symbole
+
+AI traktuje tekst jako teksturę wizualną, a nie jako znaczące symbole.
+
+### Oświetlenie i cienie
+
+Generatory AI często domyślnie stosują dramatyczne oświetlenie łamiące prawa fizyki.
+
+## Cechy wykrywania specyficzne dla wideo
+
+### Problem "Centrum sceny"
+
+Jednym z najbardziej charakterystycznych znaków w wideo generowanym przez AI jest nienaturalna tendencja do utrzymywania głównej akcji idealnie wycentrowanej w kadrze.
+
+### Artefakty ruchu kamery
+
+Panoramowanie kamery ujawnia ograniczenia AI.
+
+**Podczas ujęć panoramicznych:**
+- Prawdziwe panoramy mają subtelne niedoskonałości
+- Panoramy AI często wyglądają zbyt gładko
+- Elementy tła mogą się "ślizgać" lub zniekształcać
+
+### Problemy ze spójnością czasową
+
+- Powierzchnie, które rozciągają się i kurczą nienaturalnie
+- Budynki, które lekko się kołyszą
+- Tekst, który zniekształca się podczas ruchu kamery
+
+### Fizyka i ruch
+
+- Obiekty spadające zbyt wolno lub szybko
+- Woda zachowująca się jak galaretka
+
+## Ćwiczenia praktyczne
+
+1. **Detektyw w zwolnionym tempie** - Oglądaj filmy przy 0,25x lub 0,5x prędkości.
+2. **Liczenie palców** - Zawsze gdy widzisz ręce, licz systematycznie.
+3. **Inspektor tła** - Zakryj główny obiekt i studiuj tylko tło.
+4. **Pytanie o kontekst** - "Czy to ma sens?"
+5. **Graj w Fakeout codziennie**
+
+## Misja Fakeout: Nauka przez grę
+
+W Fakeout zaprojektowaliśmy naszą platformę wokół prostego spostrzeżenia: **gry są skuteczniejsze niż wykłady.**
+
+Wierzymy, że alfabetyzacja medialna jest najlepszą obroną przed dezinformacją.
+
+## Podsumowanie
+
+Treści generowane przez AI będą tylko bardziej wyrafinowane. Ale podstawowa umiejętność – systematyczna obserwacja, świadomy sceptycyzm i wytrenowana percepcja – pozostanie wartościowa.
+
+Zacznij trenować swoje cyfrowe oko już dziś.
+
+*Gotowy do praktyki? Wypróbuj tryb obrazów lub tryb wideo Fakeout.*
+`,
+      es: `
+# Entrena tu ojo digital: Guía completa para reconocer contenido generado por IA
+
+Vivimos en una era sin precedentes. ¿La imagen viral del Papa con una elegante chaqueta blanca acolchada? Generada por IA. ¿Las fotos del arresto de Donald Trump que se difundieron en las redes sociales? Fabricadas por algoritmos. Un estudio reciente de la Universidad de Lancaster encontró que cuando se les pidió distinguir entre rostros generados por IA y fotografías reales, los participantes obtuvieron resultados al nivel del azar – apenas mejor que lanzar una moneda.
+
+Esto no es ciencia ficción. Esta es nuestra realidad actual.
+
+En Fakeout, creemos que desarrollar la capacidad de reconocer contenido generado por IA no es solo una habilidad divertida – se está convirtiendo en una forma esencial de alfabetización digital.
+
+## Por qué las habilidades humanas de detección siguen siendo importantes
+
+Los detectores automatizados existen, pero tienen limitaciones significativas. La mayoría solo funcionan de manera confiable en generadores de IA específicos.
+
+**Aquí es donde la experiencia humana se vuelve invaluable.**
+
+Nuestros cerebros son máquinas de reconocimiento de patrones notablemente sofisticadas, finamente ajustadas para detectar cuando algo está "mal".
+
+## El marco F.A.C.E.S.: Un enfoque sistemático
+
+- **F - Focus & Framing**: ¿Hacia dónde se dirige la atención?
+- **A - Anatomy & Action**: ¿Los cuerpos y movimientos lucen naturales?
+- **C - Consistency**: ¿Los elementos son consistentes en toda la imagen?
+- **E - Edges & Environment**: ¿Qué sucede en los bordes y fondos?
+- **S - Surface Details**: Examina texturas, texto, sombras y reflejos.
+
+## Características de detección específicas para imágenes
+
+### Manos y dedos
+
+Durante años, las manos han sido el indicador más confiable de la IA.
+
+### Texto y símbolos
+
+La IA trata el texto como una textura visual, no como símbolos significativos.
+
+### Iluminación y sombras
+
+Los generadores de IA a menudo utilizan iluminación dramática que desafía las leyes físicas.
+
+## Características de detección específicas para video
+
+### El problema del "Centro del escenario"
+
+Una de las señales más distintivas en videos generados por IA es la tendencia antinatural a mantener la acción principal perfectamente centrada en el encuadre.
+
+Las cámaras reales son operadas por humanos que anticipan el movimiento y hacen ajustes. Pero los videos de IA a menudo bloquean a los sujetos justo en el centro – creando una sensación inquietante de "videojuego".
+
+### Artefactos de movimiento de cámara
+
+El paneo de cámara revela las limitaciones de la IA.
+
+**Durante tomas panorámicas:**
+- Los paneos reales tienen imperfecciones sutiles
+- Los paneos de IA a menudo lucen demasiado suaves
+- Los elementos del fondo pueden "deslizarse" o distorsionarse
+
+### Problemas de consistencia temporal
+
+- Superficies que se estiran y comprimen de manera antinatural
+- Edificios que se tambalean ligeramente
+- Texto que se distorsiona cuando la cámara se mueve
+
+### Física y movimiento
+
+- Objetos cayendo demasiado lento o rápido
+- Agua comportándose como gelatina
+
+## Ejercicios prácticos
+
+1. **El detective en cámara lenta** - Mira videos a velocidad 0.25x o 0.5x.
+2. **Conteo de dedos** - Siempre que veas manos, cuenta sistemáticamente.
+3. **El inspector de fondos** - Cubre el sujeto principal y estudia solo el fondo.
+4. **La pregunta del contexto** - "¿Tiene esto sentido?"
+5. **Juega Fakeout diariamente**
+
+## La misión de Fakeout: Aprendizaje gamificado
+
+En Fakeout, hemos diseñado nuestra plataforma en torno a una idea simple: **los juegos son más efectivos que las conferencias.**
+
+Creemos que la alfabetización mediática es la mejor defensa contra la desinformación.
+
+## Conclusión
+
+El contenido generado por IA solo se volverá más sofisticado. Pero la habilidad fundamental – observación sistemática, escepticismo informado y percepción entrenada – seguirá siendo valiosa.
+
+La tecnología que crea estas imágenes sintéticas no va a desaparecer. La pregunta es si desarrollaremos la alfabetización para navegarla sabiamente.
+
+Comienza a entrenar tu ojo digital hoy.
+
+*¿Listo para practicar? Prueba el modo de imagen o el modo de video de Fakeout.*
+`,
+    },
+  },
 ];
