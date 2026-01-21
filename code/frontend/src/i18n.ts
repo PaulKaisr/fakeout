@@ -4,13 +4,14 @@ import { createI18n } from "vue-i18n";
 // Other locales will be lazy-loaded when needed
 import en from "./locales/en.json";
 
-export type SupportedLocale = "en" | "de" | "bg" | "pl" | "es";
+export type SupportedLocale = "en" | "de" | "bg" | "pl" | "es" | "fr";
 export const SUPPORTED_LOCALES: SupportedLocale[] = [
   "en",
   "de",
   "bg",
   "pl",
   "es",
+  "fr",
 ];
 
 // Determine initial locale from saved preference or browser
