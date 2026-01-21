@@ -13,10 +13,8 @@ import { defineConfig } from "vite";
 import { fileURLToPath, URL } from "node:url";
 import path from "node:path";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
 // Supported locales
-const LOCALES = ["en", "de", "bg", "pl", "es"] as const;
+const LOCALES = ["en", "de", "bg", "pl", "es", "fr"] as const;
 
 // Blog article slugs (keep in sync with src/data/articles.ts)
 const ARTICLE_SLUGS = [
@@ -25,9 +23,12 @@ const ARTICLE_SLUGS = [
   "spotting-ai-hands-guide",
   "ai-video-detection-tips",
   "spotting-ai-tips",
-  "focus-on-faces-ai-detection",
+  "ai-image-video-generation-models-2026",
   "free-hosting-for-solo-developers",
   "training-your-digital-eye",
+  "synthetic-horizon-2026",
+  "game-based-ai-literacy-k12",
+  "spotting-ai-comprehensive-report",
 ];
 
 // Generate dynamic routes for sitemap
