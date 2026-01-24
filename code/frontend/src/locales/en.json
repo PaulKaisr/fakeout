@@ -45,11 +45,12 @@
   },
   "results": {
     "title": "Level Complete!",
+    "youTook": "You took",
     "finalScore": "Final Score",
     "shareResult": "Share Result",
     "copiedToClipboard": "Copied to Clipboard!",
     "playAgain": "Play Again",
-    "shareText": "I scored {score}/{total} on FakeOut ({mode})! Can you beat me? {url}",
+    "shareText": "I scored {score}/{total} on FakeOut ({mode}) in {time}! Can you beat me? {url}",
     "feedback": {
       "perfect": "Perfect! You are an AI detector!",
       "great": "Great job! Sharp eyes!",

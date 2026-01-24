@@ -45,6 +45,7 @@
   },
   "results": {
     "title": "¡Nivel completado!",
+    "youTook": "Te tomó",
     "finalScore": "Puntuación final",
     "shareResult": "Compartir resultado",
     "copiedToClipboard": "¡Copiado al portapapeles!",

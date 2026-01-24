@@ -30,5 +30,6 @@ export interface GameState {
   history: {
     roundId: number;
     userCorrect: boolean;
+    duration: number;
   }[];
 }

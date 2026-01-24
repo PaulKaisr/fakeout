@@ -32,6 +32,17 @@
       >
         {{ feedbackMessage }}
       </p>
+      <div
+        class="mt-4 flex flex-col items-center justify-center text-medium-emphasis"
+      >
+        <span class="mb-1">{{ t("results.youTook") }}</span>
+        <div class="flex items-center gap-2">
+          <v-icon icon="mdi-clock-outline" size="small"></v-icon>
+          <span class="font-mono text-lg font-bold">
+            {{ formattedTotalDuration }}
+          </span>
+        </div>
+      </div>
     </div>
 
     <div class="flex flex-col gap-4 w-full max-w-sm">
@@ -116,6 +127,7 @@ const router = useRouter();
 const props = defineProps<{
   score: number;
   totalRounds: number;
+  totalDuration: number;
   mode: "image" | "video";
   isLatestGame: boolean;
   gameDate: string | null;
@@ -139,6 +151,15 @@ const feedbackMessage = computed(() => {
   return t("results.feedback.poor");
 });
 
+const formattedTotalDuration = computed(() => {
+  const ms = props.totalDuration;
+  if (ms <= 0) return "00:00";
+  const seconds = Math.floor(ms / 1000);
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${m}m ${s}s`;
+});
+
 const shareUrl = computed(() => {
   if (props.gameDate) {
     return `${window.location.origin}/${locale.value}/${props.mode}/${props.gameDate}`;
@@ -151,6 +172,7 @@ const shareText = computed(() =>
     score: props.score,
     total: props.totalRounds,
     mode: t(props.mode === "image" ? "stats.imageMode" : "stats.videoMode"),
+    time: formattedTotalDuration.value,
     url: shareUrl.value,
   }),
 );
