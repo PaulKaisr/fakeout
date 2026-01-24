@@ -45,6 +45,7 @@
   },
   "results": {
     "title": "¡Nivel completado!",
+    "youTook": "Te tomó",
     "finalScore": "Puntuación final",
     "shareResult": "Compartir resultado",
     "copiedToClipboard": "¡Copiado al portapapeles!",
@@ -78,16 +79,16 @@
   "faq": {
     "title": "Preguntas frecuentes",
     "q1": {
-      "question": "¿Cómo detectar imágenes generadas por IA?",
-      "answer": "Busca texturas no naturales, iluminación inconsistente, reflejos extraños, manos o caras distorsionadas, geometría imposible y artefactos en detalles finos como cabello o texto. Las imágenes generadas por IA a menudo tienen imperfecciones sutiles que los ojos entrenados pueden detectar."
+      "question": "¿Qué es el juego Fakeout?",
+      "answer": "Fakeout es un juego de desafío semanal gratuito sin registro que pone a prueba tu capacidad para distinguir entre videos y fotografías reales y los generados por IA. Cada semana presenta nuevos pares de imágenes y videos para agudizar tus habilidades de detección de IA y contribuir a la alfabetización en IA."
     },
     "q2": {
-      "question": "¿Qué es el juego Fakeout?",
-      "answer": "Fakeout es un juego de desafío diario gratuito que pone a prueba tu capacidad para distinguir entre fotografías reales e imágenes generadas por IA. Cada día presenta nuevos pares de imágenes para agudizar tus habilidades de detección de IA."
+      "question": "¿Cómo detectar imágenes y videos generados por IA?",
+      "answer": "Busca texturas no naturales, iluminación inconsistente, reflejos extraños, manos o caras distorsionadas, geometría imposible y artefactos en detalles finos como cabello o texto. Las imágenes generadas por IA a menudo tienen imperfecciones sutiles que los ojos entrenados pueden detectar. Visita nuestro blog donde reportamos comentarios de usuarios y estadísticas sobre cómo lo hicieron en el pasado."
     },
     "q3": {
-      "question": "¿Cómo funciona el juego detector de imágenes IA?",
-      "answer": "Se te presentan dos imágenes: una fotografía real y una imagen generada por IA. Tu objetivo es identificar cuál fue creada por inteligencia artificial. Después de hacer tu selección, recibirás comentarios inmediatos y aprenderás qué buscar."
+      "question": "¿Cómo funciona el juego detector de medios IA?",
+      "answer": "Se te presentan dos videos o imágenes: un video o fotografía real y uno generado por IA. Tu objetivo es identificar cuál fue creado por inteligencia artificial. Después de hacer tu selección, recibirás comentarios inmediatos y aprenderás qué buscar. Después de cada intento puedes investigar el prompt que se usó para generar los medios sintéticos, lo que puede ayudarte a comprender el proceso de decisión de la IA."
     },
     "q4": {
       "question": "¿Se pueden detectar las imágenes generadas por IA?",
@@ -95,7 +96,11 @@
     },
     "q5": {
       "question": "¿Fakeout es gratis?",
-      "answer": "Sí, Fakeout es completamente gratis para jugar. Puedes poner a prueba tus habilidades de detección de IA diariamente sin ningún costo ni registro requerido."
+      "answer": "Sí, Fakeout es completamente gratis para jugar. Puedes poner a prueba tus habilidades de detección de IA semanalmente sin ningún costo ni registro requerido. Podemos monetizar el sitio a través de anuncios para apoyar el desarrollo y pagar por el alojamiento, el dominio y los costos asociados con la generación de videos e imágenes. Así que si quieres apoyar el proyecto, considera agregar nuestro sitio a la lista blanca en tu bloqueador de anuncios."
+    },
+    "q6": {
+      "question": "¿Utilizan los datos recopilados del juego?",
+      "answer": "No tenemos absolutamente ningún acceso a datos personales. En cuanto a los datos estadísticos del juego, almacenamos las respuestas SOLO para que el usuario vea su precisión general y rendimiento a lo largo del tiempo. Nunca venderemos esos datos a nadie, ni los utilizaremos para ningún otro propósito. Para más detalles, consulte nuestra Política de Privacidad."
     }
   },
   "errors": {
@@ -133,17 +138,18 @@
     "subtitle": "Últimas noticias y artículos",
     "readMore": "Leer más",
     "backToBlog": "Volver al blog",
-    "publishedOn": "Publicado el {date}"
+    "publishedOn": "Publicado el {date}",
+    "contentError": "No se pudo cargar el contenido del artículo"
   },
   "about": {
     "title": "Acerca de Fakeout",
     "mission": {
       "title": "Nuestra misión",
-      "text": "Fakeout tiene como objetivo democratizar la alfabetización en IA. Al convertir la detección de medios sintéticos en un juego, ayudamos a las personas a entrenar sus ojos para detectar las imperfecciones sutiles de las imágenes y videos generados por IA."
+      "text": "Fakeout desarrolla alfabetización crítica en IA a través del aprendizaje basado en juegos. Al convertir la detección de medios sintéticos en un desafío interactivo, te ayudamos a desarrollar habilidades esenciales de pensamiento crítico: aprende a cuestionar los sistemas de IA, evaluar sus resultados y detectar contenido generado por IA y desinformación. Esto no se trata solo de atrapar falsificaciones de IA; se trata de convertirte en un ciudadano digital perspicaz que puede navegar en un mundo mediado por IA con confianza y juicio independiente."
     },
     "story": {
       "title": "La historia",
-      "text": "Iniciado como un pequeño experimento en 2024, Fakeout ha crecido hasta convertirse en un desafío diario para miles de usuarios que quieren mantenerse a la vanguardia en la era de la IA generativa."
+      "text": "Fakeout fue creado por un desarrollador independiente apasionado por la alfabetización en IA y la lucha contra la desinformación. Frustrado por el auge del contenido generado por IA y su potencial para engañar, creó Fakeout como una forma divertida y atractiva para que las personas perfeccionen sus habilidades en la identificación de medios sintéticos. Desde su lanzamiento, Fakeout ha crecido hasta convertirse en una vibrante comunidad de jugadores dedicados a mantenerse a la vanguardia de los avances de la IA y promover el pensamiento crítico en la era digital."
     }
   },
   "privacy": {
@@ -279,7 +285,7 @@
   "newsletter": {
     "title": "Mantente actualizado",
     "stayUpdated": "Recibe notificaciones",
-    "description": "Recibe notificaciones cuando haya nuevos desafíos diarios disponibles.",
+    "description": "Recibe notificaciones cuando haya nuevos desafíos semanales disponibles.",
     "emailPlaceholder": "Ingresa tu correo electrónico",
     "subscribe": "Suscribirse",
     "subscribed": "¡Suscrito!",

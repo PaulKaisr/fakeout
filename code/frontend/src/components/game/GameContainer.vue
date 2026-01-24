@@ -133,6 +133,29 @@
             }}</span>
           </div>
         </v-chip>
+        <v-chip
+          class="px-4 py-2 min-w-20"
+          variant="outlined"
+          color="white"
+          style="border-color: rgba(255, 255, 255, 0.1)"
+        >
+          <template v-slot:prepend>
+            <v-icon
+              icon="mdi-clock-outline"
+              class="text-medium-emphasis mr-2"
+              size="20"
+            ></v-icon>
+          </template>
+          <div class="flex flex-col items-end">
+            <span
+              class="text-[10px] text-medium-emphasis uppercase font-bold tracking-wider"
+              >Time</span
+            >
+            <span class="text-sm font-bold tabular-nums">{{
+              formattedRoundTime
+            }}</span>
+          </div>
+        </v-chip>
       </div>
     </v-app-bar>
 
@@ -281,6 +304,7 @@
           <ResultScreen
             :score="state.score"
             :total-rounds="state.totalRounds"
+            :total-duration="totalGameDuration"
             :mode="mode || 'image'"
             :is-latest-game="!props.date"
             :game-date="loadedDate"
@@ -420,6 +444,7 @@ const localeAbbr: Record<string, string> = {
   bg: "BG",
   pl: "PL",
   es: "ES",
+  fr: "FR",
 };
 
 const props = defineProps<{
@@ -441,19 +466,6 @@ const gamePlayCount = ref(0);
 const mediaLoaded = reactive({ A: false, B: false });
 const durations = reactive({ A: 0, B: 0 });
 
-const areBothImagesLoaded = computed(() => {
-  // If we're not waiting for images, we consider them loaded
-  if (!currentRound.value) return true;
-  return mediaLoaded.A && mediaLoaded.B;
-});
-
-const commonDuration = computed(() => {
-  if (durations.A > 0 && durations.B > 0) {
-    return Math.min(durations.A, durations.B);
-  }
-  return undefined;
-});
-
 const state = reactive<GameState>({
   status: GameStatus.INTRO,
   currentRoundIndex: 0,
@@ -463,6 +475,54 @@ const state = reactive<GameState>({
 });
 
 const currentRound = computed(() => rounds.value[state.currentRoundIndex]);
+
+const timerStart = ref<number | null>(null);
+const currentRoundDuration = ref(0);
+const timerInterval = ref<ReturnType<typeof setInterval> | null>(null);
+
+const formattedRoundTime = computed(() => {
+  const seconds = Math.floor(currentRoundDuration.value / 1000);
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${m}:${s.toString().padStart(2, "0")}`;
+});
+
+const startTimer = () => {
+  if (timerInterval.value) clearInterval(timerInterval.value);
+  timerStart.value = Date.now();
+  currentRoundDuration.value = 0;
+  timerInterval.value = setInterval(() => {
+    if (timerStart.value) {
+      currentRoundDuration.value = Date.now() - timerStart.value;
+    }
+  }, 100);
+};
+
+const stopTimer = () => {
+  if (timerInterval.value) {
+    clearInterval(timerInterval.value);
+    timerInterval.value = null;
+  }
+};
+
+const areBothImagesLoaded = computed(() => {
+  // If we're not waiting for images, we consider them loaded
+  if (!currentRound.value) return true;
+  return mediaLoaded.A && mediaLoaded.B;
+});
+
+watch(areBothImagesLoaded, (loaded) => {
+  if (loaded && state.status === GameStatus.PLAYING) {
+    startTimer();
+  }
+});
+
+const commonDuration = computed(() => {
+  if (durations.A > 0 && durations.B > 0) {
+    return Math.min(durations.A, durations.B);
+  }
+  return undefined;
+});
 
 onMounted(async () => {
   await loadGame();
@@ -565,6 +625,10 @@ const loadGame = async () => {
 const handleSelection = (imageId: string) => {
   if (state.status !== GameStatus.PLAYING || !currentRound.value) return;
 
+  stopTimer();
+  // Calculate final duration. If timer wasn't running (shouldn't happen if loaded), default to 0.
+  const finalDuration = timerStart.value ? Date.now() - timerStart.value : 0;
+
   selectedImageId.value = imageId;
   state.status = GameStatus.ROUND_RESULT;
 
@@ -576,6 +640,7 @@ const handleSelection = (imageId: string) => {
   state.history.push({
     roundId: currentRound.value.id,
     userCorrect: isCorrect,
+    duration: finalDuration,
   });
 
   // Save stats immediately
@@ -588,6 +653,7 @@ const handleSelection = (imageId: string) => {
       isCorrect,
       state.totalRounds,
       currentRound.value.id,
+      finalDuration,
       pairId,
     );
 
@@ -642,6 +708,10 @@ const handleLoad = (side: "A" | "B", duration?: number) => {
   }
 };
 
+const totalGameDuration = computed(() => {
+  return state.history.reduce((acc, curr) => acc + (curr.duration || 0), 0);
+});
+
 const nextRound = async () => {
   if (state.currentRoundIndex < state.totalRounds - 1) {
     // Reset loading state immediately to hide grid before new content loads
@@ -649,6 +719,8 @@ const nextRound = async () => {
     mediaLoaded.B = false;
     durations.A = 0;
     durations.B = 0;
+    currentRoundDuration.value = 0;
+    timerStart.value = null;
     currentGlobalStats.value = null;
 
     await nextTick();
@@ -667,7 +739,7 @@ const nextRound = async () => {
 const switchMode = (newMode: "image" | "video") => {
   if (props.mode === newMode) return;
 
-  // Switch to the other mode's daily game
+  // Switch to the other mode's weekly game
   // logic: /en/ (video) <-> /en/game (image)
   if (newMode === "image") {
     router.push(`/${locale.value}/image`);

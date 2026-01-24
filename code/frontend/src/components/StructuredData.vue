@@ -16,7 +16,7 @@ const structuredData = computed(() =>
     name: "Fakeout",
     alternateName: "AI or Real Game",
     description:
-      "A daily challenge game where players test their ability to distinguish between real videos/photographs and AI-generated deepfakes",
+      "A weekly challenge game where players test their ability to distinguish between real videos/photographs and AI-generated deepfakes",
     genre: ["Puzzle", "Educational", "Quiz"],
     gamePlatform: "Web Browser",
     applicationCategory: "Game",

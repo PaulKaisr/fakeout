@@ -55,6 +55,10 @@ const faqs = computed(() => [
     question: t("faq.q5.question"),
     answer: t("faq.q5.answer"),
   },
+  {
+    question: t("faq.q6.question"),
+    answer: t("faq.q6.answer"),
+  },
 ]);
 
 const faqSchema = computed(() =>

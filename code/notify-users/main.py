@@ -10,7 +10,7 @@ def handle_subscribe(email, contact_list_name):
             EmailAddress=email,
             TopicPreferences=[
                 {
-                    'TopicName': 'daily-challenge',
+                    'TopicName': 'weekly-challenge',
                     'SubscriptionStatus': 'OPT_IN'
                 }
             ]
@@ -70,7 +70,7 @@ def handle_scheduled_notification(contact_list_name, sender_email, public_url):
                 'Filter': {
                     'FilteredStatus': 'OPT_IN',
                     'TopicFilter': {
-                        'TopicName': 'daily-challenge',
+                        'TopicName': 'weekly-challenge',
                         'UseDefaultIfPreferenceUnavailable': True
                     }
                 }

@@ -156,8 +156,8 @@ export function useSeoTranslations() {
     ),
 
     homeDescription: pick(
-      "Test your skills with Fakeout, the daily AI detection game. Can you spot AI-generated videos and images vs real ones? Play free daily challenges to train your eye for deepfakes.",
-      "Teste deine Fähigkeiten mit Fakeout, dem täglichen KI-Erkennungsspiel. Kannst du KI-generierte Videos und Bilder erkennen? Spiele kostenlose tägliche Herausforderungen.",
+      "Test your skills with Fakeout, the weekly AI detection game. Can you spot AI-generated videos and images vs real ones? Play free weekly challenges to train your eye for deepfakes.",
+      "Teste deine Fähigkeiten mit Fakeout, dem wöchentlichen KI-Erkennungsspiel. Kannst du KI-generierte Videos und Bilder erkennen? Spiele kostenlose wöchentliche Herausforderungen.",
       "Тествай уменията си с Fakeout, ежедневната игра за откриване на ИИ. Можеш ли да разпознаеш ИИ видеа и изображения от истински?",
       "Przetestuj swoje umiejętności z Fakeout, codzienną grą wykrywającą AI. Czy potrafisz rozpoznać filmy i obrazy wygenerowane przez AI od prawdziwych?",
       "Pon a prueba tus habilidades con Fakeout, el juego diario de detección de IA. ¿Puedes detectar videos e imágenes generados por IA vs los reales? Juega desafíos diarios gratuitos para entrenar tu ojo.",

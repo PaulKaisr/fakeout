@@ -46,6 +46,7 @@ export const supabaseService = {
     pairId: string,
     mode: "image" | "video",
     isCorrect: boolean,
+    durationMs?: number,
   ) {
     if (!supabase) return;
     try {
@@ -53,6 +54,7 @@ export const supabaseService = {
         pair_id: pairId,
         mode,
         is_correct: isCorrect,
+        duration_ms: durationMs,
       });
 
       if (error) console.warn("Error tracking guess:", error);

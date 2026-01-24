@@ -16,12 +16,22 @@ export interface Article {
     bg: string;
     [key: string]: string;
   };
-  content: {
+  /**
+   * Article content in different languages
+   * Optional: if missing, content will be loaded from markdown files in /src/content/blog/{slug}/{lang}.md
+   */
+  content?: {
     en: string;
     de: string;
     bg: string;
     [key: string]: string;
   };
+  /**
+   * Flag to indicate if article uses markdown files instead of inline content
+   * When true, content will be loaded from /src/content/blog/{slug}/{lang}.md
+   * When false or undefined, inline content from the content field will be used
+   */
+  useMarkdownFiles?: boolean;
 }
 
 export const articles: Article[] = [
@@ -30,6 +40,7 @@ export const articles: Article[] = [
     slug: "how-fakeout-works",
     date: "2026-01-05",
     author: "Fakeout Team",
+    useMarkdownFiles: true,
     title: {
       en: "How Fakeout Works: The Game of AI Detection",
       de: "Wie Fakeout funktioniert: Das Spiel der KI-Erkennung",
@@ -41,120 +52,6 @@ export const articles: Article[] = [
       de: "Erfahre mehr über die Mechanik hinter Fakeout und wie wir deine Fähigkeit testen, KI-generierte Inhalte zu erkennen.",
       bg: "Научете за механиката зад Fakeout и как предизвикваме способността ви да откривате съдържание, генерирано от ИИ.",
       es: "Aprende sobre la mecánica detrás de Fakeout y cómo desafiamos tu capacidad para detectar contenido generado por IA.",
-    },
-    content: {
-      en: `
-# How Fakeout Works
-
-Fakeout is designed to test and improve your ability to distinguish between real photography and AI-generated imagery. In an era where synthetic media is becoming increasingly realistic, developing a keen eye for detail is more important than ever.
-
-## The Mechanics
-
-In each round, you are presented with two images side-by-side.
-- **One is a real photograph**, sourced from high-quality stock photography libraries.
-- **The other is AI-generated**, created using state-of-the-art generative models.
-
-Your task is simple: **Identify the AI-generated image.**
-
-## Behind the Scenes
-
-We use a variety of generative models to create our AI images, ensuring a diverse range of styles and "tells". Some models might struggle with hands, while others might create unnatural lighting or textures.
-
-The real images are carefully selected to match the theme or subject matter of the AI generation, making the comparison fair but challenging.
-
-## Why Play?
-
-Playing Fakeout helps you:
-1.  **Sharpen your critical thinking** when consuming visual media.
-2.  **Learn the common artifacts** of current AI technology.
-3.  **Track your progress** over time as you get better at spotting fakes.
-
-Join us daily for new challenges!
-`,
-      de: `
-# Wie Fakeout funktioniert
-
-Fakeout wurde entwickelt, um deine Fähigkeit zu testen und zu verbessern, zwischen echter Fotografie und KI-generierten Bildern zu unterscheiden. In einer Zeit, in der synthetische Medien immer realistischer werden, ist ein geschultes Auge für Details wichtiger denn je.
-
-## Die Mechanik
-
-In jeder Runde werden dir zwei Bilder nebeneinander präsentiert.
-- **Eines ist ein echtes Foto**, das aus hochwertigen Bilddatenbanken stammt.
-- **Das andere ist KI-generiert**, erstellt mit modernsten generativen Modellen.
-
-Deine Aufgabe ist einfach: **Identifiziere das KI-generierte Bild.**
-
-## Hinter den Kulissen
-
-Wir verwenden eine Vielzahl generativer Modelle, um unsere KI-Bilder zu erstellen, und gewährleisten so eine vielfältige Palette an Stilen und "Indizien". Einige Modelle haben vielleicht Probleme mit Händen, während andere unnatürliche Beleuchtung oder Texturen erzeugen könnten.
-
-Die echten Bilder werden sorgfältig ausgewählt, um zum Thema oder Motiv der KI-Generierung zu passen, was den Vergleich fair, aber herausfordernd macht.
-
-## Warum spielen?
-
-Fakeout zu spielen hilft dir:
-1.  **Dein kritisches Denken zu schärfen**, wenn du visuelle Medien konsumierst.
-2.  **Die üblichen Artefakte** aktueller KI-Technologie kennenzulernen.
-3.  **Deinen Fortschritt zu verfolgen**, während du besser darin wirst, Fälschungen zu erkennen.
-
-Mach täglich mit bei neuen Herausforderungen!
-`,
-      bg: `
-# Как работи Fakeout
-
-Fakeout е предназначен да тества и подобри способността ви да различавате истинска фотография от изображения, генерирани от ИИ. В ера, в която синтетичните медии стават все по-реалистични, развиването на остро око за детайла е по-важно от всякога.
-
-## Механиката
-
-Във всеки рунд ви се представят две изображения едно до друго.
-- **Едното е истинска снимка**, взета от висококачествени библиотеки със стокова фотография.
-- **Другото е генерирано от ИИ**, създадено с помощта на най-съвременни генеративни модели.
-
-Вашата задача е проста: **Идентифицирайте изображението, генерирано от ИИ.**
-
-## Зад кулисите
-
-Ние използваме разнообразни генеративни модели за създаване на нашите ИИ изображения, осигурявайки разнообразна гама от стилове и "издайнически знаци". Някои модели може да се затрудняват с ръцете, докато други може да създават неестествено осветление или текстури.
-
-Истинските изображения са внимателно подбрани, за да съответстват на темата или сюжета на ИИ генерацията, което прави сравнението честно, но предизвикателно.
-
-## Защо да играете?
-
-Играта на Fakeout ви помага:
-1.  **Да изострите критичното си мислене**, когато консумирате визуални медии.
-2.  **Да научите често срещаните артефакти** на текущата ИИ технология.
-3.  **Да проследявате напредъка си** във времето, докато ставате по-добри в откриването на фалшификати.
-
-Присъединете се към нас ежедневно за нови предизвикателства!
-`,
-      es: `
-# Cómo funciona Fakeout
-
-Fakeout está diseñado para probar y mejorar tu capacidad de distinguir entre fotografía real e imágenes generadas por IA. En una era donde los medios sintéticos se vuelven cada vez más realistas, desarrollar un ojo agudo para los detalles es más importante que nunca.
-
-## La mecánica
-
-En cada ronda, se te presentan dos imágenes lado a lado.
-- **Una es una fotografía real**, obtenida de bibliotecas de fotografía de stock de alta calidad.
-- **La otra es generada por IA**, creada utilizando modelos generativos de última generación.
-
-Tu tarea es simple: **Identifica la imagen generada por IA.**
-
-## Detrás de escena
-
-Utilizamos una variedad de modelos generativos para crear nuestras imágenes de IA, asegurando una diversa gama de estilos y "señales reveladoras". Algunos modelos pueden tener dificultades con las manos, mientras que otros pueden crear iluminación o texturas poco naturales.
-
-Las imágenes reales se seleccionan cuidadosamente para coincidir con el tema o asunto de la generación de IA, haciendo la comparación justa pero desafiante.
-
-## ¿Por qué jugar?
-
-Jugar Fakeout te ayuda a:
-1.  **Agudizar tu pensamiento crítico** al consumir medios visuales.
-2.  **Aprender los artefactos comunes** de la tecnología de IA actual.
-3.  **Seguir tu progreso** a lo largo del tiempo mientras mejoras en detectar falsificaciones.
-
-¡Únete a nosotros diariamente para nuevos desafíos!
-`,
     },
   },
   {
@@ -650,7 +547,7 @@ Pay special attention to people in AI videos:
 4. **Look for loops** – Some AI tools create subtle looping patterns
 5. **Trust your gut** – If something feels "off," investigate further
 
-Train your eye daily with Fakeout's video mode!
+Train your eye weekly with Fakeout's video mode!
 `,
       de: `
 # Wie man KI-generierte Videos erkennt
@@ -723,7 +620,7 @@ Achte besonders auf Menschen in KI-Videos:
 4. **Nach Loops suchen** – Einige KI-Tools erstellen subtile Schleifenmuster
 5. **Dem Bauchgefühl vertrauen** – Wenn sich etwas "falsch" anfühlt, untersuche es weiter
 
-Trainiere dein Auge täglich mit dem Videomodus von Fakeout!
+Trainiere dein Auge wöchentlich mit dem Videomodus von Fakeout!
 `,
       bg: `
 # Как да разпознаем видеа, генерирани от ИИ
@@ -2078,7 +1975,7 @@ You might wonder: can't AI detection tools solve this problem? While automated d
 
 Our brains are remarkably sophisticated pattern-recognition machines, finely tuned over millions of years to detect when something is "off"—even when we can't immediately articulate why. This instinctive response is something no algorithm can perfectly replicate. Moreover, human judgment can incorporate context: Is this photograph plausible given what we know about the world? Would this person realistically be in this situation?
 
-Research shows that training can improve detection accuracy by approximately 10-15%. That might sound modest, but in a world where we each consume thousands of images daily, those percentage points translate to catching countless deceptive images that might otherwise influence our beliefs and decisions.
+Research shows that training can improve detection accuracy by approximately 10-15%. That might sound modest, but in a world where we each consume thousands of images weekly, those percentage points translate to catching countless deceptive images that might otherwise influence our beliefs and decisions.
 
 The goal isn't to make you paranoid about every image you see. It's to develop an informed skepticism—a trained eye that knows what to look for.
 
@@ -2299,10 +2196,10 @@ Before examining technical details, ask: "Does this make sense?"
 
 Sometimes the biggest tell isn't technical—it's contextual implausibility.
 
-### Exercise 5: Play Fakeout Daily
+### Exercise 5: Play Fakeout weekly
 
 Of course, the best way to develop your detection skills is through regular, structured practice. Fakeout provides:
-- Fresh challenges daily with diverse content
+- Fresh challenges weekly with diverse content
 - Immediate feedback so you learn from mistakes
 - Score tracking to monitor your improvement over time
 - Both image and video modes to train different perceptual skills
@@ -2313,7 +2210,7 @@ At Fakeout, we've designed our platform around a simple insight: **games are mor
 
 When learning feels like play, you engage more deeply. When you get immediate feedback, you learn faster. When you track progress over time, you stay motivated. These aren't just nice-to-haves—they're fundamental principles of effective education.
 
-Our daily challenges expose you to a wide variety of AI generation styles and techniques. Some use DALL-E, others use Imagen, others use various video generation systems. This variety ensures that your skills transfer across different generators rather than becoming overly specialized.
+Our weekly challenges expose you to a wide variety of AI generation styles and techniques. Some use DALL-E, others use Imagen, others use various video generation systems. This variety ensures that your skills transfer across different generators rather than becoming overly specialized.
 
 **We believe media literacy is the best defense against misinformation.**
 
@@ -2357,7 +2254,7 @@ Du fragst dich vielleicht: Können KI-Erkennungstools dieses Problem nicht löse
 
 Unsere Gehirne sind bemerkenswert ausgefeilte Mustererkennungsmaschinen, über Millionen von Jahren darauf abgestimmt zu erkennen, wenn etwas "nicht stimmt" – selbst wenn wir nicht sofort artikulieren können, warum. Diese instinktive Reaktion kann kein Algorithmus perfekt replizieren. Darüber hinaus kann menschliches Urteilsvermögen Kontext einbeziehen: Ist dieses Foto plausibel angesichts dessen, was wir über die Welt wissen? Würde diese Person realistisch in dieser Situation sein?
 
-Forschung zeigt, dass Training die Erkennungsgenauigkeit um etwa 10-15% verbessern kann. Das mag bescheiden klingen, aber in einer Welt, in der wir täglich Tausende von Bildern konsumieren, bedeuten diese Prozentpunkte das Erkennen unzähliger irreführender Bilder, die sonst unsere Überzeugungen und Entscheidungen beeinflussen könnten.
+Forschung zeigt, dass Training die Erkennungsgenauigkeit um etwa 10-15% verbessern kann. Das mag bescheiden klingen, aber in einer Welt, in der wir wöchentlich Tausende von Bildern konsumieren, bedeuten diese Prozentpunkte das Erkennen unzähliger irreführender Bilder, die sonst unsere Überzeugungen und Entscheidungen beeinflussen könnten.
 
 Das Ziel ist nicht, dich paranoid gegenüber jedem Bild zu machen, das du siehst. Es geht darum, eine informierte Skepsis zu entwickeln – ein geschultes Auge, das weiß, worauf es achten muss.
 
@@ -2489,9 +2386,9 @@ Bevor du technische Details untersuchst, frage: "Ergibt das Sinn?"
 - Ist diese Person an einem Ort, an dem sie realistisch sein würde?
 - Passt die Beleuchtung zur behaupteten Tageszeit oder zum Ort?
 
-### Übung 5: Spiele Fakeout täglich
+### Übung 5: Spiele Fakeout wöchentlich
 
-Natürlich ist der beste Weg, deine Erkennungsfähigkeiten zu entwickeln, regelmäßiges, strukturiertes Üben. Fakeout bietet tägliche Herausforderungen mit sofortigem Feedback.
+Natürlich ist der beste Weg, deine Erkennungsfähigkeiten zu entwickeln, regelmäßiges, strukturiertes Üben. Fakeout bietet wöchentliche Herausforderungen mit sofortigem Feedback.
 
 ## Die Fakeout-Mission: Spielerisches Lernen
 
@@ -4487,7 +4384,7 @@ Beyond AI-generated imagery, students must understand the broader context of vis
 
 ### 5.3 The False Positive Problem
 
-Detection systems, despite high accuracy rates, necessarily produce false positives and false negatives. Given billions of daily image uploads globally, even 2% error rates translate to millions of undetected fakes and wrongly flagged authentic images.
+Detection systems, despite high accuracy rates, necessarily produce false positives and false negatives. Given billions of weekly image uploads globally, even 2% error rates translate to millions of undetected fakes and wrongly flagged authentic images.
 
 ## 6. Educational Implementation: Beyond the Classroom
 
