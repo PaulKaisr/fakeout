@@ -139,11 +139,11 @@
     "title": "Acerca de Fakeout",
     "mission": {
       "title": "Nuestra misión",
-      "text": "Fakeout tiene como objetivo democratizar la alfabetización en IA. Al convertir la detección de medios sintéticos en un juego, ayudamos a las personas a entrenar sus ojos para detectar las imperfecciones sutiles de las imágenes y videos generados por IA."
+      "text": "Fakeout desarrolla alfabetización crítica en IA a través del aprendizaje basado en juegos. Al convertir la detección de medios sintéticos en un desafío interactivo, te ayudamos a desarrollar habilidades esenciales de pensamiento crítico: aprende a cuestionar los sistemas de IA, evaluar sus resultados y detectar contenido generado por IA y desinformación. Esto no se trata solo de atrapar falsificaciones de IA; se trata de convertirte en un ciudadano digital perspicaz que puede navegar en un mundo mediado por IA con confianza y juicio independiente."
     },
     "story": {
       "title": "La historia",
-      "text": "Iniciado como un pequeño experimento en 2024, Fakeout ha crecido hasta convertirse en un desafío diario para miles de usuarios que quieren mantenerse a la vanguardia en la era de la IA generativa."
+      "text": "Fakeout fue creado por un desarrollador independiente apasionado por la alfabetización en IA y la lucha contra la desinformación. Frustrado por el auge del contenido generado por IA y su potencial para engañar, creó Fakeout como una forma divertida y atractiva para que las personas perfeccionen sus habilidades en la identificación de medios sintéticos. Desde su lanzamiento, Fakeout ha crecido hasta convertirse en una vibrante comunidad de jugadores dedicados a mantenerse a la vanguardia de los avances de la IA y promover el pensamiento crítico en la era digital."
     }
   },
   "privacy": {
