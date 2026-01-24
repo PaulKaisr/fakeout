@@ -137,7 +137,8 @@
     "subtitle": "Najnowsze wiadomości i artykuły",
     "readMore": "Czytaj więcej",
     "backToBlog": "Powrót do bloga",
-    "publishedOn": "Opublikowano {date}"
+    "publishedOn": "Opublikowano {date}",
+    "contentError": "Nie udało się załadować treści artykułu"
   },
   "about": {
     "title": "O Fakeout",

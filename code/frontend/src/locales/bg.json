@@ -137,7 +137,8 @@
     "subtitle": "Последни новини и статии",
     "readMore": "Прочети повече",
     "backToBlog": "Обратно към блога",
-    "publishedOn": "Публикувано на {date}"
+    "publishedOn": "Публикувано на {date}",
+    "contentError": "Не успя да се зареди съдържанието на статията"
   },
   "about": {
     "title": "За Fakeout",

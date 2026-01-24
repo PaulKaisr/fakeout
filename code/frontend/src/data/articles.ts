@@ -16,12 +16,22 @@ export interface Article {
     bg: string;
     [key: string]: string;
   };
-  content: {
+  /**
+   * Article content in different languages
+   * Optional: if missing, content will be loaded from markdown files in /src/content/blog/{slug}/{lang}.md
+   */
+  content?: {
     en: string;
     de: string;
     bg: string;
     [key: string]: string;
   };
+  /**
+   * Flag to indicate if article uses markdown files instead of inline content
+   * When true, content will be loaded from /src/content/blog/{slug}/{lang}.md
+   * When false or undefined, inline content from the content field will be used
+   */
+  useMarkdownFiles?: boolean;
 }
 
 export const articles: Article[] = [
@@ -30,6 +40,7 @@ export const articles: Article[] = [
     slug: "how-fakeout-works",
     date: "2026-01-05",
     author: "Fakeout Team",
+    useMarkdownFiles: true,
     title: {
       en: "How Fakeout Works: The Game of AI Detection",
       de: "Wie Fakeout funktioniert: Das Spiel der KI-Erkennung",
@@ -41,120 +52,6 @@ export const articles: Article[] = [
       de: "Erfahre mehr über die Mechanik hinter Fakeout und wie wir deine Fähigkeit testen, KI-generierte Inhalte zu erkennen.",
       bg: "Научете за механиката зад Fakeout и как предизвикваме способността ви да откривате съдържание, генерирано от ИИ.",
       es: "Aprende sobre la mecánica detrás de Fakeout y cómo desafiamos tu capacidad para detectar contenido generado por IA.",
-    },
-    content: {
-      en: `
-# How Fakeout Works
-
-Fakeout is designed to test and improve your ability to distinguish between real photography and AI-generated imagery. In an era where synthetic media is becoming increasingly realistic, developing a keen eye for detail is more important than ever.
-
-## The Mechanics
-
-In each round, you are presented with two images side-by-side.
-- **One is a real photograph**, sourced from high-quality stock photography libraries.
-- **The other is AI-generated**, created using state-of-the-art generative models.
-
-Your task is simple: **Identify the AI-generated image.**
-
-## Behind the Scenes
-
-We use a variety of generative models to create our AI images, ensuring a diverse range of styles and "tells". Some models might struggle with hands, while others might create unnatural lighting or textures.
-
-The real images are carefully selected to match the theme or subject matter of the AI generation, making the comparison fair but challenging.
-
-## Why Play?
-
-Playing Fakeout helps you:
-1.  **Sharpen your critical thinking** when consuming visual media.
-2.  **Learn the common artifacts** of current AI technology.
-3.  **Track your progress** over time as you get better at spotting fakes.
-
-Join us weekly for new challenges!
-`,
-      de: `
-# Wie Fakeout funktioniert
-
-Fakeout wurde entwickelt, um deine Fähigkeit zu testen und zu verbessern, zwischen echter Fotografie und KI-generierten Bildern zu unterscheiden. In einer Zeit, in der synthetische Medien immer realistischer werden, ist ein geschultes Auge für Details wichtiger denn je.
-
-## Die Mechanik
-
-In jeder Runde werden dir zwei Bilder nebeneinander präsentiert.
-- **Eines ist ein echtes Foto**, das aus hochwertigen Bilddatenbanken stammt.
-- **Das andere ist KI-generiert**, erstellt mit modernsten generativen Modellen.
-
-Deine Aufgabe ist einfach: **Identifiziere das KI-generierte Bild.**
-
-## Hinter den Kulissen
-
-Wir verwenden eine Vielzahl generativer Modelle, um unsere KI-Bilder zu erstellen, und gewährleisten so eine vielfältige Palette an Stilen und "Indizien". Einige Modelle haben vielleicht Probleme mit Händen, während andere unnatürliche Beleuchtung oder Texturen erzeugen könnten.
-
-Die echten Bilder werden sorgfältig ausgewählt, um zum Thema oder Motiv der KI-Generierung zu passen, was den Vergleich fair, aber herausfordernd macht.
-
-## Warum spielen?
-
-Fakeout zu spielen hilft dir:
-1.  **Dein kritisches Denken zu schärfen**, wenn du visuelle Medien konsumierst.
-2.  **Die üblichen Artefakte** aktueller KI-Technologie kennenzulernen.
-3.  **Deinen Fortschritt zu verfolgen**, während du besser darin wirst, Fälschungen zu erkennen.
-
-Mach wöchentlich mit bei neuen Herausforderungen!
-`,
-      bg: `
-# Как работи Fakeout
-
-Fakeout е предназначен да тества и подобри способността ви да различавате истинска фотография от изображения, генерирани от ИИ. В ера, в която синтетичните медии стават все по-реалистични, развиването на остро око за детайла е по-важно от всякога.
-
-## Механиката
-
-Във всеки рунд ви се представят две изображения едно до друго.
-- **Едното е истинска снимка**, взета от висококачествени библиотеки със стокова фотография.
-- **Другото е генерирано от ИИ**, създадено с помощта на най-съвременни генеративни модели.
-
-Вашата задача е проста: **Идентифицирайте изображението, генерирано от ИИ.**
-
-## Зад кулисите
-
-Ние използваме разнообразни генеративни модели за създаване на нашите ИИ изображения, осигурявайки разнообразна гама от стилове и "издайнически знаци". Някои модели може да се затрудняват с ръцете, докато други може да създават неестествено осветление или текстури.
-
-Истинските изображения са внимателно подбрани, за да съответстват на темата или сюжета на ИИ генерацията, което прави сравнението честно, но предизвикателно.
-
-## Защо да играете?
-
-Играта на Fakeout ви помага:
-1.  **Да изострите критичното си мислене**, когато консумирате визуални медии.
-2.  **Да научите често срещаните артефакти** на текущата ИИ технология.
-3.  **Да проследявате напредъка си** във времето, докато ставате по-добри в откриването на фалшификати.
-
-Присъединете се към нас ежедневно за нови предизвикателства!
-`,
-      es: `
-# Cómo funciona Fakeout
-
-Fakeout está diseñado para probar y mejorar tu capacidad de distinguir entre fotografía real e imágenes generadas por IA. En una era donde los medios sintéticos se vuelven cada vez más realistas, desarrollar un ojo agudo para los detalles es más importante que nunca.
-
-## La mecánica
-
-En cada ronda, se te presentan dos imágenes lado a lado.
-- **Una es una fotografía real**, obtenida de bibliotecas de fotografía de stock de alta calidad.
-- **La otra es generada por IA**, creada utilizando modelos generativos de última generación.
-
-Tu tarea es simple: **Identifica la imagen generada por IA.**
-
-## Detrás de escena
-
-Utilizamos una variedad de modelos generativos para crear nuestras imágenes de IA, asegurando una diversa gama de estilos y "señales reveladoras". Algunos modelos pueden tener dificultades con las manos, mientras que otros pueden crear iluminación o texturas poco naturales.
-
-Las imágenes reales se seleccionan cuidadosamente para coincidir con el tema o asunto de la generación de IA, haciendo la comparación justa pero desafiante.
-
-## ¿Por qué jugar?
-
-Jugar Fakeout te ayuda a:
-1.  **Agudizar tu pensamiento crítico** al consumir medios visuales.
-2.  **Aprender los artefactos comunes** de la tecnología de IA actual.
-3.  **Seguir tu progreso** a lo largo del tiempo mientras mejoras en detectar falsificaciones.
-
-¡Únete a nosotros diariamente para nuevos desafíos!
-`,
     },
   },
   {
