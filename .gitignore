@@ -26,3 +26,6 @@ terraform.rc
 
 # Node modules
 node_modules
+
+# Zipped lambdas
+*.zip

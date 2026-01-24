@@ -45,6 +45,7 @@
   },
   "results": {
     "title": "Poziom ukończony!",
+    "youTook": "Zajęło Ci",
     "finalScore": "Wynik końcowy",
     "shareResult": "Udostępnij wynik",
     "copiedToClipboard": "Skopiowano do schowka!",
@@ -78,24 +79,28 @@
   "faq": {
     "title": "Często Zadawane Pytania",
     "q1": {
-      "question": "Jak rozpoznać obrazy wygenerowane przez AI?",
-      "answer": "Szukaj nienaturalnych tekstur, niespójnego oświetlenia, dziwnych odbić, zniekształconych dłoni lub twarzy, niemożliwej geometrii oraz artefaktów w drobnych szczegółach, takich jak włosy czy tekst. Obrazy wygenerowane przez AI często mają subtelne niedoskonałości, które wprawne oko może wykryć."
+      "question": "Czym jest gra Fakeout?",
+      "answer": "Fakeout to darmowa tygodniowa gra bez rejestracji, która testuje twoją zdolność odróżniania prawdziwych filmów i fotografii od wygenerowanych przez AI. Każdego tygodnia pojawiają się nowe pary obrazów i filmów, aby wyostrzyć twoje umiejętności detekcji AI i przyczynić się do wiedzy o AI."
     },
     "q2": {
-      "question": "Czym jest gra Fakeout?",
-      "answer": "Fakeout to darmowa codzienna gra, która testuje twoją zdolność odróżniania prawdziwych fotografii od obrazów wygenerowanych przez AI. Każdego dnia pojawiają się nowe pary obrazów, aby wyostrzyć twoje umiejętności detekcji AI."
+      "question": "Jak rozpoznać obrazy i filmy wygenerowane przez AI?",
+      "answer": "Szukaj nienaturalnych tekstur, niespójnego oświetlenia, dziwnych odbić, zniekształconych dłoni lub twarzy, niemożliwej geometrii oraz artefaktów w drobnych szczegółach, takich jak włosy czy tekst. Obrazy wygenerowane przez AI często mają subtelne niedoskonałości, które wprawne oko może wykryć. Odwiedź naszego bloga, gdzie raportujemy informacje zwrotne od użytkowników i statystyki, jak sobie radziliście w przeszłości."
     },
     "q3": {
-      "question": "Jak działa gra w detektora obrazów AI?",
-      "answer": "Prezentowane są dwa obrazy - jedna prawdziwa fotografia i jeden obraz wygenerowany przez AI. Twoim celem jest wskazanie, który z nich został stworzony przez sztuczną inteligencję. Po dokonaniu wyboru otrzymasz natychmiastową informację zwrotną i dowiesz się, na co zwracać uwagę."
+      "question": "Jak działa gra w detektora mediów AI?",
+      "answer": "Prezentowane są dwa filmy lub obrazy - jeden prawdziwy film lub fotografia i jeden wygenerowany przez AI. Twoim celem jest wskazanie, który z nich został stworzony przez sztuczną inteligencję. Po dokonaniu wyboru otrzymasz natychmiastową informację zwrotną i dowiesz się, na co zwracać uwagę. Po każdym odgadnięciu możesz sprawdzić prompt, który został użyty do wygenerowania syntetycznych mediów, co może pomóc ci zrozumieć proces decyzyjny AI."
     },
     "q4": {
-      "question": "Czy obrazy wygenerowane przez AI można wykryć?",
+      "question": "Czy obrazy wygenerowane przez AI w ogóle można wykryć?",
       "answer": "Tak! Chociaż generowanie obrazów przez AI staje się coraz bardziej zaawansowane, nadal istnieją charakterystyczne oznaki, które pomagają zidentyfikować treści wygenerowane przez AI. Dzięki praktyce i wiedzy, na co zwracać uwagę, możesz poprawić swoją dokładność detekcji."
     },
     "q5": {
       "question": "Czy Fakeout jest darmowy?",
-      "answer": "Tak, Fakeout jest całkowicie darmowy. Możesz testować swoje umiejętności detekcji AI codziennie bez żadnych kosztów ani konieczności rejestracji."
+      "answer": "Tak, Fakeout jest całkowicie darmowy. Możesz testować swoje umiejętności detekcji AI co tydzień bez żadnych kosztów ani konieczności rejestracji. Możemy monetyzować stronę za pomocą reklam, aby wspierać rozwój i opłacać hosting, domenę oraz koszty związane z generowaniem filmów i obrazów. Więc jeśli chcesz wesprzeć projekt, rozważ dodanie naszej strony do białej listy w swoim blokerze reklam."
+    },
+    "q6": {
+      "question": "Czy wykorzystujecie dane zebrane z gry?",
+      "answer": "Nie mamy absolutnie żadnego dostępu do danych osobowych. Jeśli chodzi o dane statystyczne gry, przechowujemy odpowiedzi TYLKO dla użytkownika, aby pokazać mu jego ogólną dokładność i wydajność w czasie. Nigdy nie sprzedamy tych danych nikomu ani nie wykorzystamy ich w żadnym innym celu. Więcej szczegółów znajdziesz w naszej Polityce Prywatności."
     }
   },
   "errors": {
@@ -133,17 +138,18 @@
     "subtitle": "Najnowsze wiadomości i artykuły",
     "readMore": "Czytaj więcej",
     "backToBlog": "Powrót do bloga",
-    "publishedOn": "Opublikowano {date}"
+    "publishedOn": "Opublikowano {date}",
+    "contentError": "Nie udało się załadować treści artykułu"
   },
   "about": {
     "title": "O Fakeout",
     "mission": {
       "title": "Nasza Misja",
-      "text": "Celem Fakeout jest demokratyzacja wiedzy o AI. Zamieniając wykrywanie syntetycznych mediów w grę, pomagamy ludziom trenować wzrok, aby dostrzegali subtelne niedoskonałości obrazów i wideo wygenerowanych przez AI."
+      "text": "Fakeout buduje krytyczną wiedzę o AI poprzez naukę opartą na grach. Zamieniając wykrywanie syntetycznych mediów w interaktywne wyzwanie, pomagamy Ci rozwijać niezbędne umiejętności krytycznego myślenia – ucz się kwestionować systemy AI, oceniać ich wyniki i wykrywać treści generowane przez AI oraz dezinformację. To nie tylko chodzi o wyłapywanie fałszywek AI; chodzi o zostanie rozsądnym cyfrowym obywatelem, który potrafi poruszać się po świecie pośredniczonym przez AI z pewnością siebie i niezależnym osądem."
     },
     "story": {
       "title": "Historia",
-      "text": "Rozpoczęty jako mały eksperyment w 2024 roku, Fakeout wyrósł na codzienne wyzwanie dla tysięcy użytkowników, którzy chcą być na bieżąco w erze generatywnego AI."
+      "text": "Fakeout został stworzony przez samotnego programistę pasjonującego się wiedzą o AI i zwalczaniem dezinformacji. Sfrustrowany wzrostem treści generowanych przez AI i ich potencjałem do wprowadzania w błąd, stworzył Fakeout jako zabawny i angażujący sposób dla ludzi do doskonalenia umiejętności identyfikowania syntetycznych mediów. Od swojego uruchomienia Fakeout rozrósł się w tętniącą życiem społeczność graczy zaangażowanych w wyprzedzanie postępów AI i promowanie krytycznego myślenia w erze cyfrowej."
     }
   },
   "privacy": {
@@ -279,7 +285,7 @@
   "newsletter": {
     "title": "Bądź na bieżąco",
     "stayUpdated": "Powiadom mnie",
-    "description": "Otrzymuj powiadomienia o nowych codziennych wyzwaniach.",
+    "description": "Otrzymuj powiadomienia o nowych tygodniowych wyzwaniach.",
     "emailPlaceholder": "Wpisz swój email",
     "subscribe": "Subskrybuj",
     "subscribed": "Zasubskrybowano!",

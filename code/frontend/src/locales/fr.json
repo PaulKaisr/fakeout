@@ -45,6 +45,7 @@
   },
   "results": {
     "title": "Niveau terminé !",
+    "youTook": "Vous avez mis",
     "finalScore": "Score final",
     "shareResult": "Partager le résultat",
     "copiedToClipboard": "Copié dans le presse-papiers !",
@@ -78,24 +79,28 @@
   "faq": {
     "title": "Questions fréquemment posées",
     "q1": {
-      "question": "Comment repérer les images générées par l'IA ?",
-      "answer": "Recherchez des textures non naturelles, un éclairage incohérent, des reflets étranges, des mains ou des visages déformés, une géométrie impossible et des artefacts dans les détails fins comme les cheveux ou le texte. Les images générées par l'IA présentent souvent des imperfections subtiles que les yeux entraînés peuvent détecter."
+      "question": "Qu'est-ce que le jeu Fakeout ?",
+      "answer": "Fakeout est un jeu de défi hebdomadaire gratuit sans inscription qui teste votre capacité à distinguer les vraies vidéos et photographies des contenus générés par l'IA. Chaque semaine propose de nouvelles paires d'images et de vidéos pour affiner vos compétences de détection de l'IA et contribuer à la culture de l'IA."
     },
     "q2": {
-      "question": "Qu'est-ce que le jeu Fakeout ?",
-      "answer": "Fakeout est un jeu de défi quotidien gratuit qui teste votre capacité à distinguer les vraies photographies des images générées par l'IA. Chaque jour propose de nouvelles paires d'images pour affiner vos compétences de détection de l'IA."
+      "question": "Comment repérer les images et vidéos générées par l'IA ?",
+      "answer": "Recherchez des textures non naturelles, un éclairage incohérent, des reflets étranges, des mains ou des visages déformés, une géométrie impossible et des artefacts dans les détails fins comme les cheveux ou le texte. Les images générées par l'IA présentent souvent des imperfections subtiles que les yeux entraînés peuvent détecter. Visitez notre blog où nous rapportons les retours des utilisateurs et les statistiques sur vos performances passées."
     },
     "q3": {
-      "question": "Comment fonctionne le jeu de détecteur d'images IA ?",
-      "answer": "Vous êtes présenté avec deux images - une vraie photographie et une image générée par l'IA. Votre objectif est d'identifier celle qui a été créée par l'intelligence artificielle. Après avoir fait votre sélection, vous recevez un retour immédiat et apprenez ce qu'il faut rechercher."
+      "question": "Comment fonctionne le jeu de détecteur de médias IA ?",
+      "answer": "Vous êtes présenté avec deux vidéos ou images - une vraie vidéo ou photographie et une générée par l'IA. Votre objectif est d'identifier celle qui a été créée par l'intelligence artificielle. Après avoir fait votre sélection, vous recevez un retour immédiat et apprenez ce qu'il faut rechercher. Après chaque tentative, vous pouvez examiner le prompt utilisé pour générer le média synthétique, ce qui peut vous aider à comprendre le processus de décision de l'IA."
     },
     "q4": {
-      "question": "Les images générées par l'IA peuvent-elles être détectées ?",
+      "question": "Les images générées par l'IA peuvent-elles vraiment être détectées ?",
       "answer": "Oui ! Bien que la génération d'images par l'IA devienne de plus en plus sophistiquée, il existe encore des signes révélateurs qui peuvent aider à identifier le contenu généré par l'IA. Avec de la pratique et la connaissance de ce qu'il faut rechercher, vous pouvez améliorer votre précision de détection."
     },
     "q5": {
       "question": "Fakeout est-il gratuit ?",
-      "answer": "Oui, Fakeout est entièrement gratuit. Vous pouvez tester vos compétences de détection de l'IA quotidiennement sans aucun coût ni inscription requise."
+      "answer": "Oui, Fakeout est entièrement gratuit. Vous pouvez tester vos compétences de détection de l'IA chaque semaine sans aucun coût ni inscription requise. Nous pourrions monétiser le site par le biais de publicités pour soutenir le développement et payer l'hébergement, le domaine et les coûts associés à la génération des vidéos et des images. Donc, si vous souhaitez soutenir le projet, envisagez d'ajouter notre site à la liste blanche de votre bloqueur de publicités."
+    },
+    "q6": {
+      "question": "Utilisez-vous les données collectées par le jeu ?",
+      "answer": "Nous n'avons absolument aucun accès aux données personnelles. En ce qui concerne les données statistiques du jeu, nous stockons les réponses UNIQUEMENT pour que l'utilisateur puisse voir sa précision globale et ses performances au fil du temps. Nous ne vendrons jamais ces données à qui que ce soit, ni ne les utiliserons à d'autres fins. Pour plus de détails, veuillez consulter notre Politique de confidentialité."
     }
   },
   "errors": {
@@ -133,17 +138,18 @@
     "subtitle": "Dernières actualités et articles",
     "readMore": "Lire la suite",
     "backToBlog": "Retour au blog",
-    "publishedOn": "Publié le {date}"
+    "publishedOn": "Publié le {date}",
+    "contentError": "Échec du chargement du contenu de l'article"
   },
   "about": {
     "title": "À propos de Fakeout",
     "mission": {
       "title": "Notre mission",
-      "text": "Fakeout vise à démocratiser la culture de l'IA. En transformant la détection des médias synthétiques en jeu, nous aidons les gens à entraîner leurs yeux à repérer les imperfections subtiles des images et vidéos générées par l'IA."
+      "text": "Fakeout développe une culture critique de l'IA grâce à l'apprentissage par le jeu. En transformant la détection de médias synthétiques en défi interactif, nous vous aidons à développer des compétences essentielles de pensée critique – apprenez à questionner les systèmes d'IA, à évaluer leurs résultats et à repérer le contenu généré par l'IA et la désinformation. Il ne s'agit pas seulement de détecter les faux générés par l'IA ; il s'agit de devenir un citoyen numérique averti capable de naviguer dans un monde médiatisé par l'IA avec confiance et jugement indépendant."
     },
     "story": {
       "title": "L'histoire",
-      "text": "Commencé comme une petite expérience en 2024, Fakeout est devenu un défi quotidien pour des milliers d'utilisateurs qui veulent garder une longueur d'avance à l'ère de l'IA générative."
+      "text": "Fakeout a été créé par un développeur indépendant passionné par la culture de l'IA et la lutte contre la désinformation. Frustré par la montée du contenu généré par l'IA et son potentiel de tromperie, il a créé Fakeout comme un moyen amusant et engageant pour les gens d'aiguiser leurs compétences dans l'identification de médias synthétiques. Depuis son lancement, Fakeout est devenu une communauté dynamique de joueurs dédiés à rester en avance sur les progrès de l'IA et à promouvoir la pensée critique à l'ère numérique."
     }
   },
   "privacy": {
@@ -279,7 +285,7 @@
   "newsletter": {
     "title": "Restez informé",
     "stayUpdated": "Soyez notifié",
-    "description": "Soyez informé lorsque de nouveaux défis quotidiens sont disponibles.",
+    "description": "Soyez informé lorsque de nouveaux défis hebdomadaires sont disponibles.",
     "emailPlaceholder": "Entrez votre e-mail",
     "subscribe": "S'abonner",
     "subscribed": "Abonné !",
