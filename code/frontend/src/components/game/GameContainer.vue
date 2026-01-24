@@ -668,7 +668,7 @@ const nextRound = async () => {
 const switchMode = (newMode: "image" | "video") => {
   if (props.mode === newMode) return;
 
-  // Switch to the other mode's daily game
+  // Switch to the other mode's weekly game
   // logic: /en/ (video) <-> /en/game (image)
   if (newMode === "image") {
     router.push(`/${locale.value}/image`);

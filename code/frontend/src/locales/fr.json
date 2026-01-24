@@ -283,7 +283,7 @@
   "newsletter": {
     "title": "Restez informé",
     "stayUpdated": "Soyez notifié",
-    "description": "Soyez informé lorsque de nouveaux défis quotidiens sont disponibles.",
+    "description": "Soyez informé lorsque de nouveaux défis hebdomadaires sont disponibles.",
     "emailPlaceholder": "Entrez votre e-mail",
     "subscribe": "S'abonner",
     "subscribed": "Abonné !",
