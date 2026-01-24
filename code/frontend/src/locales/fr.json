@@ -137,7 +137,8 @@
     "subtitle": "Dernières actualités et articles",
     "readMore": "Lire la suite",
     "backToBlog": "Retour au blog",
-    "publishedOn": "Publié le {date}"
+    "publishedOn": "Publié le {date}",
+    "contentError": "Échec du chargement du contenu de l'article"
   },
   "about": {
     "title": "À propos de Fakeout",

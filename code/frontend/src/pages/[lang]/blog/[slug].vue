@@ -26,8 +26,22 @@
           </div>
         </div>
 
+        <!-- Loading state -->
+        <div v-if="loadingContent" class="text-center py-8">
+          <v-progress-circular indeterminate color="primary" />
+        </div>
+
+        <!-- Error state -->
+        <v-alert
+          v-else-if="contentError"
+          type="error"
+          class="mb-4"
+          :title="$t('blog.contentError')"
+          :text="contentError"
+        />
+
         <!-- Render Markdown Content -->
-        <div class="markdown-body" v-html="renderedContent"></div>
+        <div v-else class="markdown-body" v-html="renderedContent"></div>
       </article>
 
       <v-divider class="my-8"></v-divider>
@@ -56,21 +70,53 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, watchEffect } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import MarkdownIt from "markdown-it";
 import { articles } from "@/data/articles";
+import { loadArticleContent } from "@/services/markdownLoader";
 import { useSeoMeta } from "@/composables/useSeoMeta";
 import { useHead } from "@unhead/vue";
+import type { SupportedLocale } from "@/i18n";
 
 const route = useRoute();
 const { locale } = useI18n();
-const currentLocale = computed(() => locale.value as string);
+const currentLocale = computed(() => locale.value as SupportedLocale);
 const slug = computed(() => (route.params as any).slug as string);
 
 const article = computed(() => {
   return articles.find((a) => a.slug === slug.value);
+});
+
+// Markdown content loading state
+const loadingContent = ref(false);
+const contentError = ref<string | null>(null);
+const markdownContent = ref<string>("");
+
+// Load markdown content when article or locale changes
+watchEffect(async () => {
+  if (!article.value) {
+    markdownContent.value = "";
+    return;
+  }
+
+  loadingContent.value = true;
+  contentError.value = null;
+
+  try {
+    markdownContent.value = await loadArticleContent(
+      article.value,
+      currentLocale.value
+    );
+  } catch (error) {
+    console.error("Failed to load article content:", error);
+    contentError.value = error instanceof Error
+      ? error.message
+      : "Failed to load article content";
+  } finally {
+    loadingContent.value = false;
+  }
 });
 
 // SEO meta for article
@@ -144,10 +190,8 @@ const md = new MarkdownIt({
 });
 
 const renderedContent = computed(() => {
-  if (!article.value) return "";
-  const content =
-    article.value.content[currentLocale.value] || article.value.content.en;
-  return md.render(content);
+  if (!markdownContent.value) return "";
+  return md.render(markdownContent.value);
 });
 </script>
 
