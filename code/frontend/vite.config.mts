@@ -140,7 +140,7 @@ export default defineConfig(({ mode }) => ({
       dynamicRoutes: generateSitemapRoutes(),
       exclude: ["/"],
       generateRobotsTxt: false, // We already have a robots.txt
-      changefreq: "daily",
+      changefreq: "weekly",
       priority: 0.8,
       lastmod: new Date(),
       readable: true,

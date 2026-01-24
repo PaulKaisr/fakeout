@@ -69,7 +69,7 @@ Playing Fakeout helps you:
 2.  **Learn the common artifacts** of current AI technology.
 3.  **Track your progress** over time as you get better at spotting fakes.
 
-Join us daily for new challenges!
+Join us weekly for new challenges!
 `,
       de: `
 # Wie Fakeout funktioniert
@@ -97,7 +97,7 @@ Fakeout zu spielen hilft dir:
 2.  **Die üblichen Artefakte** aktueller KI-Technologie kennenzulernen.
 3.  **Deinen Fortschritt zu verfolgen**, während du besser darin wirst, Fälschungen zu erkennen.
 
-Mach täglich mit bei neuen Herausforderungen!
+Mach wöchentlich mit bei neuen Herausforderungen!
 `,
       bg: `
 # Как работи Fakeout
@@ -650,7 +650,7 @@ Pay special attention to people in AI videos:
 4. **Look for loops** – Some AI tools create subtle looping patterns
 5. **Trust your gut** – If something feels "off," investigate further
 
-Train your eye daily with Fakeout's video mode!
+Train your eye weekly with Fakeout's video mode!
 `,
       de: `
 # Wie man KI-generierte Videos erkennt
@@ -723,7 +723,7 @@ Achte besonders auf Menschen in KI-Videos:
 4. **Nach Loops suchen** – Einige KI-Tools erstellen subtile Schleifenmuster
 5. **Dem Bauchgefühl vertrauen** – Wenn sich etwas "falsch" anfühlt, untersuche es weiter
 
-Trainiere dein Auge täglich mit dem Videomodus von Fakeout!
+Trainiere dein Auge wöchentlich mit dem Videomodus von Fakeout!
 `,
       bg: `
 # Как да разпознаем видеа, генерирани от ИИ
@@ -2078,7 +2078,7 @@ You might wonder: can't AI detection tools solve this problem? While automated d
 
 Our brains are remarkably sophisticated pattern-recognition machines, finely tuned over millions of years to detect when something is "off"—even when we can't immediately articulate why. This instinctive response is something no algorithm can perfectly replicate. Moreover, human judgment can incorporate context: Is this photograph plausible given what we know about the world? Would this person realistically be in this situation?
 
-Research shows that training can improve detection accuracy by approximately 10-15%. That might sound modest, but in a world where we each consume thousands of images daily, those percentage points translate to catching countless deceptive images that might otherwise influence our beliefs and decisions.
+Research shows that training can improve detection accuracy by approximately 10-15%. That might sound modest, but in a world where we each consume thousands of images weekly, those percentage points translate to catching countless deceptive images that might otherwise influence our beliefs and decisions.
 
 The goal isn't to make you paranoid about every image you see. It's to develop an informed skepticism—a trained eye that knows what to look for.
 
@@ -2299,10 +2299,10 @@ Before examining technical details, ask: "Does this make sense?"
 
 Sometimes the biggest tell isn't technical—it's contextual implausibility.
 
-### Exercise 5: Play Fakeout Daily
+### Exercise 5: Play Fakeout weekly
 
 Of course, the best way to develop your detection skills is through regular, structured practice. Fakeout provides:
-- Fresh challenges daily with diverse content
+- Fresh challenges weekly with diverse content
 - Immediate feedback so you learn from mistakes
 - Score tracking to monitor your improvement over time
 - Both image and video modes to train different perceptual skills
@@ -2313,7 +2313,7 @@ At Fakeout, we've designed our platform around a simple insight: **games are mor
 
 When learning feels like play, you engage more deeply. When you get immediate feedback, you learn faster. When you track progress over time, you stay motivated. These aren't just nice-to-haves—they're fundamental principles of effective education.
 
-Our daily challenges expose you to a wide variety of AI generation styles and techniques. Some use DALL-E, others use Imagen, others use various video generation systems. This variety ensures that your skills transfer across different generators rather than becoming overly specialized.
+Our weekly challenges expose you to a wide variety of AI generation styles and techniques. Some use DALL-E, others use Imagen, others use various video generation systems. This variety ensures that your skills transfer across different generators rather than becoming overly specialized.
 
 **We believe media literacy is the best defense against misinformation.**
 
@@ -2357,7 +2357,7 @@ Du fragst dich vielleicht: Können KI-Erkennungstools dieses Problem nicht löse
 
 Unsere Gehirne sind bemerkenswert ausgefeilte Mustererkennungsmaschinen, über Millionen von Jahren darauf abgestimmt zu erkennen, wenn etwas "nicht stimmt" – selbst wenn wir nicht sofort artikulieren können, warum. Diese instinktive Reaktion kann kein Algorithmus perfekt replizieren. Darüber hinaus kann menschliches Urteilsvermögen Kontext einbeziehen: Ist dieses Foto plausibel angesichts dessen, was wir über die Welt wissen? Würde diese Person realistisch in dieser Situation sein?
 
-Forschung zeigt, dass Training die Erkennungsgenauigkeit um etwa 10-15% verbessern kann. Das mag bescheiden klingen, aber in einer Welt, in der wir täglich Tausende von Bildern konsumieren, bedeuten diese Prozentpunkte das Erkennen unzähliger irreführender Bilder, die sonst unsere Überzeugungen und Entscheidungen beeinflussen könnten.
+Forschung zeigt, dass Training die Erkennungsgenauigkeit um etwa 10-15% verbessern kann. Das mag bescheiden klingen, aber in einer Welt, in der wir wöchentlich Tausende von Bildern konsumieren, bedeuten diese Prozentpunkte das Erkennen unzähliger irreführender Bilder, die sonst unsere Überzeugungen und Entscheidungen beeinflussen könnten.
 
 Das Ziel ist nicht, dich paranoid gegenüber jedem Bild zu machen, das du siehst. Es geht darum, eine informierte Skepsis zu entwickeln – ein geschultes Auge, das weiß, worauf es achten muss.
 
@@ -2489,9 +2489,9 @@ Bevor du technische Details untersuchst, frage: "Ergibt das Sinn?"
 - Ist diese Person an einem Ort, an dem sie realistisch sein würde?
 - Passt die Beleuchtung zur behaupteten Tageszeit oder zum Ort?
 
-### Übung 5: Spiele Fakeout täglich
+### Übung 5: Spiele Fakeout wöchentlich
 
-Natürlich ist der beste Weg, deine Erkennungsfähigkeiten zu entwickeln, regelmäßiges, strukturiertes Üben. Fakeout bietet tägliche Herausforderungen mit sofortigem Feedback.
+Natürlich ist der beste Weg, deine Erkennungsfähigkeiten zu entwickeln, regelmäßiges, strukturiertes Üben. Fakeout bietet wöchentliche Herausforderungen mit sofortigem Feedback.
 
 ## Die Fakeout-Mission: Spielerisches Lernen
 
@@ -4487,7 +4487,7 @@ Beyond AI-generated imagery, students must understand the broader context of vis
 
 ### 5.3 The False Positive Problem
 
-Detection systems, despite high accuracy rates, necessarily produce false positives and false negatives. Given billions of daily image uploads globally, even 2% error rates translate to millions of undetected fakes and wrongly flagged authentic images.
+Detection systems, despite high accuracy rates, necessarily produce false positives and false negatives. Given billions of weekly image uploads globally, even 2% error rates translate to millions of undetected fakes and wrongly flagged authentic images.
 
 ## 6. Educational Implementation: Beyond the Classroom
 

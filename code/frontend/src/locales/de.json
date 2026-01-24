@@ -283,7 +283,7 @@
   "newsletter": {
     "title": "Bleib auf dem Laufenden",
     "stayUpdated": "Benachrichtigung erhalten",
-    "description": "Erhalte eine Benachrichtigung, wenn neue tägliche Herausforderungen verfügbar sind.",
+    "description": "Erhalte eine Benachrichtigung, wenn neue wöchentliche Herausforderungen verfügbar sind.",
     "emailPlaceholder": "Gib deine E-Mail ein",
     "subscribe": "Abonnieren",
     "subscribed": "Abonniert!",
