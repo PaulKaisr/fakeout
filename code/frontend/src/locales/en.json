@@ -78,24 +78,28 @@
   "faq": {
     "title": "Frequently Asked Questions",
     "q1": {
-      "question": "How do you spot AI-generated images?",
-      "answer": "Look for unnatural textures, inconsistent lighting, strange reflections, distorted hands or faces, impossible geometry, and artifacts in fine details like hair or text. AI-generated images often have subtle imperfections that trained eyes can detect."
+      "question": "What is Fakeout game?",
+      "answer": "Fakeout is a no-signup free weekly challenge game that tests your ability to distinguish between real videos and photographs and AI-generated ones. Each week features new pairs of images and videos to sharpen your AI detection skills and contribute to AI literacy."
     },
     "q2": {
-      "question": "What is Fakeout game?",
-      "answer": "Fakeout is a free daily challenge game that tests your ability to distinguish between real photographs and AI-generated images. Each day features new image pairs to sharpen your AI detection skills."
+      "question": "How do you spot AI-generated images and videos?",
+      "answer": "Look for unnatural textures, inconsistent lighting, strange reflections, distorted hands or faces, impossible geometry, and artifacts in fine details like hair or text. AI-generated images often have subtle imperfections that trained eyes can detect. Visit our blog where we report some of the user feedback and statistics how you guys did in the past."
     },
     "q3": {
-      "question": "How does the AI image detector game work?",
-      "answer": "You're presented with two images - one real photograph and one AI-generated image. Your goal is to identify which one was created by artificial intelligence. After making your selection, you'll receive immediate feedback and learn what to look for."
+      "question": "How does the AI media detector game work?",
+      "answer": "You're presented with two videos or images - one real video or photograph and one AI-generated. Your goal is to identify which one was created by artificial intelligence. After making your selection, you'll receive immediate feedback and learn what to look for. After each guess you can investigate the prompt that was used to generate the synthetic media, which may help you understand the AI's decision-making process."
     },
     "q4": {
-      "question": "Can AI-generated images be detected?",
+      "question": "Can AI-generated images even be detected?",
       "answer": "Yes! While AI image generation is becoming increasingly sophisticated, there are still telltale signs that can help identify AI-generated content. With practice and knowledge of what to look for, you can improve your detection accuracy."
     },
     "q5": {
       "question": "Is Fakeout free to play?",
-      "answer": "Yes, Fakeout is completely free to play. You can test your AI detection skills daily without any cost or registration required."
+      "answer": "Yes, Fakeout is completely free to play. You can test your AI detection skills weekly without any cost or registration required. We may monetize the site through ads to support development and pay for hosting, domain and the costs associated with generating the videos and images. So if you want to support the project, consider whitelisting our site in your ad blocker."
+    },
+    "q6": {
+      "question": "Do you use the data collected from the game?",
+      "answer": "We have absolutely no access to any personal data. As for the game statistics data, we store the guesses ONLY for the user to show them their overall accuracy and performance over time. We will never sell that data to anyone, nor will we use it for any other purpose. For more details, please refer to our Privacy Policy."
     }
   },
   "errors": {

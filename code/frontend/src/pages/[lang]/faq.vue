@@ -17,7 +17,7 @@
 
     <v-expansion-panels variant="accordion">
       <v-expansion-panel
-        v-for="i in 5"
+        v-for="i in 6"
         :key="i"
         :title="$t(`faq.q${i}.question`)"
         :text="$t(`faq.q${i}.answer`)"
@@ -50,7 +50,7 @@ useSeoMeta({
 // FAQ structured data for rich results
 const faqStructuredData = computed(() => {
   const faqItems = [];
-  for (let i = 1; i <= 5; i++) {
+  for (let i = 1; i <= 6; i++) {
     faqItems.push({
       "@type": "Question",
       name: t(`faq.q${i}.question`),

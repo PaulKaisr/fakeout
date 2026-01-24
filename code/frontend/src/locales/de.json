@@ -78,24 +78,28 @@
   "faq": {
     "title": "Häufig gestellte Fragen",
     "q1": {
-      "question": "Wie erkennt man KI-generierte Bilder?",
-      "answer": "Achte auf unnatürliche Texturen, inkonsistente Beleuchtung, seltsame Reflexionen, verzerrte Hände oder Gesichter, unmögliche Geometrie und Artefakte in feinen Details wie Haaren oder Text. KI-generierte Bilder haben oft subtile Unvollkommenheiten, die geschulte Augen erkennen können."
+      "question": "Was ist das Fakeout-Spiel?",
+      "answer": "Fakeout ist ein kostenloses wöchentliches Herausforderungsspiel ohne Registrierung, das deine Fähigkeit testet, zwischen echten Videos und Fotografien und KI-generierten zu unterscheiden. Jede Woche gibt es neue Bildpaare und Videos, um deine KI-Erkennungsfähigkeiten zu schärfen und zur KI-Kompetenz beizutragen."
     },
     "q2": {
-      "question": "Was ist das Fakeout-Spiel?",
-      "answer": "Fakeout ist ein kostenloses tägliches Herausforderungsspiel, das deine Fähigkeit testet, zwischen echten Fotografien und KI-generierten Bildern zu unterscheiden. Jeden Tag gibt es neue Bildpaare, um deine KI-Erkennungsfähigkeiten zu schärfen."
+      "question": "Wie erkennt man KI-generierte Bilder und Videos?",
+      "answer": "Achte auf unnatürliche Texturen, inkonsistente Beleuchtung, seltsame Reflexionen, verzerrte Hände oder Gesichter, unmögliche Geometrie und Artefakte in feinen Details wie Haaren oder Text. KI-generierte Bilder haben oft subtile Unvollkommenheiten, die geschulte Augen erkennen können. Besuche unseren Blog, wo wir Nutzer-Feedback und Statistiken berichten, wie ihr in der Vergangenheit abgeschnitten habt."
     },
     "q3": {
-      "question": "Wie funktioniert das KI-Bilderkennungsspiel?",
-      "answer": "Dir werden zwei Bilder präsentiert - ein echtes Foto und ein KI-generiertes Bild. Dein Ziel ist es, zu identifizieren, welches von künstlicher Intelligenz erstellt wurde. Nach deiner Auswahl erhältst du sofortiges Feedback und lernst, worauf du achten solltest."
+      "question": "Wie funktioniert das KI-Medienerkennungsspiel?",
+      "answer": "Dir werden zwei Videos oder Bilder präsentiert - ein echtes Video oder Foto und ein KI-generiertes. Dein Ziel ist es, zu identifizieren, welches von künstlicher Intelligenz erstellt wurde. Nach deiner Auswahl erhältst du sofortiges Feedback und lernst, worauf du achten solltest. Nach jeder Vermutung kannst du den Prompt untersuchen, der zur Generierung der synthetischen Medien verwendet wurde, was dir helfen kann, den Entscheidungsprozess der KI zu verstehen."
     },
     "q4": {
-      "question": "Können KI-generierte Bilder erkannt werden?",
+      "question": "Können KI-generierte Bilder überhaupt erkannt werden?",
       "answer": "Ja! Obwohl die KI-Bildgenerierung immer ausgefeilter wird, gibt es immer noch verräterische Anzeichen, die helfen können, KI-generierte Inhalte zu identifizieren. Mit Übung und Wissen darüber, worauf man achten muss, kannst du deine Erkennungsgenauigkeit verbessern."
     },
     "q5": {
       "question": "Ist Fakeout kostenlos spielbar?",
-      "answer": "Ja, Fakeout ist völlig kostenlos spielbar. Du kannst deine KI-Erkennungsfähigkeiten täglich ohne Kosten oder Registrierung testen."
+      "answer": "Ja, Fakeout ist völlig kostenlos spielbar. Du kannst deine KI-Erkennungsfähigkeiten wöchentlich ohne Kosten oder Registrierung testen. Wir könnten die Seite durch Werbung monetarisieren, um die Entwicklung zu unterstützen und für Hosting, Domain und die Kosten für die Generierung der Videos und Bilder zu bezahlen. Wenn du das Projekt unterstützen möchtest, erwäge, unsere Seite auf die Whitelist deines Werbeblockers zu setzen."
+    },
+    "q6": {
+      "question": "Verwenden Sie die vom Spiel gesammelten Daten?",
+      "answer": "Wir haben absolut keinen Zugriff auf persönliche Daten. Was die Spielstatistiken betrifft, speichern wir die Vermutungen NUR für den Benutzer, um ihm seine Gesamtgenauigkeit und Leistung im Laufe der Zeit zu zeigen. Wir werden diese Daten niemals an Dritte verkaufen oder für andere Zwecke verwenden. Weitere Informationen finden Sie in unserer Datenschutzerklärung."
     }
   },
   "errors": {
