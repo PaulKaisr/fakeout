@@ -45,6 +45,7 @@
   },
   "results": {
     "title": "Level abgeschlossen!",
+    "youTook": "Du brauchtest",
     "finalScore": "Endergebnis",
     "shareResult": "Ergebnis teilen",
     "copiedToClipboard": "In die Zwischenablage kopiert!",

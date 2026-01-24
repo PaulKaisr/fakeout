@@ -1,11 +1,9 @@
-import type { SupportedLocale } from '@/i18n';
+import type { SupportedLocale } from "@/i18n";
 
 /**
  * Type for raw markdown content imported via Vite glob
  */
-export type MarkdownModule = {
-  default: string;
-};
+export type MarkdownModule = string;
 
 /**
  * Map of markdown file paths to their import functions

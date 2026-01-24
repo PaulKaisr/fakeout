@@ -9,6 +9,7 @@ export interface GameStats {
 export interface GameHistoryItem {
   roundId: number;
   userCorrect: boolean;
+  duration: number;
 }
 
 export interface SingleGameProgress {
@@ -84,6 +85,7 @@ export function recordRoundResult(
   isCorrect: boolean,
   currentTotalRounds: number,
   roundId: number,
+  duration: number,
   pairId?: string,
 ) {
   // Update specific game stats
@@ -119,7 +121,7 @@ export function recordRoundResult(
     if (isCorrect) {
       game.score++;
     }
-    game.history.push({ roundId, userCorrect: isCorrect });
+    game.history.push({ roundId, userCorrect: isCorrect, duration });
 
     // Track to Supabase (only in Prod)
     if (import.meta.env.PROD) {
@@ -129,7 +131,7 @@ export function recordRoundResult(
       }
       // 2. Guess: Track the individual guess
       if (pairId) {
-        supabaseService.trackGuess(pairId, mode, isCorrect);
+        supabaseService.trackGuess(pairId, mode, isCorrect, duration);
       }
     }
   }
