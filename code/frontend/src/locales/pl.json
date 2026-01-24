@@ -139,11 +139,11 @@
     "title": "O Fakeout",
     "mission": {
       "title": "Nasza Misja",
-      "text": "Celem Fakeout jest demokratyzacja wiedzy o AI. Zamieniając wykrywanie syntetycznych mediów w grę, pomagamy ludziom trenować wzrok, aby dostrzegali subtelne niedoskonałości obrazów i wideo wygenerowanych przez AI."
+      "text": "Fakeout buduje krytyczną wiedzę o AI poprzez naukę opartą na grach. Zamieniając wykrywanie syntetycznych mediów w interaktywne wyzwanie, pomagamy Ci rozwijać niezbędne umiejętności krytycznego myślenia – ucz się kwestionować systemy AI, oceniać ich wyniki i wykrywać treści generowane przez AI oraz dezinformację. To nie tylko chodzi o wyłapywanie fałszywek AI; chodzi o zostanie rozsądnym cyfrowym obywatelem, który potrafi poruszać się po świecie pośredniczonym przez AI z pewnością siebie i niezależnym osądem."
     },
     "story": {
       "title": "Historia",
-      "text": "Rozpoczęty jako mały eksperyment w 2024 roku, Fakeout wyrósł na codzienne wyzwanie dla tysięcy użytkowników, którzy chcą być na bieżąco w erze generatywnego AI."
+      "text": "Fakeout został stworzony przez samotnego programistę pasjonującego się wiedzą o AI i zwalczaniem dezinformacji. Sfrustrowany wzrostem treści generowanych przez AI i ich potencjałem do wprowadzania w błąd, stworzył Fakeout jako zabawny i angażujący sposób dla ludzi do doskonalenia umiejętności identyfikowania syntetycznych mediów. Od swojego uruchomienia Fakeout rozrósł się w tętniącą życiem społeczność graczy zaangażowanych w wyprzedzanie postępów AI i promowanie krytycznego myślenia w erze cyfrowej."
     }
   },
   "privacy": {

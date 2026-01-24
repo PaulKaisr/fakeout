@@ -139,11 +139,11 @@
     "title": "About Fakeout",
     "mission": {
       "title": "Our Mission",
-      "text": "Fakeout aims to democratize AI literacy. By turning the detection of synthetic media into a game, we help people train their eyes to spot the subtle imperfections of AI-generated images and videos."
+      "text": "Fakeout builds critical AI literacy through game-based learning. By turning synthetic media detection into an interactive challenge, we help you develop essential critical thinking skills—learning to question AI systems, evaluate their outputs, and spot AI-generated content and misinformation. This isn't just about catching AI fakes; it's about becoming a discerning digital citizen who can navigate an AI-mediated world with confidence and independent judgment."
     },
     "story": {
       "title": "The Story",
-      "text": "Started as a small experiment in 2024, Fakeout has grown into a daily challenge for thousands of users who want to stay ahead of the curve in the age of generative AI."
+      "text": "Fakeout was built by a solo developer passionate about AI literacy and combating misinformation. Frustrated by the rise of AI-generated content and its potential to deceive, they created Fakeout as a fun and engaging way for people to sharpen their skills in identifying synthetic media. Since its launch, Fakeout has grown into a vibrant community of players dedicated to staying ahead of AI advancements and promoting critical thinking in the digital age."
     }
   },
   "privacy": {
