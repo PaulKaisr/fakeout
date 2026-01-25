@@ -5,6 +5,7 @@
     "loading": "Cargando...",
     "retry": "Reintentar",
     "backToHome": "Volver al inicio",
+    "playGame": "Ir al juego",
     "error": "Error"
   },
   "header": {
@@ -137,8 +138,10 @@
     "title": "Blog",
     "subtitle": "Últimas noticias y artículos",
     "readMore": "Leer más",
+    "continueExploring": "Seguir explorando",
     "backToBlog": "Volver al blog",
     "publishedOn": "Publicado el {date}",
+    "writtenBy": "Escrito por",
     "contentError": "No se pudo cargar el contenido del artículo"
   },
   "about": {

@@ -3,7 +3,7 @@
     <div class="mb-4">
       <v-btn
         variant="text"
-        :to="`/${currentLocale}`"
+        to="/"
         prepend-icon="mdi-arrow-left"
         class="text-none"
       >
