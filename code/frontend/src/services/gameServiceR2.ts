@@ -128,9 +128,6 @@ export const getR2GameRounds = async (
 
     if (realImg && genImg) {
       // Create Round
-      // Randomize A/B positions
-      const isRealA = Math.random() > 0.5;
-
       const realGameImage: GameImage = {
         id: `real-${genIdFromKey}`,
         url: realImg.url,
@@ -152,13 +149,21 @@ export const getR2GameRounds = async (
 
       rounds.push({
         id: rounds.length + 1,
-        imageA: isRealA ? realGameImage : genGameImage,
-        imageB: isRealA ? genGameImage : realGameImage,
+        imageA: realGameImage,
+        imageB: genGameImage,
       });
     }
   });
 
-  // 6. Preload first round images for faster LCP
+  // 6. Randomize A/B positions for each round (different for every user/load)
+  rounds.forEach((round) => {
+    if (Math.random() > 0.5) {
+      // Swap imageA and imageB
+      [round.imageA, round.imageB] = [round.imageB, round.imageA];
+    }
+  });
+
+  // 7. Preload first round images for faster LCP
   if (rounds.length > 0) {
     preloadFirstRoundImages(rounds[0]!);
   }

@@ -5,6 +5,7 @@
     "loading": "Loading...",
     "retry": "Retry",
     "backToHome": "Back to Home",
+    "playGame": "Play Game",
     "error": "Error"
   },
   "header": {
@@ -137,8 +138,10 @@
     "title": "Blog",
     "subtitle": "Latest news and articles",
     "readMore": "Read More",
+    "continueExploring": "Continue Exploring",
     "backToBlog": "Back to Blog",
     "publishedOn": "Published on {date}",
+    "writtenBy": "Written by",
     "contentError": "Failed to load article content"
   },
   "about": {
