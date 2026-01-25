@@ -1,3 +1,16 @@
+import firstRoundsInsightsImg from "@/assets/blog/first-rounds-insights.png";
+import howFakeoutWorksImg from "@/assets/blog/how-fakeout-works.png";
+import aiGenerationConcernsImg from "@/assets/blog/ai-generation-concerns.png";
+import spottingAiHandsGuideImg from "@/assets/blog/spotting-ai-hands-guide.png";
+import aiVideoDetectionTipsImg from "@/assets/blog/ai-video-detection-tips.png";
+import spottingAiTipsImg from "@/assets/blog/spotting-ai-tips.png";
+import aiImageVideoGenerationModels2026Img from "@/assets/blog/ai-image-video-generation-models-2026.png";
+import freeHostingForSoloDevelopersImg from "@/assets/blog/free-hosting-for-solo-developers.png";
+import trainingYourDigitalEyeImg from "@/assets/blog/training-your-digital-eye.png";
+import syntheticHorizon2026Img from "@/assets/blog/synthetic-horizon-2026.png";
+import gameBasedAiLiteracyK12Img from "@/assets/blog/game-based-ai-literacy-k12.png";
+import spottingAiComprehensiveReportImg from "@/assets/blog/spotting-ai-comprehensive-report.png";
+
 export interface Article {
   id: string;
   slug: string;
@@ -38,6 +51,7 @@ export const articles: Article[] = [
   {
     id: "6",
     slug: "first-rounds-insights",
+    image: firstRoundsInsightsImg,
     date: "2026-01-25",
     author: "Fakeout Team",
     useMarkdownFiles: true,
@@ -57,6 +71,7 @@ export const articles: Article[] = [
   {
     id: "1",
     slug: "how-fakeout-works",
+    image: howFakeoutWorksImg,
     date: "2026-01-05",
     author: "Fakeout Team",
     useMarkdownFiles: true,
@@ -76,8 +91,9 @@ export const articles: Article[] = [
   {
     id: "2",
     slug: "ai-generation-concerns",
+    image: aiGenerationConcernsImg,
     date: "2026-01-06",
-    author: "Paul",
+    author: "Fakeout Team",
     title: {
       en: "Thoughts on Recent Developments in AI Generation (2024-2025)",
       de: "Gedanken zu den jüngsten Entwicklungen der KI-Generierung (2024-2025)",
@@ -208,6 +224,7 @@ La tecnología llegó para quedarse. La pregunta es: ¿estamos preparados para a
   {
     id: "3",
     slug: "spotting-ai-hands-guide",
+    image: spottingAiHandsGuideImg,
     date: "2026-01-04",
     author: "Fakeout Team",
     title: {
@@ -480,6 +497,7 @@ Los modelos modernos como DALL-E 3, Midjourney v6 y Stable Diffusion XL han mejo
   {
     id: "4",
     slug: "ai-video-detection-tips",
+    image: aiVideoDetectionTipsImg,
     date: "2026-01-03",
     author: "Fakeout Team",
     title: {
@@ -792,6 +810,7 @@ Presta especial atención a las personas en videos de IA:
   {
     id: "5",
     slug: "spotting-ai-tips",
+    image: spottingAiTipsImg,
     date: "2026-01-08",
     author: "Fakeout Team",
     title: {
@@ -968,6 +987,7 @@ La IA a menudo crea piel que se ve *demasiado* perfecta, efectivamente aerografi
   {
     id: "5",
     slug: "ai-image-video-generation-models-2026",
+    image: aiImageVideoGenerationModels2026Img,
     date: "2026-01-06",
     author: "Fakeout Team",
     title: {
@@ -1656,8 +1676,9 @@ Cuanto más entiendas estas herramientas, mejor serás para identificar su resul
   {
     id: "7",
     slug: "free-hosting-for-solo-developers",
+    image: freeHostingForSoloDevelopersImg,
     date: "2026-01-08",
-    author: "Paul",
+    author: "Fakeout Team",
     title: {
       en: "The Solo Developer's Guide to Free Hosting",
       de: "Der Leitfaden für Solo-Entwickler zum kostenlosen Hosting",
@@ -1960,6 +1981,7 @@ Con esta configuración, puedes servir a miles de usuarios antes de pagar un cen
   {
     id: "7",
     slug: "training-your-digital-eye",
+    image: trainingYourDigitalEyeImg,
     date: "2026-01-21",
     author: "Fakeout Team",
     title: {
@@ -2726,6 +2748,7 @@ Comienza a entrenar tu ojo digital hoy.
   {
     id: "8",
     slug: "synthetic-horizon-2026",
+    image: syntheticHorizon2026Img,
     date: "2026-01-21",
     author: "Fakeout Team",
     title: {
@@ -3406,6 +3429,7 @@ Cuanto más entiendas el ecosistema que crea medios sintéticos, mejor equipado 
   {
     id: "9",
     slug: "game-based-ai-literacy-k12",
+    image: gameBasedAiLiteracyK12Img,
     date: "2026-01-21",
     author: "Fakeout Team",
     title: {
@@ -4160,6 +4184,7 @@ La educación en alfabetización en IA basada en juegos no es meramente una inno
     slug: "spotting-ai-comprehensive-report",
     date: "2026-01-21",
     author: "Fakeout Research Team",
+    image: spottingAiComprehensiveReportImg,
     title: {
       en: "Spotting AI: A Comprehensive Report on Recognizing Real vs AI-Generated Images",
       de: "KI Erkennen: Ein Umfassender Bericht über das Erkennen Echter vs. KI-Generierter Bilder",
