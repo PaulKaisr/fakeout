@@ -79,18 +79,18 @@
                 }}</span>
               </div>
 
-              <v-card-title
-                class="text-h5 font-weight-bold mb-2 pt-1 line-clamp-2 text-pre-wrap"
-                style="line-height: 1.3"
-              >
+              <!-- Title: Fixed height for 2 lines. text-h5 is approx 1.5rem.
+                   Line height 1.3. Height calculated in CSS relative to font size. -->
+              <div class="text-h5 font-weight-bold mb-2 header-fixed-height">
                 {{ getArticleTitle(article) }}
-              </v-card-title>
+              </div>
 
-              <v-card-text
-                class="text-body-1 text-medium-emphasis line-clamp-3"
+              <!-- Summary: Fixed height for 3 lines. text-body-1 is 1rem. -->
+              <div
+                class="text-body-1 text-medium-emphasis summary-fixed-height"
               >
                 {{ getArticleSummary(article) }}
-              </v-card-text>
+              </div>
             </v-card-item>
 
             <v-divider></v-divider>
@@ -168,17 +168,21 @@ const formatDate = (dateString: string) => {
   aspect-ratio: 16 / 9;
 }
 
-.line-clamp-2 {
+.header-fixed-height {
+  line-height: 1.4 !important; /* Slightly increased for better reading and safety */
+  height: 3em; /* 1.4 * 2 = 2.8. Buffer to 3.0 to catch descenders */
+  overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
-.line-clamp-3 {
+.summary-fixed-height {
+  line-height: 1.5 !important;
+  height: 4.8em; /* 1.5 * 3 = 4.5. Buffer to 4.8 */
+  overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 </style>
