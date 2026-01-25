@@ -191,10 +191,19 @@ export async function handler(event, context) {
         const mediaNumber = index + 1;
         const mediaNumberPadded = String(mediaNumber).padStart(3, "0");
 
-        // Find the best quality video file (prefer HD)
-        const videoFile =
-          video.video_files.find((f) => f.quality === "hd") ||
-          video.video_files[0];
+        // Find the best quality video file based on resolution
+        // Sort by resolution (width * height) in descending order
+        const sortedVideoFiles = [...video.video_files].sort((a, b) => {
+          const resA = (a.width || 0) * (a.height || 0);
+          const resB = (b.width || 0) * (b.height || 0);
+          return resB - resA; // Descending order (highest resolution first)
+        });
+
+        // Select the highest resolution video file
+        const videoFile = sortedVideoFiles[0];
+        console.log(
+          `Selected video quality: ${videoFile.quality} (${videoFile.width}x${videoFile.height})`
+        );
         const videoUrl = videoFile.link;
         const key = `${datePrefix}/pexel_videos_raw/${mediaNumberPadded}`;
 
