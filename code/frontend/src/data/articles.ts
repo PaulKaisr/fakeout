@@ -36,6 +36,25 @@ export interface Article {
 
 export const articles: Article[] = [
   {
+    id: "6",
+    slug: "first-rounds-insights",
+    date: "2026-01-25",
+    author: "Fakeout Team",
+    useMarkdownFiles: true,
+    title: {
+      en: "Results and Insights of First Played Rounds",
+      de: "Ergebnisse und Erkenntnisse der ersten gespielten Runden",
+      bg: "Резултати и прозрения от първите изиграни рундове",
+      es: "Resultados y perspectivas de las primeras rondas jugadas",
+    },
+    summary: {
+      en: "A deep dive into the early data from Fakeout players. Uncovering patterns in how people detect AI generated content.",
+      de: "Ein tiefer Einblick in die frühen Daten von Fakeout-Spielern. Aufdeckung von Mustern, wie Menschen KI-generierte Inhalte erkennen.",
+      bg: "Задълбочен поглед върху ранните данни от играчите на Fakeout. Разкриване на модели в това как хората разпознават съдържание, генерирано от ИИ.",
+      es: "Una inmersión profunda en los primeros datos de los jugadores de Fakeout. Descubriendo patrones en cómo las personas detectan contenido generado por IA.",
+    },
+  },
+  {
     id: "1",
     slug: "how-fakeout-works",
     date: "2026-01-05",

@@ -5,6 +5,7 @@
     "loading": "Laden...",
     "retry": "Wiederholen",
     "backToHome": "Zurück zur Startseite",
+    "playGame": "Zum Spiel",
     "error": "Fehler"
   },
   "header": {
@@ -139,6 +140,7 @@
     "readMore": "Weiterlesen",
     "backToBlog": "Zurück zum Blog",
     "publishedOn": "Veröffentlicht am {date}",
+    "writtenBy": "Geschrieben von",
     "contentError": "Artikelinhalt konnte nicht geladen werden"
   },
   "about": {

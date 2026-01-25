@@ -5,6 +5,7 @@
     "loading": "Chargement...",
     "retry": "Réessayer",
     "backToHome": "Retour à l'accueil",
+    "playGame": "Accéder au jeu",
     "error": "Erreur"
   },
   "header": {
@@ -139,6 +140,7 @@
     "readMore": "Lire la suite",
     "backToBlog": "Retour au blog",
     "publishedOn": "Publié le {date}",
+    "writtenBy": "Écrit par",
     "contentError": "Échec du chargement du contenu de l'article"
   },
   "about": {
