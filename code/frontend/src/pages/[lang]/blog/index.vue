@@ -11,7 +11,7 @@
       <v-container class="position-relative z-10">
         <v-btn
           variant="text"
-          :to="`/${currentLocale}`"
+          to="/"
           prepend-icon="mdi-arrow-left"
           class="mb-8"
           color="primary"
@@ -174,6 +174,7 @@ const formatDate = (dateString: string) => {
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 
@@ -183,6 +184,7 @@ const formatDate = (dateString: string) => {
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
 }
 </style>

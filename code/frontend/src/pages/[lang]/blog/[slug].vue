@@ -13,7 +13,7 @@
           {{ $t("blog.backToBlog") }}
         </v-btn>
         <v-spacer></v-spacer>
-        <v-btn variant="text" :to="`/${currentLocale}`" class="text-none">
+        <v-btn variant="text" to="/" class="text-none">
           {{ $t("common.backToHome") }}
         </v-btn>
       </v-container>
@@ -82,7 +82,9 @@
 
         <!-- Footer Navigation -->
         <div class="d-flex flex-column align-center">
-          <h3 class="text-h5 font-weight-bold mb-6">Continue Exploring</h3>
+          <h3 class="text-h5 font-weight-bold mb-6">
+            {{ $t("blog.continueExploring") }}
+          </h3>
           <div class="d-flex gap-4">
             <v-btn
               variant="outlined"
