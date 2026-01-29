@@ -15,6 +15,26 @@
     "roundLabel": "Runda",
     "scoreLabel": "Wynik"
   },
+  "hero": {
+    "eyebrow": "Nasza Misja",
+    "title": "Wspieranie Kompetencji AI",
+    "subtitle": "Przekształcamy wykrywanie syntetycznych mediów w angażujące wyzwanie, pomagając rozwijać krytyczne myślenie do pewnego poruszania się w świecie mediowanym przez AI.",
+    "mission": "To nie tylko o wykrywaniu fałszywek AI – to o zostaniu rozsądnym cyfrowym obywatelem, który potrafi kwestionować systemy AI, oceniać ich wyniki i wykrywać dezinformację z niezależnym osądem.",
+    "features": {
+      "learn": "Ucz się",
+      "play": "Graj",
+      "detect": "Wykrywaj"
+    },
+    "stats": {
+      "think": "Myśl",
+      "challenge": "Wyzwanie",
+      "improve": "Popraw"
+    },
+    "cta": {
+      "title": "Gotowy, aby wyostrzyć swoje umiejętności wykrywania AI?",
+      "description": "Dołącz do naszej społeczności i stań się bardziej rozsądnym cyfrowym obywatelem"
+    }
+  },
   "game": {
     "mode": "Tryb",
     "question": {

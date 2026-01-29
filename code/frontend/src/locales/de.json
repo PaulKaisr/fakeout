@@ -15,6 +15,26 @@
     "roundLabel": "Runde",
     "scoreLabel": "Punkte"
   },
+  "hero": {
+    "eyebrow": "Unsere Mission",
+    "title": "KI-Kompetenz fördern",
+    "subtitle": "Wir verwandeln die Erkennung synthetischer Medien in eine spannende Herausforderung und helfen dir, kritisches Denken zu entwickeln, um selbstbewusst in einer KI-vermittelten Welt zu navigieren.",
+    "mission": "Es geht nicht nur darum, KI-Fälschungen zu entlarven – es geht darum, ein umsichtiger digitaler Bürger zu werden, der KI-Systeme hinterfragen, ihre Ergebnisse bewerten und Fehlinformationen mit unabhängigem Urteilsvermögen erkennen kann.",
+    "features": {
+      "learn": "Lernen",
+      "play": "Spielen",
+      "detect": "Erkennen"
+    },
+    "stats": {
+      "think": "Denken",
+      "challenge": "Fordern",
+      "improve": "Verbessern"
+    },
+    "cta": {
+      "title": "Bereit, deine KI-Erkennungsfähigkeiten zu schärfen?",
+      "description": "Werde Teil unserer Community und ein umsichtigerer digitaler Bürger"
+    }
+  },
   "game": {
     "mode": "Modus",
     "question": {

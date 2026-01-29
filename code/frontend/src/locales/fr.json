@@ -15,6 +15,26 @@
     "roundLabel": "Manche",
     "scoreLabel": "Score"
   },
+  "hero": {
+    "eyebrow": "Notre Mission",
+    "title": "Favoriser la Littératie en IA",
+    "subtitle": "Nous transformons la détection de médias synthétiques en un défi engageant, vous aidant à développer une pensée critique pour naviguer dans un monde médiatisé par l'IA en toute confiance.",
+    "mission": "Il ne s'agit pas seulement de détecter les faux IA – il s'agit de devenir un citoyen numérique averti capable de questionner les systèmes d'IA, d'évaluer leurs résultats et de repérer la désinformation avec un jugement indépendant.",
+    "features": {
+      "learn": "Apprendre",
+      "play": "Jouer",
+      "detect": "Détecter"
+    },
+    "stats": {
+      "think": "Penser",
+      "challenge": "Défier",
+      "improve": "Améliorer"
+    },
+    "cta": {
+      "title": "Prêt à affiner vos compétences de détection d'IA ?",
+      "description": "Rejoignez notre communauté et devenez un citoyen numérique plus averti"
+    }
+  },
   "game": {
     "mode": "Mode",
     "question": {

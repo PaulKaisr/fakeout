@@ -15,6 +15,26 @@
     "roundLabel": "Round",
     "scoreLabel": "Score"
   },
+  "hero": {
+    "eyebrow": "Our Mission",
+    "title": "Fostering AI Literacy",
+    "subtitle": "We transform synthetic media detection into an engaging challenge, helping you develop critical thinking skills to navigate an AI-mediated world with confidence.",
+    "mission": "This isn't just about catching AI fakes—it's about becoming a discerning digital citizen who can question AI systems, evaluate their outputs, and spot misinformation with independent judgment.",
+    "features": {
+      "learn": "Learn",
+      "play": "Play",
+      "detect": "Detect"
+    },
+    "stats": {
+      "think": "Think",
+      "challenge": "Challenge",
+      "improve": "Improve"
+    },
+    "cta": {
+      "title": "Ready to sharpen your AI detection skills?",
+      "description": "Join our community and become a more discerning digital citizen"
+    }
+  },
   "game": {
     "mode": "Mode",
     "question": {
