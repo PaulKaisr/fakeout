@@ -20,16 +20,6 @@ const structuredData = computed(() =>
     genre: ["Puzzle", "Educational", "Quiz"],
     gamePlatform: "Web Browser",
     applicationCategory: "Game",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.8",
-      ratingCount: "1250",
-    },
     keywords:
       "AI or real game, AI video detection, spot AI videos, deepfake detector, AI image detector, fake video game, AI generated content detection",
   }),
