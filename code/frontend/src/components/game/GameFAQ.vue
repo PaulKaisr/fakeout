@@ -1,55 +1,52 @@
 <template>
-  <section class="faq-section py-4 md:py-6 relative overflow-hidden">
+  <section class="fracture-faq-section py-16 md:py-24 relative overflow-hidden">
+    <!-- Background effects -->
+    <div class="faq-scanlines"></div>
+    <div class="faq-grid-bg"></div>
+
     <v-container class="relative z-10">
       <!-- Section Header -->
-      <div class="text-center mb-12 animate-fade-in-up">
-        <div
-          class="inline-block px-4 py-2 bg-secondary/10 border-2 border-secondary/30 rounded-full mb-4"
-        >
-          <span
-            class="text-secondary font-bold text-sm uppercase tracking-wider"
-          >
-            {{ t("faq.title") }}
-          </span>
+      <div class="text-center mb-16">
+        <div class="faq-badge">
+          <span class="badge-number">▸</span>
+          <span class="badge-text">{{ t("faq.title") }}</span>
+          <span class="badge-number">◂</span>
         </div>
       </div>
 
-      <!-- FAQ Panels -->
-      <div class="max-w-4xl mx-auto">
-        <v-expansion-panels variant="accordion" class="faq-panels">
-          <v-expansion-panel
-            v-for="(faq, index) in faqs"
-            :key="index"
-            class="faq-panel mb-4 animate-fade-in-up"
-            :style="{ animationDelay: `${index * 0.1}s` }"
-          >
-            <v-expansion-panel-title class="text-lg font-bold pa-6">
-              <template v-slot:default="{ expanded }">
-                <div class="flex items-center gap-4 w-full">
-                  <div
-                    class="faq-icon-wrapper shrink-0 w-10 h-10 rounded-full bg-linear-to-br from-primary/20 to-secondary/20 flex items-center justify-center"
-                    :class="{ 'faq-icon-expanded': expanded }"
-                  >
-                    <v-icon size="20" color="primary" class="faq-icon">
-                      mdi-help-circle
-                    </v-icon>
-                  </div>
-                  <span class="flex-1">{{ faq.question }}</span>
-                </div>
-              </template>
-            </v-expansion-panel-title>
-            <v-expansion-panel-text class="pa-6 pt-0">
-              <div class="faq-answer text-medium-emphasis pl-14">
-                {{ faq.answer }}
-              </div>
-            </v-expansion-panel-text>
+      <!-- FAQ Grid -->
+      <div class="faq-grid max-w-6xl mx-auto">
+        <div
+          v-for="(faq, index) in faqs"
+          :key="index"
+          class="faq-item"
+          :style="{ animationDelay: `${index * 0.1}s` }"
+        >
+          <div class="faq-number">{{ String(index + 1).padStart(2, '0') }}</div>
 
-            <!-- Accent Bar -->
-            <div
-              class="faq-accent h-1 bg-linear-to-r from-primary to-secondary"
-            ></div>
-          </v-expansion-panel>
-        </v-expansion-panels>
+          <div class="faq-content">
+            <button
+              class="faq-question"
+              @click="toggleFaq(index)"
+              :class="{ 'faq-active': expandedIndex === index }"
+            >
+              <span class="question-text">{{ faq.question }}</span>
+              <span class="question-icon">
+                <span class="icon-bar icon-bar-1"></span>
+                <span class="icon-bar icon-bar-2"></span>
+              </span>
+            </button>
+
+            <div class="faq-answer-wrapper" :class="{ 'answer-expanded': expandedIndex === index }">
+              <div class="faq-answer">
+                <div class="answer-glitch-line"></div>
+                <p class="answer-text">{{ faq.answer }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-border"></div>
+        </div>
       </div>
     </v-container>
 
@@ -63,10 +60,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
+
+const expandedIndex = ref<number | null>(null);
+
+const toggleFaq = (index: number) => {
+  expandedIndex.value = expandedIndex.value === index ? null : index;
+};
 
 const faqs = computed(() => [
   {
@@ -112,113 +115,340 @@ const faqSchema = computed(() =>
 </script>
 
 <style scoped>
-/* Animations */
-@keyframes fade-in-up {
-  from {
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600;700&display=swap');
+
+/* ========================================
+   FRACTURE FAQ SECTION
+   ======================================== */
+
+.fracture-faq-section {
+  background: #0a0a0f;
+  position: relative;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* ========================================
+   BACKGROUND EFFECTS
+   ======================================== */
+
+.faq-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.02) 0px,
+    rgba(0, 0, 0, 0.03) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.faq-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+  opacity: 0.5;
+  z-index: 1;
+}
+
+/* ========================================
+   SECTION BADGE
+   ======================================== */
+
+.faq-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 2rem;
+  border: 2px solid #ec4899;
+  background: rgba(236, 72, 153, 0.05);
+  position: relative;
+  animation: badge-slide-in 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes badge-slide-in {
+  0% {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(-30px) rotateX(-90deg);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes icon-pulse {
-  0%,
   100% {
-    transform: scale(1) rotate(0deg);
-  }
-  50% {
-    transform: scale(1.15) rotate(5deg);
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
   }
 }
 
-.animate-fade-in-up {
-  animation: fade-in-up 0.8s ease-out forwards;
+.badge-number {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 1.25rem;
+  color: #ec4899;
+  animation: badge-pulse 2s ease-in-out infinite;
+}
+
+@keyframes badge-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.badge-text {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.2em;
+  color: #ec4899;
+  text-transform: uppercase;
+}
+
+/* ========================================
+   FAQ GRID
+   ======================================== */
+
+.faq-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.faq-item {
+  background: #0a0a0f;
+  position: relative;
+  animation: faq-item-entrance 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) backwards;
+}
+
+@keyframes faq-item-entrance {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px) rotateY(-10deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotateY(0deg);
+  }
+}
+
+.faq-item:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* ========================================
+   FAQ NUMBER
+   ======================================== */
+
+.faq-number {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 2.5rem;
+  color: rgba(139, 92, 246, 0.1);
+  line-height: 1;
+  pointer-events: none;
+  transition: all 0.4s ease;
+}
+
+.faq-item:hover .faq-number {
+  color: rgba(139, 92, 246, 0.2);
+  transform: scale(1.1);
+}
+
+/* ========================================
+   FAQ CONTENT
+   ======================================== */
+
+.faq-content {
+  padding: 2rem 2rem 2rem 6rem;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .faq-content {
+    padding: 1.5rem 1.5rem 1.5rem 4.5rem;
+  }
+
+  .faq-number {
+    font-size: 2rem;
+    top: 1rem;
+    left: 1rem;
+  }
+}
+
+/* ========================================
+   FAQ QUESTION
+   ======================================== */
+
+.faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  gap: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.faq-question:hover {
+  transform: translateX(8px);
+}
+
+.question-text {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+  transition: color 0.3s ease;
+  flex: 1;
+}
+
+.faq-question:hover .question-text {
+  color: #8b5cf6;
+}
+
+.faq-active .question-text {
+  color: #ec4899;
+}
+
+/* ========================================
+   QUESTION ICON (PLUS/MINUS)
+   ======================================== */
+
+.question-icon {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border: 2px solid rgba(139, 92, 246, 0.3);
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.faq-question:hover .question-icon {
+  border-color: rgba(139, 92, 246, 0.6);
+  transform: rotate(90deg);
+}
+
+.faq-active .question-icon {
+  border-color: rgba(236, 72, 153, 0.8);
+  transform: rotate(180deg);
+  background: rgba(236, 72, 153, 0.1);
+}
+
+.icon-bar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #8b5cf6;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.icon-bar-1 {
+  width: 14px;
+  height: 2px;
+}
+
+.icon-bar-2 {
+  width: 2px;
+  height: 14px;
+}
+
+.faq-active .icon-bar {
+  background: #ec4899;
+}
+
+.faq-active .icon-bar-2 {
+  transform: translate(-50%, -50%) rotate(90deg);
   opacity: 0;
 }
 
-/* FAQ Panels */
-.faq-panels :deep(.v-expansion-panel) {
-  background: rgba(var(--v-theme-surface), 0.6);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
+/* ========================================
+   FAQ ANSWER
+   ======================================== */
+
+.faq-answer-wrapper {
+  max-height: 0;
   overflow: hidden;
-  transition:
-    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-    border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-    background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform;
+  transition: max-height 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-.faq-panels :deep(.v-expansion-panel:hover) {
-  border-color: rgba(var(--v-theme-primary), 0.3);
-  transform: translateY(-2px);
+.answer-expanded {
+  max-height: 500px;
 }
 
-.faq-panels :deep(.v-expansion-panel--active) {
-  border-color: rgba(var(--v-theme-primary), 0.5);
-  background: rgba(var(--v-theme-surface), 0.8);
-}
-
-.faq-panels :deep(.v-expansion-panel-title) {
-  transition: color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.faq-panels :deep(.v-expansion-panel--active .v-expansion-panel-title) {
-  color: rgb(var(--v-theme-primary));
-}
-
-/* Icon Wrapper */
-.faq-icon-wrapper {
-  transition:
-    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-    background 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-  will-change: transform;
-}
-
-.faq-icon-expanded {
-  background: linear-gradient(
-    135deg,
-    rgba(var(--v-theme-primary), 0.3),
-    rgba(var(--v-theme-secondary), 0.3)
-  ) !important;
-  transform: rotate(360deg) scale(1.1);
-}
-
-.faq-icon {
-  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.faq-icon-expanded .faq-icon {
-  animation: icon-pulse 0.6s ease-out;
-}
-
-.faq-panels :deep(.v-expansion-panel--active) .faq-accent {
-  height: 4px;
-}
-
-/* FAQ Accent Bar */
-.faq-accent {
-  transition: height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-/* FAQ Answer */
 .faq-answer {
-  line-height: 1.7;
-  animation: fade-in-content 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  padding-top: 1.5rem;
+  position: relative;
 }
 
-@keyframes fade-in-content {
-  from {
+.answer-glitch-line {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, #8b5cf6, #ec4899, #06b6d4);
+  margin-bottom: 1rem;
+  animation: glitch-line-expand 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes glitch-line-expand {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  100% {
+    width: 60px;
+    opacity: 1;
+  }
+}
+
+.answer-text {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  animation: answer-fade-in 0.6s ease 0.2s backwards;
+}
+
+@keyframes answer-fade-in {
+  0% {
     opacity: 0;
     transform: translateY(-10px);
   }
-  to {
+  100% {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* ========================================
+   FAQ BORDER
+   ======================================== */
+
+.faq-border {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(139, 92, 246, 0.2);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.faq-item:hover .faq-border {
+  transform: scaleX(1);
+}
+
+.faq-active + .faq-border {
+  background: rgba(236, 72, 153, 0.4);
+  transform: scaleX(1);
 }
 </style>

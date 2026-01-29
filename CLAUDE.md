@@ -343,6 +343,696 @@ Process videos and update video manifest:
 - Scraper Lambda package uses npm for bundling (not pnpm) due to symlink issues in zip files
 - Lambda deployment packages (`lambda.zip`) excluded from source control via `.gitignore`
 
+## Frontend Design System
+
+The FakeOut frontend uses a distinctive "Reality Fracture" design aesthetic that visually represents the core game concept: the tension between authentic content and AI-generated synthesis. This design system avoids generic "AI slop" aesthetics by employing bold, technical, and brutalist design patterns.
+
+### Design Philosophy
+
+**Core Concept: Reality Fracture**
+- Visual metaphor: Glitches, distortions, and CRT artifacts represent the fracturing of reality perception
+- Technical precision: Monospace typography, status indicators, and terminal aesthetics convey systematic analysis
+- Hard edges: No rounded corners (border-radius: 0) for a brutalist, unpolished feel
+- Maximalist approach: Bold animations, layered effects, and decorative elements create visual interest
+- Retro-futurism: CRT scanlines, pixel effects, and binary patterns evoke early digital aesthetics
+
+### Typography
+
+**Font Pairing**
+- **Display/Headers**: [Archivo Black](https://fonts.google.com/specimen/Archivo+Black) - Bold, condensed, geometric sans-serif
+- **Body/Monospace**: [IBM Plex Mono](https://fonts.google.com/specimen/IBM+Plex+Mono) - Technical monospace with excellent readability
+
+**Usage Guidelines**
+- Use Archivo Black for: Main headlines, large numbers, brand elements, decorative badges
+- Use IBM Plex Mono for: Body text, labels, buttons, navigation, code-like elements
+- Always include via Google Fonts import: `@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600;700&display=swap');`
+- Never use generic fonts like Inter, Roboto, or system fonts
+
+### Color Palette
+
+**Core Colors (always use these exact hex codes)**
+```css
+/* Primary - Purple */
+--color-primary: #8b5cf6;
+
+/* Secondary - Pink */
+--color-secondary: #ec4899;
+
+/* Accent - Cyan */
+--color-accent: #06b6d4;
+
+/* Background - Deep Black */
+--color-bg: #0a0a0f;
+
+/* Text - White variations */
+--color-text: rgba(255, 255, 255, 0.9);
+--color-text-dim: rgba(255, 255, 255, 0.7);
+--color-text-subtle: rgba(255, 255, 255, 0.5);
+--color-text-ghost: rgba(255, 255, 255, 0.4);
+```
+
+**Color Usage**
+- Purple (#8b5cf6): Primary borders, main glows, status indicators, primary interactions
+- Pink (#ec4899): Active states, highlights, badges, accent elements
+- Cyan (#06b6d4): Tertiary accents, alternative status indicators, gradient endpoints
+- Deep Black (#0a0a0f): All backgrounds
+- Gradients: Combine purple → pink → cyan for animated elements
+
+### Visual Effect Patterns
+
+#### 1. Scanlines (CRT Effect)
+```css
+.scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.03) 0px,
+    rgba(0, 0, 0, 0.05) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+  animation: scanline-drift 8s linear infinite;
+}
+
+@keyframes scanline-drift {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(4px); }
+}
+```
+
+#### 2. Glitch Effects (RGB Separation)
+```css
+.glitch-text {
+  position: relative;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-text::before {
+  left: 2px;
+  text-shadow: -2px 0 #ec4899;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  animation: glitch-anim-1 2s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+  left: -2px;
+  text-shadow: 2px 0 #06b6d4;
+  clip-path: polygon(0 80%, 100% 20%, 100% 100%, 0 100%);
+  animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+  0% { clip-path: polygon(0 0%, 100% 0%, 100% 5%, 0 5%); }
+  20% { clip-path: polygon(0 15%, 100% 15%, 100% 25%, 0 25%); }
+  40% { clip-path: polygon(0 40%, 100% 40%, 100% 60%, 0 60%); }
+  60% { clip-path: polygon(0 75%, 100% 75%, 100% 76%, 0 76%); }
+  80% { clip-path: polygon(0 85%, 100% 85%, 100% 100%, 0 100%); }
+  100% { clip-path: polygon(0 0%, 100% 0%, 100% 100%, 0 100%); }
+}
+```
+
+#### 3. Grid Background
+```css
+.grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+  opacity: 0.5;
+  z-index: 1;
+}
+```
+
+#### 4. Noise Texture
+```css
+.noise-texture {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.3;
+  z-index: 2;
+}
+```
+
+#### 5. Corner Brackets (L-shaped indicators)
+```css
+.corner-bracket {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+}
+
+.corner-bracket::before,
+.corner-bracket::after {
+  content: '';
+  position: absolute;
+  background: #8b5cf6;
+}
+
+.corner-bracket::before {
+  width: 100%;
+  height: 2px;
+}
+
+.corner-bracket::after {
+  width: 2px;
+  height: 100%;
+}
+
+/* Top-left */
+.corner-tl { top: 1rem; left: 1rem; }
+.corner-tl::before { top: 0; left: 0; }
+.corner-tl::after { top: 0; left: 0; }
+
+/* Top-right */
+.corner-tr { top: 1rem; right: 1rem; }
+.corner-tr::before { top: 0; right: 0; }
+.corner-tr::after { top: 0; right: 0; }
+
+/* Bottom-left */
+.corner-bl { bottom: 1rem; left: 1rem; }
+.corner-bl::before { bottom: 0; left: 0; }
+.corner-bl::after { bottom: 0; left: 0; }
+
+/* Bottom-right */
+.corner-br { bottom: 1rem; right: 1rem; }
+.corner-br::before { bottom: 0; right: 0; }
+.corner-br::after { bottom: 0; right: 0; }
+```
+
+#### 6. Bracket Motifs (Text decoration)
+```html
+<!-- Navigation links -->
+<a class="nav-link">
+  <span class="bracket">[</span>
+  <span class="text">LINK TEXT</span>
+  <span class="bracket">]</span>
+</a>
+
+<!-- Badges -->
+<div class="badge">
+  <span class="bracket">▸</span>
+  <span class="text">BADGE TEXT</span>
+  <span class="bracket">◂</span>
+</div>
+```
+
+```css
+.bracket {
+  color: rgba(139, 92, 246, 0.6);
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover .bracket:first-child {
+  transform: translateX(-2px);
+}
+
+.nav-link:hover .bracket:last-child {
+  transform: translateX(2px);
+}
+```
+
+### Animation Patterns
+
+**Standard Easing Function**
+```css
+/* Use this cubic-bezier for all bouncy animations */
+transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+```
+
+**Staggered Entrance Animations**
+```vue
+<template>
+  <div
+    v-for="(item, index) in items"
+    :key="index"
+    :style="{ animationDelay: `${index * 0.1}s` }"
+    class="animated-item"
+  >
+</template>
+
+<style>
+.animated-item {
+  animation: entrance 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) backwards;
+}
+
+@keyframes entrance {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px) rotateY(-10deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotateY(0deg);
+  }
+}
+</style>
+```
+
+**Status Pulse**
+```css
+@keyframes status-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.7;
+  }
+}
+
+.status-dot {
+  animation: status-pulse 2s ease-in-out infinite;
+}
+```
+
+**Hover Scan Effect**
+```css
+.scan-effect {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(139, 92, 246, 0.2) 50%,
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: transform 1s ease;
+}
+
+.card:hover .scan-effect {
+  transform: translateX(100%);
+}
+```
+
+### Code Implementation Patterns
+
+#### Component Structure Template
+```vue
+<template>
+  <div class="fracture-component relative overflow-hidden">
+    <!-- Background Effects (always first) -->
+    <div class="scanlines"></div>
+    <div class="grid-bg"></div>
+    <div class="noise-texture"></div>
+
+    <!-- Main Content (relative z-10) -->
+    <div class="component-content relative z-10">
+      <!-- Your content here -->
+    </div>
+
+    <!-- Decorative Elements (last) -->
+    <div class="corner-bracket corner-tl"></div>
+    <div class="corner-bracket corner-tr"></div>
+    <div class="corner-bracket corner-bl"></div>
+    <div class="corner-bracket corner-br"></div>
+  </div>
+</template>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600;700&display=swap');
+
+.fracture-component {
+  background: #0a0a0f;
+  font-family: 'IBM Plex Mono', monospace;
+  position: relative;
+}
+
+/* Add scanlines, grid, noise, corners styles here */
+</style>
+```
+
+#### Badge Component Pattern (see [MissionHero.vue](code/frontend/src/components/MissionHero.vue#L29-L33))
+```vue
+<div class="fracture-badge">
+  <span class="badge-bracket">▸</span>
+  <span class="badge-text">{{ $t('badge.text') }}</span>
+  <span class="badge-bracket">◂</span>
+</div>
+
+<style scoped>
+.fracture-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 2rem;
+  border: 2px solid #ec4899;
+  background: rgba(236, 72, 153, 0.05);
+  position: relative;
+}
+
+.badge-bracket {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 1.25rem;
+  color: #ec4899;
+  animation: badge-pulse 2s ease-in-out infinite;
+}
+
+.badge-text {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.2em;
+  color: #ec4899;
+  text-transform: uppercase;
+}
+</style>
+```
+
+#### Numbered Card Pattern (see [GameFAQ.vue](code/frontend/src/components/game/GameFAQ.vue#L19-L50))
+```vue
+<div class="fracture-card" v-for="(item, index) in items" :key="index">
+  <div class="card-number">{{ String(index + 1).padStart(2, '0') }}</div>
+
+  <div class="card-content">
+    <!-- Your content -->
+  </div>
+</div>
+
+<style scoped>
+.fracture-card {
+  position: relative;
+  background: #0a0a0f;
+}
+
+.card-number {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 2.5rem;
+  color: rgba(139, 92, 246, 0.1);
+  line-height: 1;
+  pointer-events: none;
+  transition: all 0.4s ease;
+}
+
+.fracture-card:hover .card-number {
+  color: rgba(139, 92, 246, 0.2);
+  transform: scale(1.1);
+}
+
+.card-content {
+  padding: 2rem 2rem 2rem 6rem;
+  position: relative;
+}
+</style>
+```
+
+#### Status Indicators Pattern (see [AppFooter.vue](code/frontend/src/components/AppFooter.vue#L12-L25))
+```vue
+<div class="status-bar">
+  <div class="status-item">
+    <div class="status-dot status-online"></div>
+    <span class="status-label">SYSTEM:ONLINE</span>
+  </div>
+  <div class="status-item">
+    <div class="status-dot status-ready"></div>
+    <span class="status-label">STATUS:READY</span>
+  </div>
+</div>
+
+<style scoped>
+.status-bar {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: status-pulse 2s ease-in-out infinite;
+}
+
+.status-online {
+  background: #8b5cf6;
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.8);
+}
+
+.status-ready {
+  background: #ec4899;
+  box-shadow: 0 0 8px rgba(236, 72, 153, 0.8);
+  animation-delay: 0.3s;
+}
+
+.status-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+}
+</style>
+```
+
+#### Navigation with Brackets Pattern (see [AppFooter.vue](code/frontend/src/components/AppFooter.vue#L28-L46))
+```vue
+<nav class="fracture-nav">
+  <div class="nav-section">
+    <div class="nav-section-label">// SECTION_NAME</div>
+    <a href="#" class="nav-link">
+      <span class="nav-bracket">[</span>
+      <span class="nav-text">{{ $t('nav.link') }}</span>
+      <span class="nav-bracket">]</span>
+    </a>
+  </div>
+</nav>
+
+<style scoped>
+.nav-section-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(236, 72, 153, 0.6);
+  margin-bottom: 0.5rem;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  width: fit-content;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #8b5cf6, #ec4899);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.nav-link:hover {
+  color: #8b5cf6;
+  transform: translateX(4px);
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+.nav-bracket {
+  color: rgba(139, 92, 246, 0.4);
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover .nav-bracket {
+  color: #ec4899;
+}
+</style>
+```
+
+#### Interactive Card with Corner Brackets (see [ImageCard.vue](code/frontend/src/components/game/ImageCard.vue))
+```vue
+<div class="fracture-interactive-card" :class="{ 'card-selected': isSelected }">
+  <!-- Corner Brackets -->
+  <div class="card-corner card-corner-tl"></div>
+  <div class="card-corner card-corner-tr"></div>
+  <div class="card-corner card-corner-bl"></div>
+  <div class="card-corner card-corner-br"></div>
+
+  <!-- Scan Effect on Hover -->
+  <div class="card-scan-effect"></div>
+
+  <!-- Label Badge -->
+  <div class="label-badge">
+    <span class="label-bracket">[</span>
+    <span class="label-text">A</span>
+    <span class="label-bracket">]</span>
+  </div>
+
+  <!-- Content -->
+  <div class="card-image-wrapper">
+    <img :src="imageUrl" alt="" />
+  </div>
+</div>
+
+<style scoped>
+.fracture-interactive-card {
+  position: relative;
+  overflow: hidden;
+  border: 2px solid rgba(139, 92, 246, 0.3);
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  cursor: pointer;
+}
+
+.fracture-interactive-card:hover {
+  border-color: rgba(139, 92, 246, 0.6);
+  transform: translateY(-4px);
+}
+
+.card-selected {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+  animation: border-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes border-pulse {
+  0%, 100% { border-color: #8b5cf6; }
+  50% { border-color: #ec4899; }
+}
+
+.card-scan-effect {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(139, 92, 246, 0.3) 50%,
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: transform 0.8s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.fracture-interactive-card:hover .card-scan-effect {
+  transform: translateX(100%);
+}
+
+.label-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(10, 10, 15, 0.9);
+  border: 2px solid rgba(139, 92, 246, 0.5);
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+}
+
+.label-bracket {
+  color: rgba(139, 92, 246, 0.6);
+}
+
+.label-text {
+  color: rgba(255, 255, 255, 0.9);
+}
+</style>
+```
+
+### Component Design Checklist
+
+When creating or modifying components, ensure:
+
+**Typography**
+- [ ] Google Fonts import included for Archivo Black and IBM Plex Mono
+- [ ] Archivo Black used for display elements (headlines, large numbers, brand)
+- [ ] IBM Plex Mono used for body text and monospace elements
+- [ ] Appropriate font weights (400, 600, 700) specified
+
+**Colors**
+- [ ] Using exact hex codes: #8b5cf6, #ec4899, #06b6d4, #0a0a0f
+- [ ] Background is always #0a0a0f
+- [ ] Text uses rgba(255, 255, 255, X) with appropriate opacity
+- [ ] Purple for primary, pink for active/highlight, cyan for tertiary
+
+**Visual Effects**
+- [ ] Scanlines layer added for CRT effect
+- [ ] Grid background included where appropriate
+- [ ] Corner brackets on cards and containers
+- [ ] Bracket motifs ([...] or ▸◂) on buttons/links/badges
+- [ ] No border-radius (hard edges everywhere)
+
+**Animations**
+- [ ] Using cubic-bezier(0.68, -0.55, 0.265, 1.55) for bouncy transitions
+- [ ] Staggered animations with animationDelay for lists
+- [ ] Hover effects with scan/glitch animations
+- [ ] Status indicators have pulse animations
+
+**Structure**
+- [ ] Background effects positioned absolutely with z-index: 1
+- [ ] Main content has relative positioning with z-index: 10
+- [ ] Decorative elements (corners, badges) properly layered
+- [ ] Overflow hidden on containers with effects
+
+**Accessibility**
+- [ ] Proper semantic HTML elements
+- [ ] i18n integration for all text content
+- [ ] Sufficient color contrast maintained
+- [ ] Interactive elements have focus states
+
+**Responsive**
+- [ ] Mobile breakpoints defined (@media max-width: 768px)
+- [ ] Font sizes and spacing adjust for mobile
+- [ ] Grid layouts use grid-template-columns with minmax()
+- [ ] Touch targets are at least 44x44px
+
+### Reference Components
+
+Study these components as reference implementations:
+
+1. **[MissionHero.vue](code/frontend/src/components/MissionHero.vue)** - Hero section with large typography, glitch effects, numbered mission blocks
+2. **[GameFAQ.vue](code/frontend/src/components/game/GameFAQ.vue)** - Custom accordion, numbered cards, animated plus/minus icons
+3. **[index.vue](code/frontend/src/pages/[lang]/index.vue)** - Articles grid with scan effects, date badges, border animations
+4. **[AppFooter.vue](code/frontend/src/components/AppFooter.vue)** - Status bar, bracketed navigation, terminal divider, brand display
+5. **[ImageCard.vue](code/frontend/src/components/game/ImageCard.vue)** - Interactive cards, corner brackets, result overlays, emoji icons
+
 ## Game Flow
 
 1. **Content Generation** (Automated weekly via Step Functions):

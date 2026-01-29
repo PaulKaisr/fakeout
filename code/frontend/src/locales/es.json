@@ -15,6 +15,26 @@
     "roundLabel": "Ronda",
     "scoreLabel": "Puntuación"
   },
+  "hero": {
+    "eyebrow": "Nuestra Misión",
+    "title": "Fomentar la Alfabetización en IA",
+    "subtitle": "Transformamos la detección de medios sintéticos en un desafío atractivo, ayudándote a desarrollar pensamiento crítico para navegar un mundo mediado por IA con confianza.",
+    "mission": "Esto no se trata solo de detectar falsificaciones de IA, se trata de convertirse en un ciudadano digital perspicaz que pueda cuestionar los sistemas de IA, evaluar sus resultados y detectar la desinformación con juicio independiente.",
+    "features": {
+      "learn": "Aprender",
+      "play": "Jugar",
+      "detect": "Detectar"
+    },
+    "stats": {
+      "think": "Pensar",
+      "challenge": "Desafiar",
+      "improve": "Mejorar"
+    },
+    "cta": {
+      "title": "¿Listo para mejorar tus habilidades de detección de IA?",
+      "description": "Únete a nuestra comunidad y conviértete en un ciudadano digital más perspicaz"
+    }
+  },
   "game": {
     "mode": "Modo",
     "question": {
