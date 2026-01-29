@@ -229,7 +229,7 @@
     <v-main>
       <v-container
         fluid
-        class="py-12 flex flex-col items-center justify-center max-w-[1800px] mx-auto"
+        class="py-4 md:py-6 flex flex-col items-center justify-center max-w-450 mx-auto"
       >
         <!-- Question Section - fixed height reserves space to prevent CLS -->
         <div
