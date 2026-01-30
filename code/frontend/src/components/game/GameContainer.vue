@@ -14,7 +14,7 @@
         <!-- Mobile Menu Toggle -->
         <button
           @click="drawer = !drawer"
-          class="terminal-button mobile-menu-btn"
+          class="mobile-menu-btn"
           aria-label="Open navigation menu"
         >
           <span class="terminal-bracket">[</span>
@@ -43,28 +43,26 @@
           </div>
         </div>
 
-        <div class="header-spacer"></div>
+        <!-- Mode Switcher (Centered) -->
+        <div class="mode-selector">
+          <button
+            :class="['mode-button', { active: mode === 'video' }]"
+            @click="switchMode('video')"
+          >
+            <span class="mode-icon">▶</span>
+            <span class="mode-text">VIDEO</span>
+          </button>
+          <button
+            :class="['mode-button', { active: mode === 'image' }]"
+            @click="switchMode('image')"
+          >
+            <span class="mode-icon">◉</span>
+            <span class="mode-text">PHOTO</span>
+          </button>
+        </div>
 
         <!-- Desktop Navigation -->
         <nav class="desktop-nav">
-          <!-- Mode Switcher -->
-          <div class="mode-selector">
-            <button
-              :class="['mode-button', { active: mode === 'video' }]"
-              @click="switchMode('video')"
-            >
-              <span class="mode-icon">▶</span>
-              <span class="mode-text">VIDEO</span>
-            </button>
-            <button
-              :class="['mode-button', { active: mode === 'image' }]"
-              @click="switchMode('image')"
-            >
-              <span class="mode-icon">◉</span>
-              <span class="mode-text">PHOTO</span>
-            </button>
-          </div>
-
           <!-- Language Switcher -->
           <div class="lang-selector">
             <LanguageSwitcher />
@@ -84,26 +82,6 @@
           </button>
         </nav>
 
-        <!-- System Stats -->
-        <div class="system-stats">
-          <div class="stat-item">
-            <div class="stat-label">RND</div>
-            <div class="stat-value">
-              {{ state.currentRoundIndex + 1 }}/{{ state.totalRounds }}
-            </div>
-            <div class="stat-indicator stat-indicator-primary"></div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-label">SCR</div>
-            <div class="stat-value">{{ state.score }}</div>
-            <div class="stat-indicator stat-indicator-success"></div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-label">TM</div>
-            <div class="stat-value">{{ formattedRoundTime }}</div>
-            <div class="stat-indicator stat-indicator-cyan"></div>
-          </div>
-        </div>
       </div>
 
       <!-- Status Bar -->
@@ -294,6 +272,7 @@
         <!-- Detection Grid -->
         <div
           v-else-if="currentRound"
+          ref="detectionGridWrapper"
           class="detection-grid-wrapper game-grid-container"
         >
           <!-- Scanning Overlay -->
@@ -359,6 +338,55 @@
               </div>
               <div class="frame-footer">
                 <div class="frame-scanline"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game Stats Panel -->
+          <div class="game-stats-panel">
+            <div class="stats-panel-inner">
+              <!-- Scanlines -->
+              <div class="stats-scanlines"></div>
+
+              <!-- Corner Brackets -->
+              <div class="stats-corner stats-corner-tl"></div>
+              <div class="stats-corner stats-corner-tr"></div>
+              <div class="stats-corner stats-corner-bl"></div>
+              <div class="stats-corner stats-corner-br"></div>
+
+              <!-- Stats Grid -->
+              <div class="stats-grid">
+                <div class="stat-box">
+                  <div class="stat-box-header">
+                    <span class="stat-box-bracket">[</span>
+                    <span class="stat-box-label">ROUND</span>
+                    <span class="stat-box-bracket">]</span>
+                  </div>
+                  <div class="stat-box-value">
+                    {{ state.currentRoundIndex + 1 }}/{{ state.totalRounds }}
+                  </div>
+                  <div class="stat-box-indicator stat-indicator-primary"></div>
+                </div>
+
+                <div class="stat-box">
+                  <div class="stat-box-header">
+                    <span class="stat-box-bracket">[</span>
+                    <span class="stat-box-label">SCORE</span>
+                    <span class="stat-box-bracket">]</span>
+                  </div>
+                  <div class="stat-box-value">{{ state.score }}</div>
+                  <div class="stat-box-indicator stat-indicator-success"></div>
+                </div>
+
+                <div class="stat-box">
+                  <div class="stat-box-header">
+                    <span class="stat-box-bracket">[</span>
+                    <span class="stat-box-label">TIME</span>
+                    <span class="stat-box-bracket">]</span>
+                  </div>
+                  <div class="stat-box-value">{{ formattedRoundTime }}</div>
+                  <div class="stat-box-indicator stat-indicator-cyan"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -522,6 +550,7 @@ const drawer = ref(false);
 const route = useRoute();
 const gamePrompt = ref<string | null>(null);
 const gamePlayCount = ref(0);
+const detectionGridWrapper = ref<HTMLDivElement | null>(null);
 
 const mediaLoaded = reactive({ A: false, B: false });
 const durations = reactive({ A: 0, B: 0 });
@@ -674,6 +703,12 @@ const loadGame = async () => {
     } else {
       state.status = GameStatus.PLAYING;
     }
+
+    // Scroll to detection grid if game is in PLAYING state
+    if (state.status === GameStatus.PLAYING) {
+      await nextTick();
+      scrollToDetectionGrid();
+    }
   } catch (e) {
     console.error(e);
     error.value = t("errors.failedToLoad");
@@ -772,6 +807,15 @@ const totalGameDuration = computed(() => {
   return state.history.reduce((acc, curr) => acc + (curr.duration || 0), 0);
 });
 
+const scrollToDetectionGrid = () => {
+  if (detectionGridWrapper.value) {
+    detectionGridWrapper.value.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
+};
+
 const nextRound = async () => {
   if (state.currentRoundIndex < state.totalRounds - 1) {
     // Reset loading state immediately to hide grid before new content loads
@@ -788,6 +832,10 @@ const nextRound = async () => {
     state.currentRoundIndex++;
     selectedImageId.value = null;
     state.status = GameStatus.PLAYING;
+
+    // Scroll to the detection grid after state update
+    await nextTick();
+    scrollToDetectionGrid();
   } else {
     state.status = GameStatus.GAME_OVER;
     if (loadedDate.value) {
@@ -882,10 +930,17 @@ const switchLanguage = (newLocale: string) => {
   max-width: 1600px;
   margin: 0 auto;
   padding: 1rem 1.5rem;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 2rem;
   position: relative;
+}
+
+@media (max-width: 767px) {
+  .header-container {
+    display: flex;
+  }
 }
 
 /* Header Brackets */
@@ -944,14 +999,35 @@ const switchLanguage = (newLocale: string) => {
 
 /* Mobile Menu Button */
 .mobile-menu-btn {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(139, 92, 246, 0.1);
+  border: 2px solid rgba(139, 92, 246, 0.3);
+  border-radius: 0.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@media (min-width: 768px) {
+.mobile-menu-btn:hover {
+  background: rgba(139, 92, 246, 0.2);
+  border-color: #8b5cf6;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+}
+
+.mobile-menu-btn .terminal-text {
+  text-transform: uppercase;
+}
+
+@media (max-width: 767px) {
   .mobile-menu-btn {
-    display: none;
+    display: flex;
   }
 }
 
@@ -1037,8 +1113,21 @@ const switchLanguage = (newLocale: string) => {
   font-weight: bold;
 }
 
-.header-spacer {
-  flex: 1;
+/* Mode Selector (centered in grid) */
+.mode-selector {
+  display: none;
+  gap: 0.5rem;
+  padding: 0.25rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 0.5rem;
+  justify-self: center;
+}
+
+@media (min-width: 768px) {
+  .mode-selector {
+    display: flex;
+  }
 }
 
 /* Desktop Navigation */
@@ -1046,22 +1135,13 @@ const switchLanguage = (newLocale: string) => {
   display: none;
   align-items: center;
   gap: 1.5rem;
+  justify-self: end;
 }
 
 @media (min-width: 768px) {
   .desktop-nav {
     display: flex;
   }
-}
-
-/* Mode Selector */
-.mode-selector {
-  display: flex;
-  gap: 0.5rem;
-  padding: 0.25rem;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(139, 92, 246, 0.2);
-  border-radius: 0.5rem;
 }
 
 .mode-button {
@@ -1162,7 +1242,8 @@ const switchLanguage = (newLocale: string) => {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 0.375rem;
-  min-width: 4rem;
+  width: 5rem;
+  flex-shrink: 0;
   overflow: hidden;
 }
 
@@ -1991,6 +2072,194 @@ const switchLanguage = (newLocale: string) => {
   to {
     transform: translateX(100%);
   }
+}
+
+/* ========================================
+   GAME STATS PANEL
+   ======================================== */
+
+.game-stats-panel {
+  margin-top: 2rem;
+}
+
+.stats-panel-inner {
+  position: relative;
+  background: rgba(10, 10, 15, 0.6);
+  border: 2px solid rgba(139, 92, 246, 0.3);
+  padding: 2rem;
+  overflow: hidden;
+}
+
+.stats-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.02) 0px,
+    rgba(0, 0, 0, 0.03) 1px,
+    transparent 2px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.stats-corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  z-index: 10;
+}
+
+.stats-corner::before,
+.stats-corner::after {
+  content: '';
+  position: absolute;
+  background: #8b5cf6;
+}
+
+.stats-corner::before {
+  width: 100%;
+  height: 2px;
+}
+
+.stats-corner::after {
+  width: 2px;
+  height: 100%;
+}
+
+.stats-corner-tl {
+  top: 0;
+  left: 0;
+}
+
+.stats-corner-tl::before {
+  top: 0;
+  left: 0;
+}
+
+.stats-corner-tl::after {
+  top: 0;
+  left: 0;
+}
+
+.stats-corner-tr {
+  top: 0;
+  right: 0;
+}
+
+.stats-corner-tr::before {
+  top: 0;
+  right: 0;
+}
+
+.stats-corner-tr::after {
+  top: 0;
+  right: 0;
+}
+
+.stats-corner-bl {
+  bottom: 0;
+  left: 0;
+}
+
+.stats-corner-bl::before {
+  bottom: 0;
+  left: 0;
+}
+
+.stats-corner-bl::after {
+  bottom: 0;
+  left: 0;
+}
+
+.stats-corner-br {
+  bottom: 0;
+  right: 0;
+}
+
+.stats-corner-br::before {
+  bottom: 0;
+  right: 0;
+}
+
+.stats-corner-br::after {
+  bottom: 0;
+  right: 0;
+}
+
+.stats-grid {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+@media (max-width: 640px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.stat-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.5rem 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  transition: all 0.3s ease;
+}
+
+.stat-box:hover {
+  border-color: rgba(139, 92, 246, 0.4);
+  background: rgba(139, 92, 246, 0.05);
+}
+
+.stat-box-header {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.stat-box-bracket {
+  color: rgba(139, 92, 246, 0.6);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.stat-box-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+}
+
+.stat-box-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+  min-width: 4rem;
+  text-align: center;
+}
+
+.stat-box-indicator {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: stat-pulse 2s ease-in-out infinite;
 }
 
 /* ========================================
