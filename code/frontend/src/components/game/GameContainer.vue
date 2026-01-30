@@ -39,7 +39,6 @@
               FAKEOUT
               <span class="terminal-bracket">◂</span>
             </h1>
-            <p class="brand-subtitle">REALITY_DETECTION_SYSTEM</p>
           </div>
         </div>
 
@@ -81,7 +80,6 @@
             <span class="nav-bracket">]</span>
           </button>
         </nav>
-
       </div>
     </header>
 
@@ -770,8 +768,8 @@ const totalGameDuration = computed(() => {
 const scrollToDetectionGrid = () => {
   if (detectionGridWrapper.value) {
     detectionGridWrapper.value.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
+      behavior: "smooth",
+      block: "start",
     });
   }
 };
@@ -833,15 +831,12 @@ const switchLanguage = (newLocale: string) => {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=IBM+Plex+Mono:wght@400;600;700&display=swap");
-
 /* ========================================
    DETECTION SYSTEM BASE
    ======================================== */
 
 .detection-system {
   background: #0a0a0f;
-  font-family: "Orbitron", monospace;
   position: relative;
   min-height: 100vh;
   overflow-x: hidden;
@@ -1051,7 +1046,6 @@ const switchLanguage = (newLocale: string) => {
 }
 
 .brand-title {
-  font-family: "Orbitron", sans-serif;
   font-size: 1rem;
   font-weight: 900;
   letter-spacing: 0.1em;
@@ -1287,7 +1281,6 @@ const switchLanguage = (newLocale: string) => {
   box-shadow: 0 0 8px rgba(6, 182, 212, 0.8);
 }
 
-
 /* ========================================
    TERMINAL DRAWER
    ======================================== */
@@ -1336,7 +1329,6 @@ const switchLanguage = (newLocale: string) => {
 }
 
 .drawer-title {
-  font-family: "Orbitron", sans-serif;
   font-size: 0.875rem;
   font-weight: 900;
   letter-spacing: 0.1em;
@@ -1588,7 +1580,6 @@ const switchLanguage = (newLocale: string) => {
 }
 
 .brief-title {
-  font-family: "Orbitron", sans-serif;
   font-size: clamp(1.25rem, 4vw, 2rem);
   font-weight: 900;
   letter-spacing: 0.05em;
@@ -1939,7 +1930,7 @@ const switchLanguage = (newLocale: string) => {
 
 .stats-corner::before,
 .stats-corner::after {
-  content: '';
+  content: "";
   position: absolute;
   background: #8b5cf6;
 }
@@ -2050,7 +2041,7 @@ const switchLanguage = (newLocale: string) => {
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: "IBM Plex Mono", monospace;
 }
 
 .stat-box-bracket {
@@ -2068,7 +2059,7 @@ const switchLanguage = (newLocale: string) => {
 }
 
 .stat-box-value {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: "IBM Plex Mono", monospace;
   font-size: 1.125rem;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.95);
@@ -2133,7 +2124,6 @@ const switchLanguage = (newLocale: string) => {
 }
 
 .stat-value {
-  font-family: "Orbitron", sans-serif;
   font-size: 1.25rem;
   font-weight: 900;
   color: #8b5cf6;
@@ -2270,7 +2260,6 @@ const switchLanguage = (newLocale: string) => {
   );
   border: 2px solid rgba(139, 92, 246, 0.3);
   border-radius: 2rem;
-  font-family: "Orbitron", sans-serif;
   font-size: 0.875rem;
   font-weight: 900;
   letter-spacing: 0.15em;
