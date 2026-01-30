@@ -257,9 +257,21 @@ const onVideoMetadataLoaded = (event: Event) => {
   }
 };
 
-// Fallback: emit load without duration if metadata event didn't provide valid duration
+// Fallback: try to get duration from video element if metadata event didn't provide valid duration
 const onVideoLoaded = () => {
   if (hasEmittedLoad) return;
+
+  // Try to read duration from video element (may be available now)
+  if (videoRef.value) {
+    const duration = videoRef.value.duration;
+    if (Number.isFinite(duration) && duration > 0.5) {
+      hasEmittedLoad = true;
+      emit("load", duration);
+      return;
+    }
+  }
+
+  // Last resort: emit load without duration (image will be marked as loaded but no duration sync)
   hasEmittedLoad = true;
   emit("load");
 };
