@@ -145,13 +145,39 @@
               <span class="prompt-bracket">[</span>
               <span class="prompt-text">{{ t("game.viewPrompt") || "View Prompt" }}</span>
               <span class="prompt-bracket">]</span>
+              <div class="prompt-button-scan"></div>
             </button>
           </template>
-          <v-card class="prompt-card">
-            <v-card-text class="prompt-card-content">
-              <span class="prompt-header">{{ t("game.prompt") || "Prompt" }}:</span>
-              <div class="markdown-body" v-html="renderedPrompt"></div>
-            </v-card-text>
+
+          <v-card class="terminal-prompt-wrapper">
+            <div class="terminal-prompt-card">
+              <!-- Scanlines -->
+              <div class="prompt-scanlines"></div>
+
+              <!-- Corner Brackets -->
+              <div class="prompt-corner prompt-corner-tl"></div>
+              <div class="prompt-corner prompt-corner-tr"></div>
+              <div class="prompt-corner prompt-corner-bl"></div>
+              <div class="prompt-corner prompt-corner-br"></div>
+
+              <!-- Header -->
+              <div class="prompt-card-header">
+                <span class="prompt-header-bracket">▸</span>
+                <span class="prompt-header-text">{{ t("game.prompt") || "PROMPT" }}</span>
+                <span class="prompt-header-bracket">◂</span>
+              </div>
+
+              <!-- Content -->
+              <div class="prompt-card-body">
+                <div class="markdown-body" v-html="renderedPrompt"></div>
+              </div>
+
+              <!-- Footer -->
+              <div class="prompt-card-footer">
+                <span class="prompt-footer-text">AI_GENERATED</span>
+                <span class="prompt-footer-binary">{{ Array(6).fill(0).map(() => Math.random() > 0.5 ? '1' : '0').join('') }}</span>
+              </div>
+            </div>
           </v-card>
         </v-menu>
       </div>
@@ -771,6 +797,7 @@ const onTimeUpdate = () => {
 }
 
 .prompt-button {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 0.25rem;
@@ -785,12 +812,15 @@ const onTimeUpdate = () => {
   letter-spacing: 0.1em;
   cursor: pointer;
   transition: all 0.3s ease;
+  overflow: hidden;
 }
 
 .prompt-button:hover {
   background: rgba(139, 92, 246, 0.2);
   border-color: #8b5cf6;
   color: #8b5cf6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
 }
 
 .prompt-bracket {
@@ -802,26 +832,283 @@ const onTimeUpdate = () => {
   color: #ec4899;
 }
 
-.prompt-card {
-  max-width: 300px;
-  max-height: 400px;
-  overflow-y: auto;
-  background: rgba(10, 10, 15, 0.95);
-  border: 2px solid rgba(139, 92, 246, 0.3);
+.prompt-button-scan {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.6), transparent);
+  animation: prompt-scan 2s linear infinite;
 }
 
-.prompt-card-content {
-  font-size: 0.8rem;
+@keyframes prompt-scan {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
-.prompt-header {
+/* ========================================
+   TERMINAL PROMPT CARD
+   ======================================== */
+
+.terminal-prompt-wrapper {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+.terminal-prompt-card {
+  position: relative;
+  min-width: 320px;
+  max-width: 400px;
+  max-height: 500px;
+  background: #0a0a0f;
+  border: 2px solid rgba(139, 92, 246, 0.5);
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4);
+}
+
+/* Scanlines */
+.prompt-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.02) 0px,
+    rgba(0, 0, 0, 0.03) 1px,
+    transparent 2px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 1;
+  animation: scanline-drift 8s linear infinite;
+}
+
+@keyframes scanline-drift {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(3px); }
+}
+
+/* Corner Brackets */
+.prompt-corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  z-index: 10;
+  animation: corner-glow 3s ease-in-out infinite;
+}
+
+@keyframes corner-glow {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+.prompt-corner::before,
+.prompt-corner::after {
+  content: '';
+  position: absolute;
+  background: #8b5cf6;
+  box-shadow: 0 0 4px rgba(139, 92, 246, 0.6);
+}
+
+.prompt-corner::before {
+  width: 100%;
+  height: 2px;
+}
+
+.prompt-corner::after {
+  width: 2px;
+  height: 100%;
+}
+
+.prompt-corner-tl {
+  top: 0;
+  left: 0;
+}
+
+.prompt-corner-tl::before {
+  top: 0;
+  left: 0;
+}
+
+.prompt-corner-tl::after {
+  top: 0;
+  left: 0;
+}
+
+.prompt-corner-tr {
+  top: 0;
+  right: 0;
+}
+
+.prompt-corner-tr::before {
+  top: 0;
+  right: 0;
+}
+
+.prompt-corner-tr::after {
+  top: 0;
+  right: 0;
+}
+
+.prompt-corner-bl {
+  bottom: 0;
+  left: 0;
+}
+
+.prompt-corner-bl::before {
+  bottom: 0;
+  left: 0;
+}
+
+.prompt-corner-bl::after {
+  bottom: 0;
+  left: 0;
+}
+
+.prompt-corner-br {
+  bottom: 0;
+  right: 0;
+}
+
+.prompt-corner-br::before {
+  bottom: 0;
+  right: 0;
+}
+
+.prompt-corner-br::after {
+  bottom: 0;
+  right: 0;
+}
+
+/* Header */
+.prompt-card-header {
+  position: relative;
+  z-index: 5;
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(236, 72, 153, 0.1));
+  border-bottom: 1px solid rgba(139, 92, 246, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.prompt-header-bracket {
   font-family: 'IBM Plex Mono', monospace;
+  font-size: 1rem;
+  color: rgba(139, 92, 246, 0.7);
   font-weight: 700;
-  color: #8b5cf6;
+  animation: header-bracket-pulse 2s ease-in-out infinite;
+}
+
+@keyframes header-bracket-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.prompt-header-text {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.9);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  display: block;
-  margin-bottom: 0.5rem;
+}
+
+/* Body */
+.prompt-card-body {
+  position: relative;
+  z-index: 5;
+  padding: 1.5rem;
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.prompt-card-body .markdown-body {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.prompt-card-body .markdown-body p {
+  margin-bottom: 0.75rem;
+}
+
+.prompt-card-body .markdown-body strong {
+  color: #8b5cf6;
+  font-weight: 700;
+}
+
+.prompt-card-body .markdown-body em {
+  color: #ec4899;
+  font-style: italic;
+}
+
+.prompt-card-body .markdown-body code {
+  padding: 0.125rem 0.375rem;
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  color: #06b6d4;
+  font-size: 0.75rem;
+}
+
+/* Footer */
+.prompt-card-footer {
+  position: relative;
+  z-index: 5;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 0, 0, 0.4);
+  border-top: 1px solid rgba(139, 92, 246, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.prompt-footer-text {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(236, 72, 153, 0.7);
+  text-transform: uppercase;
+}
+
+.prompt-footer-binary {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.5rem;
+  color: rgba(139, 92, 246, 0.3);
+  letter-spacing: 0.2em;
+  animation: footer-binary-flicker 3s linear infinite;
+}
+
+@keyframes footer-binary-flicker {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+/* Scrollbar */
+.prompt-card-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.prompt-card-body::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.prompt-card-body::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.4);
+  border-radius: 0;
+}
+
+.prompt-card-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.6);
 }
 
 /* ========================================
