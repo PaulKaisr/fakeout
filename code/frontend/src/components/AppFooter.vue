@@ -57,7 +57,12 @@
             <span class="nav-text">{{ $t("footer.contact") }}</span>
             <span class="nav-bracket">]</span>
           </a>
-          <a href="https://www.reddit.com/r/FakeOutGame/" target="_blank" rel="noopener noreferrer" class="nav-link">
+          <a
+            href="https://www.reddit.com/r/FakeOutGame/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="nav-link"
+          >
             <span class="nav-bracket">[</span>
             <span class="nav-text">{{ $t("footer.reddit") }}</span>
             <span class="nav-bracket">]</span>
@@ -91,7 +96,6 @@
           <span class="brand-name">FAKEOUT</span>
           <span class="brand-bracket">◂</span>
           <span class="brand-separator">|</span>
-          <span class="brand-tagline">REALITY_DETECTION_SYSTEM</span>
         </div>
 
         <div class="footer-meta">
@@ -131,7 +135,7 @@ const termsLink = computed(() => `/${locale.value}/terms`);
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600;700&display=swap");
 
 /* ========================================
    FRACTURE FOOTER
@@ -141,7 +145,6 @@ const termsLink = computed(() => `/${locale.value}/terms`);
   background: #0a0a0f;
   border-top: 2px solid rgba(139, 92, 246, 0.3);
   padding: 3rem 1.5rem 2rem;
-  font-family: 'IBM Plex Mono', monospace;
   position: relative;
   margin-top: auto;
 }
@@ -229,7 +232,8 @@ const termsLink = computed(() => `/${locale.value}/terms`);
 }
 
 @keyframes status-pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 1;
   }
@@ -294,7 +298,7 @@ const termsLink = computed(() => `/${locale.value}/terms`);
 }
 
 .nav-link::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -2px;
   left: 0;
@@ -356,8 +360,13 @@ const termsLink = computed(() => `/${locale.value}/terms`);
 }
 
 @keyframes divider-flicker {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.6; }
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
 }
 
 /* ========================================
@@ -381,7 +390,7 @@ const termsLink = computed(() => `/${locale.value}/terms`);
 }
 
 .brand-bracket {
-  font-family: 'Archivo Black', sans-serif;
+  font-family: "Archivo Black", sans-serif;
   font-size: 1.25rem;
   color: #8b5cf6;
   animation: bracket-pulse 2s ease-in-out infinite;
@@ -392,12 +401,19 @@ const termsLink = computed(() => `/${locale.value}/terms`);
 }
 
 @keyframes bracket-pulse {
-  0%, 100% { opacity: 0.5; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.1); }
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
 }
 
 .brand-name {
-  font-family: 'Archivo Black', sans-serif;
+  font-family: "Archivo Black", sans-serif;
   font-size: 1.25rem;
   letter-spacing: 0.2em;
   color: rgba(255, 255, 255, 0.9);
@@ -446,7 +462,7 @@ const termsLink = computed(() => `/${locale.value}/terms`);
 
 .corner-bracket::before,
 .corner-bracket::after {
-  content: '';
+  content: "";
   position: absolute;
   background: #8b5cf6;
 }
