@@ -1580,7 +1580,7 @@ const switchLanguage = (newLocale: string) => {
 }
 
 .brief-title {
-  font-size: clamp(1.25rem, 4vw, 2rem);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
   font-weight: 900;
   letter-spacing: 0.05em;
   background: linear-gradient(135deg, #ffffff, rgba(139, 92, 246, 0.8));
@@ -1611,14 +1611,14 @@ const switchLanguage = (newLocale: string) => {
 }
 
 .theme-label {
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.8);
   letter-spacing: 0.05em;
 }
 
 .theme-value {
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #8b5cf6;
   letter-spacing: 0.1em;
@@ -1631,7 +1631,7 @@ const switchLanguage = (newLocale: string) => {
   align-items: center;
   justify-content: center;
   gap: 0.375rem;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   color: rgba(255, 255, 255, 0.5);
 }
 
@@ -1640,7 +1640,7 @@ const switchLanguage = (newLocale: string) => {
 }
 
 .brief-instructions {
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: rgba(255, 255, 255, 0.6);
   letter-spacing: 0.025em;
 }
