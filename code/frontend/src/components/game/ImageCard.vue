@@ -518,21 +518,43 @@ const onTimeUpdate = () => {
 
 .label-badge {
   position: absolute;
-  top: 1rem;
-  left: 1rem;
+  top: 0.5rem;
+  left: 0.5rem;
   z-index: 20;
   display: flex;
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.5rem 1rem;
+  gap: 0.125rem;
+  padding: 0.25rem 0.5rem;
   background: rgba(10, 10, 15, 0.9);
-  border: 2px solid rgba(139, 92, 246, 0.5);
+  border: 1px solid rgba(139, 92, 246, 0.5);
   font-family: 'IBM Plex Mono', monospace;
   font-weight: 700;
-  font-size: 1.25rem;
+  font-size: 0.75rem;
   color: #8b5cf6;
   letter-spacing: 0.1em;
   transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .label-badge {
+    top: 0.75rem;
+    left: 0.75rem;
+    gap: 0.2rem;
+    padding: 0.375rem 0.75rem;
+    border-width: 1.5px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .label-badge {
+    top: 1rem;
+    left: 1rem;
+    gap: 0.25rem;
+    padding: 0.5rem 1rem;
+    border-width: 2px;
+    font-size: 1.25rem;
+  }
 }
 
 .fracture-image-card:hover .label-badge {
