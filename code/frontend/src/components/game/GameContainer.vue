@@ -1578,7 +1578,7 @@ const switchLanguage = (newLocale: string) => {
 .detection-container {
   max-width: 1600px;
   margin: 0 auto;
-  padding: 2rem 1.5rem;
+  padding: 1.5rem 1.5rem;
 }
 
 /* ========================================
@@ -1586,13 +1586,13 @@ const switchLanguage = (newLocale: string) => {
    ======================================== */
 
 .mission-brief {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .brief-header {
   position: relative;
   text-align: center;
-  padding: 3rem 2rem;
+  padding: 1.5rem 1.5rem;
   background: linear-gradient(
     135deg,
     rgba(139, 92, 246, 0.05),
@@ -1600,11 +1600,11 @@ const switchLanguage = (newLocale: string) => {
   );
   border: 1px solid rgba(139, 92, 246, 0.2);
   border-radius: 1rem;
-  min-height: 12rem;
+  min-height: 8rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 .brief-corner {
@@ -1692,14 +1692,14 @@ const switchLanguage = (newLocale: string) => {
 
 .brief-title {
   font-family: "Orbitron", sans-serif;
-  font-size: clamp(1.75rem, 5vw, 3rem);
+  font-size: clamp(1.25rem, 4vw, 2rem);
   font-weight: 900;
   letter-spacing: 0.05em;
   background: linear-gradient(135deg, #ffffff, rgba(139, 92, 246, 0.8));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   animation: brief-glow 3s ease-in-out infinite;
 }
 
@@ -1714,23 +1714,23 @@ const switchLanguage = (newLocale: string) => {
 }
 
 .brief-theme {
-  min-height: 1.75rem;
+  min-height: 1.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.375rem;
   flex-wrap: wrap;
 }
 
 .theme-label {
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.8);
   letter-spacing: 0.05em;
 }
 
 .theme-value {
-  font-size: 1.125rem;
+  font-size: 0.875rem;
   font-weight: 700;
   color: #8b5cf6;
   letter-spacing: 0.1em;
@@ -1738,12 +1738,12 @@ const switchLanguage = (newLocale: string) => {
 }
 
 .brief-stats {
-  min-height: 1.25rem;
+  min-height: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  font-size: 0.875rem;
+  gap: 0.375rem;
+  font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.5);
 }
 
@@ -1752,7 +1752,7 @@ const switchLanguage = (newLocale: string) => {
 }
 
 .brief-instructions {
-  font-size: 1rem;
+  font-size: 0.875rem;
   color: rgba(255, 255, 255, 0.6);
   letter-spacing: 0.025em;
 }
@@ -1903,7 +1903,7 @@ const switchLanguage = (newLocale: string) => {
 
 .detection-grid-wrapper {
   position: relative;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .scanning-overlay {
@@ -2079,14 +2079,14 @@ const switchLanguage = (newLocale: string) => {
    ======================================== */
 
 .game-stats-panel {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 .stats-panel-inner {
   position: relative;
   background: rgba(10, 10, 15, 0.6);
   border: 2px solid rgba(139, 92, 246, 0.3);
-  padding: 2rem;
+  padding: 1rem;
   overflow: hidden;
 }
 
@@ -2106,8 +2106,8 @@ const switchLanguage = (newLocale: string) => {
 
 .stats-corner {
   position: absolute;
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   z-index: 10;
 }
 
@@ -2193,13 +2193,13 @@ const switchLanguage = (newLocale: string) => {
   z-index: 5;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  gap: 1rem;
 }
 
 @media (max-width: 640px) {
   .stats-grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 0.75rem;
   }
 }
 
@@ -2208,8 +2208,8 @@ const switchLanguage = (newLocale: string) => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
-  padding: 1.5rem 1rem;
+  gap: 0.5rem;
+  padding: 0.75rem 0.75rem;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(139, 92, 246, 0.2);
   transition: all 0.3s ease;
@@ -2229,12 +2229,12 @@ const switchLanguage = (newLocale: string) => {
 
 .stat-box-bracket {
   color: rgba(139, 92, 246, 0.6);
-  font-size: 0.75rem;
+  font-size: 0.625rem;
   font-weight: 700;
 }
 
 .stat-box-label {
-  font-size: 0.75rem;
+  font-size: 0.625rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   color: rgba(255, 255, 255, 0.5);
@@ -2243,21 +2243,21 @@ const switchLanguage = (newLocale: string) => {
 
 .stat-box-value {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 1.5rem;
+  font-size: 1.125rem;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.95);
   letter-spacing: 0.05em;
   font-variant-numeric: tabular-nums;
-  min-width: 4rem;
+  min-width: 3rem;
   text-align: center;
 }
 
 .stat-box-indicator {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  width: 6px;
-  height: 6px;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   animation: stat-pulse 2s ease-in-out infinite;
 }
@@ -2267,18 +2267,18 @@ const switchLanguage = (newLocale: string) => {
    ======================================== */
 
 .stats-display {
-  min-height: 3rem;
+  min-height: 2.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .global-stat {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 1rem 2rem;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
   background: linear-gradient(
     135deg,
     rgba(139, 92, 246, 0.1),
@@ -2301,21 +2301,21 @@ const switchLanguage = (newLocale: string) => {
 }
 
 .stat-bracket {
-  font-size: 1.5rem;
+  font-size: 1.125rem;
   color: rgba(139, 92, 246, 0.5);
   font-weight: bold;
 }
 
 .stat-value {
   font-family: "Orbitron", sans-serif;
-  font-size: 1.75rem;
+  font-size: 1.25rem;
   font-weight: 900;
   color: #8b5cf6;
   letter-spacing: 0.05em;
 }
 
 .stat-label {
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.8);
   letter-spacing: 0.025em;
@@ -2327,11 +2327,11 @@ const switchLanguage = (newLocale: string) => {
    ======================================== */
 
 .action-zone {
-  min-height: 5rem;
+  min-height: 4rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .action-button {
@@ -2422,21 +2422,21 @@ const switchLanguage = (newLocale: string) => {
    ======================================== */
 
 .intel-section {
-  margin-top: 4rem;
-  padding: 3rem 0;
+  margin-top: 3rem;
+  padding: 2rem 0;
   border-top: 1px solid rgba(139, 92, 246, 0.2);
 }
 
 .intel-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .intel-label {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 2rem;
+  gap: 0.5rem;
+  padding: 0.625rem 1.5rem;
   background: linear-gradient(
     135deg,
     rgba(139, 92, 246, 0.1),
@@ -2445,7 +2445,7 @@ const switchLanguage = (newLocale: string) => {
   border: 2px solid rgba(139, 92, 246, 0.3);
   border-radius: 2rem;
   font-family: "Orbitron", sans-serif;
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 900;
   letter-spacing: 0.15em;
   color: rgba(255, 255, 255, 0.95);
@@ -2456,7 +2456,7 @@ const switchLanguage = (newLocale: string) => {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .intel-panel {
@@ -2483,8 +2483,8 @@ const switchLanguage = (newLocale: string) => {
 .panel-header {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1.5rem;
+  gap: 0.75rem;
+  padding: 1rem;
   transition: color 0.3s ease;
 }
 
@@ -2496,15 +2496,15 @@ const switchLanguage = (newLocale: string) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   background: linear-gradient(
     135deg,
     rgba(139, 92, 246, 0.2),
     rgba(236, 72, 153, 0.2)
   );
   border-radius: 50%;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   color: #8b5cf6;
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   flex-shrink: 0;
@@ -2521,7 +2521,7 @@ const switchLanguage = (newLocale: string) => {
 
 .panel-title {
   flex: 1;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.025em;
   color: rgba(255, 255, 255, 0.9);
@@ -2538,9 +2538,9 @@ const switchLanguage = (newLocale: string) => {
 }
 
 .panel-answer {
-  padding: 0 1.5rem 1.5rem 4.5rem;
-  font-size: 0.9375rem;
-  line-height: 1.7;
+  padding: 0 1rem 1rem 3.5rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
   color: rgba(255, 255, 255, 0.6);
   animation: fade-in-content 0.6s ease-out forwards;
 }
@@ -2579,13 +2579,13 @@ const switchLanguage = (newLocale: string) => {
    ======================================== */
 
 .game-grid-container {
-  min-height: max(500px, calc((100vw - 3rem) * 0.75 * 2 + 2rem));
+  min-height: max(400px, calc((100vw - 3rem) * 0.75 * 2 + 2rem));
   contain: layout style;
 }
 
 @media (min-width: 768px) {
   .game-grid-container {
-    min-height: max(400px, calc((50vw - 4.5rem) * 0.75 + 3rem));
+    min-height: max(350px, calc((50vw - 4.5rem) * 0.75 + 3rem));
   }
 }
 
@@ -2599,20 +2599,20 @@ const switchLanguage = (newLocale: string) => {
   }
 
   .detection-container {
-    padding: 1.5rem 1rem;
+    padding: 1rem 1rem;
   }
 
   .brief-header {
-    padding: 2rem 1rem;
-    min-height: 10rem;
+    padding: 1.25rem 1rem;
+    min-height: 7rem;
   }
 
   .brief-title {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
   }
 
   .theme-value {
-    font-size: 1rem;
+    font-size: 0.875rem;
   }
 
   .action-button {
@@ -2621,7 +2621,7 @@ const switchLanguage = (newLocale: string) => {
   }
 
   .panel-answer {
-    padding-left: 3rem;
+    padding-left: 2.5rem;
   }
 }
 
