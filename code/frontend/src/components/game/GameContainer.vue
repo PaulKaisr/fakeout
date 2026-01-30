@@ -83,24 +83,6 @@
         </nav>
 
       </div>
-
-      <!-- Status Bar -->
-      <div class="header-status-bar">
-        <div class="status-segment">
-          <div class="status-dot"></div>
-          <span>SYSTEM:ACTIVE</span>
-        </div>
-        <div class="status-separator">|</div>
-        <div class="status-segment">
-          <div class="status-dot status-dot-pink"></div>
-          <span>MODE:{{ mode?.toUpperCase() || "IMAGE" }}</span>
-        </div>
-        <div class="status-separator">|</div>
-        <div class="status-segment">
-          <div class="status-dot status-dot-cyan"></div>
-          <span>STATUS:READY</span>
-        </div>
-      </div>
     </header>
 
     <!-- Terminal Navigation Drawer -->
@@ -291,54 +273,32 @@
           >
             <!-- Frame A -->
             <div class="detection-frame">
-              <div class="frame-header">
-                <span class="frame-label">// TARGET_A</span>
-                <div class="frame-indicator">
-                  <div class="indicator-dot"></div>
-                </div>
-              </div>
-              <div class="frame-content">
-                <ImageCard
-                  :key="currentRound.imageA.id"
-                  :image="currentRound.imageA"
-                  label="A"
-                  :is-selected="selectedImageId === currentRound.imageA.id"
-                  :show-result="state.status === GameStatus.ROUND_RESULT"
-                  :is-correct="isSelectionCorrect(currentRound.imageA)"
-                  :max-duration="commonDuration"
-                  @select="handleSelection(currentRound.imageA.id)"
-                  @load="handleLoad('A', $event)"
-                />
-              </div>
-              <div class="frame-footer">
-                <div class="frame-scanline"></div>
-              </div>
+              <ImageCard
+                :key="currentRound.imageA.id"
+                :image="currentRound.imageA"
+                label="A"
+                :is-selected="selectedImageId === currentRound.imageA.id"
+                :show-result="state.status === GameStatus.ROUND_RESULT"
+                :is-correct="isSelectionCorrect(currentRound.imageA)"
+                :max-duration="commonDuration"
+                @select="handleSelection(currentRound.imageA.id)"
+                @load="handleLoad('A', $event)"
+              />
             </div>
 
             <!-- Frame B -->
             <div class="detection-frame">
-              <div class="frame-header">
-                <span class="frame-label">// TARGET_B</span>
-                <div class="frame-indicator">
-                  <div class="indicator-dot"></div>
-                </div>
-              </div>
-              <div class="frame-content">
-                <ImageCard
-                  :key="currentRound.imageB.id"
-                  :image="currentRound.imageB"
-                  label="B"
-                  :is-selected="selectedImageId === currentRound.imageB.id"
-                  :show-result="state.status === GameStatus.ROUND_RESULT"
-                  :is-correct="isSelectionCorrect(currentRound.imageB)"
-                  :max-duration="commonDuration"
-                  @select="handleSelection(currentRound.imageB.id)"
-                  @load="handleLoad('B', $event)"
-                />
-              </div>
-              <div class="frame-footer">
-                <div class="frame-scanline"></div>
-              </div>
+              <ImageCard
+                :key="currentRound.imageB.id"
+                :image="currentRound.imageB"
+                label="B"
+                :is-selected="selectedImageId === currentRound.imageB.id"
+                :show-result="state.status === GameStatus.ROUND_RESULT"
+                :is-correct="isSelectionCorrect(currentRound.imageB)"
+                :max-duration="commonDuration"
+                @select="handleSelection(currentRound.imageB.id)"
+                @load="handleLoad('B', $event)"
+              />
             </div>
           </div>
 
@@ -1327,69 +1287,6 @@ const switchLanguage = (newLocale: string) => {
   box-shadow: 0 0 8px rgba(6, 182, 212, 0.8);
 }
 
-/* Status Bar */
-.header-status-bar {
-  display: none;
-  padding: 0.5rem 1.5rem;
-  background: rgba(0, 0, 0, 0.3);
-  border-top: 1px solid rgba(139, 92, 246, 0.15);
-  justify-content: center;
-  align-items: center;
-  gap: 1.5rem;
-  font-size: 0.625rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.4);
-}
-
-@media (min-width: 1024px) {
-  .header-status-bar {
-    display: flex;
-  }
-}
-
-.status-segment {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.status-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #8b5cf6;
-  box-shadow: 0 0 8px rgba(139, 92, 246, 0.8);
-  animation: status-pulse 2s ease-in-out infinite;
-}
-
-.status-dot-pink {
-  background: #ec4899;
-  box-shadow: 0 0 8px rgba(236, 72, 153, 0.8);
-  animation-delay: 0.3s;
-}
-
-.status-dot-cyan {
-  background: #06b6d4;
-  box-shadow: 0 0 8px rgba(6, 182, 212, 0.8);
-  animation-delay: 0.6s;
-}
-
-@keyframes status-pulse {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.3);
-    opacity: 0.7;
-  }
-}
-
-.status-separator {
-  color: rgba(139, 92, 246, 0.3);
-}
 
 /* ========================================
    TERMINAL DRAWER
@@ -2001,77 +1898,6 @@ const switchLanguage = (newLocale: string) => {
 
 .detection-frame {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.frame-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 0;
-}
-
-.frame-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  color: rgba(236, 72, 153, 0.7);
-}
-
-.frame-indicator {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.indicator-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #06b6d4;
-  box-shadow: 0 0 8px rgba(6, 182, 212, 0.8);
-  animation: indicator-pulse 2s ease-in-out infinite;
-}
-
-@keyframes indicator-pulse {
-  0%,
-  100% {
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-.frame-content {
-  flex: 1;
-}
-
-.frame-footer {
-  height: 1px;
-  overflow: hidden;
-}
-
-.frame-scanline {
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(139, 92, 246, 0.5),
-    transparent
-  );
-  animation: scanline-sweep 3s linear infinite;
-}
-
-@keyframes scanline-sweep {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(100%);
-  }
 }
 
 /* ========================================

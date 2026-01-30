@@ -96,10 +96,6 @@
 
         <div class="footer-meta">
           <span class="meta-item">
-            © {{ new Date().getFullYear() }}
-          </span>
-          <span class="meta-separator">·</span>
-          <span class="meta-item">
             {{ $t("footer.copyright", { year: new Date().getFullYear() }) }}
           </span>
         </div>
