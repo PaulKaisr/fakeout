@@ -136,9 +136,9 @@
         class="result-prompt"
       >
         <v-menu location="top" :close-on-content-click="false">
-          <template v-slot:activator="{ menuProps }">
+          <template v-slot:activator="{ props }">
             <button
-              v-bind="menuProps"
+              v-bind="props"
               class="prompt-button"
               @click.stop
             >
