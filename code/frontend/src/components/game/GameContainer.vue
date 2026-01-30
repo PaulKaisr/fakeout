@@ -882,7 +882,6 @@ const switchLanguage = (newLocale: string) => {
 }
 
 .header-container {
-  max-width: 1600px;
   margin: 0 auto;
   padding: 1rem 1.5rem;
   display: grid;
@@ -1465,7 +1464,6 @@ const switchLanguage = (newLocale: string) => {
 }
 
 .detection-container {
-  max-width: 1600px;
   margin: 0 auto;
   padding: 1.5rem 1.5rem;
 }
