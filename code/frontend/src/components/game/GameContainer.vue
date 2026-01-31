@@ -6,10 +6,6 @@
 
     <!-- Cyber Header -->
     <header class="cyber-header">
-      <!-- Corner Brackets -->
-      <div class="header-bracket header-bracket-tl"></div>
-      <div class="header-bracket header-bracket-tr"></div>
-
       <div class="header-container">
         <!-- Mobile Menu Toggle -->
         <button
