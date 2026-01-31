@@ -2122,7 +2122,7 @@ const switchLanguage = (newLocale: string) => {
 }
 
 .stat-value {
-  font-size: 1.25rem;
+  font-size: 2.5rem;
   font-weight: 900;
   color: #8b5cf6;
   letter-spacing: 0.05em;
@@ -2435,6 +2435,10 @@ const switchLanguage = (newLocale: string) => {
 
   .panel-answer {
     padding-left: 2.5rem;
+  }
+
+  .global-stat .stat-value {
+    font-size: 2rem;
   }
 }
 

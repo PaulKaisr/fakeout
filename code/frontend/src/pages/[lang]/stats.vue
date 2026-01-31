@@ -73,7 +73,9 @@
               </div>
               <div class="data-item">
                 <div class="data-value">
-                  {{ userStats.video.totalScore }}<span class="value-separator">/</span>{{ userStats.video.totalRounds }}
+                  {{ userStats.video.totalScore
+                  }}<span class="value-separator">/</span
+                  >{{ userStats.video.totalRounds }}
                 </div>
                 <div class="data-label">
                   <span class="label-slash">//</span>
@@ -90,7 +92,9 @@
                   {{ t("stats.accuracy") }}
                   <span class="label-bracket">◂</span>
                 </span>
-                <span class="accuracy-value video-color">{{ getAccuracy("video") }}%</span>
+                <span class="accuracy-value video-color"
+                  >{{ getAccuracy("video") }}%</span
+                >
               </div>
 
               <!-- Terminal Progress Bar -->
@@ -108,7 +112,10 @@
                     v-for="i in 20"
                     :key="i"
                     class="segment"
-                    :class="{ 'segment-active': i <= Math.floor(getAccuracy('video') / 5) }"
+                    :class="{
+                      'segment-active':
+                        i <= Math.floor(getAccuracy('video') / 5),
+                    }"
                   ></span>
                 </div>
               </div>
@@ -157,7 +164,9 @@
               </div>
               <div class="data-item">
                 <div class="data-value">
-                  {{ userStats.image.totalScore }}<span class="value-separator">/</span>{{ userStats.image.totalRounds }}
+                  {{ userStats.image.totalScore
+                  }}<span class="value-separator">/</span
+                  >{{ userStats.image.totalRounds }}
                 </div>
                 <div class="data-label">
                   <span class="label-slash">//</span>
@@ -174,7 +183,9 @@
                   {{ t("stats.accuracy") }}
                   <span class="label-bracket">◂</span>
                 </span>
-                <span class="accuracy-value image-color">{{ getAccuracy("image") }}%</span>
+                <span class="accuracy-value image-color"
+                  >{{ getAccuracy("image") }}%</span
+                >
               </div>
 
               <!-- Terminal Progress Bar -->
@@ -192,7 +203,10 @@
                     v-for="i in 20"
                     :key="i"
                     class="segment"
-                    :class="{ 'segment-active': i <= Math.floor(getAccuracy('image') / 5) }"
+                    :class="{
+                      'segment-active':
+                        i <= Math.floor(getAccuracy('image') / 5),
+                    }"
                   ></span>
                 </div>
               </div>
@@ -244,7 +258,7 @@ const confirmReset = () => {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600;700&display=swap");
 
 /* ========================================
    FRACTURE STATS PAGE
@@ -253,7 +267,7 @@ const confirmReset = () => {
 .fracture-stats-page {
   background: #0a0a0f;
   position: relative;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: "IBM Plex Mono", monospace;
 }
 
 /* ========================================
@@ -276,8 +290,12 @@ const confirmReset = () => {
 }
 
 @keyframes scanline-drift {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(4px); }
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(4px);
+  }
 }
 
 .stats-grid-bg {
@@ -313,7 +331,7 @@ const confirmReset = () => {
 
 .corner-bracket::before,
 .corner-bracket::after {
-  content: '';
+  content: "";
   position: absolute;
   background: #8b5cf6;
   box-shadow: 0 0 4px rgba(139, 92, 246, 0.6);
@@ -416,7 +434,7 @@ const confirmReset = () => {
   padding: 0.5rem 1rem;
   background: rgba(139, 92, 246, 0.05);
   border: 2px solid rgba(139, 92, 246, 0.3);
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: "IBM Plex Mono", monospace;
   font-size: 1rem;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.7);
@@ -451,7 +469,7 @@ const confirmReset = () => {
 }
 
 .header-title {
-  font-family: 'Archivo Black', sans-serif;
+  font-family: "Archivo Black", sans-serif;
   font-size: clamp(2.5rem, 8vw, 4.5rem);
   letter-spacing: 0.05em;
   color: rgba(255, 255, 255, 0.95);
@@ -490,22 +508,26 @@ const confirmReset = () => {
 }
 
 @keyframes glitch-text-1 {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0;
     transform: translate(0);
   }
-  20%, 80% {
+  20%,
+  80% {
     opacity: 0.8;
     transform: translate(-4px, 2px);
   }
 }
 
 @keyframes glitch-text-2 {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0;
     transform: translate(0);
   }
-  20%, 80% {
+  20%,
+  80% {
     opacity: 0.8;
     transform: translate(4px, -2px);
   }
@@ -522,7 +544,8 @@ const confirmReset = () => {
 .divider-line {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg,
+  background: linear-gradient(
+    90deg,
     transparent 0%,
     #8b5cf6 20%,
     #ec4899 50%,
@@ -533,8 +556,13 @@ const confirmReset = () => {
 }
 
 @keyframes divider-shimmer {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 /* ========================================
@@ -565,7 +593,8 @@ const confirmReset = () => {
   border: 2px solid rgba(139, 92, 246, 0.2);
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  animation: block-entrance 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) backwards;
+  animation: block-entrance 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)
+    backwards;
 }
 
 @keyframes block-entrance {
@@ -599,7 +628,7 @@ const confirmReset = () => {
   position: absolute;
   top: 1.5rem;
   right: 1.5rem;
-  font-family: 'Archivo Black', sans-serif;
+  font-family: "Archivo Black", sans-serif;
   font-size: 3.5rem;
   color: rgba(139, 92, 246, 0.08);
   line-height: 1;
@@ -629,7 +658,7 @@ const confirmReset = () => {
 
 .block-corner::before,
 .block-corner::after {
-  content: '';
+  content: "";
   position: absolute;
   background: #8b5cf6;
 }
@@ -708,7 +737,8 @@ const confirmReset = () => {
 .block-scan {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg,
+  background: linear-gradient(
+    90deg,
     transparent,
     rgba(139, 92, 246, 0.2) 50%,
     transparent
@@ -787,7 +817,7 @@ const confirmReset = () => {
 }
 
 .block-title {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: "IBM Plex Mono", monospace;
   font-size: 1.25rem;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.95);
@@ -835,7 +865,7 @@ const confirmReset = () => {
 }
 
 .data-value {
-  font-family: 'Archivo Black', sans-serif;
+  font-family: "Archivo Black", sans-serif;
   font-size: 2.5rem;
   color: rgba(255, 255, 255, 0.95);
   line-height: 1;
@@ -894,13 +924,20 @@ const confirmReset = () => {
 }
 
 @keyframes bracket-pulse {
-  0%, 100% { opacity: 0.5; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.2); }
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
 }
 
 .accuracy-value {
-  font-family: 'Archivo Black', sans-serif;
-  font-size: 1.75rem;
+  font-family: "Archivo Black", sans-serif;
+  font-size: 2.5rem;
   letter-spacing: -0.02em;
 }
 
@@ -962,10 +999,13 @@ const confirmReset = () => {
 }
 
 @keyframes progress-glitch-move {
-  0%, 90%, 100% {
+  0%,
+  90%,
+  100% {
     opacity: 0;
   }
-  92%, 96% {
+  92%,
+  96% {
     opacity: 0.6;
   }
 }
@@ -989,8 +1029,13 @@ const confirmReset = () => {
 }
 
 @keyframes segment-flicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 /* ========================================
@@ -999,7 +1044,8 @@ const confirmReset = () => {
 
 .reset-section {
   text-align: center;
-  animation: reset-entrance 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) backwards;
+  animation: reset-entrance 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)
+    backwards;
 }
 
 @keyframes reset-entrance {
@@ -1034,8 +1080,13 @@ const confirmReset = () => {
 }
 
 @keyframes divider-flicker {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.6; }
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
 }
 
 .reset-button {
@@ -1046,7 +1097,7 @@ const confirmReset = () => {
   padding: 0.75rem 2rem;
   background: rgba(239, 68, 68, 0.05);
   border: 2px solid rgba(239, 68, 68, 0.3);
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: "IBM Plex Mono", monospace;
   font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -1085,7 +1136,8 @@ const confirmReset = () => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(90deg,
+  background: linear-gradient(
+    90deg,
     transparent,
     rgba(239, 68, 68, 0.2) 50%,
     transparent
@@ -1123,7 +1175,7 @@ const confirmReset = () => {
   }
 
   .accuracy-value {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
 }
 </style>
