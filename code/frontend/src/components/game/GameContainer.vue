@@ -25,6 +25,16 @@
         <!-- Logo & Title -->
         <div class="header-brand" @click="router.push(`/${locale}`)">
           <div class="brand-icon">
+            <!-- Corner Brackets -->
+            <div class="logo-corner logo-corner-tl"></div>
+            <div class="logo-corner logo-corner-tr"></div>
+            <div class="logo-corner logo-corner-bl"></div>
+            <div class="logo-corner logo-corner-br"></div>
+
+            <!-- Scanlines -->
+            <div class="logo-scanlines"></div>
+
+            <!-- Logo Image -->
             <img
               src="/favicon-32x32.png"
               alt="Fakeout Logo"
@@ -1000,36 +1010,167 @@ const switchLanguage = (newLocale: string) => {
 
 .brand-icon {
   position: relative;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: rgba(10, 10, 15, 0.8);
+  border: 2px solid rgba(139, 92, 246, 0.4);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-brand:hover .brand-icon {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.4);
 }
 
 .brand-icon img {
   position: relative;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  border-radius: 4px;
+  z-index: 3;
+  width: 32px;
+  height: 32px;
+  display: block;
 }
 
 .icon-glow {
   position: absolute;
-  inset: -4px;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.4), transparent 70%);
-  filter: blur(8px);
+  inset: -8px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.3), transparent 70%);
+  filter: blur(12px);
   animation: pulse-glow 3s ease-in-out infinite;
+  z-index: 1;
 }
 
 @keyframes pulse-glow {
   0%,
   100% {
-    opacity: 0.5;
+    opacity: 0.4;
     transform: scale(1);
   }
   50% {
-    opacity: 1;
-    transform: scale(1.1);
+    opacity: 0.8;
+    transform: scale(1.15);
   }
+}
+
+/* Logo Scanlines */
+.logo-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.02) 0px,
+    rgba(0, 0, 0, 0.03) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  pointer-events: none;
+  z-index: 2;
+  animation: logo-scanline-drift 6s linear infinite;
+}
+
+@keyframes logo-scanline-drift {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(4px);
+  }
+}
+
+/* Logo Corner Brackets */
+.logo-corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  z-index: 4;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.header-brand:hover .logo-corner {
+  opacity: 1;
+}
+
+.logo-corner::before,
+.logo-corner::after {
+  content: "";
+  position: absolute;
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  box-shadow: 0 0 4px rgba(139, 92, 246, 0.6);
+}
+
+.logo-corner::before {
+  width: 100%;
+  height: 2px;
+}
+
+.logo-corner::after {
+  width: 2px;
+  height: 100%;
+}
+
+.logo-corner-tl {
+  top: -1px;
+  left: -1px;
+}
+
+.logo-corner-tl::before {
+  top: 0;
+  left: 0;
+}
+
+.logo-corner-tl::after {
+  top: 0;
+  left: 0;
+}
+
+.logo-corner-tr {
+  top: -1px;
+  right: -1px;
+}
+
+.logo-corner-tr::before {
+  top: 0;
+  right: 0;
+}
+
+.logo-corner-tr::after {
+  top: 0;
+  right: 0;
+}
+
+.logo-corner-bl {
+  bottom: -1px;
+  left: -1px;
+}
+
+.logo-corner-bl::before {
+  bottom: 0;
+  left: 0;
+}
+
+.logo-corner-bl::after {
+  bottom: 0;
+  left: 0;
+}
+
+.logo-corner-br {
+  bottom: -1px;
+  right: -1px;
+}
+
+.logo-corner-br::before {
+  bottom: 0;
+  right: 0;
+}
+
+.logo-corner-br::after {
+  bottom: 0;
+  right: 0;
 }
 
 .brand-text {
