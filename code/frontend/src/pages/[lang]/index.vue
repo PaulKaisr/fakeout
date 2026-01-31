@@ -1,126 +1,107 @@
 <template>
   <!-- Game Section - Main Focus -->
-  <GameContainer mode="video" />
+  <div id="game-section">
+    <GameContainer mode="video" />
+  </div>
+
+  <!-- Mission Hero Section -->
+  <MissionHero />
 
   <!-- Recent Articles Section -->
-  <section class="articles-section py-4 md:py-6 relative overflow-hidden">
+  <section class="fracture-articles-section py-16 md:py-24 relative overflow-hidden">
+    <!-- Background effects -->
+    <div class="articles-scanlines"></div>
+    <div class="articles-noise"></div>
+
     <v-container class="relative z-10">
       <!-- Section Header -->
-      <div class="text-center mb-12 animate-fade-in-up">
-        <div
-          class="inline-block px-4 py-2 bg-secondary/10 border-2 border-secondary/30 rounded-full mb-4"
-        >
-          <span
-            class="text-secondary font-bold text-sm uppercase tracking-wider"
-          >
-            {{ t("blog.subtitle") }}
+      <div class="text-center mb-16">
+        <div class="articles-badge">
+          <span class="badge-glitch" data-text="◆ {{ t('blog.subtitle') }} ◆">
+            ◆ {{ t("blog.subtitle") }} ◆
           </span>
         </div>
       </div>
 
       <!-- Articles Grid -->
-      <div v-if="recentArticles.length > 0" class="articles-grid mb-8">
-        <v-card
+      <div v-if="recentArticles.length > 0" class="fracture-articles-grid mb-12">
+        <a
           v-for="(article, index) in recentArticles"
           :key="article.id"
-          :to="getArticleLink(article)"
-          class="article-card h-full hover-lift-strong animate-fade-in-up"
-          :style="{ animationDelay: `${index * 0.1}s` }"
-          elevation="0"
+          :href="getArticleLink(article)"
+          class="fracture-article-card"
+          :style="{ animationDelay: `${index * 0.15}s` }"
         >
+          <!-- Article Number -->
+          <div class="article-number">{{ String(index + 1).padStart(2, '0') }}</div>
+
           <!-- Article Image -->
-          <div class="article-image-wrapper relative overflow-hidden">
-            <v-img
+          <div class="article-image-container">
+            <img
               v-if="article.image"
               :src="article.image"
               :alt="getArticleTitle(article)"
-              cover
-              class="article-image"
-              height="240"
-            >
-              <div
-                class="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"
-              ></div>
-            </v-img>
-            <div
-              v-else
-              class="article-image-placeholder h-60 bg-linear-to-br from-primary/20 to-secondary/20 flex items-center justify-center"
-            >
-              <v-icon
-                size="80"
-                :color="index % 2 === 0 ? 'primary' : 'secondary'"
-              >
-                mdi-text-box-outline
-              </v-icon>
+              class="article-image-fracture"
+            />
+            <div v-else class="article-image-fallback">
+              <span class="fallback-icon">▨</span>
             </div>
 
-            <!-- Floating Badge -->
-            <div
-              class="absolute top-4 left-4 px-3 py-1 bg-primary rounded-full shadow-lg"
-            >
-              <span class="text-xs font-bold text-white">
-                {{ formatDate(article.date) }}
-              </span>
+            <!-- Date Badge -->
+            <div class="article-date-badge">
+              {{ formatDate(article.date) }}
             </div>
+
+            <!-- Scan Effect -->
+            <div class="article-scan-effect"></div>
           </div>
 
           <!-- Article Content -->
-          <v-card-text class="pa-6">
-            <h3
-              class="text-xl font-bold mb-3 line-clamp-2 hover:text-primary transition-colors"
-            >
+          <div class="article-content-fracture">
+            <div class="article-meta">
+              <span class="meta-author">{{ article.author }}</span>
+              <span class="meta-separator">|</span>
+              <span class="meta-category">{{ t("blog.subtitle") }}</span>
+            </div>
+
+            <h3 class="article-title-fracture">
               {{ getArticleTitle(article) }}
             </h3>
 
-            <p class="text-medium-emphasis mb-4 line-clamp-3">
+            <p class="article-summary-fracture">
               {{ getArticleSummary(article) }}
             </p>
 
-            <div class="flex items-center justify-between mt-4">
-              <span class="text-sm text-medium-emphasis">
-                {{ article.author }}
-              </span>
-
-              <v-btn
-                variant="text"
-                color="primary"
-                size="small"
-                class="font-bold"
-              >
-                {{ t("blog.readMore") }}
-                <v-icon end size="small">mdi-arrow-right</v-icon>
-              </v-btn>
+            <div class="article-read-more">
+              <span class="read-more-text">{{ t("blog.readMore") }}</span>
+              <span class="read-more-arrow">→</span>
             </div>
-          </v-card-text>
+          </div>
 
-          <!-- Accent Bar -->
-          <div
-            class="article-accent h-1 bg-linear-to-r from-primary to-secondary"
-          ></div>
-        </v-card>
+          <!-- Border Effects -->
+          <div class="article-border-top"></div>
+          <div class="article-border-bottom"></div>
+        </a>
       </div>
 
       <!-- View All Button -->
-      <div class="text-center animate-fade-in-up" style="animation-delay: 0.5s">
-        <v-btn
-          :to="`/${locale}/blog`"
-          size="large"
-          variant="outlined"
-          color="secondary"
-          class="px-8 font-bold hover-lift"
-        >
-          {{ t("blog.continueExploring") }}
-          <v-icon end>mdi-arrow-right</v-icon>
-        </v-btn>
+      <div class="text-center">
+        <a :href="`/${locale}/blog`" class="view-all-button">
+          <span class="button-brackets">[</span>
+          <span class="button-text">{{ t("blog.continueExploring") }}</span>
+          <span class="button-brackets">]</span>
+          <div class="button-underline"></div>
+        </a>
       </div>
     </v-container>
   </section>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import GameContainer from "@/components/game/GameContainer.vue";
+import MissionHero from "@/components/MissionHero.vue";
 import { useSeoMeta, useSeoTranslations } from "@/composables/useSeoMeta";
 import { articles, type Article } from "@/data/articles";
 
@@ -186,142 +167,477 @@ const formatDate = (dateString: string) => {
   };
   return new Date(dateString).toLocaleDateString(locale.value, options);
 };
+
+// Ensure the page starts at the top (game section, not hero section)
+onMounted(() => {
+  // Small delay to ensure DOM is fully rendered
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, 0);
+});
 </script>
 
 <style scoped>
-/* Animations */
-@keyframes fade-in-up {
-  from {
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600;700&display=swap');
+
+/* ========================================
+   FRACTURE ARTICLES SECTION
+   ======================================== */
+
+.fracture-articles-section {
+  background: #0a0a0f;
+  position: relative;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* ========================================
+   BACKGROUND EFFECTS
+   ======================================== */
+
+.articles-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.015) 0px,
+    rgba(0, 0, 0, 0.02) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.articles-noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ========================================
+   SECTION BADGE
+   ======================================== */
+
+.articles-badge {
+  display: inline-block;
+  position: relative;
+  padding: 0.75rem 2rem;
+  border: 2px solid #06b6d4;
+  background: rgba(6, 182, 212, 0.05);
+  animation: articles-badge-entrance 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes articles-badge-entrance {
+  0% {
     opacity: 0;
-    transform: translateY(30px);
+    transform: scale(0.8) rotateZ(-10deg);
   }
-  to {
+  100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1) rotateZ(0deg);
   }
 }
 
-.animate-fade-in-up {
-  animation: fade-in-up 0.8s ease-out forwards;
+.badge-glitch {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.2em;
+  color: #06b6d4;
+  text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+}
+
+.badge-glitch::before,
+.badge-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
   opacity: 0;
 }
 
-/* Hover Effects */
-.hover-lift {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+.articles-badge:hover .badge-glitch::before {
+  color: #8b5cf6;
+  animation: badge-glitch-1 0.3s infinite;
 }
 
-.hover-lift:hover {
-  transform: translateY(-4px);
+.articles-badge:hover .badge-glitch::after {
+  color: #ec4899;
+  animation: badge-glitch-2 0.3s infinite;
 }
 
-.hover-lift-strong {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+@keyframes badge-glitch-1 {
+  0%, 100% {
+    opacity: 0;
+    transform: translate(0);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translate(-2px, 1px);
+  }
 }
 
-.hover-lift-strong:hover {
+@keyframes badge-glitch-2 {
+  0%, 100% {
+    opacity: 0;
+    transform: translate(0);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translate(2px, -1px);
+  }
+}
+
+/* ========================================
+   ARTICLES GRID
+   ======================================== */
+
+.fracture-articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1px;
+  background: rgba(139, 92, 246, 0.1);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .fracture-articles-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .fracture-articles-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================
+   ARTICLE CARD
+   ======================================== */
+
+.fracture-article-card {
+  background: #0a0a0f;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  animation: article-card-entrance 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) backwards;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes article-card-entrance {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.fracture-article-card:hover {
   transform: translateY(-8px);
+  background: rgba(255, 255, 255, 0.02);
 }
 
-.hover-lift-strong:hover .article-accent {
-  height: 4px;
+/* ========================================
+   ARTICLE NUMBER
+   ======================================== */
+
+.article-number {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 3rem;
+  color: rgba(139, 92, 246, 0.08);
+  z-index: 5;
+  line-height: 1;
+  transition: all 0.4s ease;
 }
 
-/* Text Gradient */
-.text-gradient {
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+.fracture-article-card:hover .article-number {
+  color: rgba(139, 92, 246, 0.15);
+  transform: scale(1.1) rotate(5deg);
 }
 
-/* Line Clamping */
-.line-clamp-2 {
+/* ========================================
+   ARTICLE IMAGE
+   ======================================== */
+
+.article-image-container {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  background: rgba(139, 92, 246, 0.05);
+}
+
+.article-image-fracture {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  filter: grayscale(0.3) contrast(1.1);
+}
+
+.fracture-article-card:hover .article-image-fracture {
+  transform: scale(1.08);
+  filter: grayscale(0) contrast(1.2);
+}
+
+.article-image-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
+}
+
+.fallback-icon {
+  font-size: 4rem;
+  color: rgba(139, 92, 246, 0.3);
+}
+
+/* Date Badge */
+.article-date-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.375rem 0.875rem;
+  background: rgba(6, 182, 212, 0.9);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #000;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  z-index: 5;
+  transition: all 0.3s ease;
+}
+
+.fracture-article-card:hover .article-date-badge {
+  background: rgba(236, 72, 153, 0.95);
+  transform: translateX(4px);
+}
+
+/* Scan Effect */
+.article-scan-effect {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(139, 92, 246, 0.2) 50%,
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.fracture-article-card:hover .article-scan-effect {
+  left: 100%;
+}
+
+/* ========================================
+   ARTICLE CONTENT
+   ======================================== */
+
+.article-content-fracture {
+  padding: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.article-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.meta-separator {
+  color: rgba(139, 92, 246, 0.5);
+}
+
+.meta-category {
+  color: rgba(236, 72, 153, 0.6);
+}
+
+.article-title-fracture {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 1.375rem;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0;
+  transition: color 0.3s ease;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-.line-clamp-3 {
+.fracture-article-card:hover .article-title-fracture {
+  color: #8b5cf6;
+}
+
+.article-summary-fracture {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  flex: 1;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* FAQ Panels */
-.faq-panels :deep(.v-expansion-panel) {
-  background: rgba(var(--v-theme-surface), 0.6);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
-  overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+.article-read-more {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #06b6d4;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-top: auto;
 }
 
-.faq-panels :deep(.v-expansion-panel:hover) {
-  border-color: rgba(var(--v-theme-primary), 0.3);
-  transform: translateY(-2px);
+.read-more-arrow {
+  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-.faq-panels :deep(.v-expansion-panel--active) {
-  border-color: rgba(var(--v-theme-primary), 0.5);
+.fracture-article-card:hover .read-more-arrow {
+  transform: translateX(6px);
 }
 
-.faq-panels :deep(.v-expansion-panel-title) {
+/* ========================================
+   BORDER EFFECTS
+   ======================================== */
+
+.article-border-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #8b5cf6, #ec4899, #06b6d4);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.fracture-article-card:hover .article-border-top {
+  transform: scaleX(1);
+}
+
+.article-border-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #06b6d4, #ec4899, #8b5cf6);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.fracture-article-card:hover .article-border-bottom {
+  transform: scaleX(1);
+}
+
+/* ========================================
+   VIEW ALL BUTTON
+   ======================================== */
+
+.view-all-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2.5rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #8b5cf6;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  text-decoration: none;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  animation: button-entrance 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.5s backwards;
+}
+
+@keyframes button-entrance {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.button-brackets {
+  font-size: 1.5rem;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.view-all-button:hover .button-brackets:first-child {
+  transform: translateX(-8px);
+  color: #ec4899;
+}
+
+.view-all-button:hover .button-brackets:last-child {
+  transform: translateX(8px);
+  color: #06b6d4;
+}
+
+.button-text {
   transition: color 0.3s ease;
 }
 
-.faq-panels :deep(.v-expansion-panel--active .v-expansion-panel-title) {
-  color: rgb(var(--v-theme-primary));
+.view-all-button:hover .button-text {
+  color: #ec4899;
 }
 
-/* Articles Grid */
-.articles-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
+.button-underline {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 2.5rem;
+  right: 2.5rem;
+  height: 2px;
+  background: linear-gradient(90deg, #8b5cf6, #ec4899, #06b6d4);
+  transform: scaleX(0);
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-@media (min-width: 768px) {
-  .articles-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* Article Card */
-.article-card {
-  display: flex;
-  flex-direction: column;
-  background: rgba(var(--v-theme-surface), 0.6);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
-  overflow: hidden;
-}
-
-.article-image-wrapper {
-  position: relative;
-}
-
-.article-image {
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.article-card:hover .article-image {
-  transform: scale(1.1);
-}
-
-.article-accent {
-  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Responsive Typography */
-@media (max-width: 768px) {
-  .articles-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
+.view-all-button:hover .button-underline {
+  transform: scaleX(1);
 }
 </style>
 
