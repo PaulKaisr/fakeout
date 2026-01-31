@@ -74,8 +74,11 @@
       <!-- Result Icon -->
       <div class="result-icon-container">
         <div class="result-icon-bg"></div>
-        <div class="result-icon" :class="image.isAiGenerated ? 'icon-ai' : 'icon-real'">
-          {{ image.isAiGenerated ? '⚡' : '📷' }}
+        <div
+          class="result-icon"
+          :class="image.isAiGenerated ? 'icon-ai' : 'icon-real'"
+        >
+          {{ image.isAiGenerated ? "⚡" : "📷" }}
         </div>
       </div>
 
@@ -88,7 +91,11 @@
               : t(`game.real.${image.mediaType || "image"}`)
           }}
         </div>
-        <div v-if="isSelected" class="result-verdict" :class="isCorrect ? 'verdict-correct' : 'verdict-wrong'">
+        <div
+          v-if="isSelected"
+          class="result-verdict"
+          :class="isCorrect ? 'verdict-correct' : 'verdict-wrong'"
+        >
           <span class="verdict-bracket">▸</span>
           {{ isCorrect ? t("game.correct") : t("game.wrong") }}
           <span class="verdict-bracket">◂</span>
@@ -97,7 +104,6 @@
 
       <!-- Credits/Prompt Section -->
       <div v-if="!image.isAiGenerated && image.credit" class="result-credits">
-        <div class="credits-divider"></div>
         <p class="credits-label">
           {{
             image.mediaType === "video" ? t("game.videoBy") : t("game.photoBy")
@@ -131,19 +137,14 @@
       </div>
 
       <!-- AI Prompt -->
-      <div
-        v-if="image.isAiGenerated && image.prompt"
-        class="result-prompt"
-      >
+      <div v-if="image.isAiGenerated && image.prompt" class="result-prompt">
         <v-menu location="top" :close-on-content-click="false">
           <template v-slot:activator="{ props }">
-            <button
-              v-bind="props"
-              class="prompt-button"
-              @click.stop
-            >
+            <button v-bind="props" class="prompt-button" @click.stop>
               <span class="prompt-bracket">[</span>
-              <span class="prompt-text">{{ t("game.viewPrompt") || "View Prompt" }}</span>
+              <span class="prompt-text">{{
+                t("game.viewPrompt") || "View Prompt"
+              }}</span>
               <span class="prompt-bracket">]</span>
               <div class="prompt-button-scan"></div>
             </button>
@@ -163,7 +164,9 @@
               <!-- Header -->
               <div class="prompt-card-header">
                 <span class="prompt-header-bracket">▸</span>
-                <span class="prompt-header-text">{{ t("game.prompt") || "PROMPT" }}</span>
+                <span class="prompt-header-text">{{
+                  t("game.prompt") || "PROMPT"
+                }}</span>
                 <span class="prompt-header-bracket">◂</span>
               </div>
 
@@ -175,7 +178,12 @@
               <!-- Footer -->
               <div class="prompt-card-footer">
                 <span class="prompt-footer-text">AI_GENERATED</span>
-                <span class="prompt-footer-binary">{{ Array(6).fill(0).map(() => Math.random() > 0.5 ? '1' : '0').join('') }}</span>
+                <span class="prompt-footer-binary">{{
+                  Array(6)
+                    .fill(0)
+                    .map(() => (Math.random() > 0.5 ? "1" : "0"))
+                    .join("")
+                }}</span>
               </div>
             </div>
           </v-card>
@@ -184,7 +192,7 @@
 
       <!-- Binary Pattern -->
       <div class="result-binary">
-        {{ image.isAiGenerated ? '01010101' : '11110000' }}
+        {{ image.isAiGenerated ? "01010101" : "11110000" }}
       </div>
     </div>
   </div>
@@ -294,7 +302,7 @@ const onTimeUpdate = () => {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600;700&display=swap");
 
 /* ========================================
    FRACTURE IMAGE CARD
@@ -306,7 +314,7 @@ const onTimeUpdate = () => {
   border: 2px solid rgba(139, 92, 246, 0.2);
   cursor: pointer;
   overflow: hidden;
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: "IBM Plex Mono", monospace;
   transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
@@ -386,7 +394,7 @@ const onTimeUpdate = () => {
 
 .card-corner::before,
 .card-corner::after {
-  content: '';
+  content: "";
   position: absolute;
   background: #8b5cf6;
 }
@@ -503,14 +511,17 @@ const onTimeUpdate = () => {
 }
 
 @keyframes spinner-rotate {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Glitch Effect */
 .glitch-layer {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg,
+  background: linear-gradient(
+    90deg,
     transparent 0%,
     rgba(139, 92, 246, 0.1) 50%,
     transparent 100%
@@ -539,7 +550,7 @@ const onTimeUpdate = () => {
   padding: 0.25rem 0.5rem;
   background: rgba(10, 10, 15, 0.9);
   border: 1px solid rgba(139, 92, 246, 0.5);
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: "IBM Plex Mono", monospace;
   font-weight: 700;
   font-size: 0.75rem;
   color: #8b5cf6;
@@ -603,7 +614,8 @@ const onTimeUpdate = () => {
 }
 
 @keyframes selection-pulse-animation {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
@@ -626,7 +638,7 @@ const onTimeUpdate = () => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 1rem;
   z-index: 25;
   animation: result-fade-in 0.4s ease backwards;
 }
@@ -643,8 +655,9 @@ const onTimeUpdate = () => {
 /* Result Icon */
 .result-icon-container {
   position: relative;
-  margin-bottom: 1.5rem;
-  animation: result-icon-entrance 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.2s backwards;
+  margin-bottom: 0.75rem;
+  animation: result-icon-entrance 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)
+    0.2s backwards;
 }
 
 @keyframes result-icon-entrance {
@@ -666,8 +679,15 @@ const onTimeUpdate = () => {
 }
 
 @keyframes icon-bg-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.5; }
-  50% { transform: scale(1.2); opacity: 0.8; }
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
 }
 
 .result-icon {
@@ -685,20 +705,33 @@ const onTimeUpdate = () => {
 }
 
 @keyframes icon-ai-flicker {
-  0%, 100% { opacity: 1; }
-  25%, 75% { opacity: 0.7; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 @keyframes icon-real-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
 }
 
 /* Result Labels */
 .result-label {
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.75rem;
   animation: result-label-slide 0.6s ease 0.3s backwards;
 }
 
@@ -714,16 +747,16 @@ const onTimeUpdate = () => {
 }
 
 .result-type {
-  font-family: 'Archivo Black', sans-serif;
+  font-family: "Archivo Black", sans-serif;
   font-size: 1.5rem;
   color: rgba(255, 255, 255, 0.95);
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
 }
 
 .result-verdict {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: "IBM Plex Mono", monospace;
   font-size: 0.95rem;
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -748,8 +781,15 @@ const onTimeUpdate = () => {
 }
 
 @keyframes verdict-bracket-pulse {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.2); }
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
 }
 
 /* ========================================
@@ -758,7 +798,7 @@ const onTimeUpdate = () => {
 
 .result-credits {
   text-align: center;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   animation: result-credits-fade 0.6s ease 0.4s backwards;
 }
 
@@ -771,17 +811,10 @@ const onTimeUpdate = () => {
   }
 }
 
-.credits-divider {
-  width: 60px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #06b6d4, transparent);
-  margin: 0 auto 1rem;
-}
-
 .credits-label {
   font-size: 0.7rem;
   color: rgba(255, 255, 255, 0.5);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -800,12 +833,12 @@ const onTimeUpdate = () => {
 }
 
 .credits-source {
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
 }
 
 .source-link {
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
   transition: color 0.3s ease;
 }
@@ -815,7 +848,7 @@ const onTimeUpdate = () => {
 }
 
 .result-prompt {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   animation: result-prompt-fade 0.6s ease 0.5s backwards;
 }
 
@@ -838,7 +871,7 @@ const onTimeUpdate = () => {
   padding: 0.5rem 1rem;
   background: rgba(139, 92, 246, 0.1);
   border: 2px solid rgba(139, 92, 246, 0.3);
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: "IBM Plex Mono", monospace;
   font-size: 0.75rem;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.7);
@@ -872,7 +905,12 @@ const onTimeUpdate = () => {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.6), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(139, 92, 246, 0.6),
+    transparent
+  );
   animation: prompt-scan 2s linear infinite;
 }
 
@@ -924,8 +962,12 @@ const onTimeUpdate = () => {
 }
 
 @keyframes scanline-drift {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(3px); }
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(3px);
+  }
 }
 
 /* Corner Brackets */
@@ -938,13 +980,18 @@ const onTimeUpdate = () => {
 }
 
 @keyframes corner-glow {
-  0%, 100% { opacity: 0.8; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 .prompt-corner::before,
 .prompt-corner::after {
-  content: '';
+  content: "";
   position: absolute;
   background: #8b5cf6;
   box-shadow: 0 0 4px rgba(139, 92, 246, 0.6);
@@ -1025,7 +1072,11 @@ const onTimeUpdate = () => {
   position: relative;
   z-index: 5;
   padding: 1rem;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(236, 72, 153, 0.1));
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.15),
+    rgba(236, 72, 153, 0.1)
+  );
   border-bottom: 1px solid rgba(139, 92, 246, 0.4);
   display: flex;
   align-items: center;
@@ -1034,7 +1085,7 @@ const onTimeUpdate = () => {
 }
 
 .prompt-header-bracket {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: "IBM Plex Mono", monospace;
   font-size: 1rem;
   color: rgba(139, 92, 246, 0.7);
   font-weight: 700;
@@ -1042,12 +1093,17 @@ const onTimeUpdate = () => {
 }
 
 @keyframes header-bracket-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
 }
 
 .prompt-header-text {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: "IBM Plex Mono", monospace;
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.2em;
@@ -1065,7 +1121,7 @@ const onTimeUpdate = () => {
 }
 
 .prompt-card-body .markdown-body {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: "IBM Plex Mono", monospace;
   font-size: 0.8rem;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.8);
@@ -1106,7 +1162,7 @@ const onTimeUpdate = () => {
 }
 
 .prompt-footer-text {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: "IBM Plex Mono", monospace;
   font-size: 0.625rem;
   font-weight: 700;
   letter-spacing: 0.15em;
@@ -1115,7 +1171,7 @@ const onTimeUpdate = () => {
 }
 
 .prompt-footer-binary {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: "IBM Plex Mono", monospace;
   font-size: 0.5rem;
   color: rgba(139, 92, 246, 0.3);
   letter-spacing: 0.2em;
@@ -1123,8 +1179,13 @@ const onTimeUpdate = () => {
 }
 
 @keyframes footer-binary-flicker {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.6; }
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
 }
 
 /* Scrollbar */
@@ -1151,9 +1212,9 @@ const onTimeUpdate = () => {
 
 .result-binary {
   position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  font-family: 'IBM Plex Mono', monospace;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  font-family: "IBM Plex Mono", monospace;
   font-size: 0.65rem;
   color: rgba(139, 92, 246, 0.2);
   letter-spacing: 0.2em;
@@ -1161,7 +1222,61 @@ const onTimeUpdate = () => {
 }
 
 @keyframes binary-flicker {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 0.4; }
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* ========================================
+   MOBILE RESPONSIVE
+   ======================================== */
+
+@media (max-width: 640px) {
+  .result-overlay {
+    padding: 0.75rem;
+    justify-content: flex-start;
+    overflow-y: auto;
+  }
+
+  .result-icon-container {
+    margin-bottom: 0.5rem;
+  }
+
+  .result-icon {
+    font-size: 3rem;
+  }
+
+  .result-label {
+    margin-bottom: 0.5rem;
+  }
+
+  .result-type {
+    font-size: 1.25rem;
+  }
+
+  .result-verdict {
+    font-size: 0.85rem;
+  }
+
+  .result-credits {
+    margin-top: 0.5rem;
+  }
+
+  .credits-label {
+    font-size: 0.65rem;
+  }
+
+  .credits-link,
+  .credits-text {
+    font-size: 0.85rem;
+  }
+
+  .source-link {
+    font-size: 0.7rem;
+  }
 }
 </style>
