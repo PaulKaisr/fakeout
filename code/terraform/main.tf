@@ -112,13 +112,14 @@ resource "aws_lambda_function" "scraper" {
 
   environment {
     variables = {
-      R2_ENDPOINT            = var.r2_endpoint
-      R2_ACCESS_KEY_ID       = var.r2_access_key_id
-      R2_SECRET_ACCESS_KEY   = var.r2_secret_access_key
-      PEXELS_API_KEY         = var.pexels_api_key
-      R2_BUCKET_NAME         = cloudflare_r2_bucket.fakeout_videos_dev.name
-      SUPABASE_URL           = var.supabase_url
+      R2_ENDPOINT               = var.r2_endpoint
+      R2_ACCESS_KEY_ID          = var.r2_access_key_id
+      R2_SECRET_ACCESS_KEY      = var.r2_secret_access_key
+      PEXELS_API_KEY            = var.pexels_api_key
+      R2_BUCKET_NAME            = cloudflare_r2_bucket.fakeout_videos_dev.name
+      SUPABASE_URL              = var.supabase_url
       SUPABASE_SERVICE_ROLE_KEY = var.supabase_service_role_key
+      STORAGE_PROVIDER          = "r2" # Default for main app
     }
   }
 
@@ -167,11 +168,14 @@ resource "aws_lambda_function" "describe_and_generate" {
 
   environment {
     variables = {
-      R2_ENDPOINT          = var.r2_endpoint
-      R2_ACCESS_KEY_ID     = var.r2_access_key_id
-      R2_SECRET_ACCESS_KEY = var.r2_secret_access_key
-      OPENAI_API_KEY       = var.openai_api_key
-      GOOGLE_AI_API_KEY    = var.google_ai_api_key
+      R2_ENDPOINT               = var.r2_endpoint
+      R2_ACCESS_KEY_ID          = var.r2_access_key_id
+      R2_SECRET_ACCESS_KEY      = var.r2_secret_access_key
+      OPENAI_API_KEY            = var.openai_api_key
+      GOOGLE_AI_API_KEY         = var.google_ai_api_key
+      SUPABASE_URL              = var.supabase_url
+      SUPABASE_SERVICE_ROLE_KEY = var.supabase_service_role_key
+      STORAGE_PROVIDER          = "r2" # Default for main app
     }
   }
 

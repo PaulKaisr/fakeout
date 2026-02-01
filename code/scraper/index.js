@@ -4,7 +4,7 @@ import {
   getCuratedImages,
   getPopularVideos,
 } from "./clients/pexel.js";
-import { putObject } from "./clients/s3.js";
+import { createStorageClient } from "./clients/storage.js";
 import { getNextPrompt, markPromptAsUsed } from "./clients/supabase.js";
 import fs from "fs";
 import path from "path";
@@ -143,6 +143,26 @@ export async function handler(event, context) {
     const mode = event.mode || "foto";
     const mediaCount = event.mediaCount || 10;
 
+    // Extract storage provider from event or environment
+    const storageProvider =
+      event.storage_provider || process.env.STORAGE_PROVIDER || "r2";
+    console.log(`Using storage provider: ${storageProvider}`);
+
+    // Initialize storage client based on provider
+    const storageConfig =
+      storageProvider === "supabase"
+        ? {
+            url: process.env.SUPABASE_URL,
+            serviceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
+          }
+        : {
+            endpoint: process.env.R2_ENDPOINT,
+            accessKeyId: process.env.R2_ACCESS_KEY_ID,
+            secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
+          };
+
+    const storageClient = createStorageClient(storageProvider, storageConfig);
+
     // Check for search prompt in executionInput (from Step Function) or directly in event
     const searchPrompt =
       event.executionInput?.search_prompt || event.search_prompt;
@@ -224,9 +244,9 @@ export async function handler(event, context) {
 
           const buffer = fs.readFileSync(tempOutput);
 
-          // Upload video to R2
+          // Upload video to storage
           console.log(`Uploading video ${mediaNumber} to ${key}...`);
-          const mediaResult = await putObject({
+          const mediaResult = await storageClient.putObject({
             bucketName,
             key,
             body: buffer,
@@ -252,7 +272,7 @@ export async function handler(event, context) {
           console.log(
             `Uploading metadata for video ${mediaNumber} to ${metaKey}...`
           );
-          const metaResult = await putObject({
+          const metaResult = await storageClient.putObject({
             bucketName,
             key: metaKey,
             body: JSON.stringify(metadata, null, 2),
@@ -371,9 +391,9 @@ export async function handler(event, context) {
         const imageBuffer = await response.arrayBuffer();
         const buffer = Buffer.from(imageBuffer);
 
-        // Upload image to R2
+        // Upload image to storage
         console.log(`Uploading image ${mediaNumber} to ${key}...`);
-        const mediaResult = await putObject({
+        const mediaResult = await storageClient.putObject({
           bucketName,
           key,
           body: buffer,
@@ -400,7 +420,7 @@ export async function handler(event, context) {
         console.log(
           `Uploading metadata for image ${mediaNumber} to ${metaKey}...`
         );
-        const metaResult = await putObject({
+        const metaResult = await storageClient.putObject({
           bucketName,
           key: metaKey,
           body: JSON.stringify(metadata, null, 2),

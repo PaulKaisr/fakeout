@@ -7,7 +7,7 @@ import os
 import json
 from datetime import datetime
 from typing import Dict, Any, List, Literal, Optional, Protocol
-from clients.r2 import R2Client
+from clients.storage_factory import create_storage_client, StorageClient
 from clients.openai_vision import VisionClient
 from clients.google_ai import GoogleAIClient
 import subprocess
@@ -26,7 +26,7 @@ def get_manifest_key(media_type: Literal["image", "video"]) -> str:
 
 def backfill_manifest(
     bucket_name: str,
-    r2_client: R2Client,
+    storage_client: StorageClient,
     media_type: Literal["image", "video"] = "image",
 ) -> List[str]:
     """
@@ -39,7 +39,7 @@ def backfill_manifest(
     print(f"Starting manifest backfill for {media_type}s...")
 
     # List top-level folders
-    response = r2_client.list_objects(bucket_name, delimiter="/", max_keys=1000)
+    response = storage_client.list_objects(bucket_name, delimiter="/", max_keys=1000)
     common_prefixes = response.get("CommonPrefixes", [])
 
     dates = []
@@ -57,7 +57,7 @@ def backfill_manifest(
 
         # Check if this date folder has content for the specified media type
         check_prefix = f"{folder_name}/{subfolder}/"
-        check_response = r2_client.list_objects(bucket_name, prefix=check_prefix, max_keys=1)
+        check_response = storage_client.list_objects(bucket_name, prefix=check_prefix, max_keys=1)
         
         contents = check_response.get("Contents")
         if contents:
@@ -68,7 +68,7 @@ def backfill_manifest(
             # Actually, let's list specifically for the first meta file.
             meta_key_predict = f"{folder_name}/{subfolder}/001_meta.json"
             try:
-                metadata = r2_client.get_json(bucket_name, meta_key_predict)
+                metadata = storage_client.get_json(bucket_name, meta_key_predict)
                 if metadata and "search_prompt" in metadata:
                     prompts[folder_name] = metadata["search_prompt"]
             except Exception:
@@ -83,7 +83,7 @@ def backfill_manifest(
         "prompts": prompts,
         "updated_at": datetime.utcnow().isoformat()
     }
-    r2_client.put_json(bucket_name, manifest_key, manifest, cache_control="max-age=0, no-cache")
+    storage_client.put_json(bucket_name, manifest_key, manifest, cache_control="max-age=0, no-cache")
     print(f"Manifest {manifest_key} updated with {len(dates)} dates: {dates}")
     print(f"Prompts found: {prompts}")
     return dates
@@ -92,7 +92,7 @@ def backfill_manifest(
 def update_manifest(
     bucket_name: str,
     date_prefix: str,
-    r2_client: R2Client,
+    storage_client: StorageClient,
     media_type: Literal["image", "video"] = "image",
 ):
     """
@@ -101,7 +101,7 @@ def update_manifest(
     manifest_key = get_manifest_key(media_type)
     subfolder = "pexel_videos_raw" if media_type == "video" else "pexel_images_raw"
     try:
-        manifest = r2_client.get_json(bucket_name, manifest_key)
+        manifest = storage_client.get_json(bucket_name, manifest_key)
         dates = manifest.get("dates", [])
         prompts = manifest.get("prompts", {})
     except Exception:
@@ -116,7 +116,7 @@ def update_manifest(
         # Try to get prompt for the new date
         meta_key_predict = f"{date_prefix}/{subfolder}/001_meta.json"
         try:
-            metadata = r2_client.get_json(bucket_name, meta_key_predict)
+            metadata = storage_client.get_json(bucket_name, meta_key_predict)
             if metadata and "search_prompt" in metadata:
                 prompts[date_prefix] = metadata["search_prompt"]
         except Exception:
@@ -127,7 +127,7 @@ def update_manifest(
             "prompts": prompts,
             "updated_at": datetime.utcnow().isoformat()
         }
-        r2_client.put_json(bucket_name, manifest_key, manifest, cache_control="max-age=0, no-cache")
+        storage_client.put_json(bucket_name, manifest_key, manifest, cache_control="max-age=0, no-cache")
         print(f"Added {date_prefix} to manifest {manifest_key}. Prompt: {prompts.get(date_prefix)}")
     else:
         print(f"Date {date_prefix} already in manifest {manifest_key}.")
@@ -149,7 +149,7 @@ def process_images(
     bucket_name: str,
     date_prefix: str,
     mode: Literal["DESCRIBE", "GENERATE", "DESCRIBE_AND_GENERATE"],
-    r2_client: R2Client,
+    storage_client: StorageClient,
     ai_client: AIProvider,
     provider: Literal["openai", "google"],
     n: Optional[int] = None,
@@ -161,7 +161,7 @@ def process_images(
         bucket_name: Name of the R2 bucket
         date_prefix: Date prefix to filter images (YYYY-MM-DD format)
         mode: Operation mode - DESCRIBE, GENERATE, or DESCRIBE_AND_GENERATE
-        r2_client: Initialized R2 client
+        storage_client: Initialized R2 client
         ai_client: Initialized AI client (OpenAI or Google)
         provider: AI provider to use ("openai" or "google")
         n: Optional limit on number of images to process (processes all if None)
@@ -175,7 +175,7 @@ def process_images(
     prefix = f"{date_prefix}/pexel_images_raw/"
     print(f"Listing metadata files with prefix: {prefix}")
 
-    response = r2_client.list_objects(bucket_name, prefix=prefix)
+    response = storage_client.list_objects(bucket_name, prefix=prefix)
     objects = response.get("Contents", [])
     meta_files = [obj["Key"] for obj in objects if obj["Key"].endswith("_meta.json")]
 
@@ -198,12 +198,12 @@ def process_images(
             print(f"Image key: {image_key}")
 
             # Get existing metadata
-            metadata = r2_client.get_json(bucket_name, meta_key)
+            metadata = storage_client.get_json(bucket_name, meta_key)
             original_image_id = metadata.get("id", image_number)
 
             # Download the image (needed for both DESCRIBE and GENERATE modes)
             print(f"Downloading image from {image_key}...")
-            image_data = r2_client.get_object(bucket_name, image_key)
+            image_data = storage_client.get_object(bucket_name, image_key)
 
             result = {
                 "image_number": image_number,
@@ -237,7 +237,7 @@ def process_images(
 
                 # Upload updated metadata back to R2
                 print(f"Updating metadata at {meta_key}...")
-                r2_client.put_json(bucket_name, meta_key, metadata)
+                storage_client.put_json(bucket_name, meta_key, metadata)
 
                 result["description"] = description
                 print(f"✓ Description added for {image_number}")
@@ -262,7 +262,7 @@ def process_images(
                 folder_name = f"{provider}_generated_images"
                 generated_image_key = f"{date_prefix}/{folder_name}/{original_image_id}"
                 print(f"Uploading generated image to {generated_image_key}...")
-                r2_client.put_object(
+                storage_client.put_object(
                     bucket_name,
                     generated_image_key,
                     generated_image_data,
@@ -285,7 +285,7 @@ def process_images(
                 # Upload generated image metadata
                 generated_meta_key = f"{date_prefix}/{folder_name}/{original_image_id}_meta.json"
                 print(f"Uploading generated image metadata to {generated_meta_key}...")
-                r2_client.put_json(bucket_name, generated_meta_key, generated_meta, cache_control="max-age=0, no-cache")
+                storage_client.put_json(bucket_name, generated_meta_key, generated_meta, cache_control="max-age=0, no-cache")
 
                 result["generated_image_key"] = generated_image_key
                 result["generated_meta_key"] = generated_meta_key
@@ -308,7 +308,7 @@ def process_videos(
     bucket_name: str,
     date_prefix: str,
     mode: Literal["DESCRIBE", "GENERATE", "DESCRIBE_AND_GENERATE"],
-    r2_client: R2Client,
+    storage_client: StorageClient,
     ai_client: GoogleAIClient,
     n: Optional[int] = None,
     max_length: int = 10,
@@ -320,7 +320,7 @@ def process_videos(
         bucket_name: Name of the R2 bucket
         date_prefix: Date prefix to filter videos (YYYY-MM-DD format)
         mode: Operation mode - DESCRIBE, GENERATE, or DESCRIBE_AND_GENERATE
-        r2_client: Initialized R2 client
+        storage_client: Initialized R2 client
         ai_client: Initialized Google AI client (only Google supports video)
         n: Optional limit on number of videos to process (processes all if None)
         max_length: Maximum length of video in seconds (default: 10)
@@ -334,7 +334,7 @@ def process_videos(
     prefix = f"{date_prefix}/pexel_videos_raw/"
     print(f"Listing video metadata files with prefix: {prefix}")
 
-    response = r2_client.list_objects(bucket_name, prefix=prefix)
+    response = storage_client.list_objects(bucket_name, prefix=prefix)
     objects = response.get("Contents", [])
     meta_files = [obj["Key"] for obj in objects if obj["Key"].endswith("_meta.json")]
 
@@ -357,12 +357,12 @@ def process_videos(
             print(f"Video key: {video_key}")
 
             # Get existing metadata
-            metadata = r2_client.get_json(bucket_name, meta_key)
+            metadata = storage_client.get_json(bucket_name, meta_key)
             original_video_id = metadata.get("id", video_number)
 
             # Download the video (needed for DESCRIBE mode)
             print(f"Downloading video from {video_key}...")
-            video_data = r2_client.get_object(bucket_name, video_key)
+            video_data = storage_client.get_object(bucket_name, video_key)
             print(f"Video downloaded: {len(video_data)} bytes")
 
             # Cut video if needed
@@ -437,7 +437,7 @@ def process_videos(
 
                 # Upload updated metadata back to R2
                 print(f"Updating metadata at {meta_key}...")
-                r2_client.put_json(bucket_name, meta_key, metadata)
+                storage_client.put_json(bucket_name, meta_key, metadata)
 
                 result["description"] = description
                 print(f"✓ Description added for video {video_number}")
@@ -461,7 +461,7 @@ def process_videos(
                 folder_name = "google_generated_videos"
                 generated_video_key = f"{date_prefix}/{folder_name}/{original_video_id}"
                 print(f"Uploading generated video to {generated_video_key}...")
-                r2_client.put_object(
+                storage_client.put_object(
                     bucket_name,
                     generated_video_key,
                     generated_video_data,
@@ -484,7 +484,7 @@ def process_videos(
                 # Upload generated video metadata
                 generated_meta_key = f"{date_prefix}/{folder_name}/{original_video_id}_meta.json"
                 print(f"Uploading generated video metadata to {generated_meta_key}...")
-                r2_client.put_json(bucket_name, generated_meta_key, generated_meta, cache_control="max-age=0, no-cache")
+                storage_client.put_json(bucket_name, generated_meta_key, generated_meta, cache_control="max-age=0, no-cache")
 
                 result["generated_video_key"] = generated_video_key
                 result["generated_meta_key"] = generated_meta_key
@@ -540,16 +540,20 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         backfill = event.get("backfill", True)
         max_length = event.get("maxLength", 10)
 
-        # Initialize R2 client
-        r2_client = R2Client()
+        # Extract storage provider from event or environment
+        storage_provider = event.get("storage_provider", os.getenv("STORAGE_PROVIDER", "r2"))
+        print(f"Using storage provider: {storage_provider}")
+
+        # Initialize storage client based on provider
+        storage_client = create_storage_client(storage_provider)
 
         # Handle Manifest (Backfill or Update)
         if backfill:
             print(f"Backfill requested (default=True). Updating {media_type} manifest from all existing folders...")
-            backfill_manifest(bucket_name, r2_client, media_type)
+            backfill_manifest(bucket_name, storage_client, media_type)
         else:
             print(f"Updating {media_type} manifest with current date: {date_prefix}")
-            update_manifest(bucket_name, date_prefix, r2_client, media_type)
+            update_manifest(bucket_name, date_prefix, storage_client, media_type)
 
         # Validate mode
         valid_modes = ["DESCRIBE", "GENERATE", "DESCRIBE_AND_GENERATE"]
@@ -590,7 +594,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 bucket_name=bucket_name,
                 date_prefix=date_prefix,
                 mode=mode,
-                r2_client=r2_client,
+                storage_client=storage_client,
                 ai_client=ai_client,
                 n=n,
                 max_length=max_length,
@@ -601,7 +605,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 bucket_name=bucket_name,
                 date_prefix=date_prefix,
                 mode=mode,
-                r2_client=r2_client,
+                storage_client=storage_client,
                 ai_client=ai_client,
                 provider=provider,
                 n=n,
