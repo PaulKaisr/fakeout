@@ -985,7 +985,7 @@ La IA a menudo crea piel que se ve *demasiado* perfecta, efectivamente aerografi
     },
   },
   {
-    id: "5",
+    id: "11",
     slug: "ai-image-video-generation-models-2026",
     image: aiImageVideoGenerationModels2026Img,
     date: "2026-01-06",
@@ -1979,7 +1979,7 @@ Con esta configuración, puedes servir a miles de usuarios antes de pagar un cen
     },
   },
   {
-    id: "7",
+    id: "12",
     slug: "training-your-digital-eye",
     image: trainingYourDigitalEyeImg,
     date: "2026-01-21",
