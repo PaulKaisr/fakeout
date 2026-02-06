@@ -23,6 +23,19 @@ provider "aws" {
   region = var.aws_region
 }
 
+data "aws_caller_identity" "current" {}
+
+resource "aws_s3_bucket" "lambda_artifacts" {
+  bucket = "fakeout-lambda-artifacts-${data.aws_caller_identity.current.account_id}"
+}
+
+resource "aws_s3_object" "describe_and_generate_artifact" {
+  bucket = aws_s3_bucket.lambda_artifacts.id
+  key    = "describe-and-generate/lambda.zip"
+  source = "${path.module}/../describe-and-generate/lambda.zip"
+  etag   = filemd5("${path.module}/../describe-and-generate/lambda.zip")
+}
+
 resource "cloudflare_r2_bucket" "fakeout_videos_dev" {
   account_id = var.cloudflare_account_id
   name       = "fakeout-videos-dev"
@@ -158,7 +171,9 @@ resource "aws_iam_role_policy_attachment" "describe_lambda_r2_access" {
 
 # Lambda function for describe-and-generate
 resource "aws_lambda_function" "describe_and_generate" {
-  filename      = "${path.module}/../describe-and-generate/lambda.zip"
+  s3_bucket     = aws_s3_bucket.lambda_artifacts.id
+  s3_key        = aws_s3_object.describe_and_generate_artifact.key
+  # filename      = "${path.module}/../describe-and-generate/lambda.zip"
   function_name = "describe-and-generate"
   role          = aws_iam_role.describe_lambda.arn
   handler       = "main.handler"
