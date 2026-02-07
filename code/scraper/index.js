@@ -142,6 +142,7 @@ export async function handler(event, context) {
     const bucketName = event.bucketName || "fakeout-videos-dev";
     const mode = event.mode || "foto";
     const mediaCount = event.mediaCount || 10;
+    const dbSchema = event.db_schema;
 
     // Extract storage provider from event or environment
     const storageProvider =
@@ -179,7 +180,7 @@ export async function handler(event, context) {
       // If no prompt provided, try to get one from Supabase
       if (!effectiveSearchPrompt) {
         console.log("No search prompt provided. Fetching from Supabase...");
-        const dbPrompt = await getNextPrompt("video");
+        const dbPrompt = await getNextPrompt("video", dbSchema);
         if (dbPrompt) {
           effectiveSearchPrompt = dbPrompt;
           usedSupabasePrompt = true;
@@ -310,7 +311,7 @@ export async function handler(event, context) {
         usedSupabasePrompt &&
         uploadResults.some((r) => r.status !== "failed")
       ) {
-        await markPromptAsUsed(effectiveSearchPrompt, "video");
+        await markPromptAsUsed(effectiveSearchPrompt, "video", dbSchema);
       }
 
       console.log(
@@ -342,7 +343,7 @@ export async function handler(event, context) {
         console.log(
           "No search prompt provided for images. Fetching from Supabase..."
         );
-        const dbPrompt = await getNextPrompt("image");
+        const dbPrompt = await getNextPrompt("image", dbSchema);
         if (dbPrompt) {
           effectiveSearchPrompt = dbPrompt;
           usedSupabasePrompt = true;
@@ -445,7 +446,7 @@ export async function handler(event, context) {
         usedSupabasePrompt &&
         uploadResults.some((r) => r.status !== "failed")
       ) {
-        await markPromptAsUsed(effectiveSearchPrompt, "image");
+        await markPromptAsUsed(effectiveSearchPrompt, "image", dbSchema);
       }
 
       console.log(

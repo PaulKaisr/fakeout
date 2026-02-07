@@ -15,6 +15,7 @@ resource "aws_sfn_state_machine" "daily_reddit_generation" {
           mediaCount       = 5
           storage_provider = "supabase"
           bucketName       = "fakeout-reddit"
+          db_schema        = "fakeout-devvit"
           "executionInput.$" = "$"
         }
         Retry = [
@@ -75,7 +76,7 @@ resource "aws_iam_role_policy" "scheduler_policy_reddit" {
   })
 }
 
-# EventBridge Scheduler for Daily Reddit Trigger (12 PM UTC)
+# EventBridge Scheduler for Daily Reddit Trigger (12 AM UTC)
 resource "aws_scheduler_schedule" "daily_reddit_generation" {
   name       = "fakeout-reddit-daily-trigger"
   group_name = "default"
@@ -84,8 +85,8 @@ resource "aws_scheduler_schedule" "daily_reddit_generation" {
     mode = "OFF"
   }
 
-  # Daily at 12 PM UTC
-  schedule_expression = "cron(0 12 * * ? *)"
+  # Daily at 12 AM UTC
+  schedule_expression = "cron(0 0 * * ? *)"
 
   target {
     arn      = aws_sfn_state_machine.daily_reddit_generation.arn
