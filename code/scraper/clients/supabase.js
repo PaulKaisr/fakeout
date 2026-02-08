@@ -48,24 +48,45 @@ export async function getNextPrompt(mode = "video", schema = DEFAULT_SCHEMA) {
 
   const column = mode === "image" ? "last_used_image_at" : "last_used_video_at";
 
+  // Non-default schemas (e.g. fakeout-devvit) have approved/votes columns
+  const hasVoting = schema !== DEFAULT_SCHEMA;
+
   try {
     // 1. Try to find a prompt that has NEVER been used for this mode
-    let { data, error } = await supabase
+    let unusedQuery = supabase
       .from("search_prompts")
       .select("prompt")
-      .is(column, null)
-      .limit(1)
-      .single();
+      .is(column, null);
+
+    if (hasVoting) {
+      unusedQuery = unusedQuery
+        .eq("approved", true)
+        .order("votes", { ascending: false });
+    }
+
+    let { data, error } = await unusedQuery.limit(1).single();
 
     if (!error && data) {
       return data.prompt;
     }
 
-    // 2. If all have been used, pick the one used least recently for this mode
-    const { data: recycledData, error: recycledError } = await supabase
+    // 2. If all have been used, recycle
+    let recycleQuery = supabase
       .from("search_prompts")
-      .select("prompt")
-      .order(column, { ascending: true }) // Oldest timestamp first
+      .select("prompt");
+
+    if (hasVoting) {
+      // Highest voted approved prompt, with oldest-used as tiebreaker
+      recycleQuery = recycleQuery
+        .eq("approved", true)
+        .order("votes", { ascending: false })
+        .order(column, { ascending: true });
+    } else {
+      // Original behavior: oldest used first
+      recycleQuery = recycleQuery.order(column, { ascending: true });
+    }
+
+    const { data: recycledData, error: recycledError } = await recycleQuery
       .limit(1)
       .single();
 
