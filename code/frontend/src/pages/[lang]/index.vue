@@ -108,10 +108,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import { computed, defineAsyncComponent, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import GameContainer from "@/components/game/GameContainer.vue";
 import MissionHero from "@/components/MissionHero.vue";
+
+// Lazy-load GameContainer: it's inside <ClientOnly> and never SSG-rendered,
+// so there's no reason to parse it in the critical-path bundle.
+const GameContainer = defineAsyncComponent(
+  () => import("@/components/game/GameContainer.vue"),
+);
 import { useSeoMeta, useSeoTranslations } from "@/composables/useSeoMeta";
 import { articles, type Article } from "@/data/articles";
 

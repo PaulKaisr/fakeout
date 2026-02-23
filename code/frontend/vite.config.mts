@@ -216,7 +216,10 @@ export default defineConfig(({ mode }) => ({
     }),
     tailwindcss(),
     VueI18nPlugin({
-      runtimeOnly: false,
+      // runtimeOnly: true ships only the message runtime, not the compiler.
+      // Translations are pre-compiled by this plugin at build time, so the
+      // compiler (~40KB gzipped) is not needed at runtime.
+      runtimeOnly: true,
     }),
     Sitemap({
       hostname: "https://fakeout.dev",
