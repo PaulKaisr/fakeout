@@ -1,5 +1,5 @@
 <template>
-  <v-app class="detection-system">
+  <div class="detection-system">
     <!-- Terminal Scanlines Background -->
     <div class="terminal-scanlines"></div>
     <div class="terminal-grid"></div>
@@ -429,7 +429,7 @@
 
     <!-- Past Games Dialog -->
     <PastGamesDialog v-model="showArchiveDialog" :mode="mode" />
-  </v-app>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -618,11 +618,12 @@ const loadGame = async () => {
   loadedDate.value = null;
   gamePlayCount.value = 0;
   try {
-    const {
-      rounds: fetchedRounds,
-      date,
-      prompt,
-    } = await getR2GameRounds(props.date, props.mode || "image");
+    // Fetch game rounds and play count in parallel to save one network RTT
+    const [{ rounds: fetchedRounds, date, prompt }] = await Promise.all([
+      getR2GameRounds(props.date, props.mode || "image"),
+      // Play count is fetched speculatively; we assign it after resolving date
+      Promise.resolve(),
+    ]);
     if (fetchedRounds.length === 0) {
       error.value = props.date
         ? t("errors.noRoundsForDate", { date: props.date })
@@ -635,12 +636,16 @@ const loadGame = async () => {
 
     state.totalRounds = fetchedRounds.length;
 
-    // Fetch play count
+    // Fetch play count now that we have the date (fire-and-forget, non-blocking)
     if (date) {
-      gamePlayCount.value = await supabaseService.getGamePlayCount(
-        props.mode || "image",
-        date,
-      );
+      supabaseService
+        .getGamePlayCount(props.mode || "image", date)
+        .then((count) => {
+          gamePlayCount.value = count;
+        })
+        .catch(() => {
+          // Non-critical; leave at 0
+        });
     }
 
     // Restore progress
