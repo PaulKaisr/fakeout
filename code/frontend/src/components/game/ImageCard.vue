@@ -302,7 +302,7 @@ const onTimeUpdate = () => {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600;700&display=swap");
+/* Fonts loaded globally in index.html */
 
 /* ========================================
    FRACTURE IMAGE CARD

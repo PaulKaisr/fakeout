@@ -104,19 +104,30 @@
     <meta name="robots" content="index, follow" />
 
     <meta name="author" content="Fakeout" />
-    <link rel="canonical" href="https://fakeout.dev/" />
+    <!-- Canonical URLs handled dynamically by useSeoMeta composable for proper language-specific URLs -->
 
     <!-- Internationalization -->
     <link rel="alternate" hreflang="en" href="https://fakeout.dev/en" />
     <link rel="alternate" hreflang="de" href="https://fakeout.dev/de" />
     <link rel="alternate" hreflang="bg" href="https://fakeout.dev/bg" />
+    <link rel="alternate" hreflang="pl" href="https://fakeout.dev/pl" />
+    <link rel="alternate" hreflang="es" href="https://fakeout.dev/es" />
+    <link rel="alternate" hreflang="fr" href="https://fakeout.dev/fr" />
     <link rel="alternate" hreflang="x-default" href="https://fakeout.dev/" />
 
     <!-- Preconnect hints for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="preconnect"
       href="https://pub-2e17857f3c564e4fa7b0e9e926defc73.r2.dev"
       crossorigin
+    />
+
+    <!-- Global Google Fonts for design system -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600;700&display=swap"
+      rel="stylesheet"
     />
     <link
       rel="dns-prefetch"
@@ -153,7 +164,7 @@
         "name": "Fakeout",
         "url": "https://fakeout.dev",
         "logo": "https://fakeout.dev/android-chrome-512x512.png",
-        "sameAs": []
+        "sameAs": ["https://www.reddit.com/r/FakeOutGame/"]
       }
     </script>
   </head>

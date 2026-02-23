@@ -16,20 +16,24 @@ import path from "node:path";
 // Supported locales
 const LOCALES = ["en", "de", "bg", "pl", "es", "fr"] as const;
 
-// Blog article slugs (keep in sync with src/data/articles.ts)
-const ARTICLE_SLUGS = [
-  "how-fakeout-works",
-  "ai-generation-concerns",
-  "spotting-ai-hands-guide",
-  "ai-video-detection-tips",
-  "spotting-ai-tips",
-  "ai-image-video-generation-models-2026",
-  "free-hosting-for-solo-developers",
-  "training-your-digital-eye",
-  "synthetic-horizon-2026",
-  "game-based-ai-literacy-k12",
-  "spotting-ai-comprehensive-report",
-];
+// Blog article data (keep in sync with src/data/articles.ts)
+const ARTICLES = [
+  { slug: "first-rounds-insights", date: "2026-01-25" },
+  { slug: "how-fakeout-works", date: "2026-01-05" },
+  { slug: "ai-generation-concerns", date: "2026-01-06" },
+  { slug: "spotting-ai-hands-guide", date: "2026-01-07" },
+  { slug: "ai-video-detection-tips", date: "2026-01-08" },
+  { slug: "spotting-ai-tips", date: "2026-01-09" },
+  { slug: "ai-image-video-generation-models-2026", date: "2026-01-10" },
+  { slug: "free-hosting-for-solo-developers", date: "2026-01-11" },
+  { slug: "training-your-digital-eye", date: "2026-01-12" },
+  { slug: "synthetic-horizon-2026", date: "2026-01-13" },
+  { slug: "game-based-ai-literacy-k12", date: "2026-01-14" },
+  { slug: "spotting-ai-comprehensive-report", date: "2026-01-15" },
+] as const;
+
+// Extract just slugs for route generation
+const ARTICLE_SLUGS = ARTICLES.map((a) => a.slug);
 
 // Generate dynamic routes for sitemap
 function generateSitemapRoutes(): string[] {
@@ -50,6 +54,31 @@ function generateSitemapRoutes(): string[] {
   }
 
   return routes;
+}
+
+// Generate per-route lastmod dates for sitemap
+function generateLastmodMap(): Record<string, Date> {
+  const lastmodMap: Record<string, Date> = {};
+
+  // Default date for static pages (site launch / last major update)
+  const staticPageDate = new Date("2026-01-01");
+
+  // Static pages get a consistent date
+  const staticPages = ["", "/image", "/blog", "/stats", "/about", "/faq"];
+  for (const locale of LOCALES) {
+    for (const page of staticPages) {
+      lastmodMap[`/${locale}${page}`] = staticPageDate;
+    }
+  }
+
+  // Blog articles get their publish date
+  for (const locale of LOCALES) {
+    for (const article of ARTICLES) {
+      lastmodMap[`/${locale}/blog/${article.slug}`] = new Date(article.date);
+    }
+  }
+
+  return lastmodMap;
 }
 
 // https://vitejs.dev/config/
@@ -142,7 +171,7 @@ export default defineConfig(({ mode }) => ({
       generateRobotsTxt: false, // We already have a robots.txt
       changefreq: "weekly",
       priority: 0.8,
-      lastmod: new Date(),
+      lastmod: generateLastmodMap(), // Per-route lastmod based on article dates
       readable: true,
     }),
   ],
