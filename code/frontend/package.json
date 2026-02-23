@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
+    "build:ssg": "run-p type-check \"build-ssg-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
+    "build-ssg-only": "vite-ssg build",
     "type-check": "vue-tsc --build --force",
     "lint": "prettier --check .",
     "lint:fix": "prettier --write ."
@@ -34,6 +36,7 @@
     "@types/node": "^22.9.0",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/tsconfig": "^0.8.1",
+    "beasties": "^0.4.1",
     "eslint": "^9.35.0",
     "eslint-config-vuetify": "^4.2.0",
     "npm-run-all2": "^8.0.4",
@@ -47,6 +50,7 @@
     "vite": "^7.1.5",
     "vite-plugin-sitemap": "^0.8.2",
     "vite-plugin-vuetify": "^2.1.2",
+    "vite-ssg": "^28.3.0",
     "vue-tsc": "^3.0.7"
   }
 }

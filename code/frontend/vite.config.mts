@@ -35,6 +35,37 @@ const ARTICLES = [
 // Extract just slugs for route generation
 const ARTICLE_SLUGS = ARTICLES.map((a) => a.slug);
 
+// Generate routes for SSG pre-rendering
+function generateSSGRoutes(): string[] {
+  const routes: string[] = ["/"];
+
+  // Static pages per locale
+  const staticPages = [
+    "",
+    "/image",
+    "/blog",
+    "/stats",
+    "/about",
+    "/faq",
+    "/privacy",
+    "/terms",
+    "/contact",
+  ];
+
+  for (const locale of LOCALES) {
+    for (const page of staticPages) {
+      routes.push(`/${locale}${page}`);
+    }
+
+    // Blog article pages
+    for (const article of ARTICLES) {
+      routes.push(`/${locale}/blog/${article.slug}`);
+    }
+  }
+
+  return routes;
+}
+
 // Generate dynamic routes for sitemap
 function generateSitemapRoutes(): string[] {
   const routes: string[] = [];
@@ -83,14 +114,37 @@ function generateLastmodMap(): Record<string, Date> {
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  // vite-ssg options
+  ssgOptions: {
+    dirStyle: "nested",
+    formatting: "minify",
+    script: "async",
+    crittersOptions: {
+      preload: "swap",
+    },
+    includedRoutes: () => generateSSGRoutes(),
+  },
+  // SSR configuration to bundle Vuetify properly
+  ssr: {
+    noExternal: ["vuetify", "@mdi/font"],
+  },
   esbuild: {
     pure: mode === "production" ? ["console.log", "console.debug"] : [],
   },
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ["vue", "vue-router", "vuetify"],
+        // Use function form to avoid issues with SSG external modules
+        manualChunks(id) {
+          // Only split chunks for client build, not during SSG
+          if (id.includes("node_modules")) {
+            if (id.includes("vuetify")) {
+              return "vuetify";
+            }
+            if (id.includes("vue-router") || id.includes("vue")) {
+              return "vue-vendor";
+            }
+          }
         },
       },
     },

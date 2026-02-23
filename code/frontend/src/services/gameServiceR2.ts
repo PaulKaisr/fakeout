@@ -176,6 +176,9 @@ export const getR2GameRounds = async (
  * Injects <link rel="preload"> tags into the document head.
  */
 function preloadFirstRoundImages(round: Round): void {
+  // SSR-safe: only preload on client
+  if (typeof document === "undefined") return;
+
   const urls = [round.imageA.url, round.imageB.url];
 
   for (const url of urls) {

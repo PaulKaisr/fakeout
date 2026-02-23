@@ -8,9 +8,12 @@ export const supabase =
     ? createClient(supabaseUrl, supabaseKey, { db: { schema: "fakeout" } })
     : null;
 
+// SSR-safe check for browser environment
+const isBrowser = typeof window !== "undefined";
+
 export const supabaseService = {
   async trackVisitor() {
-    if (!supabase) return;
+    if (!supabase || !isBrowser) return;
 
     // Check session storage to avoid duplicate hits on refresh
     const sessionKey = "fakeout_visitor_tracked";

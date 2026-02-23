@@ -1,5 +1,15 @@
 <template>
-  <GameContainer mode="image" />
+  <ClientOnly>
+    <GameContainer mode="image" />
+    <template #fallback>
+      <div class="game-loading-placeholder">
+        <v-container class="py-16 text-center">
+          <v-progress-circular indeterminate color="primary" size="64" />
+          <p class="mt-4 text-medium-emphasis">{{ $t("common.loading") }}</p>
+        </v-container>
+      </div>
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">

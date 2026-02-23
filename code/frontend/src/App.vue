@@ -27,12 +27,15 @@ const { locale } = useI18n();
 watch(
   locale,
   (newLocale) => {
-    document.documentElement.lang = newLocale;
-    // Update cookie consent language when locale changes
-    if (["en", "de", "bg", "pl", "es"].includes(newLocale)) {
-      updateCookieConsentLanguage(
-        newLocale as "en" | "de" | "bg" | "pl" | "es",
-      );
+    // SSR-safe: only access document on client
+    if (typeof document !== "undefined") {
+      document.documentElement.lang = newLocale;
+      // Update cookie consent language when locale changes
+      if (["en", "de", "bg", "pl", "es"].includes(newLocale)) {
+        updateCookieConsentLanguage(
+          newLocale as "en" | "de" | "bg" | "pl" | "es",
+        );
+      }
     }
   },
   { immediate: true },

@@ -14,37 +14,66 @@ export const SUPPORTED_LOCALES: SupportedLocale[] = [
   "fr",
 ];
 
-// Determine initial locale from saved preference or browser
-const savedLocale = localStorage.getItem("user-locale");
-const browserLocale = (
-  navigator.language ? navigator.language.split("-")[0] : "en"
-) as string;
-const initialLocale: SupportedLocale =
-  savedLocale && SUPPORTED_LOCALES.includes(savedLocale as SupportedLocale)
-    ? (savedLocale as SupportedLocale)
-    : SUPPORTED_LOCALES.includes(browserLocale as SupportedLocale)
-      ? (browserLocale as SupportedLocale)
-      : "en";
-
-// Create i18n instance with only the default locale loaded initially
-const i18n = createI18n({
-  legacy: false,
-  globalInjection: true,
-  locale: initialLocale,
-  fallbackLocale: "en",
-  messages: {
-    en,
-  },
-});
-
-// Track which locales have been loaded
+// Track which locales have been loaded (per i18n instance for SSG)
 const loadedLocales = new Set<SupportedLocale>(["en"]);
+
+/**
+ * Get initial locale - SSR-safe
+ * During SSG build, defaults to 'en'. On client, checks localStorage/browser.
+ */
+function getInitialLocale(): SupportedLocale {
+  // SSR/SSG: use default locale
+  if (typeof window === "undefined") {
+    return "en";
+  }
+
+  // Client: check saved preference or browser
+  const savedLocale = localStorage.getItem("user-locale");
+  const browserLocale = navigator.language
+    ? navigator.language.split("-")[0]
+    : "en";
+
+  if (
+    savedLocale &&
+    SUPPORTED_LOCALES.includes(savedLocale as SupportedLocale)
+  ) {
+    return savedLocale as SupportedLocale;
+  }
+
+  if (SUPPORTED_LOCALES.includes(browserLocale as SupportedLocale)) {
+    return browserLocale as SupportedLocale;
+  }
+
+  return "en";
+}
+
+/**
+ * Create a fresh i18n instance.
+ * For SSG, a new instance is created per page render.
+ */
+export function createI18nInstance(locale?: SupportedLocale) {
+  const initialLocale = locale || getInitialLocale();
+
+  return createI18n({
+    legacy: false,
+    globalInjection: true,
+    locale: initialLocale,
+    fallbackLocale: "en",
+    messages: {
+      en,
+    },
+  });
+}
+
+// Type for i18n instance returned by createI18nInstance
+export type AppI18n = ReturnType<typeof createI18nInstance>;
 
 /**
  * Lazy-load a locale's messages on demand.
  * This keeps the initial bundle small for better LCP.
  */
 export async function loadLocaleMessages(
+  i18n: AppI18n,
   locale: SupportedLocale,
 ): Promise<void> {
   // Skip if already loaded
@@ -59,26 +88,37 @@ export async function loadLocaleMessages(
     loadedLocales.add(locale);
   } catch (error) {
     console.error(`Failed to load locale: ${locale}`, error);
-    // Fall back to English if locale fails to load
-    i18n.global.locale.value = "en";
   }
 }
 
 /**
  * Switch to a new locale, loading messages if needed.
+ * Client-only function.
  */
-export async function setLocale(locale: SupportedLocale): Promise<void> {
-  await loadLocaleMessages(locale);
+export async function setLocale(
+  i18n: AppI18n,
+  locale: SupportedLocale,
+): Promise<void> {
+  await loadLocaleMessages(i18n, locale);
   (i18n.global.locale as { value: string }).value = locale;
-  localStorage.setItem("user-locale", locale);
-  document.documentElement.lang = locale;
+
+  // Only access localStorage on client
+  if (typeof window !== "undefined") {
+    localStorage.setItem("user-locale", locale);
+    document.documentElement.lang = locale;
+  }
 }
 
+// Default export for backward compatibility (client-only usage)
+const i18n = createI18nInstance();
+
 // Load the initial locale if it's not English (which is already loaded)
-if (initialLocale !== "en") {
-  // Use void to explicitly ignore the promise
-  // The app will show English briefly while the locale loads
-  void loadLocaleMessages(initialLocale);
+// Only on client side
+if (typeof window !== "undefined") {
+  const initialLocale = getInitialLocale();
+  if (initialLocale !== "en") {
+    void loadLocaleMessages(i18n, initialLocale);
+  }
 }
 
 export default i18n;

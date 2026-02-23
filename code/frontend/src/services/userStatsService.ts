@@ -35,10 +35,13 @@ const defaultStats: UserStats = {
   games: {},
 };
 
+// SSR-safe check for browser environment
+const isBrowser = typeof window !== "undefined";
+
 // Deferred localStorage write to avoid blocking main thread during interactions
 let pendingSave = false;
 function deferredSaveStats() {
-  if (pendingSave) return;
+  if (!isBrowser || pendingSave) return;
   pendingSave = true;
 
   const save = () => {
@@ -55,6 +58,11 @@ function deferredSaveStats() {
 }
 
 function loadStats(): UserStats {
+  // SSR-safe: return default stats during build
+  if (!isBrowser) {
+    return JSON.parse(JSON.stringify(defaultStats));
+  }
+
   const stored = localStorage.getItem(STORAGE_KEY);
   if (stored) {
     try {
@@ -163,7 +171,9 @@ export function getGameStats(
 
 export function resetStats() {
   Object.assign(userStats, JSON.parse(JSON.stringify(defaultStats)));
-  localStorage.removeItem(STORAGE_KEY);
+  if (isBrowser) {
+    localStorage.removeItem(STORAGE_KEY);
+  }
 }
 
 export function getAccuracy(mode: "image" | "video"): number {

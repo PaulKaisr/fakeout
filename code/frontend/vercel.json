@@ -5,8 +5,14 @@
       "destination": "https://pub-285780421745452cbbfeee3b552758f0.r2.dev/:path*"
     },
     {
-      "source": "/:path((?!files/).*)",
-      "destination": "/index.html"
+      "source": "/:lang/video/:date",
+      "destination": "/:lang/index.html"
+    },
+    {
+      "source": "/:lang/image/:date",
+      "destination": "/:lang/image/index.html"
     }
-  ]
+  ],
+  "trailingSlash": false,
+  "cleanUrls": true
 }
