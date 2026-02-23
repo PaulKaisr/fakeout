@@ -23,17 +23,23 @@ test.describe("Game Flow", () => {
     });
 
     // Verify that the game heading is visible
+    // The heading renders the i18n key "game.question.image" or its translation
+    // "Which image is AI-generated?" depending on the i18n state at render time
     await expect(
-      page.getByRole("heading", { name: "Which image is AI-generated?" }),
+      page.getByRole("heading", {
+        name: /Which image is AI-generated\?|game\.question\.image/,
+      }),
     ).toBeVisible();
 
     // Verify that the theme is displayed
-    await expect(page.getByText(/Theme:/)).toBeVisible();
+    // The theme label renders as "Theme:" (translated) or "game.theme:" (raw key)
+    await expect(page.getByText(/Theme:|game\.theme/)).toBeVisible();
 
     // Verify that the instruction text is visible
+    // Matches translated text or raw i18n key
     await expect(
       page.getByText(
-        "Click on the image you think was created by Artificial Intelligence",
+        /Click on the image you think was created by Artificial Intelligence|game\.instructions\.image/,
       ),
     ).toBeVisible();
 

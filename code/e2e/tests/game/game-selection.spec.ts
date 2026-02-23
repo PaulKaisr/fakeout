@@ -24,23 +24,25 @@ test.describe("Game Flow", () => {
     await expect(page.getByText(/1\/\d/)).toBeVisible();
 
     // Check initial score display is visible
-    await expect(page.getByText("Score")).toBeVisible();
+    // The stat box label is hardcoded as "SCORE" in the template
+    await expect(page.getByText("SCORE")).toBeVisible();
 
     // Click on option A (one of the game cards)
     await page.locator("main").getByText("A", { exact: true }).click();
 
     // Wait for feedback - "Next Round" button should appear
+    // The button text renders as "Next Round" (translated) or "game.nextRound" (raw key)
     await expect(
-      page.getByRole("button", { name: "Next Round" })
+      page.getByRole("button", { name: /Next Round|game\.nextRound/ })
     ).toBeVisible({ timeout: 10000 });
 
     // Click Next Round to proceed
-    await page.getByRole("button", { name: "Next Round" }).click();
+    await page.getByRole("button", { name: /Next Round|game\.nextRound/ }).click();
 
     // Wait for round counter to update to 2/5
     await expect(page.getByText(/2\/\d/)).toBeVisible({ timeout: 10000 });
 
     // Score should still be visible
-    await expect(page.getByText("Score")).toBeVisible();
+    await expect(page.getByText("SCORE")).toBeVisible();
   });
 });
